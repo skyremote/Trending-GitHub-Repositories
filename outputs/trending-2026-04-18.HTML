@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-04-18</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --gold: #f0c000;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editor-take {
+    background: linear-gradient(135deg, #1f6feb11, #bc8cff11);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editor-take::before {
+    content: "Editor's Take";
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+  }
+  .editor-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2em 0.6em;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-7d {
+    background: #3fb95022;
+    color: var(--green);
+  }
+  .badge-30d {
+    background: #f0883e22;
+    color: var(--orange);
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: #1c2333;
+  }
+  .rank {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.1rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+  .repo-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-info h3 a:hover {
+    text-decoration: underline;
+  }
+  .repo-info .desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .stars svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--gold);
+    flex-shrink: 0;
+  }
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    .repo-card {
+      grid-template-columns: 2rem 1fr;
+      gap: 0.75rem;
+    }
+    .stars {
+      grid-column: 2;
+      justify-self: start;
+      padding-top: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-04-18 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <p>Developer tooling <em>around</em> AI agents is now growing faster than agents themselves. The week's top repo is a cost-observability dashboard for coding agents, not another framework or model wrapper. The 30-day leader is a curated collection of static DESIGN.md files &mdash; assets that help agents produce better UI without a single inference call. The ecosystem has shifted from &ldquo;build more agents&rdquo; to &ldquo;instrument, debug, and optimize the ones we have.&rdquo; Baidu's 8B-parameter open DiT image model is the notable model release, but even there the story is parameter efficiency over architecture novelty. One pattern to watch: portable agent-config directories (.agent/ folders) that follow you across harnesses &mdash; a sign the community expects churn among tools but permanence in workflows.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 days</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/AgentSeal/codeburn" target="_blank" rel="noopener">AgentSeal/codeburn</a></h3>
+        <div class="desc">Interactive TUI dashboard for tracking where AI coding tokens go across Claude Code, Codex, and Cursor. First serious cost-observability tool for the agentic coding wave.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        2,601
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Mouseww/anything-analyzer" target="_blank" rel="noopener">Mouseww/anything-analyzer</a></h3>
+        <div class="desc">All-in-one protocol analysis toolkit with browser capture, MITM proxy, fingerprint spoofing, and a built-in MCP server that plugs directly into AI agents and IDEs.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        1,290
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Manavarya09/design-extract" target="_blank" rel="noopener">Manavarya09/design-extract</a></h3>
+        <div class="desc">CLI that extracts a complete design language (colors, typography, spacing, shadows) from any website. Ships as both an npx package and a Claude Code plugin.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        892
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/BuilderPulse/BuilderPulse" target="_blank" rel="noopener">BuilderPulse/BuilderPulse</a></h3>
+        <div class="desc">AI-powered daily intelligence digest for indie hackers. Pulls from 10+ sources, distills into 20 actionable questions every morning.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        890
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/WeaveMindAI/weft" target="_blank" rel="noopener">WeaveMindAI/weft</a></h3>
+        <div class="desc">A programming language designed specifically for AI systems. Early-stage but signals growing interest in purpose-built AI-native languages beyond prompt engineering.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        778
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/codejunkie99/agentic-stack" target="_blank" rel="noopener">codejunkie99/agentic-stack</a></h3>
+        <div class="desc">Portable .agent/ folder (memory, skills, protocols) that plugs into Claude Code, Cursor, Windsurf, OpenCode, and more. Keeps knowledge intact when you switch harnesses.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        362
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener">h4ckf0r0day/obscura</a></h3>
+        <div class="desc">Headless browser purpose-built for AI agents and web scraping. Optimized for agent-driven navigation rather than human browsing patterns.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        277
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/getlago/inside-lago-voice-skill" target="_blank" rel="noopener">getlago/inside-lago-voice-skill</a></h3>
+        <div class="desc">Framework for teaching AI to write like a specific person &mdash; not a better version, but a faithful reproduction of voice and style.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        260
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/baidu/ERNIE-Image" target="_blank" rel="noopener">baidu/ERNIE-Image</a></h3>
+        <div class="desc">Baidu's open text-to-image model built on a single-stream Diffusion Transformer. Only 8B DiT parameters but reaches state-of-the-art among open-weight image generators.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        248
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/poseljacob/agentic-video-editor" target="_blank" rel="noopener">poseljacob/agentic-video-editor</a></h3>
+        <div class="desc">Turns raw footage and a creative brief into a polished ad using an ensemble of AI agents (Gemini + FFmpeg). First serious agentic take on video post-production.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        243
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 days</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/VoltAgent/awesome-design-md" target="_blank" rel="noopener">VoltAgent/awesome-design-md</a></h3>
+        <div class="desc">Curated collection of DESIGN.md files modeled after popular brand design systems. Drop one into a project and coding agents generate matching UI. The month's breakout hit.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        58,294
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/santifer/career-ops" target="_blank" rel="noopener">santifer/career-ops</a></h3>
+        <div class="desc">AI-powered job search system built on Claude Code with 14 skill modes, a Go dashboard, PDF generation, and batch processing. The most ambitious vertical agent of the month.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        35,677
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a></h3>
+        <div class="desc">Coding assistant skill that turns any folder of code, docs, papers, images, or videos into a queryable knowledge graph. Works across Claude Code, Codex, Cursor, Gemini CLI, and more.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        29,221
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noopener">Gitlawb/openclaude</a></h3>
+        <div class="desc">Open-source coding-agent CLI compatible with OpenAI, Gemini, DeepSeek, Ollama, and 200+ models via OpenAI-compatible APIs. The &ldquo;bring your own model&rdquo; answer to Claude Code.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        22,322
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/sanbuphy/learn-coding-agent" target="_blank" rel="noopener">sanbuphy/learn-coding-agent</a></h3>
+        <div class="desc">Deep research compendium on coding agents &mdash; architecture patterns, benchmark results, and implementation analysis. The definitive reading list for the space.</div>
+      </div>
+      <div class="stars">
+        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        11,670
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine &middot; Data sourced from GitHub Search API on 2026-04-18 UTC</p>
+  </footer>
+</div>
+</body>
+</html>
