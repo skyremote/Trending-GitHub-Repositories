@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-04-26</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f3a5f;
+    --gold: #f0c000;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header {
+    text-align: center;
+    padding: 2.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.35rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .editors-take strong { color: var(--text); }
+  .editors-take .label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title .badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+  }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .rank {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+  .repo-info { min-width: 0; }
+  .repo-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+  .repo-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+  }
+  .meta-lang {
+    background: #1a2332;
+    color: var(--purple);
+  }
+  .stars {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    padding-top: 0.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .stars svg { width: 14px; height: 14px; fill: var(--gold); }
+  footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr; gap: 0.5rem; }
+    .stars { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-04-26 &middot; Weekly Brief</div>
+  </header>
+
+  <div class="editors-take">
+    <div class="label">Editor's Take</div>
+    <p>
+      <strong>Agent memory is this month's infrastructure war.</strong> Three of the top entries — MemPalace, Stash, and auto-memory — solve the same problem at different scales: making agents remember across sessions. MemPalace's 49k-star surge in under a month says the market considers this solved at the library level; Stash's Postgres-native approach and auto-memory's CLI-first design show that "where the state lives" is the real design axis. Meanwhile, the 7-day window is dominated by orchestration frameworks (Harmonist, Wanman, Mercury) rather than new model wrappers — builders have stopped chasing the latest checkpoint and started wiring existing models into durable pipelines. The outlier worth watching: <strong>text-to-cad</strong>, which points AI tooling at mechanical engineering instead of yet another chat interface.
+    </p>
+  </div>
+
+  <h2 class="section-title">Top 10 — Last 7 Days <span class="badge">Apr 19 – 26</span></h2>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/cosmicstack-labs/mercury-agent" target="_blank">cosmicstack-labs/mercury-agent</a></div>
+        <div class="repo-desc">Permission-hardened AI agent with token budgets and multi-channel access (CLI, Telegram). Ships as a 24/7 daemon, not a REPL toy.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">TypeScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,146</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/GammaLabTechnologies/harmonist" target="_blank">GammaLabTechnologies/harmonist</a></div>
+        <div class="repo-desc">Agent orchestration with mechanical protocol enforcement. 186 agents with zero runtime dependencies — the constraint is the feature.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 618</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/earthtojake/text-to-cad" target="_blank">earthtojake/text-to-cad</a></div>
+        <div class="repo-desc">Open source harness for generating CAD models from natural language. One of few AI projects targeting mechanical engineering.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">JavaScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 483</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/tashfeenahmed/freellmapi" target="_blank">tashfeenahmed/freellmapi</a></div>
+        <div class="repo-desc">OpenAI-compatible proxy that aggregates free-tier keys from ~14 AI providers with automatic failover. For personal experimentation only.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">TypeScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 446</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/future-agi/future-agi" target="_blank">future-agi/future-agi</a></div>
+        <div class="repo-desc">End-to-end platform for LLM/agent evaluation: tracing, evals, simulations, datasets, gateway, guardrails. Self-hostable, Apache 2.0.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 431</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/chekusu/wanman" target="_blank">chekusu/wanman</a></div>
+        <div class="repo-desc">Agent matrix runtime inspired by Japanese one-man trains. Humans step into an observer role while local agents coordinate autonomous workflows.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">TypeScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 301</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/alash3al/stash" target="_blank">alash3al/stash</a></div>
+        <div class="repo-desc">Persistent memory layer for AI agents — episodes, facts, and working context stored in Postgres. MCP server included, single binary.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Go</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 236</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/dezgit2025/auto-memory" target="_blank">dezgit2025/auto-memory</a></div>
+        <div class="repo-desc">Progressive session recall CLI for AI coding agents. Agents pick up where they left off without manual context injection.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 219</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/muxprotocol/kalshi-trading-bot" target="_blank">muxprotocol/kalshi-trading-bot</a></div>
+        <div class="repo-desc">Five-agent AI ensemble for Kalshi prediction markets. Fractional Kelly sizing, paper and live modes.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">TypeScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 203</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/TheTom/vllm-swift" target="_blank">TheTom/vllm-swift</a></div>
+        <div class="repo-desc">vLLM Metal plugin powered by mlx-swift for high-performance LLM inference on Apple Silicon. Bridges vLLM to Mac hardware.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 192</div>
+    </li>
+  </ol>
+
+  <h2 class="section-title">Top 5 — Last 30 Days <span class="badge">Mar 27 – Apr 26</span></h2>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/MemPalace/mempalace" target="_blank">MemPalace/mempalace</a></div>
+        <div class="repo-desc">The benchmark-topping open-source AI memory system continues its tear. Now the default integration target for agent frameworks.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 49,670</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/JuliusBrussee/caveman" target="_blank">JuliusBrussee/caveman</a></div>
+        <div class="repo-desc">Claude Code skill that rewrites prompts in pidgin to cut 65% of tokens. The joke works because it measurably saves money.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 46,588</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/santifer/career-ops" target="_blank">santifer/career-ops</a></div>
+        <div class="repo-desc">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, and batch processing.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">JavaScript</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 39,688</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/safishamsi/graphify" target="_blank">safishamsi/graphify</a></div>
+        <div class="repo-desc">Turns any folder of code, docs, papers, images, or videos into a queryable knowledge graph. Works across 20+ AI coding platforms.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 34,898</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/kyegomez/OpenMythos" target="_blank">kyegomez/OpenMythos</a></div>
+        <div class="repo-desc">Theoretical reconstruction of the Claude Mythos architecture from first principles using published research. The most serious open attempt at replicating Anthropic's internals.</div>
+        <div class="repo-meta"><span class="meta-tag meta-lang">Python</span></div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 10,433</div>
+    </li>
+  </ol>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine &middot; 2026-04-26</p>
+  </footer>
+</div>
+</body>
+</html>
