@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-04-27</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --gold: #f0c000;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+  .badge-7d { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .badge-30d { background: rgba(188,140,255,0.15); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+  .editor-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editor-take::before {
+    content: 'EDITOR\'S TAKE';
+    position: absolute;
+    top: -0.6rem;
+    left: 1.25rem;
+    background: var(--surface);
+    padding: 0 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+  .editor-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    transition: border-color 0.2s, transform 0.15s;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+  .repo-body { min-width: 0; }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .repo-meta span { display: flex; align-items: center; gap: 0.25rem; }
+  .star-count { color: var(--gold); font-weight: 600; }
+  .lang-dot {
+    width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+  }
+  .lang-python { background: #3572A5; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-typescript { background: #3178c6; }
+  .lang-go { background: #00ADD8; }
+  .lang-shell { background: #89e051; }
+  .lang-rust { background: #dea584; }
+  .repo-desc {
+    margin-top: 0.45rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .stars-badge {
+    background: rgba(240,192,0,0.1);
+    border: 1px solid rgba(240,192,0,0.25);
+    color: var(--gold);
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+    height: fit-content;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr auto; padding: 0.9rem 1rem; gap: 0 0.75rem; }
+    header h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-04-27 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <p>Memory is the new moat. Three of fifteen repos across both windows are persistent memory layers for agents, and the category leader &mdash; MemPalace &mdash; added another 3,600 stars since our last scan. Agent orchestration, meanwhile, is fragmenting fast: harmonist, wanman, and future-agi each propose incompatible runtimes with zero overlap in their protocol choices. The Claude Code skill ecosystem keeps compounding (caveman, oh-story-claudecode, career-ops, graphify), which means the real platform war is not models versus models but harnesses versus harnesses. The sleeper signal this week is domain-specific AI tooling outpacing generic wrappers &mdash; a text-to-CAD harness topped the 7-day chart, and a five-agent prediction-market bot cracked the top ten. If you are still shipping &ldquo;yet another LLM wrapper,&rdquo; the market has moved on.</p>
+  </div>
+
+  <div class="section-title">Top 10 &mdash; last 7 days <span class="badge badge-7d">7-day</span></div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/earthtojake/text-to-cad" target="_blank" rel="noopener">earthtojake/text-to-cad</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        </div>
+        <div class="repo-desc">Open-source harness for generating CAD models from text prompts. First serious open entry into AI-driven mechanical design, a domain locked behind proprietary tools until now.</div>
+      </div>
+      <div class="stars-badge">&#9733; 704</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/GammaLabTechnologies/harmonist" target="_blank" rel="noopener">GammaLabTechnologies/harmonist</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Agent orchestration with mechanical protocol enforcement. Ships 186 pre-built agents and zero runtime dependencies; the &ldquo;batteries included&rdquo; pitch for multi-agent systems.</div>
+      </div>
+      <div class="stars-badge">&#9733; 695</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/future-agi/future-agi" target="_blank" rel="noopener">future-agi/future-agi</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">End-to-end platform for evaluating, observing, and improving LLM and AI agent applications. Covers tracing, evals, simulations, datasets, gateway, and guardrails under Apache 2.0.</div>
+      </div>
+      <div class="stars-badge">&#9733; 557</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/tashfeenahmed/freellmapi" target="_blank" rel="noopener">tashfeenahmed/freellmapi</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">OpenAI-compatible proxy that aggregates free-tier keys from ~14 AI providers with automatic failover. Useful for prototyping; not production-grade by design.</div>
+      </div>
+      <div class="stars-badge">&#9733; 533</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/epoko77-ai/im-not-ai" target="_blank" rel="noopener">epoko77-ai/im-not-ai</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Rewrites AI-generated text to sound human-written. A sign that AI-detection evasion tooling is now its own micro-category.</div>
+      </div>
+      <div class="stars-badge">&#9733; 389</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/chekusu/wanman" target="_blank" rel="noopener">chekusu/wanman</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Agent matrix runtime inspired by Japanese one-man trains. Lets human users step back into an observer role while agents coordinate autonomous workflows.</div>
+      </div>
+      <div class="stars-badge">&#9733; 369</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/worldwonderer/oh-story-claudecode" target="_blank" rel="noopener">worldwonderer/oh-story-claudecode</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-shell"></span> Shell</span>
+        </div>
+        <div class="repo-desc">Web fiction writing skill pack for Claude Code covering plot analysis, chapter structuring, style transfer, and &ldquo;de-AI-ing&rdquo; prose. Niche, but signals skill packs going vertical.</div>
+      </div>
+      <div class="stars-badge">&#9733; 291</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/alash3al/stash" target="_blank" rel="noopener">alash3al/stash</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-go"></span> Go</span>
+        </div>
+        <div class="repo-desc">Persistent memory layer for AI agents: episodes, facts, and working context stored in Postgres. MCP server included, single binary, self-hosted.</div>
+      </div>
+      <div class="stars-badge">&#9733; 289</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/dezgit2025/auto-memory" target="_blank" rel="noopener">dezgit2025/auto-memory</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Progressive session recall CLI that gives AI coding agents persistent memory across sessions. Another entry in the &ldquo;agents should remember&rdquo; wave.</div>
+      </div>
+      <div class="stars-badge">&#9733; 235</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/muxprotocol/kalshi-trading-bot" target="_blank" rel="noopener">muxprotocol/kalshi-trading-bot</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Five-agent AI ensemble for Kalshi prediction markets. Runs analysis, sizes positions with fractional Kelly criterion, and executes orders in paper or live mode.</div>
+      </div>
+      <div class="stars-badge">&#9733; 221</div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Top 5 &mdash; last 30 days <span class="badge badge-30d">30-day</span></div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener">MemPalace/mempalace</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">The benchmark-topping open-source AI memory system. Still the reference implementation that every agent framework integrates against; growth has not slowed.</div>
+      </div>
+      <div class="stars-badge">&#9733; 49,857</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener">JuliusBrussee/caveman</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Claude Code skill that cuts 65% of tokens by rewriting prompts in pidgin. The joke works because it measurably saves money at scale.</div>
+      </div>
+      <div class="stars-badge">&#9733; 47,281</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/santifer/career-ops" target="_blank" rel="noopener">santifer/career-ops</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        </div>
+        <div class="repo-desc">AI-powered job search system built on Claude Code with 14 skill modes, a Go dashboard, PDF generation, and batch processing. The most complete &ldquo;AI for personal ops&rdquo; project this month.</div>
+      </div>
+      <div class="stars-badge">&#9733; 40,058</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Turn any folder of code, docs, papers, images, or videos into a queryable knowledge graph. Works with Claude Code, Codex, Cursor, and five other AI coding assistants.</div>
+      </div>
+      <div class="stars-badge">&#9733; 35,712</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a></div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <div class="repo-desc">Theoretical reconstruction of the Claude architecture from first principles using available research literature. Academic exercise, but the most-starred model-internals repo this cycle.</div>
+      </div>
+      <div class="stars-badge">&#9733; 10,693</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated 2026-04-27 UTC &middot; Trending GitHub Repos routine
+  </footer>
+</div>
+</body>
+</html>
