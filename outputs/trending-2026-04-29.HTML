@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-04-29</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --gold: #f0c674;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --red: #f85149;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .editor-take {
+    background: linear-gradient(135deg, #1f6feb11, #bc8cff11);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .editor-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+  }
+
+  .editor-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-7d {
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: 1px solid #1f6feb55;
+  }
+
+  .badge-30d {
+    background: #f0c67422;
+    color: var(--gold);
+    border: 1px solid #f0c67455;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 4px 24px #1f6feb18;
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+
+  .repo-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-info h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+  }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-go { background: #00ADD8; }
+  .lang-rust { background: #dea584; }
+
+  .stars-col {
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .stars-count {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+  }
+
+  .stars-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.1rem;
+  }
+
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 640px) {
+    .repo-card {
+      grid-template-columns: 1.5rem 1fr;
+      gap: 0.75rem;
+    }
+    .stars-col {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <p class="date">2026-04-29 UTC</p>
+  </header>
+
+  <section class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>
+      The AI-agent ecosystem is splitting into two clear layers: <strong>platforms</strong> and <strong>plumbing</strong>.
+      This week's breakout, <code>open-design</code>, proves that Claude Code's skill architecture is now a de facto standard &mdash;
+      projects ship as skills first, standalone tools second. Meanwhile the 30-day window tells a starker story: four of the top five
+      repos are either memory systems or token-economy hacks, which means the community has moved past "can I build an agent?" to
+      "can I afford to run one?" The most underrated signal is <code>future-agi</code> and <code>codeburn</code> converging on the
+      same problem from opposite ends &mdash; eval and cost observability are becoming table stakes, not afterthoughts.
+      If you are building agent infrastructure without a metering story, you are already behind.
+    </p>
+  </section>
+
+  <!-- 7-Day Section -->
+  <div class="section-header">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <span class="badge badge-7d">Apr 22 &ndash; 29</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/nexu-io/open-design" target="_blank" rel="noopener">nexu-io/open-design</a></h3>
+        <p class="repo-desc">Local-first, open-source alternative to Claude Design with 19 skills and 71 design systems. Runs across Claude Code, Codex, Cursor, and Gemini CLI. The first serious open competitor in AI-assisted design tooling.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+          <span class="meta-item">Created Apr 28</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">1,778</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/GammaLabTechnologies/harmonist" target="_blank" rel="noopener">GammaLabTechnologies/harmonist</a></h3>
+        <p class="repo-desc">Agent orchestration with mechanical protocol enforcement across 186 agents and zero runtime dependencies. Takes a batteries-excluded approach that contrasts sharply with heavier frameworks.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">844</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/future-agi/future-agi" target="_blank" rel="noopener">future-agi/future-agi</a></h3>
+        <p class="repo-desc">End-to-end platform for evaluating, observing, and improving LLM applications. Bundles tracing, evals, simulations, datasets, gateway, and guardrails in a self-hostable Apache 2.0 package.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">711</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/epoko77-ai/im-not-ai" target="_blank" rel="noopener">epoko77-ai/im-not-ai</a></h3>
+        <p class="repo-desc">Korean-language skill that rewrites AI-generated text to read as human-written. A niche but telling indicator of demand for AI-output humanization tools.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 24</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">596</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/alash3al/stash" target="_blank" rel="noopener">alash3al/stash</a></h3>
+        <p class="repo-desc">Persistent memory layer for AI agents storing episodes, facts, and working context in Postgres. Ships as a single Go binary with an MCP server included. No cloud required.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-go"></span> Go</span>
+          <span class="meta-item">Created Apr 24</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">523</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/levelsio/superlevels" target="_blank" rel="noopener">levelsio/superlevels</a></h3>
+        <p class="repo-desc">Open-source Chrome extension from Pieter Levels built as a safer, auditable alternative to closed-source browser extensions. Designed to be read and verified with AI before installing.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">427</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/TheTom/vllm-swift" target="_blank" rel="noopener">TheTom/vllm-swift</a></h3>
+        <p class="repo-desc">Metal plugin for vLLM powered by <code>mlx-swift</code>, bringing high-performance LLM inference to Apple Silicon. Bridges vLLM's server ecosystem with Mac hardware acceleration.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">227</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/sweriko/ai4anim-webgpu" target="_blank" rel="noopener">sweriko/ai4anim-webgpu</a></h3>
+        <p class="repo-desc">AI-driven animation running on WebGPU. Early-stage project representing a bet on browser-native neural rendering for real-time character animation.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+          <span class="meta-item">Created Apr 26</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">198</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/bubblesslayyer-cmd/Awesome-GPT-Image-2-OpenAi" target="_blank" rel="noopener">bubblesslayyer-cmd/Awesome-GPT-Image-2-OpenAi</a></h3>
+        <p class="repo-desc">Curated prompt vault for OpenAI's GPT Image 2 model. Optimised templates for pixel-perfect text rendering, consistent characters, and production-grade asset generation.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">162</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/baidu-baige/LoongForge" target="_blank" rel="noopener">baidu-baige/LoongForge</a></h3>
+        <p class="repo-desc">Baidu's modular training framework for language, multimodal, and embodied models. A rare open-source release from a Chinese hyperscaler covering VLM and VLA training in one system.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 23</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">151</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 30-Day Section -->
+  <div class="section-header">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <span class="badge badge-30d">Mar 30 &ndash; Apr 29</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener">MemPalace/mempalace</a></h3>
+        <p class="repo-desc">The month's runaway hit. Best-benchmarked open-source AI memory system, now the reference implementation that agent frameworks integrate against. Free, ChromaDB-backed, MCP-native.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 5</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">50,220</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener">JuliusBrussee/caveman</a></h3>
+        <p class="repo-desc">Claude Code skill that rewrites prompts in pidgin English to cut 65% of tokens. Started as a joke, persists because it measurably reduces cost. A meme that ships.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 4</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">49,398</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/santifer/career-ops" target="_blank" rel="noopener">santifer/career-ops</a></h3>
+        <p class="repo-desc">AI-powered job search system with 14 skill modes, a Go dashboard, PDF generation, and batch processing. The most polished vertical agent built on Claude Code so far.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+          <span class="meta-item">Created Apr 4</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">40,725</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a></h3>
+        <p class="repo-desc">Turns any folder of code, docs, papers, images, or videos into a queryable knowledge graph. Works across Claude Code, Codex, Cursor, Gemini CLI, and five other agent harnesses.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 3</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">37,447</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a></h3>
+        <p class="repo-desc">Theoretical reconstruction of Anthropic's Claude Mythos architecture from first principles and public research. The go-to reference for understanding looped transformer designs.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created Apr 18</span>
+        </div>
+      </div>
+      <div class="stars-col">
+        <span class="stars-count">11,059</span>
+        <span class="stars-label">stars</span>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Generated 2026-04-29 UTC by the Trending GitHub Repos routine.</p>
+  </footer>
+
+</div>
+</body>
+</html>
