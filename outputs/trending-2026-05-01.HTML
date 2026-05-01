@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-01</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header .date {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: "Editor's take";
+    position: absolute;
+    top: -0.65rem;
+    left: 1rem;
+    background: var(--surface);
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+  .editors-take p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title .badge {
+    font-size: 0.7rem;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .rank {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    padding-top: 0.1rem;
+  }
+  .repo-card .body {
+    min-width: 0;
+  }
+  .repo-card .name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .repo-card a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    word-break: break-all;
+  }
+  .repo-card a:hover { text-decoration: underline; }
+  .repo-card .lang {
+    font-size: 0.7rem;
+    background: #30363d;
+    color: var(--muted);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .repo-card .desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+    line-height: 1.5;
+  }
+  .stars {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: var(--orange);
+    font-weight: 600;
+    padding-top: 0.1rem;
+  }
+  .stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--orange);
+    vertical-align: -2px;
+    margin-right: 2px;
+  }
+  .monthly .repo-card { border-left: 3px solid var(--purple); }
+  .monthly .rank { color: var(--purple); }
+  .monthly .stars { color: var(--green); }
+  .monthly .stars svg { fill: var(--green); }
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr auto; padding: 0.85rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-05-01 UTC</div>
+  </header>
+
+  <div class="editors-take">
+    <p>AI tooling is fragmenting into verticals. Legal (Mike), medical education (MedKit), and mobile performance (compose-performance-skills) all surfaced in the same seven-day window &mdash; a sign the generic &ldquo;AI wrapper&rdquo; phase is closing. Agent observability is now tracking agent building blow-for-blow: Hermes Labyrinth shipped a read-only observability plugin while GodModeSkill introduced multi-model voting gates for code review. On the monthly chart, caveman crossed 50k stars on pure token-efficiency pragmatism, and the rise of club-3090 &mdash; community recipes for serving 27B-parameter models on consumer GPUs &mdash; confirms a quiet but steady local-inference movement running parallel to the API-first mainstream.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 <span class="badge">last 7 days</span></h2>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/willchen96/mike" target="_blank" rel="noopener">willchen96/mike</a>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="desc">Open-source AI legal platform. Handles contract review and case research; the first credible open entry in a space dominated by closed products.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>805</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/ka-pi-ba-la/AIbijia" target="_blank" rel="noopener">ka-pi-ba-la/AIbijia</a>
+        </div>
+        <div class="desc">Token price-comparison aggregator for LLM API providers. Useful if you are shopping inference costs across vendors.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>458</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/deepseek-ai/awesome-deepseek-agent" target="_blank" rel="noopener">deepseek-ai/awesome-deepseek-agent</a>
+        </div>
+        <div class="desc">Official curated list of agents, tools, and integrations for the DeepSeek model family. Signals a push to build ecosystem around their models.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>445</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/sandeco/reversa" target="_blank" rel="noopener">sandeco/reversa</a>
+          <span class="lang">JavaScript</span>
+        </div>
+        <div class="desc">Converts legacy codebases into executable specifications that AI coding agents can consume. Practical bridge between brownfield systems and agent-driven development.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>336</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/browser-use/bux" target="_blank" rel="noopener">browser-use/bux</a>
+          <span class="lang">Python</span>
+        </div>
+        <div class="desc">24/7 Claude Code agent with an integrated browser harness, deployable on any box you own. From the browser-use team that already owns the headless-browser-for-agents niche.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>282</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/stainlu/hermes-labyrinth" target="_blank" rel="noopener">stainlu/hermes-labyrinth</a>
+          <span class="lang">HTML</span>
+        </div>
+        <div class="desc">Read-only observability plugin for Hermes Agent covering journeys, crossings, and guideposts. Useful for debugging autonomous agent runs without touching production state.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>240</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/skydoves/compose-performance-skills" target="_blank" rel="noopener">skydoves/compose-performance-skills</a>
+          <span class="lang">Shell</span>
+        </div>
+        <div class="desc">Curated agent skills focused on Jetpack Compose performance: recomposition analysis, layout optimization, and Kotlin best practices baked into Claude Code workflows.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>222</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/noonghunna/club-3090" target="_blank" rel="noopener">noonghunna/club-3090</a>
+          <span class="lang">Shell</span>
+        </div>
+        <div class="desc">Community recipes for serving LLMs on RTX 3090 cards. Multi-engine support (vLLM, llama.cpp, SGLang) with Qwen3.6-27B configs for single and dual-GPU setups.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>219</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/sweriko/ai4anim-webgpu" target="_blank" rel="noopener">sweriko/ai4anim-webgpu</a>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="desc">AI-driven character animation running entirely in the browser via WebGPU. TypeScript implementation pushing real-time neural animation to the client side.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>214</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="body">
+        <div class="name-row">
+          <a href="https://github.com/99xAgency/GodModeSkill" target="_blank" rel="noopener">99xAgency/GodModeSkill</a>
+          <span class="lang">Shell</span>
+        </div>
+        <div class="desc">Multi-LLM cross-review workflow for Claude Code. The <code>/work</code> command orchestrates plan, implement, and bug-fix stages with three different model families voting on every gate.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>185</div>
+    </li>
+  </ol>
+
+  <div class="monthly">
+    <h2 class="section-title">Top 5 <span class="badge">last 30 days</span></h2>
+    <ol class="repo-list">
+      <li class="repo-card">
+        <div class="rank">1</div>
+        <div class="body">
+          <div class="name-row">
+            <a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener">JuliusBrussee/caveman</a>
+            <span class="lang">Python</span>
+          </div>
+          <div class="desc">Claude Code skill that rewrites prompts in pidgin to cut 65% of tokens. Grew from 31k to 51k stars in two weeks; the meme-that-works keeps compounding.</div>
+        </div>
+        <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>51,467</div>
+      </li>
+      <li class="repo-card">
+        <div class="rank">2</div>
+        <div class="body">
+          <div class="name-row">
+            <a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener">MemPalace/mempalace</a>
+            <span class="lang">Python</span>
+          </div>
+          <div class="desc">Best-benchmarked open-source AI memory system. Now the de-facto memory layer that agent frameworks integrate against.</div>
+        </div>
+        <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>50,553</div>
+      </li>
+      <li class="repo-card">
+        <div class="rank">3</div>
+        <div class="body">
+          <div class="name-row">
+            <a href="https://github.com/santifer/career-ops" target="_blank" rel="noopener">santifer/career-ops</a>
+            <span class="lang">JavaScript</span>
+          </div>
+          <div class="desc">AI-powered job search system built on Claude Code with 14 skill modes, a Go dashboard, PDF generation, and batch processing. The full-stack career agent.</div>
+        </div>
+        <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>41,333</div>
+      </li>
+      <li class="repo-card">
+        <div class="rank">4</div>
+        <div class="body">
+          <div class="name-row">
+            <a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a>
+            <span class="lang">Python</span>
+          </div>
+          <div class="desc">Turns any folder of code, docs, papers, images, or videos into a queryable knowledge graph. Works across Claude Code, Codex, Cursor, and Gemini CLI.</div>
+        </div>
+        <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>39,127</div>
+      </li>
+      <li class="repo-card">
+        <div class="rank">5</div>
+        <div class="body">
+          <div class="name-row">
+            <a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a>
+            <span class="lang">Python</span>
+          </div>
+          <div class="desc">Theoretical reconstruction of the Claude Mythos architecture from first principles and available research literature. Reference implementation in PyTorch and JAX.</div>
+        </div>
+        <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>11,273</div>
+      </li>
+    </ol>
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-05-01 UTC
+  </footer>
+</div>
+</body>
+</html>
