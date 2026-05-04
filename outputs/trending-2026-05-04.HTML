@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-04</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79b8ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --radius: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .editors-take {
+    background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(188,140,255,0.08));
+    border: 1px solid rgba(88,166,255,0.2);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .editors-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-week {
+    background: rgba(63,185,80,0.15);
+    color: var(--green);
+    border: 1px solid rgba(63,185,80,0.3);
+  }
+
+  .badge-month {
+    background: rgba(210,153,34,0.15);
+    color: var(--orange);
+    border: 1px solid rgba(210,153,34,0.3);
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: default;
+  }
+
+  .repo-card:hover {
+    border-color: rgba(88,166,255,0.4);
+    background: var(--surface-hover);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 1.5rem;
+    padding-top: 0.15rem;
+  }
+
+  .repo-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    word-break: break-word;
+  }
+
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .repo-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .star-icon { color: var(--orange); }
+  .lang-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .lang-typescript { background: #3178c6; }
+  .lang-python { background: #3572a5; }
+  .lang-shell { background: #89e051; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-rust { background: #dea584; }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    line-height: 1.55;
+  }
+
+  .stars-pill {
+    background: rgba(210,153,34,0.12);
+    border: 1px solid rgba(210,153,34,0.25);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--orange);
+    white-space: nowrap;
+    height: fit-content;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: rgba(88,166,255,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-top { flex-direction: column; gap: 0.5rem; }
+    .stars-pill { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-05-04 UTC</div>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The week's clearest signal: AI tooling has split into two distinct lanes. Lane one is infrastructure — memory systems, sandboxes, headless browsers — the plumbing that makes agents actually work in production. Lane two is the skills-and-design wave that treats coding agents as extensible platforms rather than chat interfaces. Five of the top seven 30-day repos are either agent infrastructure or agent design systems, not models. Meanwhile, the 7-day window shows practical verticals gaining traction: AI-powered legal platforms, AIOps incident response, and LLM serving recipes for consumer GPUs. The days of "wrapper around an API call" as a viable repo are over. The market now rewards repos that solve the last-mile problem — how to make agents reliable, observable, and domain-specific.</p>
+  </section>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterAll()">All</button>
+    <button class="filter-btn" onclick="filterByTag('infra')">Infrastructure</button>
+    <button class="filter-btn" onclick="filterByTag('agent')">Agents</button>
+    <button class="filter-btn" onclick="filterByTag('dev')">Dev Tools</button>
+    <button class="filter-btn" onclick="filterByTag('vertical')">Verticals</button>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 — Last 7 Days</h2>
+    <span class="badge badge-week">7d</span>
+  </div>
+
+  <div class="repo-list" id="weekly">
+
+    <div class="repo-card" data-tags="vertical agent">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/willchen96/mike" target="_blank" rel="noopener">willchen96/mike</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-04-29</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 1,717</div>
+      </div>
+      <div class="repo-desc">Open-source AI legal platform. Vertical AI is where defensible value lives, and legal is one of the hardest domains to get right. The star velocity here suggests real demand, not hype.</div>
+    </div>
+
+    <div class="repo-card" data-tags="dev">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/mattpocock/dictionary-of-ai-coding" target="_blank" rel="noopener">mattpocock/dictionary-of-ai-coding</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-05-01</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 858</div>
+      </div>
+      <div class="repo-desc">AI coding jargon explained in plain English. Matt Pocock (of TypeScript fame) bringing his educational style to the AI coding space. Useful reference as terminology fragments across tools.</div>
+    </div>
+
+    <div class="repo-card" data-tags="infra">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/noonghunna/club-3090" target="_blank" rel="noopener">noonghunna/club-3090</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-shell"></span> Shell</span>
+            <span>Created 2026-04-28</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 450</div>
+      </div>
+      <div class="repo-desc">Community recipes for serving LLMs on RTX 3090 cards using vLLM, llama.cpp, and SGLang. Currently shipping Qwen3.6-27B configs for single and dual cards. Practical infrastructure for the "run it yourself" crowd.</div>
+    </div>
+
+    <div class="repo-card" data-tags="agent vertical">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Tommy-yw/RunbookHermes" target="_blank" rel="noopener">Tommy-yw/RunbookHermes</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created 2026-05-01</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 360</div>
+      </div>
+      <div class="repo-desc">Hermes-native AIOps agent for evidence-driven incident response with approval-gated remediation and runbook learning. Targets the gap between "AI can diagnose" and "AI can safely fix."</div>
+    </div>
+
+    <div class="repo-card" data-tags="dev agent">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/skydoves/compose-performance-skills" target="_blank" rel="noopener">skydoves/compose-performance-skills</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-shell"></span> Shell</span>
+            <span>Created 2026-04-29</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 286</div>
+      </div>
+      <div class="repo-desc">Curated agent skills focused on Jetpack Compose performance from prolific Android library author skydoves. Shows the agent-skill pattern expanding into mobile-specific domains.</div>
+    </div>
+
+    <div class="repo-card" data-tags="infra agent">
+      <div class="repo-top">
+        <span class="repo-rank">#6</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/aattaran/deepclaude" target="_blank" rel="noopener">aattaran/deepclaude</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span>Created 2026-05-03</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 230</div>
+      </div>
+      <div class="repo-desc">Run Claude Code's autonomous agent loop with DeepSeek V4 Pro, OpenRouter, or any Anthropic-compatible backend. Same UX, 17x cheaper. The "bring your own model" pattern applied to agent loops.</div>
+    </div>
+
+    <div class="repo-card" data-tags="agent vertical">
+      <div class="repo-top">
+        <span class="repo-rank">#7</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/lukiIabs/trading-agents" target="_blank" rel="noopener">lukiIabs/trading-agents</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created 2026-05-01</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 212</div>
+      </div>
+      <div class="repo-desc">Multi-agent LLM framework for finance trading with sentiment analysis. Distinguishes itself with multi-agent orchestration rather than single-bot execution.</div>
+    </div>
+
+    <div class="repo-card" data-tags="infra agent">
+      <div class="repo-top">
+        <span class="repo-rank">#8</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/warpdot-dev/composio" target="_blank" rel="noopener">warpdot-dev/composio</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-05-01</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 206</div>
+      </div>
+      <div class="repo-desc">Multi-provider AI agent SDK supporting MCP, OAuth, and integrations across Anthropic, OpenAI, LangChain, LlamaIndex, and Vercel AI. A composable middleware layer for agent tooling.</div>
+    </div>
+
+    <div class="repo-card" data-tags="agent dev">
+      <div class="repo-top">
+        <span class="repo-rank">#9</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/99xAgency/GodModeSkill" target="_blank" rel="noopener">99xAgency/GodModeSkill</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-shell"></span> Shell</span>
+            <span>Created 2026-04-28</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 197</div>
+      </div>
+      <div class="repo-desc">Multi-LLM cross-review workflow for Claude Code. <code>/work</code> orchestrates plan/implement/bug-fix with three different model families voting on every gate. An opinionated take on ensemble coding.</div>
+    </div>
+
+    <div class="repo-card" data-tags="dev">
+      <div class="repo-top">
+        <span class="repo-rank">#10</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/mrslimslim/gpt-image-canvas" target="_blank" rel="noopener">mrslimslim/gpt-image-canvas</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-04-28</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 184</div>
+      </div>
+      <div class="repo-desc">Local professional AI canvas built with tldraw. Bridges the gap between prompt-based image generation and spatial design tools.</div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 — Last 30 Days</h2>
+    <span class="badge badge-month">30d</span>
+  </div>
+
+  <div class="repo-list" id="monthly">
+
+    <div class="repo-card" data-tags="infra agent">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener">MemPalace/mempalace</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created 2026-04-05</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 50,994</div>
+      </div>
+      <div class="repo-desc">The month's runaway hit. Best-benchmarked open-source AI memory system, now the reference implementation that agent frameworks integrate against. 50k stars in under a month signals that persistent memory was the missing piece everyone was waiting for.</div>
+    </div>
+
+    <div class="repo-card" data-tags="agent">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/garrytan/gbrain" target="_blank" rel="noopener">garrytan/gbrain</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-04-05</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 12,983</div>
+      </div>
+      <div class="repo-desc">Y Combinator president Garry Tan's opinionated OpenClaw/Hermes Agent brain. A curated agent configuration from someone with visibility into hundreds of AI startups. Worth reading for the architectural choices alone.</div>
+    </div>
+
+    <div class="repo-card" data-tags="dev">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/google-labs-code/design.md" target="_blank" rel="noopener">google-labs-code/design.md</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created 2026-04-10</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 11,415</div>
+      </div>
+      <div class="repo-desc">A format specification for describing visual identity to coding agents. DESIGN.md gives agents a persistent, structured understanding of a design system. From Google Labs — the kind of standard that could quietly become ubiquitous.</div>
+    </div>
+
+    <div class="repo-card" data-tags="infra agent">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener">browser-use/browser-harness</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created 2026-04-17</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 10,061</div>
+      </div>
+      <div class="repo-desc">Self-healing harness that enables LLMs to complete any browser-based task. From the browser-use team. Solves the brittleness problem that has plagued every prior browser automation agent.</div>
+    </div>
+
+    <div class="repo-card" data-tags="infra">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener">h4ckf0r0day/obscura</a></div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-rust"></span> Rust</span>
+            <span>Created 2026-04-13</span>
+          </div>
+        </div>
+        <div class="stars-pill"><span class="star-icon">&#9733;</span> 9,901</div>
+      </div>
+      <div class="repo-desc">Headless browser built specifically for AI agents and web scraping. Written in Rust for performance. The infrastructure layer that agent frameworks need but rarely build themselves.</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-05-04 UTC
+  </footer>
+
+</div>
+
+<script>
+  function filterByTag(tag) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.repo-card').forEach(card => {
+      const tags = card.dataset.tags || '';
+      card.style.display = tags.includes(tag) ? '' : 'none';
+    });
+  }
+
+  function filterAll() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.repo-card').forEach(card => {
+      card.style.display = '';
+    });
+  }
+</script>
+</body>
+</html>
