@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-05</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-subtle: #1f6feb22;
+  --star: #e3b341;
+  --badge-7d: #238636;
+  --badge-30d: #6e40c9;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 2rem 1rem;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+header .date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.editors-take {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.editors-take h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.editors-take p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+.section-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  color: #fff;
+}
+.badge-7d { background: var(--badge-7d); }
+.badge-30d { background: var(--badge-30d); }
+.repo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.repo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: border-color 0.15s;
+}
+.repo-card:hover {
+  border-color: var(--accent);
+}
+.repo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.repo-card-header .rank {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 1.5rem;
+}
+.repo-card-header a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.repo-card-header a:hover {
+  text-decoration: underline;
+}
+.stars {
+  color: var(--star);
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.repo-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.lang-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  margin-top: 0.5rem;
+}
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  body { padding: 1rem 0.75rem; }
+  .repo-card-header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <span class="date">2026-05-05 UTC</span>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The AI tooling market is forking into two clear camps: those building agents that do things (legal, trading, security, ops) and those building the scaffolding to run agents cheaper or evaluate them better. This week's standout, <strong>deepclaude</strong>, bets that the expensive part of Claude Code is the model, not the loop — and wraps the agent harness around a 17x cheaper backend. Meanwhile, vertical agents like <strong>mike</strong> (law) and <strong>RunbookHermes</strong> (incident response) are proving that domain-specific agents outperform generalists when the workflow is well-scoped. The 30-day window tells the same story at scale: <strong>OpenMythos</strong> and <strong>obscura</strong> exist because people want to rebuild the infrastructure, not rent it.</p>
+  </section>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 Days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#1</span>
+        <a href="https://github.com/willchen96/mike" target="_blank" rel="noopener">willchen96/mike</a>
+        <span class="stars">&#9733; 2,041</span>
+      </div>
+      <p>Open-source AI legal platform; the first credible attempt at replacing paralegal workflows with an agent that reasons over case law.</p>
+      <span class="lang-tag">TypeScript</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#2</span>
+        <a href="https://github.com/aattaran/deepclaude" target="_blank" rel="noopener">aattaran/deepclaude</a>
+        <span class="stars">&#9733; 1,076</span>
+      </div>
+      <p>Drops DeepSeek V4 Pro or any Anthropic-compatible backend into Claude Code's agent loop for 17x lower cost; same UX, radically different economics.</p>
+      <span class="lang-tag">JavaScript</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#3</span>
+        <a href="https://github.com/mattpocock/dictionary-of-ai-coding" target="_blank" rel="noopener">mattpocock/dictionary-of-ai-coding</a>
+        <span class="stars">&#9733; 981</span>
+      </div>
+      <p>AI coding jargon explained in plain English; fills the glossary gap for teams onboarding to agent-assisted development.</p>
+      <span class="lang-tag">TypeScript</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#4</span>
+        <a href="https://github.com/Tommy-yw/RunbookHermes" target="_blank" rel="noopener">Tommy-yw/RunbookHermes</a>
+        <span class="stars">&#9733; 505</span>
+      </div>
+      <p>Hermes-native AIOps agent for evidence-driven incident response with approval-gated remediation and runbook learning.</p>
+      <span class="lang-tag">Python</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#5</span>
+        <a href="https://github.com/tddworks/baguette" target="_blank" rel="noopener">tddworks/baguette</a>
+        <span class="stars">&#9733; 503</span>
+      </div>
+      <p>Headless iOS Simulator farm with host-side input injection for iOS 26; the missing piece for mobile agent testing at scale.</p>
+      <span class="lang-tag">Swift</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#6</span>
+        <a href="https://github.com/vercel-labs/deepsec" target="_blank" rel="noopener">vercel-labs/deepsec</a>
+        <span class="stars">&#9733; 377</span>
+      </div>
+      <p>Security harness that uses coding agents to find vulnerabilities in your codebase; red-team automation from Vercel's research arm.</p>
+      <span class="lang-tag">TypeScript</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#7</span>
+        <a href="https://github.com/skydoves/compose-performance-skills" target="_blank" rel="noopener">skydoves/compose-performance-skills</a>
+        <span class="stars">&#9733; 300</span>
+      </div>
+      <p>Curated Agent Skills for Jetpack Compose performance; practical example of the skills-as-distribution pattern for Android.</p>
+      <span class="lang-tag">Shell / Kotlin</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#8</span>
+        <a href="https://github.com/raiyanyahya/how-to-train-your-gpt" target="_blank" rel="noopener">raiyanyahya/how-to-train-your-gpt</a>
+        <span class="stars">&#9733; 274</span>
+      </div>
+      <p>Build a modern LLM from scratch in PyTorch with every line commented; the best new from-zero educational resource this week.</p>
+      <span class="lang-tag">Python / PyTorch</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#9</span>
+        <a href="https://github.com/StartupHakk/OpenMonoAgent.ai" target="_blank" rel="noopener">StartupHakk/OpenMonoAgent.ai</a>
+        <span class="stars">&#9733; 231</span>
+      </div>
+      <p>Terminal-native coding agent powered entirely by local LLMs; unlimited tokens, single-command install, built on C#/.NET.</p>
+      <span class="lang-tag">C#</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#10</span>
+        <a href="https://github.com/nateherkai/AIS-OS" target="_blank" rel="noopener">nateherkai/AIS-OS</a>
+        <span class="stars">&#9733; 217</span>
+      </div>
+      <p>AI Operating System starter kit for Claude Code with a three-skill kit and 3M-context workflow; opinionated but ships fast.</p>
+      <span class="lang-tag">Markdown</span>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 Days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#1</span>
+        <a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a>
+        <span class="stars">&#9733; 11,697</span>
+      </div>
+      <p>Theoretical reconstruction of the Claude Mythos architecture from first principles; research-quality reference implementation in PyTorch.</p>
+      <span class="lang-tag">Python</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#2</span>
+        <a href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener">h4ckf0r0day/obscura</a>
+        <span class="stars">&#9733; 10,128</span>
+      </div>
+      <p>Headless browser purpose-built for AI agents and web scraping; Rust-native, fast, and the de facto choice for agent browsing infra.</p>
+      <span class="lang-tag">Rust</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#3</span>
+        <a href="https://github.com/KKKKhazix/khazix-skills" target="_blank" rel="noopener">KKKKhazix/khazix-skills</a>
+        <span class="stars">&#9733; 7,986</span>
+      </div>
+      <p>Massive AI Skills collection from KhaZix; practical, battle-tested skills you can drop into any compatible agent runtime.</p>
+      <span class="lang-tag">Python</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#4</span>
+        <a href="https://github.com/yizhiyanhua-ai/fireworks-tech-graph" target="_blank" rel="noopener">yizhiyanhua-ai/fireworks-tech-graph</a>
+        <span class="stars">&#9733; 5,433</span>
+      </div>
+      <p>Generate production-quality SVG and PNG technical diagrams from natural language; supports 7 styles and UML.</p>
+      <span class="lang-tag">Python</span>
+    </li>
+    <li class="repo-card">
+      <div class="repo-card-header">
+        <span class="rank">#5</span>
+        <a href="https://github.com/getagentseal/codeburn" target="_blank" rel="noopener">getagentseal/codeburn</a>
+        <span class="stars">&#9733; 5,345</span>
+      </div>
+      <p>Interactive TUI dashboard showing where your AI coding tokens go across Claude Code, Codex, and Cursor; cost visibility for agentic workflows.</p>
+      <span class="lang-tag">TypeScript</span>
+    </li>
+  </ol>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-05-05 UTC
+  </footer>
+</div>
+</body>
+</html>
