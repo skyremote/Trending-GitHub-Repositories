@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-05-07</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-glow: rgba(88, 166, 255, 0.15);
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --red: #f85149;
+    --gold: #f0c000;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+  header .date {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .editors-take {
+    background: linear-gradient(135deg, var(--accent-glow), rgba(188, 140, 255, 0.08));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: "EDITOR'S TAKE";
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+  .section-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .badge-7d { background: rgba(63, 185, 80, 0.15); color: var(--green); border: 1px solid rgba(63, 185, 80, 0.3); }
+  .badge-30d { background: rgba(188, 140, 255, 0.15); color: var(--purple); border: 1px solid rgba(188, 140, 255, 0.3); }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 1.5rem;
+    line-height: 1.5;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-name a {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .star-count {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-rust { background: #dea584; }
+  .lang-jupyter { background: #DA5B0B; }
+  .lang-cpp { background: #f34b7d; }
+  .lang-na { background: var(--text-muted); }
+  .repo-desc {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .repo-why {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--border);
+  }
+  .stars-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 0.6rem;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .stars-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.5rem; }
+    .repo-top { flex-direction: column; gap: 0.5rem; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-05-07 UTC &middot; Weekly Brief</div>
+  </header>
+
+  <div class="editors-take">
+    <p>The AI open-source ecosystem this week is splitting into two clear lanes. One lane is about making AI <strong>understandable</strong>&mdash;from Matt Pocock's plain-English dictionary of AI coding terms to a line-by-line GPT build tutorial that crossed 590 stars in four days. The other lane is about making AI agents <strong>operational</strong>: headless browsers built for agent scraping, sandboxes designed for concurrent agent execution, and LLM pipelines that audit smart contracts through multi-role chain-of-thought reasoning.</p>
+    <p style="margin-top:0.75rem;">The most telling signal: cost observability for AI coding tools (<code style="color:var(--accent);background:rgba(88,166,255,0.1);padding:0.1em 0.4em;border-radius:4px;">codeburn</code>) hit 5,600 stars in under a month. Developers are done pretending token spend doesn't matter. Meanwhile, Cloudflare shipping an agentic email client on Workers and Tencent open-sourcing a Rust-based agent sandbox suggest the infrastructure layer for autonomous agents is maturing fast. The projects gaining real traction solve the boring problems&mdash;cost, security, sandboxing&mdash;not the flashy demos.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">15</div>
+      <div class="stat-label">Repos Tracked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">48.7K</div>
+      <div class="stat-label">Combined Stars</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">7</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">Python</div>
+      <div class="stat-label">Top Language</div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRepos('all')">All</button>
+    <button class="filter-btn" onclick="filterRepos('7d')">Last 7 Days</button>
+    <button class="filter-btn" onclick="filterRepos('30d')">Last 30 Days</button>
+    <button class="filter-btn" onclick="filterRepos('python')">Python</button>
+    <button class="filter-btn" onclick="filterRepos('typescript')">TypeScript</button>
+    <button class="filter-btn" onclick="filterRepos('rust')">Rust</button>
+  </div>
+
+  <!-- 7-DAY SECTION -->
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="section-badge badge-7d">Last 7 Days</span>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="typescript">
+    <div class="repo-top">
+      <span class="repo-rank">#1</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/mattpocock/dictionary-of-ai-coding" target="_blank" rel="noopener">mattpocock/dictionary-of-ai-coding</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 1,160</span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+          <span class="meta-item">Created May 1</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">AI coding jargon, explained in plain English. A reference glossary for developers entering the AI-assisted coding space.</div>
+    <div class="repo-why">Fills a real gap. Most AI coding docs assume you already know the vocabulary. This is the on-ramp.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:100%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#2</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/raiyanyahya/how-to-train-your-gpt" target="_blank" rel="noopener">raiyanyahya/how-to-train-your-gpt</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 591</span>
+          <span class="meta-item"><span class="lang-dot lang-jupyter"></span> Jupyter Notebook</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 3</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Build a modern LLM from scratch. Every line commented. Explained like we're five. Covers tokenization, attention mechanisms, and training loops in PyTorch.</div>
+    <div class="repo-why">Educational repos rarely get this kind of traction this fast. The demand for first-principles LLM understanding is clearly unmet.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:51%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#3</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/yaojingang/yao-open-prompts" target="_blank" rel="noopener">yaojingang/yao-open-prompts</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 540</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created May 6</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Chinese-language AI prompt library covering work, study, content creation, marketing, and daily life scenarios. Structured and categorized for practical use.</div>
+    <div class="repo-why">The Chinese-language AI tooling ecosystem is producing its own high-quality prompt engineering resources, independent of English-first collections.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:47%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="other">
+    <div class="repo-top">
+      <span class="repo-rank">#4</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/jherrodthomas/robotics-skills-suite" target="_blank" rel="noopener">jherrodthomas/robotics-skills-suite</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 514</span>
+          <span class="meta-item"><span class="lang-dot lang-na"></span> Multi</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 3</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">76 audit-ready Claude skills automating industrial robot, cobot, AMR, ROS2, V&amp;V, AI/ML, and IEC 62443 lifecycle. Organized as 38 builder-reviewer pairs.</div>
+    <div class="repo-why">AI meeting industrial compliance&mdash;not a toy demo but a structured approach to robotics safety documentation and verification.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:44%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#5</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/lightseekorg/tokenspeed" target="_blank" rel="noopener">lightseekorg/tokenspeed</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 349</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 6</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">A speed-of-light LLM inference engine. Targets Blackwell GPUs and supports DeepSeek, Qwen, Kimi, and MiniMax architectures.</div>
+    <div class="repo-why">Inference speed is the bottleneck for real-time agent applications. A dedicated engine optimized for the latest hardware signals where the performance frontier is moving.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:30%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#6</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/joshawome/chainreason" target="_blank" rel="noopener">joshawome/chainreason</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 251</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 4</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">A benchmark for evaluating LLM reasoning on Ethereum and DeFi tasks. Tests whether models can reliably reason about smart contract logic, transaction flows, and protocol mechanics.</div>
+    <div class="repo-why">LLMs are increasingly used in crypto/DeFi tooling. This benchmark provides a structured way to measure whether that trust is warranted.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:22%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#7</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/butthtio/solidity-cot-auditor" target="_blank" rel="noopener">butthtio/solidity-cot-auditor</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 239</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">Created May 4</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Multi-role chain-of-thought LLM pipeline for Solidity security auditing, layered on top of Slither output. Multiple LLM "roles" review the same contract from different angles.</div>
+    <div class="repo-why">Combining static analysis with multi-perspective LLM review is a pragmatic architecture for AI-assisted security auditing.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:21%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="javascript">
+    <div class="repo-top">
+      <span class="repo-rank">#8</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/thcp/stemdeck" target="_blank" rel="noopener">thcp/stemdeck</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 216</span>
+          <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+          <span class="meta-item">Apache-2.0</span>
+          <span class="meta-item">Created May 3</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">AI-powered stem extraction platform for musicians and producers. Isolates vocals, drums, bass, and instruments for remixing and production workflows.</div>
+    <div class="repo-why">A clean application of audio ML models to a well-defined creative workflow. Practical AI for music production, not research.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:19%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#9</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/jmerelnyc/Photo-agents" target="_blank" rel="noopener">jmerelnyc/Photo-agents</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 184</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 4</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Autonomous self-evolving agents with vision-grounded layered memory and self-written skills. Agents operate your computer using photographic memory of what they see on screen.</div>
+    <div class="repo-why">Vision-grounded agent memory is a harder problem than text memory. This repo tackles it directly with a layered architecture.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:16%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="7d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#10</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/NirDiamant/Agent_Memory_Techniques" target="_blank" rel="noopener">NirDiamant/Agent_Memory_Techniques</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 114</span>
+          <span class="meta-item"><span class="lang-dot lang-jupyter"></span> Jupyter Notebook</span>
+          <span class="meta-item">Apache-2.0</span>
+          <span class="meta-item">Created May 5</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">30 runnable Jupyter notebooks covering conversation buffers, vector stores, knowledge graphs, episodic and semantic memory for LLM agents.</div>
+    <div class="repo-why">Hands-on notebooks covering the full spectrum of agent memory architectures, not just RAG. From a well-known AI educator.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:10%"></div></div>
+  </div>
+
+  <!-- 30-DAY SECTION -->
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="section-badge badge-30d">Last 30 Days</span>
+  </div>
+
+  <div class="repo-card" data-period="30d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#1</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 12,125</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created Apr 18</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">A theoretical reconstruction of the Claude Mythos architecture, built from first principles using available research literature. Attempts to reverse-engineer Anthropic's internal model architecture.</div>
+    <div class="repo-why">12K stars in three weeks is exceptional. The appetite for understanding what's inside frontier models is enormous, even when the reconstruction is theoretical.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:100%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="30d" data-lang="rust">
+    <div class="repo-top">
+      <span class="repo-rank">#2</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener">h4ckf0r0day/obscura</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 10,696</span>
+          <span class="meta-item"><span class="lang-dot lang-rust"></span> Rust</span>
+          <span class="meta-item">Apache-2.0</span>
+          <span class="meta-item">Created Apr 13</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">A headless browser purpose-built for AI agents and web scraping. Designed for the specific access patterns agents need: structured data extraction, form interaction, and navigation without rendering overhead.</div>
+    <div class="repo-why">Agents need browsers. General-purpose headless browsers weren't built for agent workloads. This fills that gap with a Rust implementation optimized for throughput.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:88%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="30d" data-lang="typescript">
+    <div class="repo-top">
+      <span class="repo-rank">#3</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/getagentseal/codeburn" target="_blank" rel="noopener">getagentseal/codeburn</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 5,651</span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created Apr 13</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Interactive TUI dashboard showing where your AI coding tokens go. Supports Claude Code, Codex, and Cursor. Tracks cost, token volume, and usage patterns across sessions.</div>
+    <div class="repo-why">A cost tracking tool for AI coding hit 5,600 stars. Developers want visibility into their AI spend.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:47%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="30d" data-lang="python">
+    <div class="repo-top">
+      <span class="repo-rank">#4</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/yizhiyanhua-ai/fireworks-tech-graph" target="_blank" rel="noopener">yizhiyanhua-ai/fireworks-tech-graph</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 5,615</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created Apr 10</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Generate production-quality SVG and PNG technical diagrams from natural language. Supports 7 styles, UML, and AI/Agent workflow patterns.</div>
+    <div class="repo-why">Documentation is the perennial bottleneck. Natural-language-to-diagram with production output quality is immediately useful for any engineering team.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:46%"></div></div>
+  </div>
+
+  <div class="repo-card" data-period="30d" data-lang="rust">
+    <div class="repo-top">
+      <span class="repo-rank">#5</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/TencentCloud/CubeSandbox" target="_blank" rel="noopener">TencentCloud/CubeSandbox</a></div>
+        <div class="repo-meta">
+          <span class="meta-item star-count">&#9733; 5,097</span>
+          <span class="meta-item"><span class="lang-dot lang-rust"></span> Rust</span>
+          <span class="meta-item">Created Apr 10</span>
+        </div>
+      </div>
+    </div>
+    <div class="repo-desc">Instant, concurrent, secure, and lightweight sandbox for AI agents. From Tencent Cloud. Designed for running untrusted agent-generated code safely at scale.</div>
+    <div class="repo-why">Agent sandboxing is critical infrastructure. A major cloud provider open-sourcing their solution sets a baseline for the industry.</div>
+    <div class="stars-bar"><div class="stars-bar-fill" style="width:42%"></div></div>
+  </div>
+
+  <footer>
+    All repos verified via GitHub API on 2026-05-07 UTC. Star counts are point-in-time.
+  </footer>
+</div>
+
+<script>
+function filterRepos(filter) {
+  const cards = document.querySelectorAll('.repo-card');
+  const btns = document.querySelectorAll('.filter-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    const period = card.getAttribute('data-period');
+    const lang = card.getAttribute('data-lang');
+    if (filter === 'all') {
+      card.style.display = '';
+    } else if (filter === '7d' || filter === '30d') {
+      card.style.display = period === filter ? '' : 'none';
+    } else {
+      card.style.display = lang === filter ? '' : 'none';
+    }
+  });
+
+  document.querySelectorAll('.section-header').forEach(h => {
+    if (filter === 'all') { h.style.display = ''; return; }
+    if (filter === '7d') { h.style.display = h.querySelector('.badge-7d') ? '' : 'none'; return; }
+    if (filter === '30d') { h.style.display = h.querySelector('.badge-30d') ? '' : 'none'; return; }
+    h.style.display = '';
+  });
+}
+</script>
+</body>
+</html>
