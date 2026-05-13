@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-13</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --star: #e3b341;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 12px 12px 0 0;
+  }
+
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+  }
+
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .editors-take p:last-child { margin-bottom: 0; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-header .badge {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .repo-list { list-style: none; margin-bottom: 2.5rem; }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s, transform 0.15s;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--star); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+
+  .repo-info { min-width: 0; }
+
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-dot.python { background: #3572A5; }
+  .lang-dot.javascript { background: #f1e05a; }
+  .lang-dot.typescript { background: #3178c6; }
+  .lang-dot.swift { background: #F05138; }
+  .lang-dot.java { background: #b07219; }
+  .lang-dot.cpp { background: #f34b7d; }
+  .lang-dot.shell { background: #89e051; }
+  .lang-dot.css { background: #563d7c; }
+  .lang-dot.other { background: var(--text-muted); }
+
+  .star-count {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .star-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.5rem; }
+    .repo-card {
+      grid-template-columns: 1.75rem 1fr;
+      gap: 0.75rem;
+    }
+    .star-count {
+      grid-column: 2;
+      justify-self: start;
+      padding-top: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-05-13 UTC</div>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>Two distinct currents this week. In the 7-day window, 3DCellForge pulled 1,725 stars in three days by applying generative AI to scientific 3D cell visualization &mdash; a reminder that the highest-growth pockets are often outside the usual chatbot and coding-assistant categories. The agent ecosystem is consolidating around Hermes: three of the top ten new repos build tooling specifically for that framework. DeepSeek V4 Pro's desktop client appeared within a day of the model's announcement, confirming that open-weight model communities now ship consumer wrappers at near-real-time speed.</p>
+    <p>In the 30-day window, GPT-Image-2 prompt libraries dominate &mdash; three separate repos collectively hold 25,000+ stars. But the real story is OpenMythos at 12,500 stars: a from-scratch theoretical reconstruction of Claude's architecture that has attracted serious research attention. Browser Harness from the browser-use team at 12,340 stars confirms browser automation for agents has graduated from demo to infrastructure.</p>
+    <p>The thread connecting both windows: the community is spending less time building new models and more time building surfaces, workflows, and evaluation rigs for existing ones. We are firmly in the application layer.</p>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Last 7 Days</h2>
+      <span class="line"></span>
+      <span class="badge">May 6 &ndash; 13</span>
+    </div>
+    <ol class="repo-list">
+
+      <li class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/huangserva/3DCellForge" target="_blank" rel="noopener">huangserva/3DCellForge</a></div>
+          <div class="repo-desc">AI-powered interactive 3D cell generation and exploration studio. Lets researchers create, mutate, and inspect synthetic cell structures in the browser. The biotech crossover the trending page rarely sees.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot javascript"></span>JavaScript</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,725</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/nickvasilescu/hermes-desktop-os1" target="_blank" rel="noopener">nickvasilescu/hermes-desktop-os1</a></div>
+          <div class="repo-desc">Native macOS workspace for the Hermes Agent on Orgo cloud computers and SSH hosts. SwiftUI front-end with session persistence and terminal integration.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot swift"></span>Swift</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>393</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/ChristianJR19/Goblin-Agent" target="_blank" rel="noopener">ChristianJR19/Goblin-Agent</a></div>
+          <div class="repo-desc">Lightweight agentic framework with composable tool registries and streaming execution. Designed for rapid prototyping of multi-step agent pipelines.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot python"></span>Python</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>356</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/iam567/LifeManga" target="_blank" rel="noopener">iam567/LifeManga</a></div>
+          <div class="repo-desc">iOS app that turns photos into manga-style panels using OpenAI's GPT-Image model. Full SwiftUI pipeline from camera capture to styled output.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot swift"></span>Swift</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>326</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/zoyluoblue/mc_aiplayer" target="_blank" rel="noopener">zoyluoblue/mc_aiplayer</a></div>
+          <div class="repo-desc">AI-driven Minecraft agent that observes, reasons, and acts inside live game worlds. Demonstrates embodied-agent patterns in a familiar sandbox.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot java"></span>Java</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>261</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">6</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/kerlos/pordee" target="_blank" rel="noopener">kerlos/pordee</a></div>
+          <div class="repo-desc">Concise AI-powered Q&amp;A assistant built for the Thai-language market. Short answers, fast inference, minimal UI.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot javascript"></span>JavaScript</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>251</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">7</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yaassin12/DeepSeek-V4-Pro-App" target="_blank" rel="noopener">yaassin12/DeepSeek-V4-Pro-App</a></div>
+          <div class="repo-desc">Desktop client for DeepSeek V4 Pro. Surfaces the 1.6T MoE model's 1M-token context, Think Mode, and Engram memory through a low-latency streaming interface.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot cpp"></span>C++</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>238</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">8</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Salomondiei08/oh-my-hermes" target="_blank" rel="noopener">Salomondiei08/oh-my-hermes</a></div>
+          <div class="repo-desc">Opinionated workflow layer for building, shipping, and operating apps with Hermes Agent. Templates, deployment scripts, and a convention-over-configuration setup.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot shell"></span>Shell</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>230</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">9</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Sayhi-bzb/AIEden" target="_blank" rel="noopener">Sayhi-bzb/AIEden</a></div>
+          <div class="repo-desc">An LLM-native virtual world and civilization simulator. Agents negotiate, build, and evolve within a persistent environment &mdash; part research sandbox, part interactive fiction.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot typescript"></span>TypeScript</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>197</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">10</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/LYiHub/OpenClaw-AWD-Arena" target="_blank" rel="noopener">LYiHub/OpenClaw-AWD-Arena</a></div>
+          <div class="repo-desc">Automated attack-with-defense platform where LLM-powered agents compete in real-time. Built for security research and red-team evaluation.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot python"></span>Python</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>168</div>
+      </li>
+
+    </ol>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Last 30 Days</h2>
+      <span class="line"></span>
+      <span class="badge">Apr 13 &ndash; May 13</span>
+    </div>
+    <ol class="repo-list">
+
+      <li class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts" target="_blank" rel="noopener">EvoLinkAI/awesome-gpt-image-2-API-and-Prompts</a></div>
+          <div class="repo-desc">The canonical GPT-Image-2 API reference. Curated prompts, parameter guides, and code examples that became the default starting point for image generation developers.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot python"></span>Python</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>14,083</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a></div>
+          <div class="repo-desc">Theoretical reconstruction of the Claude Mythos architecture built from first principles using published research. Open-weights, reproducible, and already spawning derivative work.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot python"></span>Python</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>12,509</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener">browser-use/browser-harness</a></div>
+          <div class="repo-desc">Self-healing browser automation harness that enables LLMs to complete any web task. Graduated from the browser-use team's earlier demo into production-grade infrastructure.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot python"></span>Python</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>12,340</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/OpenCoworkAI/open-codesign" target="_blank" rel="noopener">OpenCoworkAI/open-codesign</a></div>
+          <div class="repo-desc">Open-source alternative to Claude Design. Prompt to prototype, slides, or PDF. Multi-model support across Claude, GPT, Gemini, Kimi, GLM, and Ollama. BYOK, local-first, MIT licensed.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot typescript"></span>TypeScript</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>5,747</div>
+      </li>
+
+      <li class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/cosmicstack-labs/mercury-agent" target="_blank" rel="noopener">cosmicstack-labs/mercury-agent</a></div>
+          <div class="repo-desc">Permission-hardened AI agent with token budgets and multi-channel access across CLI and Telegram. Soul-driven personality layer makes it opinionated by design. Runs 24/7.</div>
+          <div class="repo-meta"><span class="lang-tag"><span class="lang-dot typescript"></span>TypeScript</span></div>
+        </div>
+        <div class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>2,143</div>
+      </li>
+
+    </ol>
+  </section>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-05-13 UTC
+  </footer>
+
+</div>
+</body>
+</html>
