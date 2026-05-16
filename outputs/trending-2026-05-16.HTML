@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-05-16</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --gold: #f0c040;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f78166;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: "Editor's Take";
+    display: block;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .badge-hot { background: #da3633; color: #fff; }
+  .badge-30d { background: #1f6feb; color: #fff; }
+  .badge-mention { background: #30363d; color: var(--text-muted); }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.15s, transform 0.15s;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+
+  .repo-info { min-width: 0; }
+
+  .repo-name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 0.35rem;
+    line-height: 1.5;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .meta-item .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .star-count {
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 0.1rem;
+  }
+
+  .star-count .number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .star-count .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+  }
+
+  .mention-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .mention-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.15s;
+  }
+
+  .mention-card:hover { border-color: var(--accent); }
+
+  .mention-left { min-width: 0; }
+
+  .mention-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .mention-name a:hover { text-decoration: underline; }
+
+  .mention-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mention-stars {
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .lang-js { background: #f1e05a; }
+  .lang-html { background: #e34c26; }
+  .lang-py { background: #3572A5; }
+  .lang-ts { background: #3178c6; }
+  .lang-swift { background: #F05138; }
+  .lang-rust { background: #dea584; }
+  .lang-c { background: #555555; }
+  .lang-csharp { background: #178600; }
+
+  @media (max-width: 640px) {
+    .container { padding: 1.25rem 1rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr auto; gap: 0.75rem; padding: 1rem; }
+    .mention-card { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-05-16 &middot; Weekly Briefing</div>
+  </header>
+
+  <div class="editors-take">
+    <p>The AI agent ecosystem is consolidating around a clear pattern: specialized skills plugged into general-purpose hosts. This week's standouts &mdash; <strong>html-anything</strong>, <strong>agentara/skills</strong>, <strong>journal-adapt-writing-skill</strong> &mdash; all ship as composable modules rather than monolithic apps. Meanwhile, <strong>OpenMythos</strong> crossing 12k stars in under a month signals that the community wants to reverse-engineer frontier model architectures in the open, not just consume their APIs. The most under-appreciated trend is AI tooling arriving in domains that never asked for it: graph overlays for Postgres (<strong>pgGraph</strong>), CAD pipelines (<strong>text-to-cad</strong>), and IoT firmware agents (<strong>esp-claw</strong>). Infrastructure is eating the agent stack.</p>
+  </div>
+
+  <!-- 7-Day Section -->
+  <div class="section-header">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <span class="badge badge-hot">HOT</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/huangserva/3DCellForge" target="_blank" rel="noopener">huangserva/3DCellForge</a></div>
+        <div class="repo-desc">AI-powered interactive 3D model generation, inspection, and presentation studio.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-js"></span> JavaScript</span>
+          <span class="meta-item">347 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">2,065</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></div>
+        <div class="repo-desc">Agentic HTML editor with 75 skills across 9 surfaces. Sandboxed preview, one-click export to WeChat, X, and Zhihu. Zero API key required.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-html"></span> HTML / Next.js</span>
+          <span class="meta-item">238 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">2,063</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/simonlin1212/a-stock-data" target="_blank" rel="noopener">simonlin1212/a-stock-data</a></div>
+        <div class="repo-desc">China A-share full-stack data toolkit. Six-layer architecture, 15 endpoints, 7 data sources. Built as an AI skill.</div>
+        <div class="repo-meta">
+          <span class="meta-item">216 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">895</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/WantongC/journal-adapt-writing-skill" target="_blank" rel="noopener">WantongC/journal-adapt-writing-skill</a></div>
+        <div class="repo-desc">Learns a journal's writing conventions from published papers, then revises your manuscript to match &mdash; section by section.</div>
+        <div class="repo-meta">
+          <span class="meta-item">16 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">257</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/agentara/skills" target="_blank" rel="noopener">agentara/skills</a></div>
+        <div class="repo-desc">Curated library of original, practical skills for AI agent builders.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-html"></span> HTML</span>
+          <span class="meta-item">8 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">234</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/simonlin1212/TradingAgents-astock" target="_blank" rel="noopener">simonlin1212/TradingAgents-astock</a></div>
+        <div class="repo-desc">Multi-agent investment research framework for A-shares. Seven AI analysts run bull/bear debates with risk assessment.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-py"></span> Python</span>
+          <span class="meta-item">61 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">201</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/virgo777/buddyme" target="_blank" rel="noopener">virgo777/buddyme</a></div>
+        <div class="repo-desc">Lightweight agent framework with layered personality evolution, three-tier skill loading, and heartbeat memory system.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-py"></span> Python</span>
+          <span class="meta-item">6 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">183</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/himomohi/AirTranslate" target="_blank" rel="noopener">himomohi/AirTranslate</a></div>
+        <div class="repo-desc">AI-powered translation app for macOS.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-swift"></span> Swift</span>
+          <span class="meta-item">18 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">149</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Evokoa/pgGraph" target="_blank" rel="noopener">Evokoa/pgGraph</a></div>
+        <div class="repo-desc">Graph database superpowers for existing Postgres data. Adds traversal and relationship queries as a PostgreSQL extension.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-rust"></span> Rust</span>
+          <span class="meta-item">11 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">146</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Callous-0923/agent-study" target="_blank" rel="noopener">Callous-0923/agent-study</a></div>
+        <div class="repo-desc">28-chapter AI Agent full-stack course: ReAct loops, Claude Code internals, MCP/A2A protocols, RAG, DSPy, and production observability.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-html"></span> HTML / Python</span>
+          <span class="meta-item">8 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">144</span><span class="label">stars</span></div>
+    </div>
+
+  </div>
+
+  <!-- 30-Day Section -->
+  <div class="section-header">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <span class="badge badge-30d">30D</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/kyegomez/OpenMythos" target="_blank" rel="noopener">kyegomez/OpenMythos</a></div>
+        <div class="repo-desc">Theoretical reconstruction of the Claude Mythos architecture from first principles using available research literature.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-py"></span> Python</span>
+          <span class="meta-item">2,955 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">12,994</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/op7418/guizang-ppt-skill" target="_blank" rel="noopener">op7418/guizang-ppt-skill</a></div>
+        <div class="repo-desc">AI-agent skill for generating polished HTML slide decks. Magazine and Swiss layouts, image prompts, social covers, and a WebGL presentation runtime.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-html"></span> HTML</span>
+          <span class="meta-item">735 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">9,016</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/crynta/terax-ai" target="_blank" rel="noopener">crynta/terax-ai</a></div>
+        <div class="repo-desc">Lightweight (7 MB) AI terminal emulator built on Rust, Tauri, and React. Cross-platform.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-ts"></span> TypeScript</span>
+          <span class="meta-item">304 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">3,038</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/esengine/DeepSeek-Reasonix" target="_blank" rel="noopener">esengine/DeepSeek-Reasonix</a></div>
+        <div class="repo-desc">DeepSeek-native coding agent for the terminal. Engineered around prefix-cache stability for long-running sessions.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-ts"></span> TypeScript</span>
+          <span class="meta-item">166 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">3,018</span><span class="label">stars</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/earthtojake/text-to-cad" target="_blank" rel="noopener">earthtojake/text-to-cad</a></div>
+        <div class="repo-desc">Collection of agent skills for CAD, robotics, and hardware design. Supports STEP, STL, URDF, and 15+ formats.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-js"></span> JavaScript</span>
+          <span class="meta-item">343 forks</span>
+        </div>
+      </div>
+      <div class="star-count"><span class="number">2,865</span><span class="label">stars</span></div>
+    </div>
+
+  </div>
+
+  <!-- Honorable Mentions -->
+  <div class="section-header">
+    <h2>Honorable Mentions</h2>
+    <span class="badge badge-mention">30D</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="mention-list">
+    <div class="mention-card">
+      <div class="mention-left">
+        <div class="mention-name"><a href="https://github.com/strukto-ai/mirage" target="_blank" rel="noopener">strukto-ai/mirage</a></div>
+        <div class="mention-desc">Unified virtual filesystem for AI agents. TypeScript.</div>
+      </div>
+      <div class="mention-stars">2,287</div>
+    </div>
+    <div class="mention-card">
+      <div class="mention-left">
+        <div class="mention-name"><a href="https://github.com/cosmicstack-labs/mercury-agent" target="_blank" rel="noopener">cosmicstack-labs/mercury-agent</a></div>
+        <div class="mention-desc">Soul-driven AI agent with permission-hardened tools and token budgets. Runs 24/7 from CLI or Telegram.</div>
+      </div>
+      <div class="mention-stars">2,210</div>
+    </div>
+    <div class="mention-card">
+      <div class="mention-left">
+        <div class="mention-name"><a href="https://github.com/GammaLabTechnologies/harmonist" target="_blank" rel="noopener">GammaLabTechnologies/harmonist</a></div>
+        <div class="mention-desc">Portable AI agent orchestration with mechanical protocol enforcement. 186 agents, zero runtime dependencies.</div>
+      </div>
+      <div class="mention-stars">1,699</div>
+    </div>
+    <div class="mention-card">
+      <div class="mention-left">
+        <div class="mention-name"><a href="https://github.com/mattpocock/dictionary-of-ai-coding" target="_blank" rel="noopener">mattpocock/dictionary-of-ai-coding</a></div>
+        <div class="mention-desc">AI coding jargon explained in plain English.</div>
+      </div>
+      <div class="mention-stars">1,619</div>
+    </div>
+    <div class="mention-card">
+      <div class="mention-left">
+        <div class="mention-name"><a href="https://github.com/Open-Less/openless" target="_blank" rel="noopener">Open-Less/openless</a></div>
+        <div class="mention-desc">Hold a key, speak, release &mdash; AI-polished text appears at your cursor. Open-source voice input for macOS and Windows.</div>
+      </div>
+      <div class="mention-stars">1,349</div>
+    </div>
+  </div>
+
+  <footer>
+    Data sourced from the GitHub Search API on 2026-05-16.<br>
+    Repos ranked by star count at time of query. "Last 7 days" = created after 2026-05-09; "Last 30 days" = created after 2026-04-16.
+  </footer>
+
+</div>
+</body>
+</html>
