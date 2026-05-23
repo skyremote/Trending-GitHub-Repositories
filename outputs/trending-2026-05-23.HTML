@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-23</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --star: #e3b341;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--purple));
+    border-radius: 8px 0 0 8px;
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .badge-week {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+    border: 1px solid rgba(63, 185, 80, 0.3);
+  }
+  .badge-month {
+    background: rgba(188, 140, 255, 0.15);
+    color: var(--purple);
+    border: 1px solid rgba(188, 140, 255, 0.3);
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.15s;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--star); }
+  .repo-card:nth-child(2) .rank { color: var(--text-muted); }
+  .repo-card:nth-child(3) .rank { color: var(--orange); }
+  .repo-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-info h3 a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-info .description {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .repo-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .star-count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    padding-top: 0.1rem;
+    white-space: nowrap;
+  }
+  .star-count .stars {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--star);
+  }
+  .star-count .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .lang-js { background: #f1e05a; }
+  .lang-html { background: #e34c26; }
+  .lang-py { background: #3572a5; }
+  .lang-ts { background: #3178c6; }
+  .lang-rust { background: #dea584; }
+  .lang-go { background: #00add8; }
+  .lang-css { background: #563d7c; }
+  .lang-cs { background: #178600; }
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 640px) {
+    .container { padding: 1rem; }
+    .repo-card {
+      grid-template-columns: 1.75rem 1fr;
+      gap: 0.75rem;
+    }
+    .star-count {
+      grid-column: 2;
+      flex-direction: row;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    header h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-05-23 &middot; Weekly intelligence brief</div>
+  </header>
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The dominant theme this week is the maturation of AI coding agents as a category unto themselves. Three of the top 10 weekly repos are tools that exist solely to manage, monitor, or extend other AI agents &mdash; Lucarne for mobile control, codex-shim for model routing, and ai-fomo-skills for taming the firehose of agent output. Meanwhile, the 30-day window shows the community&rsquo;s attention shifting from building models to building <em>around</em> them: prompt libraries (awesome-gpt-image-2), virtual filesystems (mirage), and full vertical platforms (mike for legal). The standout is smallcode&rsquo;s claim of 87% benchmark performance from a 4B-active parameter model, which, if reproducible, suggests the minimum viable agent is shrinking fast. Security-focused agents (audit, AiSOC) are also gaining traction &mdash; a sign that the industry is starting to take agent safety seriously rather than treating it as an afterthought.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <span class="badge badge-week">May 16 &ndash; 23</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Doorman11991/smallcode" target="_blank" rel="noopener">Doorman11991/smallcode</a></h3>
+        <div class="description">AI coding agent optimized for small LLMs; claims 87% benchmark with a 4B-active parameter model. Worth watching for the efficiency angle.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-js"></span> JavaScript</span>
+          <span>88 forks</span>
+          <span>Created May 18</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">1,238</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/datawhalechina/Agent-Learning-Hub" target="_blank" rel="noopener">datawhalechina/Agent-Learning-Hub</a></h3>
+        <div class="description">Curated AI Agent learning roadmap and resource collection from Datawhale; structured path from fundamentals to multi-agent systems.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-html"></span> HTML</span>
+          <span>118 forks</span>
+          <span>Created May 17</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">1,110</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/LiuMengxuan04/shushu-internship-tool" target="_blank" rel="noopener">LiuMengxuan04/shushu-internship-tool</a></h3>
+        <div class="description">AI pipeline that converts job descriptions into portfolio projects, then into resumes, then into interview prep. Practical vertical application.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-py"></span> Python</span>
+          <span>18 forks</span>
+          <span>Created May 17</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">442</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/evilsocket/audit" target="_blank" rel="noopener">evilsocket/audit</a></h3>
+        <div class="description">Eight-stage automated vulnerability-discovery agent from the creator of bettercap. Structured approach to agentic security testing.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-py"></span> Python</span>
+          <span>60 forks</span>
+          <span>Created May 18</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">436</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/basketikun/infinite-canvas" target="_blank" rel="noopener">basketikun/infinite-canvas</a></h3>
+        <div class="description">Open-source infinite canvas workspace for AI creation: image generation, reference editing, prompt library, and chat assistant in one surface.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+          <span>81 forks</span>
+          <span>Created May 18</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">423</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/paradigmxyz/centaur" target="_blank" rel="noopener">paradigmxyz/centaur</a></h3>
+        <div class="description">Multiplayer, self-hosted, secure agent framework from Paradigm. Designed for teams running agents in shared environments.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-py"></span> Python</span>
+          <span>43 forks</span>
+          <span>Created May 18</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">388</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/0xSero/codex-shim" target="_blank" rel="noopener">0xSero/codex-shim</a></h3>
+        <div class="description">Local Responses-API shim that routes BYOK models (and optional GPT-5.5 passthrough) to Codex Desktop. Solves vendor lock-in for agent IDEs.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-py"></span> Python</span>
+          <span>23 forks</span>
+          <span>Created May 22</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">241</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/MoonshotAI/kimi-code" target="_blank" rel="noopener">MoonshotAI/kimi-code</a></h3>
+        <div class="description">Coding agent from Moonshot AI (makers of Kimi). Early but signals another major lab entering the terminal-agent space.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+          <span>4 forks</span>
+          <span>Created May 22</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">168</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/vincelele/ai-fomo-skills" target="_blank" rel="noopener">vincelele/ai-fomo-skills</a></h3>
+        <div class="description">Skills for converting AI information overload into reusable knowledge, signals, and digests. Meta-tooling for staying current.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-py"></span> Python</span>
+          <span>0 forks</span>
+          <span>Created May 19</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">122</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/tuchg/Lucarne" target="_blank" rel="noopener">tuchg/Lucarne</a></h3>
+        <div class="description">Zero-intrusion mobile control for local AI agents via Telegram and WeChat. Sync, approve, and resume Claude/Codex sessions from your phone.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-rust"></span> Rust</span>
+          <span>5 forks</span>
+          <span>Created May 17</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">118</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <span class="badge badge-month">Apr 23 &ndash; May 23</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/freestylefly/awesome-gpt-image-2" target="_blank" rel="noopener">freestylefly/awesome-gpt-image-2</a></h3>
+        <div class="description">GPT-Image2 prompt engineering engine: 370+ reverse-engineered examples, 20+ industrial-grade templates, and a reusable skill system.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-js"></span> JavaScript</span>
+          <span>786 forks</span>
+          <span>Created Apr 25</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">5,875</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></h3>
+        <div class="description">Agentic HTML editor where your local AI agent writes the HTML and you ship it. 75 skills across 9 surface types including magazines, decks, and data reports.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-html"></span> HTML</span>
+          <span>479 forks</span>
+          <span>Created May 11</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">4,616</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/willchen96/mike" target="_blank" rel="noopener">willchen96/mike</a></h3>
+        <div class="description">Open-source AI-powered legal platform. The first credible OSS entry in AI legal tooling to cross 3k stars.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+          <span>1,048 forks</span>
+          <span>Created Apr 29</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">3,417</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/strukto-ai/mirage" target="_blank" rel="noopener">strukto-ai/mirage</a></h3>
+        <div class="description">Unified virtual filesystem for AI agents. Abstracts file access so agents can work across local, cloud, and sandboxed environments.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+          <span>175 forks</span>
+          <span>Created May 6</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">2,562</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/huangserva/3DCellForge" target="_blank" rel="noopener">huangserva/3DCellForge</a></h3>
+        <div class="description">AI-powered interactive 3D model generation, inspection, and presentation studio. Bridges the gap between text prompts and 3D asset pipelines.</div>
+        <div class="repo-meta">
+          <span><span class="lang-dot lang-js"></span> JavaScript</span>
+          <span>383 forks</span>
+          <span>Created May 10</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <span class="stars">2,304</span>
+        <span class="label">stars</span>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine &middot; 2026-05-23 UTC</p>
+  </footer>
+</div>
+</body>
+</html>
