@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-24</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --badge-bg: #1f2937;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header {
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: "EDITOR'S TAKE";
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-header .window-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--orange);
+    background: rgba(210, 153, 34, 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    transition: border-color 0.15s;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .rank {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+  .repo-info { min-width: 0; }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 0.3rem;
+    line-height: 1.55;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--text-muted);
+  }
+  .badge.lang { color: var(--purple); background: rgba(188, 140, 255, 0.1); }
+  .badge.license { color: var(--green); background: rgba(63, 185, 80, 0.1); }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--orange);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+  .stars svg { width: 16px; height: 16px; fill: var(--orange); }
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr auto; padding: 1rem; }
+    header h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-05-24 UTC</div>
+  </header>
+
+  <div class="editors-take">
+    <p>The agent infrastructure layer is solidifying fast. This week's signal: the market has moved past "build an agent" into "build <em>for</em> agents." Four of the top five 30-day repos are not agents themselves but surfaces, filesystems, languages, and design tools purpose-built for agents to operate inside. Meanwhile, the 7-day window shows two clear currents &mdash; security tooling for agents (evilsocket's <code>audit</code>, paradigmxyz's <code>centaur</code>) and efficiency plays that make small or cheap models viable (Doorman11991's <code>smallcode</code> hitting 87% on a 4B model). The unsexy-but-important story is observability: <code>ccglass</code> lets you watch what your coding agent actually sends to the model, a sign that the "trust but verify" phase of agent adoption is underway.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="line"></span>
+    <span class="window-badge">7 DAYS</span>
+  </div>
+
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Doorman11991/smallcode" target="_blank" rel="noopener">Doorman11991/smallcode</a></div>
+        <div class="repo-desc">AI coding agent optimized for small LLMs. Hits 87% on standard benchmarks with a 4B-active-parameter model.</div>
+        <div class="repo-meta">
+          <span class="badge lang">JavaScript</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>1,329</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/lynote-ai/humanize-text" target="_blank" rel="noopener">lynote-ai/humanize-text</a></div>
+        <div class="repo-desc">Open-source AI text humanizer that rewrites LLM output to read more naturally. Ships Dify/n8n integrations and a free web tool.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>567</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/basketikun/infinite-canvas" target="_blank" rel="noopener">basketikun/infinite-canvas</a></div>
+        <div class="repo-desc">Open-source infinite-canvas workstation for AI image creation. Integrates generation, reference editing, layout, chat assistant, and prompt library.</div>
+        <div class="repo-meta">
+          <span class="badge lang">TypeScript</span>
+          <span class="badge license">AGPL-3.0</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>454</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/evilsocket/audit" target="_blank" rel="noopener">evilsocket/audit</a></div>
+        <div class="repo-desc">An 8-stage vulnerability-discovery agent that chains recon through exploit validation. From the author of bettercap.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>448</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/paradigmxyz/centaur" target="_blank" rel="noopener">paradigmxyz/centaur</a></div>
+        <div class="repo-desc">Multiplayer, self-hosted, secure agent runtime from the Paradigm crypto research lab.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>436</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/0xSero/codex-shim" target="_blank" rel="noopener">0xSero/codex-shim</a></div>
+        <div class="repo-desc">Local Responses-API shim that lets Codex Desktop talk to any BYOK model provider, including optional ChatGPT GPT-5.5 passthrough.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>388</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/jianshuo/ccglass" target="_blank" rel="noopener">jianshuo/ccglass</a></div>
+        <div class="repo-desc">Local proxy + web dashboard that shows exactly what your coding agent (Claude Code, Codex, Kimi) sends to the model.</div>
+        <div class="repo-meta">
+          <span class="badge lang">JavaScript</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>171</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/wanshuiyin/ARIS-in-AI-Offer" target="_blank" rel="noopener">wanshuiyin/ARIS-in-AI-Offer</a></div>
+        <div class="repo-desc">Bilingual ML/LLM/multimodal interview cheat sheets rendered as single-file HTML. Covers diffusion, flow matching, MoE, RLHF, and more.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>86</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Patdolitse/piia-engram" target="_blank" rel="noopener">Patdolitse/piia-engram</a></div>
+        <div class="repo-desc">Local-first, MCP-compatible memory layer. One memory store shared across every AI tool, no cloud required.</div>
+        <div class="repo-meta">
+          <span class="badge lang">Python</span>
+          <span class="badge license">Apache 2.0</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>84</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/leosssvip-dot/remotion-ad-video-skill" target="_blank" rel="noopener">leosssvip-dot/remotion-ad-video-skill</a></div>
+        <div class="repo-desc">Claude Code / Codex skill that generates Remotion ad-video projects from a URL. No video-generation AI needed.</div>
+        <div class="repo-meta">
+          <span class="badge lang">JavaScript</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>76</div>
+    </li>
+
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="line"></span>
+    <span class="window-badge">30 DAYS</span>
+  </div>
+
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/freestylefly/awesome-gpt-image-2" target="_blank" rel="noopener">freestylefly/awesome-gpt-image-2</a></div>
+        <div class="repo-desc">Industrial-grade prompt engine and template library for GPT-Image2 with 370+ reverse-engineered examples and 20+ production templates.</div>
+        <div class="repo-meta">
+          <span class="badge lang">JavaScript</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>6,148</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></div>
+        <div class="repo-desc">Agentic HTML editor: 75 skills across 9 surface types (magazine, deck, poster, prototype, data report). Zero API key &mdash; works with Claude Code, Cursor, Codex, Gemini.</div>
+        <div class="repo-meta">
+          <span class="badge lang">HTML</span>
+          <span class="badge license">Apache 2.0</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>4,708</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/vercel-labs/zerolang" target="_blank" rel="noopener">vercel-labs/zerolang</a></div>
+        <div class="repo-desc">A programming language designed from scratch for agents. From Vercel Labs.</div>
+        <div class="repo-meta">
+          <span class="badge lang">C</span>
+          <span class="badge license">Apache 2.0</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>4,415</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/1weiho/open-slide" target="_blank" rel="noopener">1weiho/open-slide</a></div>
+        <div class="repo-desc">A slide framework purpose-built for agents to create and manipulate presentations.</div>
+        <div class="repo-meta">
+          <span class="badge lang">TypeScript</span>
+          <span class="badge license">MIT</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>3,600</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/willchen96/mike" target="_blank" rel="noopener">willchen96/mike</a></div>
+        <div class="repo-desc">Open-source AI legal platform.</div>
+        <div class="repo-meta">
+          <span class="badge lang">TypeScript</span>
+          <span class="badge license">AGPL-3.0</span>
+        </div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>3,457</div>
+    </li>
+
+  </ol>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine &middot; 2026-05-24 UTC</p>
+  </footer>
+</div>
+</body>
+</html>
