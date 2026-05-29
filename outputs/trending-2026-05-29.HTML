@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-05-29</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --star: #e3b341;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #d29922;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { margin-bottom: 2.5rem; }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editor-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .editor-take strong { color: var(--text); }
+  .editor-take .label {
+    display: inline-block;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .section-header .badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .badge-7d { background: #1f6feb33; color: var(--accent); }
+  .badge-30d { background: #8b5cf633; color: var(--purple); }
+  .badge-hm { background: #d2992233; color: var(--orange); }
+  .repo-list { list-style: none; margin-bottom: 2.5rem; }
+  .repo-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.15s;
+  }
+  .repo-item:hover { border-color: var(--accent); }
+  .repo-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .repo-rank {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 1.75rem;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+  }
+  .stars {
+    color: var(--star);
+    font-weight: 600;
+  }
+  .lang {
+    color: var(--text-muted);
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    padding-left: 1.75rem;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .repo-top { flex-direction: column; align-items: flex-start; }
+    .repo-desc { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <span class="date">2026-05-29 UTC</span>
+</header>
+
+<div class="editor-take">
+  <span class="label">Editor's Take</span>
+  <p>
+    The agent-infrastructure stack is crystallizing into distinct layers this week.
+    At the bottom, new runtimes and filesystems (<strong>zerolang</strong>, <strong>mirage</strong>) define how agents interact with code and files.
+    In the middle, skill optimizers and memory-native runtimes (<strong>SkillOpt</strong>, <strong>opensquilla</strong>) compete on token efficiency.
+    At the top, a wave of "how it works" repos and structured courses signal that practitioners have moved past "use an agent" to "understand and customize the agent loop."
+    The 7-day window is dominated by Claude Code ecosystem projects &mdash; skills, harnesses, and architecture teardowns &mdash; suggesting the skill-as-distribution-unit pattern is gaining real traction.
+    Meanwhile, Vercel shipped both a language and a security scanner for agents in the same month, a bet that agents need purpose-built tooling, not bolted-on linters.
+  </p>
+</div>
+
+<!-- ===== 7-DAY ===== -->
+<div class="section-header">
+  <h2>Top 10 &mdash; Last 7 Days</h2>
+  <span class="badge badge-7d">May 22 &ndash; 29</span>
+</div>
+
+<ol class="repo-list">
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/study8677/awesome-architecture" target="_blank" rel="noopener">study8677/awesome-architecture</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 745</span>
+        <span class="lang">Vue</span>
+      </div>
+    </div>
+    <div class="repo-desc">21 architecture reference maps covering AI gateway, RAG pipelines, agent orchestration, and inference serving patterns.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/UditAkhourii/adhd" target="_blank" rel="noopener">UditAkhourii/adhd</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 477</span>
+        <span class="lang">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Tree-of-thought skill for coding agents built on the Claude Agent SDK. Fans out parallel divergent reasoning paths, then prunes.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/FlashML-org/flashlib" target="_blank" rel="noopener">FlashML-org/flashlib</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 372</span>
+        <span class="lang">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Fast, memory-efficient classical ML operators. Fills the gap when you need traditional algorithms without pulling in all of scikit-learn.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/withkynam/vibecode-pro-max-kit" target="_blank" rel="noopener">withkynam/vibecode-pro-max-kit</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 332</span>
+        <span class="lang">JavaScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Spec-driven coding harness that persists project context across agent sessions. Designed for vibecoders who lose state between runs.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/bryanyzhu/agentic-ai-system-course" target="_blank" rel="noopener">bryanyzhu/agentic-ai-system-course</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 287</span>
+        <span class="lang">JavaScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Skeleton course on designing, building, and operating production AI agents. Uses an agent to teach agent concepts.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#6</span>
+        <span class="repo-name"><a href="https://github.com/realrossmanngroup/no_ai_slop_writing_rules" target="_blank" rel="noopener">realrossmanngroup/no_ai_slop_writing_rules</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 254</span>
+        <span class="lang">&mdash;</span>
+      </div>
+    </div>
+    <div class="repo-desc">CLAUDE.md and skills that force Claude Code to write in Louis Rossmann's voice. A working example of persona-constrained agent output.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#7</span>
+        <span class="repo-name"><a href="https://github.com/veryyoldman/Genspark-AI" target="_blank" rel="noopener">veryyoldman/Genspark-AI</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 230</span>
+        <span class="lang">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Self-hosted super agent with multi-agent orchestration and deep research. Open alternative to Genspark.ai.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#8</span>
+        <span class="repo-name"><a href="https://github.com/bandyah/uni-mm-trainer" target="_blank" rel="noopener">bandyah/uni-mm-trainer</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 205</span>
+        <span class="lang">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Small library for training multimodal LLMs that combine text, vision, and audio in a single pipeline.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#9</span>
+        <span class="repo-name"><a href="https://github.com/cellinlab/how-pi-agent-works" target="_blank" rel="noopener">cellinlab/how-pi-agent-works</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 186</span>
+        <span class="lang">&mdash;</span>
+      </div>
+    </div>
+    <div class="repo-desc">Deep architecture walkthrough of Pi Agent's internals and implementation details.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#10</span>
+        <span class="repo-name"><a href="https://github.com/nv-tlabs/Gamma-World" target="_blank" rel="noopener">nv-tlabs/Gamma-World</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 169</span>
+        <span class="lang">&mdash;</span>
+      </div>
+    </div>
+    <div class="repo-desc">NVIDIA research: generative multi-agent world modeling beyond two-player setups. Targets robotics and game simulation.</div>
+  </li>
+</ol>
+
+<!-- ===== 30-DAY ===== -->
+<div class="section-header">
+  <h2>Top 5 &mdash; Last 30 Days</h2>
+  <span class="badge badge-30d">Apr 29 &ndash; May 29</span>
+</div>
+
+<ol class="repo-list">
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,314</span>
+        <span class="lang">HTML</span>
+      </div>
+    </div>
+    <div class="repo-desc">Agentic HTML editor: a local AI agent writes the HTML across 9 surface types (magazine, deck, dashboard, etc.), you ship it. 75 built-in skills.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/vercel-labs/zerolang" target="_blank" rel="noopener">vercel-labs/zerolang</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 4,668</span>
+        <span class="lang">C</span>
+      </div>
+    </div>
+    <div class="repo-desc">A programming language designed from the ground up for agents. Vercel's bet that agents need their own execution semantics.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/vercel-labs/deepsec" target="_blank" rel="noopener">vercel-labs/deepsec</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,958</span>
+        <span class="lang">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Security harness that uses coding agents to find vulnerabilities in your codebase. Agent-powered pen testing.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/strukto-ai/mirage" target="_blank" rel="noopener">strukto-ai/mirage</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,766</span>
+        <span class="lang">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Unified virtual filesystem for AI agents. Sandboxed file operations so agents can read, write, and execute without touching your real FS.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/simonlin1212/a-stock-data" target="_blank" rel="noopener">simonlin1212/a-stock-data</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,722</span>
+        <span class="lang">&mdash;</span>
+      </div>
+    </div>
+    <div class="repo-desc">Full-stack China A-Share data toolkit: 7-layer architecture, 28 endpoints, 13 data sources, zero dependencies. Built for AI coding assistants.</div>
+  </li>
+</ol>
+
+<!-- ===== HONORABLE MENTIONS ===== -->
+<div class="section-header">
+  <h2>Honorable Mentions</h2>
+  <span class="badge badge-hm">30-Day Window</span>
+</div>
+
+<ol class="repo-list">
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-name"><a href="https://github.com/microsoft/SkillOpt" target="_blank" rel="noopener">microsoft/SkillOpt</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,230</span>
+        <span class="lang">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Text-space optimizer training reusable natural-language skills for frozen LLM agents.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-name"><a href="https://github.com/raiyanyahya/how-to-train-your-gpt" target="_blank" rel="noopener">raiyanyahya/how-to-train-your-gpt</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,131</span>
+        <span class="lang">Jupyter Notebook</span>
+      </div>
+    </div>
+    <div class="repo-desc">Build a modern LLM from scratch, every line commented. Explained like we are five.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-name"><a href="https://github.com/opensquilla/opensquilla" target="_blank" rel="noopener">opensquilla/opensquilla</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,084</span>
+        <span class="lang">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Token-efficient AI agent: same budget, higher intelligence density.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-name"><a href="https://github.com/aattaran/deepclaude" target="_blank" rel="noopener">aattaran/deepclaude</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,990</span>
+        <span class="lang">JavaScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Run Claude Code's agent loop with DeepSeek V4 Pro or any Anthropic-compatible backend.</div>
+  </li>
+
+  <li class="repo-item">
+    <div class="repo-top">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="repo-name"><a href="https://github.com/microsoft/AI-Engineering-Coach" target="_blank" rel="noopener">microsoft/AI-Engineering-Coach</a></span>
+      </div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,633</span>
+        <span class="lang">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Microsoft's agentic engineering coaching tool.</div>
+  </li>
+</ol>
+
+<footer>
+  Data: GitHub Search API, sorted by stars, filtered for AI relevance. Spam and piracy repos excluded.<br>
+  Generated 2026-05-29 UTC.
+</footer>
+
+</div>
+</body>
+</html>
