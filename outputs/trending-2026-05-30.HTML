@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-05-30</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --card-hover: #1c2333;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, #161b22 0%, #1a1f2e 50%, #161b22 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    margin: 2rem 0 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  .nav-tab {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin: 1.5rem 0 2rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: "EDITOR'S TAKE";
+    position: absolute;
+    top: -0.65rem;
+    left: 1.2rem;
+    background: var(--surface);
+    padding: 0 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--purple);
+  }
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title .badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .badge-7d {
+    background: rgba(63,185,80,0.15);
+    color: var(--green);
+    border: 1px solid rgba(63,185,80,0.3);
+  }
+  .badge-30d {
+    background: rgba(210,153,34,0.15);
+    color: var(--orange);
+    border: 1px solid rgba(210,153,34,0.3);
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 0.75rem;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .repo-card:hover {
+    background: var(--card-hover);
+    border-color: #40464f;
+  }
+  .repo-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 2rem;
+    opacity: 0.5;
+  }
+  .repo-info { flex: 1; min-width: 200px; }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .repo-meta span { display: flex; align-items: center; gap: 0.3rem; }
+  .star-icon { color: var(--orange); }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .lang-ts { background: #3178c6; }
+  .lang-js { background: #f1e05a; }
+  .lang-py { background: #3572A5; }
+  .lang-html { background: #e34c26; }
+  .lang-rs { background: #dea584; }
+  .lang-jnb { background: #DA5B0B; }
+  .lang-none { background: var(--text-muted); }
+  .repo-desc {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .repo-why {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--border);
+    font-style: italic;
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .search-box {
+    margin: 1.5rem 0 0;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 0.65rem 1rem 0.65rem 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box input:focus { border-color: var(--accent); }
+  .search-box .search-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .stats-bar {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    padding: 0.8rem 1rem;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .stats-bar strong { color: var(--text); }
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.4rem; }
+    .container { padding: 0 1rem 2rem; }
+    .nav-tab { padding: 0.6rem 0.8rem; font-size: 0.82rem; }
+    .repo-card { padding: 1rem 1.1rem; }
+    .repo-card-header { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-05-30 UTC &middot; GitHub Search API</div>
+</div>
+
+<div class="container">
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+    <button class="nav-tab" onclick="showTab('weekly')">7-Day (Top 10)</button>
+    <button class="nav-tab" onclick="showTab('monthly')">30-Day (Top 5)</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="overview" class="tab-content active">
+
+    <div class="editors-take">
+      <p>The AI-agent ecosystem is consolidating around a single idea: <strong>composable skills</strong>. Almost every breakout repo this week treats agent capabilities as modular, swappable units &mdash; tree-of-thought reasoning, context memory, prompt caching, even PPT generation &mdash; slotted into a host runtime. Microsoft's <code>SkillOpt</code> formalized this by training reusable natural-language skills through trajectory-driven edits, and the 7-day chart is the downstream effect: independent developers shipping their own skill packs for Claude Code, Codex, and Cursor.</p>
+      <p>Meanwhile, the <strong>infrastructure layer is maturing fast</strong>. Virtual filesystems for agent sandboxing, fork-and-snapshot microVMs, and token-efficient runtimes all point toward a future where spinning up a throwaway agent is as cheap as spawning a thread. NVIDIA's <code>Gamma-World</code> extends multi-agent modeling beyond two-player games, signaling that research labs see <strong>agent coordination</strong> &mdash; not just single-agent performance &mdash; as the next frontier.</p>
+      <p>The practical takeaway: if you are building on LLM agents, the shelf of reusable parts just got much deeper. The repos worth watching are the ones that treat agent skills like libraries, not monoliths.</p>
+    </div>
+
+    <div class="stats-bar">
+      <span><strong>15</strong> repos tracked</span>
+      <span><strong>24,659</strong> combined stars</span>
+      <span><strong>7</strong> languages</span>
+      <span><strong>2</strong> from Microsoft / NVIDIA</span>
+    </div>
+
+    <div class="search-box">
+      <span class="search-icon">&#x1F50D;</span>
+      <input type="text" id="searchInput" placeholder="Filter repos by name, description, or language..." oninput="filterCards()">
+    </div>
+  </div>
+
+  <!-- 7-DAY TAB -->
+  <div id="weekly" class="tab-content">
+    <h2 class="section-title">Top 10 &mdash; Last 7 Days <span class="badge badge-7d">May 23 &ndash; 30</span></h2>
+
+    <div class="repo-card" data-search="uditakhourii adhd typescript tree-of-thought agent skill claude">
+      <div class="repo-card-header">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/UditAkhourii/adhd" target="_blank" rel="noopener">UditAkhourii/adhd</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>519</strong></span>
+            <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span>Created May 25</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Tree-of-thought with pruning, built on the Claude Agent SDK. Fans out parallel divergent thoughts under different cognitive frames, scores them, prunes dead ends, and deepens survivors. Designed for creative and interdisciplinary problem-solving.</div>
+      <div class="repo-why">Operationalizes a research-grade reasoning pattern as a drop-in skill rather than a bespoke pipeline.</div>
+    </div>
+
+    <div class="repo-card" data-search="withkynam vibecode-pro-max-kit javascript context memory coding harness agents skills">
+      <div class="repo-card-header">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/withkynam/vibecode-pro-max-kit" target="_blank" rel="noopener">withkynam/vibecode-pro-max-kit</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>512</strong></span>
+            <span><span class="lang-dot lang-js"></span> JavaScript</span>
+            <span>Created May 27</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Spec-driven coding harness with self-improving context memory, 12 agents, and 32 skills. Targets the "context rot" problem by maintaining persistent structured memory across agent invocations. Works with Claude Code, Codex, and Cursor.</div>
+      <div class="repo-why">Context window limits remain the practical bottleneck for AI-assisted coding. This attacks the problem at the harness level.</div>
+    </div>
+
+    <div class="repo-card" data-search="flashml-org flashlib python machine learning classical ml operators">
+      <div class="repo-card-header">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/FlashML-org/flashlib" target="_blank" rel="noopener">FlashML-org/flashlib</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>393</strong></span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 26</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Fast and memory-efficient classical machine learning operators. A back-to-basics library that optimizes PCA, k-means, SVD, and other building blocks rather than chasing the latest foundation model.</div>
+      <div class="repo-why">Classical ML never left production. Faster primitives benefit every pipeline that preprocesses, clusters, or reduces dimensionality before handing data to a neural model.</div>
+    </div>
+
+    <div class="repo-card" data-search="2arons duel-agents typescript adversarial multi-agent cli sdk">
+      <div class="repo-card-header">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/2aronS/Duel-Agents" target="_blank" rel="noopener">2aronS/Duel-Agents</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>379</strong></span>
+            <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span>Created May 28</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">CLI, SDK, and IDE plugins for running paired adversarial agents. Two agents work on the same task from different angles and reconcile outputs. Supports Anthropic, OpenAI-compatible, and OpenClaw backends.</div>
+      <div class="repo-why">Adversarial pairing catches errors that single-agent passes miss. Multi-backend support makes it practical for mixed-provider teams.</div>
+    </div>
+
+    <div class="repo-card" data-search="nv-tlabs gamma-world nvidia multi-agent world modeling robotics research">
+      <div class="repo-card-header">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/nv-tlabs/Gamma-World" target="_blank" rel="noopener">nv-tlabs/Gamma-World</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>305</strong></span>
+            <span><span class="lang-dot lang-none"></span> Research</span>
+            <span>Created May 25</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">NVIDIA Toronto AI Lab's implementation of "Gamma-World: Generative Multi-Agent World Modeling Beyond Two Players." Extends world modeling to many interacting agents, with applications in robotics and game AI.</div>
+      <div class="repo-why">A top-tier lab releasing reproducible code for a paper that pushes multi-agent coordination past simple two-player settings.</div>
+    </div>
+
+    <div class="repo-card" data-search="gordensun gordenpptskill python ppt powerpoint ai builder templates chinese">
+      <div class="repo-card-header">
+        <span class="repo-rank">#6</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/GordenSun/GordenPPTSkill" target="_blank" rel="noopener">GordenSun/GordenPPTSkill</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>296</strong></span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 27</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">AI-friendly PPT builder: 17 hand-polished Chinese PPTX templates with non-destructive text-only editing via python-pptx. The agent writes an edits.json manifest; the skill renders a real .pptx with layout intact.</div>
+      <div class="repo-why">Demonstrates the "skill as a bridge" pattern &mdash; the AI never touches raw XML, just a structured edit spec. Applicable to any complex document format.</div>
+    </div>
+
+    <div class="repo-card" data-search="realrossmanngroup no_ai_slop_writing_rules voice personality claude louis rossmann">
+      <div class="repo-card-header">
+        <span class="repo-rank">#7</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/realrossmanngroup/no_ai_slop_writing_rules" target="_blank" rel="noopener">realrossmanngroup/no_ai_slop_writing_rules</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>262</strong></span>
+            <span><span class="lang-dot lang-none"></span> Config</span>
+            <span>Created May 25</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">A portable CLAUDE.md plus skills package that forces Claude Code to write in Louis Rossmann's voice &mdash; direct, opinionated, no corporate filler. A working reference for personality-constrained agent output.</div>
+      <div class="repo-why">As agent-written text proliferates, voice control becomes a product requirement. This is a clean reference implementation.</div>
+    </div>
+
+    <div class="repo-card" data-search="bandyah uni-mm-trainer python multimodal llm training text vision audio">
+      <div class="repo-card-header">
+        <span class="repo-rank">#8</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/bandyah/uni-mm-trainer" target="_blank" rel="noopener">bandyah/uni-mm-trainer</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>224</strong> &middot; 2,014 forks</span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 24</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">A small library for training multimodal LLMs combining text, vision, and audio. The exceptionally high fork count (10&times; stars) suggests heavy use in coursework or research reproducibility.</div>
+      <div class="repo-why">Multimodal training is still hard to set up from scratch. A lightweight, well-forked trainer lowers the bar for cross-modal experimentation.</div>
+    </div>
+
+    <div class="repo-card" data-search="cellinlab how-pi-agent-works agent internals architecture chinese">
+      <div class="repo-card-header">
+        <span class="repo-rank">#9</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/cellinlab/how-pi-agent-works" target="_blank" rel="noopener">cellinlab/how-pi-agent-works</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>209</strong></span>
+            <span><span class="lang-dot lang-none"></span> Docs</span>
+            <span>Created May 26</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">A deep-dive into the internals of the Pi Agent architecture &mdash; how it plans, executes tools, manages memory, and recovers from errors. Written in Chinese with detailed code walkthroughs.</div>
+      <div class="repo-why">Agent internals are often opaque. Reverse-engineering a production agent's design helps the ecosystem build better alternatives.</div>
+    </div>
+
+    <div class="repo-card" data-search="quarqlabs agent-oss python evidence-gated cognitive runtime memory retrieval">
+      <div class="repo-card-header">
+        <span class="repo-rank">#10</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/quarqlabs/agent-oss" target="_blank" rel="noopener">quarqlabs/agent-oss</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>180</strong></span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 24</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">A recursive evidence-gated cognitive runtime for memory-native AI agents. Combines hybrid retrieval, temporal reasoning, async learning, and plug-and-play tools. Requires retrieved evidence before committing to an action.</div>
+      <div class="repo-why">"Evidence-gated" is the key phrase &mdash; a practical hallucination mitigation strategy that checks its own citations before acting.</div>
+    </div>
+  </div>
+
+  <!-- 30-DAY TAB -->
+  <div id="monthly" class="tab-content">
+    <h2 class="section-title">Top 5 &mdash; Last 30 Days <span class="badge badge-30d">Apr 30 &ndash; May 30</span></h2>
+
+    <div class="repo-card" data-search="nexu-io html-anything html agentic editor skills surfaces publishing">
+      <div class="repo-card-header">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>5,387</strong></span>
+            <span><span class="lang-dot lang-html"></span> HTML</span>
+            <span>Created May 11</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">The agentic HTML editor &mdash; 75 skills across 9 surface types (magazine, deck, poster, social post, prototype, data report, Hyperframes). Your local AI agent generates the HTML; you preview in a sandbox and export to WeChat, X, Zhihu, or static files. Zero API key required.</div>
+      <div class="repo-why">Highest-starred repo on both charts. Treats the browser as an output canvas for agents and solves the last-mile publishing problem with one-click export.</div>
+    </div>
+
+    <div class="repo-card" data-search="microsoft skillopt python text-space optimizer skills llm agents trajectory">
+      <div class="repo-card-header">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/microsoft/SkillOpt" target="_blank" rel="noopener">microsoft/SkillOpt</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>2,908</strong></span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 8</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Microsoft's text-space optimizer that trains reusable natural-language skills for frozen LLM agents. Uses trajectory-driven edits and validation-gated updates to produce deployable best_skill.md artifacts. No model fine-tuning required.</div>
+      <div class="repo-why">Formalizes what the community has been doing ad hoc: iterating on system prompts until they work. SkillOpt automates the loop and version-controls the output.</div>
+    </div>
+
+    <div class="repo-card" data-search="strukto-ai mirage typescript virtual filesystem vfs sandbox agents fuse">
+      <div class="repo-card-header">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/strukto-ai/mirage" target="_blank" rel="noopener">strukto-ai/mirage</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>2,786</strong></span>
+            <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span>Created May 6</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">A unified virtual filesystem for AI agents. Provides a sandboxed, FUSE-compatible VFS layer so agents can read and write files without touching the real filesystem. Integrates with LangChain, OpenAI Agents, and Claude Code.</div>
+      <div class="repo-why">Agent sandboxing is a prerequisite for trust. Mirage makes it possible to give an agent full filesystem semantics with zero risk to the host.</div>
+    </div>
+
+    <div class="repo-card" data-search="raiyanyahya how-to-train-your-gpt jupyter notebook llm from scratch tutorial educational">
+      <div class="repo-card-header">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/raiyanyahya/how-to-train-your-gpt" target="_blank" rel="noopener">raiyanyahya/how-to-train-your-gpt</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>2,155</strong></span>
+            <span><span class="lang-dot lang-jnb"></span> Jupyter Notebook</span>
+            <span>Created May 3</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Build a modern LLM from scratch with every line commented. Covers tokenization, attention, training loops, and inference. Aimed at the "explain like I'm five" level without sacrificing correctness.</div>
+      <div class="repo-why">The best-performing educational LLM repo this month. Clear, annotated, and runnable &mdash; converts curious engineers into practitioners.</div>
+    </div>
+
+    <div class="repo-card" data-search="opensquilla python token-efficient agent runtime caching mcp">
+      <div class="repo-card-header">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/opensquilla/opensquilla" target="_blank" rel="noopener">opensquilla/opensquilla</a></div>
+          <div class="repo-meta">
+            <span class="star-icon">&#9733;</span><span><strong>2,096</strong></span>
+            <span><span class="lang-dot lang-py"></span> Python</span>
+            <span>Created May 6</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Token-efficient AI agent runtime &mdash; same budget, higher intelligence density. Achieves comparable output quality while consuming significantly fewer tokens through aggressive caching, skill reuse, and MCP integration.</div>
+      <div class="repo-why">Token cost is the dominant expense for agent-heavy workflows. A runtime that delivers equivalent results for fewer tokens has an immediate ROI argument.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Data sourced from the GitHub Search API on 2026-05-30 (UTC). Star counts are point-in-time and will change.
+  </div>
+</div>
+
+<script>
+function showTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  const tabs = ['overview','weekly','monthly'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(tabId)].classList.add('active');
+}
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.repo-card').forEach(card => {
+    const text = (card.getAttribute('data-search') || '') + ' ' + card.textContent.toLowerCase();
+    card.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
