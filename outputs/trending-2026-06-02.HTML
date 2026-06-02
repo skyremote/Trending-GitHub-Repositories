@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-06-02</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb;
+    --gold: #f0c674;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --tag-bg: #1c2128;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  header .source {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+  .editors-take {
+    background: linear-gradient(135deg, #1a1e2e 0%, #161b22 100%);
+    border: 1px solid var(--accent-subtle);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .editors-take::before {
+    content: "EDITOR'S TAKE";
+    position: absolute;
+    top: -0.65rem;
+    left: 1.25rem;
+    background: var(--accent-subtle);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+  }
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .section-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-week {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+    border: 1px solid rgba(63, 185, 80, 0.3);
+  }
+  .badge-month {
+    background: rgba(188, 140, 255, 0.15);
+    color: var(--purple);
+    border: 1px solid rgba(188, 140, 255, 0.3);
+  }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s, transform 0.15s;
+    position: relative;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .repo-rank {
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .repo-card.top3 .repo-rank {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+  .repo-top-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .star-count { color: var(--gold); font-weight: 600; }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .lang-python { background: #3572A5; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-typescript { background: #3178c6; }
+  .lang-html { background: #e34c26; }
+  .lang-c { background: #555555; }
+  .lang-rust { background: #dea584; }
+  .lang-go { background: #00ADD8; }
+  .lang-swift { background: #F05138; }
+  .lang-jupyter { background: #DA5B0B; }
+  .lang-na { background: #8b949e; }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+  .footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+  }
+  .nav-tab {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .nav-tab:hover { border-color: var(--accent); color: var(--text); }
+  .nav-tab.active {
+    background: var(--accent-subtle);
+    border-color: var(--accent-subtle);
+    color: #fff;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+  @media (max-width: 640px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.4rem; }
+    .repo-card { padding: 1rem; }
+    .editors-take { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-06-02</div>
+    <div class="source">GitHub Search API &middot; sorted by stars &middot; filtered by creation date</div>
+  </header>
+
+  <div class="editors-take">
+    <p>The AI tooling layer is consolidating fast. This week's standout is <strong>odysseus</strong>, a self-hosted AI workspace that pulled nearly 22k stars in under three days &mdash; a signal that developers are done stitching together disparate tools and want a single surface for agent-driven work. Meanwhile, a quieter but more technically interesting release came from NVIDIA's research lab: <strong>dvlt</strong> applies looping transformers to multi-view 3D reconstruction, trading depth for parameter reuse. On the 30-day horizon, Vercel's <strong>zerolang</strong> is the most provocative bet &mdash; a new programming language designed specifically for agents to write and execute. Microsoft's <strong>SkillOpt</strong> is the sleeper pick: training reusable natural-language skills for frozen LLM agents through trajectory-driven edits is the kind of infrastructure that compounds. The theme across both windows is clear &mdash; we're moving from "build an agent" to "build the platform agents run on."</p>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('week')">Last 7 Days</button>
+    <button class="nav-tab" onclick="switchTab('month')">Last 30 Days</button>
+    <button class="nav-tab" onclick="switchTab('all')">All</button>
+  </div>
+
+  <div id="section-week" class="section active">
+    <div class="section-header">
+      <h2>Top 10 &mdash; Last 7 Days</h2>
+      <span class="section-badge badge-week">May 26 &ndash; Jun 2</span>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-card top3">
+        <span class="repo-rank">1</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/pewdiepie-archdaemon/odysseus" target="_blank" rel="noopener">pewdiepie-archdaemon/odysseus</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 21,959</span></span>
+          <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        </div>
+        <p class="repo-desc">Self-hosted AI workspace. Unified environment for running agent workflows locally. The star velocity is unusual &mdash; 20k+ in roughly 48 hours, suggesting strong organic pull. Worth watching whether the architecture holds up.</p>
+      </li>
+      <li class="repo-card top3">
+        <span class="repo-rank">2</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/GordenSun/GordenPPTSkill" target="_blank" rel="noopener">GordenSun/GordenPPTSkill</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 1,458</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">AI-friendly PPT builder skill with 17 hand-polished Chinese PPTX templates and non-destructive text-only editing via python-pptx. Pick a template, write an edits.json, get a real .pptx with layout intact. Practical and narrow &mdash; the kind of vertical skill that actually ships.</p>
+      </li>
+      <li class="repo-card top3">
+        <span class="repo-rank">3</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/withkynam/vibecode-pro-max-kit" target="_blank" rel="noopener">withkynam/vibecode-pro-max-kit</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 703</span></span>
+          <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        </div>
+        <p class="repo-desc">Spec-driven coding harness for AI agents with self-improving context memory, 12 agents, and 32 skills. Targets the "context rot" problem that plagues long-running agent sessions. Works with Claude Code and Codex across any stack.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">4</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/2aronS/Duel-Agents" target="_blank" rel="noopener">2aronS/Duel-Agents</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 642</span></span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <p class="repo-desc">CLI, SDK, and IDE plugins for running dual competing agents. The adversarial pattern &mdash; two agents checking each other's work &mdash; is gaining traction as a lightweight alternative to formal verification in code generation.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">5</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/jdevalk/specification.website" target="_blank" rel="noopener">jdevalk/specification.website</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 401</span></span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <p class="repo-desc">A living website specification covering HTML, accessibility, security, SEO, and agent-readiness. Platform-agnostic, fully sourced, MIT-licensed. The "agent-readiness" angle formalizes what a website needs to be navigable by AI agents.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">6</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/DannyMac180/skills" target="_blank" rel="noopener">DannyMac180/skills</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 337</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">Collection of AI agent skills by a single author. The personal-skills-as-repo pattern continues to grow. Useful as reference implementations more than as dependencies.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">7</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/yb2460/harness-anything" target="_blank" rel="noopener">yb2460/harness-anything</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 278</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">CLI harness that lets AI agents control WPS Office (Writer, Calc, Impress) via COM automation. Bridges the gap between agent capabilities and legacy desktop software &mdash; a real-world integration problem most frameworks ignore.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">8</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/nv-tlabs/dvlt" target="_blank" rel="noopener">nv-tlabs/dvlt</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 129</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">Official NVIDIA implementation of "D&eacute;j&agrave; View: Looping Transformers for Multi-View 3D Reconstruction." Trades the standard deep-stack approach for parameter-reusing loops, achieving competitive reconstruction quality with fewer parameters. Research-grade code.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">9</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/ATOM00blue/machine-learning-library" target="_blank" rel="noopener">ATOM00blue/machine-learning-library</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 114</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">Hand-curated ML education library: 923 documents (391 arXiv papers, 474 Stanford/MIT/Karpathy/fast.ai lectures, 58 explainers), all normalized to Markdown with full provenance. Designed for Obsidian or as a clean corpus for RAG and fine-tuning.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">10</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/laoshan-song/Awesome-LLM-Interview" target="_blank" rel="noopener">laoshan-song/Awesome-LLM-Interview</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 103</span></span>
+          <span class="meta-item"><span class="lang-dot lang-html"></span> HTML</span>
+        </div>
+        <p class="repo-desc">LLM interview prep notes covering Transformer internals, RLHF, DPO, LoRA, KV Cache, RAG, MoE, distributed training, and 2026 frontier topics. Reflects the growing demand for LLM systems knowledge in hiring.</p>
+      </li>
+    </ol>
+  </div>
+
+  <div id="section-month" class="section">
+    <div class="section-header">
+      <h2>Top 5 &mdash; Last 30 Days</h2>
+      <span class="section-badge badge-month">May 3 &ndash; May 25</span>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-card top3">
+        <span class="repo-rank">1</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 5,790</span></span>
+          <span class="meta-item"><span class="lang-dot lang-html"></span> HTML</span>
+        </div>
+        <p class="repo-desc">Agentic HTML editor where a local AI agent writes HTML across 75 skills and 9 output surfaces (magazine, deck, poster, social post, prototype, data report, and more). Sandboxed preview included. The breadth of surface types sets this apart from generic generators.</p>
+      </li>
+      <li class="repo-card top3">
+        <span class="repo-rank">2</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/vercel-labs/zerolang" target="_blank" rel="noopener">vercel-labs/zerolang</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 4,793</span></span>
+          <span class="meta-item"><span class="lang-dot lang-c"></span> C</span>
+        </div>
+        <p class="repo-desc">A programming language designed specifically for agents. Written in C for performance. The thesis: existing languages carry too much human-ergonomic baggage for agent-generated code. Bold bet from Vercel's research arm.</p>
+      </li>
+      <li class="repo-card top3">
+        <span class="repo-rank">3</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/microsoft/SkillOpt" target="_blank" rel="noopener">microsoft/SkillOpt</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 4,179</span></span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+        <p class="repo-desc">Text-space optimizer that trains reusable natural-language skills for frozen LLM agents through trajectory-driven edits, validation-gated updates, and deployable best_skill.md artifacts. Microsoft Research making the case that skills should be optimized like model weights.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">4</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/strukto-ai/mirage" target="_blank" rel="noopener">strukto-ai/mirage</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 2,951</span></span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <p class="repo-desc">Unified virtual filesystem for AI agents. Abstracts away the differences between local files, cloud storage, and API-backed data behind a single FS interface. Solves a real plumbing problem in multi-tool agent architectures.</p>
+      </li>
+      <li class="repo-card">
+        <span class="repo-rank">5</span>
+        <div class="repo-top-row">
+          <span class="repo-name"><a href="https://github.com/OpenBMB/PilotDeck" target="_blank" rel="noopener">OpenBMB/PilotDeck</a></span>
+        </div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-count">&#9733; 2,751</span></span>
+          <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        </div>
+        <p class="repo-desc">Task-oriented AI agent productivity platform from OpenBMB (Tsinghua-affiliated). Positions itself between low-level agent frameworks and end-user apps &mdash; an orchestration layer with a UI.</p>
+      </li>
+    </ol>
+  </div>
+
+  <div id="section-all" class="section">
+    <div class="section-header">
+      <h2>All Repos &mdash; Combined View</h2>
+    </div>
+    <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border); text-align:left;">
+          <th style="padding:0.6rem 0.5rem; color:var(--text-muted);">#</th>
+          <th style="padding:0.6rem 0.5rem; color:var(--text-muted);">Repository</th>
+          <th style="padding:0.6rem 0.5rem; color:var(--text-muted);">Stars</th>
+          <th style="padding:0.6rem 0.5rem; color:var(--text-muted);">Language</th>
+          <th style="padding:0.6rem 0.5rem; color:var(--text-muted);">Window</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">1</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/pewdiepie-archdaemon/odysseus" style="color:var(--accent); text-decoration:none;">pewdiepie-archdaemon/odysseus</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">21,959</td>
+          <td style="padding:0.5rem;">JavaScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">2</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/nexu-io/html-anything" style="color:var(--accent); text-decoration:none;">nexu-io/html-anything</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">5,790</td>
+          <td style="padding:0.5rem;">HTML</td>
+          <td style="padding:0.5rem;"><span style="color:var(--purple);">30d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">3</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/vercel-labs/zerolang" style="color:var(--accent); text-decoration:none;">vercel-labs/zerolang</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">4,793</td>
+          <td style="padding:0.5rem;">C</td>
+          <td style="padding:0.5rem;"><span style="color:var(--purple);">30d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">4</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/microsoft/SkillOpt" style="color:var(--accent); text-decoration:none;">microsoft/SkillOpt</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">4,179</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--purple);">30d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">5</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/strukto-ai/mirage" style="color:var(--accent); text-decoration:none;">strukto-ai/mirage</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">2,951</td>
+          <td style="padding:0.5rem;">TypeScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--purple);">30d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">6</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/OpenBMB/PilotDeck" style="color:var(--accent); text-decoration:none;">OpenBMB/PilotDeck</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">2,751</td>
+          <td style="padding:0.5rem;">TypeScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--purple);">30d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">7</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/GordenSun/GordenPPTSkill" style="color:var(--accent); text-decoration:none;">GordenSun/GordenPPTSkill</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">1,458</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">8</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/withkynam/vibecode-pro-max-kit" style="color:var(--accent); text-decoration:none;">withkynam/vibecode-pro-max-kit</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">703</td>
+          <td style="padding:0.5rem;">JavaScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">9</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/2aronS/Duel-Agents" style="color:var(--accent); text-decoration:none;">2aronS/Duel-Agents</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">642</td>
+          <td style="padding:0.5rem;">TypeScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">10</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/jdevalk/specification.website" style="color:var(--accent); text-decoration:none;">jdevalk/specification.website</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">401</td>
+          <td style="padding:0.5rem;">TypeScript</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">11</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/DannyMac180/skills" style="color:var(--accent); text-decoration:none;">DannyMac180/skills</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">337</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">12</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/yb2460/harness-anything" style="color:var(--accent); text-decoration:none;">yb2460/harness-anything</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">278</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">13</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/nv-tlabs/dvlt" style="color:var(--accent); text-decoration:none;">nv-tlabs/dvlt</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">129</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">14</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/ATOM00blue/machine-learning-library" style="color:var(--accent); text-decoration:none;">ATOM00blue/machine-learning-library</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">114</td>
+          <td style="padding:0.5rem;">Python</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:0.5rem;">15</td>
+          <td style="padding:0.5rem;"><a href="https://github.com/laoshan-song/Awesome-LLM-Interview" style="color:var(--accent); text-decoration:none;">laoshan-song/Awesome-LLM-Interview</a></td>
+          <td style="padding:0.5rem; color:var(--gold);">103</td>
+          <td style="padding:0.5rem;">HTML</td>
+          <td style="padding:0.5rem;"><span style="color:var(--green);">7d</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="footer">
+    <p>Generated 2026-06-02 UTC &middot; Star counts are point-in-time snapshots and will drift.</p>
+  </footer>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('section-' + tab).classList.add('active');
+}
+</script>
+</body>
+</html>
