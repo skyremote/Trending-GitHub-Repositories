@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-06-05</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb33;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #db6d28;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  header h1 .date {
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15em 0.5em;
+    border-radius: 2em;
+    vertical-align: middle;
+  }
+  .badge-7d { background: var(--accent-subtle); color: var(--accent); border: 1px solid var(--accent); }
+  .badge-30d { background: #3fb95022; color: var(--green); border: 1px solid var(--green); }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .editors-take h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s ease;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .rank {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--yellow); }
+  .repo-card:nth-child(2) .rank { color: var(--text-muted); }
+  .repo-card:nth-child(3) .rank { color: var(--orange); }
+  .repo-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .repo-body h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-body h3 a:hover {
+    text-decoration: underline;
+  }
+  .repo-body .desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+  .repo-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .meta-item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .stars {
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--yellow);
+    font-size: 0.9rem;
+    padding-top: 0.15rem;
+  }
+  .lang-rust { background: #dea584; }
+  .lang-go { background: #00ADD8; }
+  .lang-js { background: #f1e05a; }
+  .lang-ts { background: #3178c6; }
+  .lang-python { background: #3572A5; }
+  .lang-shell { background: #89e051; }
+  .lang-vue { background: #41b883; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .toc {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .toc a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.35em 0.75em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+    transition: all 0.15s ease;
+  }
+  .toc a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .repo-card {
+      grid-template-columns: 2rem 1fr;
+    }
+    .stars {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos <span class="date">2026-06-05</span></h1>
+  <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.9rem;">Daily brief on the fastest-growing AI repositories on GitHub.</p>
+</header>
+
+<nav class="toc">
+  <a href="#editors-take">Editor's Take</a>
+  <a href="#top-7d">Top 10 — 7 days</a>
+  <a href="#top-30d">Top 5 — 30 days</a>
+</nav>
+
+<section id="editors-take" class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The agent ecosystem has split into two clear layers this week: the agents themselves and the infrastructure that keeps them honest. Memory systems (memory-os, ai-memory), sandboxing (sandboxes, vigils), and rule-synchronization tools (ai-rules-sync, meta-llm-charter) are accumulating stars faster than new agent shells. That inversion matters. It means the community has moved past "can an LLM write code?" and is now debugging "how do we supervise and persist what the LLM knows?" Meanwhile, Rust keeps gaining ground as the language of choice for performance-sensitive agent internals &mdash; zerostack, vigils, and rmux all ship Rust cores. The week's quiet signal: small-model agents (smallcode hitting 87% on a 4B-active model) are pulling within striking distance of frontier-hosted agents on coding benchmarks, which will compress margins for API-only providers faster than most pricing models assume.</p>
+</section>
+
+<section id="top-7d">
+  <h2 class="section-title"><span class="badge badge-7d">7 days</span> Top 10 — Created May 29 – Jun 5</h2>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/ClaudioDrews/memory-os" target="_blank" rel="noopener">ClaudioDrews/memory-os</a></h3>
+        <p class="desc">Seven-layer memory operating system for AI agents with Qdrant-backed persistent storage, structured facts, fabric recall, and surgical context injection. Runs locally with any LLM provider. The most complete open-source attempt at solving context rot across long sessions.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-python"></span> Python</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 31</span>
+        </div>
+      </div>
+      <div class="stars">830</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/tastyeffectco/sandboxes" target="_blank" rel="noopener">tastyeffectco/sandboxes</a></h3>
+        <p class="desc">Self-hosted dev sandboxes with preview URLs in a single command. No Kubernetes required. Built in Go, aimed at coding agents and SaaS factories that need disposable environments without orchestration overhead.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-go"></span> Go</span>
+          <span class="meta-item">Created Jun 3</span>
+        </div>
+      </div>
+      <div class="stars">395</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/duncatzat/vigils" target="_blank" rel="noopener">duncatzat/vigils</a></h3>
+        <p class="desc">Local control plane for AI agents built with Rust and Tauri. See what agents do, approve what matters, keep secrets out. Includes a Chrome MV3 extension for browser-based agent monitoring and PII filtering.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-rust"></span> Rust</span>
+          <span class="meta-item">Apache-2.0</span>
+          <span class="meta-item">Created May 31</span>
+        </div>
+      </div>
+      <div class="stars">211</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/PanisHandsome/ai-rules-sync" target="_blank" rel="noopener">PanisHandsome/ai-rules-sync</a></h3>
+        <p class="desc">Converts and syncs coding-agent rules between AGENTS.md, CLAUDE.md, .cursorrules, Copilot, Windsurf, Cline, Aider, and Gemini formats. Zero dependencies. Solves the real problem of maintaining a single source of truth across a fragmented tool landscape.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-js"></span> JavaScript</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created Jun 1</span>
+        </div>
+      </div>
+      <div class="stars">105</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/ethanhq/cc-fleet" target="_blank" rel="noopener">ethanhq/cc-fleet</a></h3>
+        <p class="desc">Spawn any vendor LLM (DeepSeek, GLM, Qwen, Kimi, MiniMax) as native Claude Code teammates or one-shot subagents. Written in Go. Multi-model routing without leaving the Claude Code workflow.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-go"></span> Go</span>
+          <span class="meta-item">Apache-2.0</span>
+          <span class="meta-item">Created May 30</span>
+        </div>
+      </div>
+      <div class="stars">97</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/anvia-hq/lexa" target="_blank" rel="noopener">anvia-hq/lexa</a></h3>
+        <p class="desc">Fast local code intelligence for humans and AI agents. Turns a codebase into a queryable index without shipping code to an API. Focused on latency-sensitive use cases where cloud round-trips are unacceptable.</p>
+        <div class="repo-meta">
+          <span class="meta-item">Created Jun 2</span>
+        </div>
+      </div>
+      <div class="stars">80</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/LLMQuant/skills" target="_blank" rel="noopener">LLMQuant/skills</a></h3>
+        <p class="desc">Reusable agent skills for Claude Code, Codex, and Cursor, grounded in financial market data. Covers equity research, ETF analysis, options trading, and portfolio management. Demonstrates skills as a distribution format for domain expertise.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-shell"></span> Shell</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 30</span>
+        </div>
+      </div>
+      <div class="stars">71</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/razr001/align-dev" target="_blank" rel="noopener">razr001/align-dev</a></h3>
+        <p class="desc">Generates shared coding standards and system instructions for AI-assisted frontend teams. Bridges the gap between team style guides and the system prompts that agents actually consume.</p>
+        <div class="repo-meta">
+          <span class="meta-item">Created Jun 3</span>
+        </div>
+      </div>
+      <div class="stars">59</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/ntd4996/agentpet" target="_blank" rel="noopener">ntd4996/agentpet</a></h3>
+        <p class="desc">Native macOS menu bar app with a desktop pet that monitors your AI coding agent's activity. Light-touch observability for developers who want ambient awareness without a full dashboard.</p>
+        <div class="repo-meta">
+          <span class="meta-item">Created May 31</span>
+        </div>
+      </div>
+      <div class="stars">58</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/rextanka/zero-cost-cline" target="_blank" rel="noopener">rextanka/zero-cost-cline</a></h3>
+        <p class="desc">Comprehensive guide to 100% local, private LLM code generation on Apple Silicon (24GB+). Uses Ollama and Cline with custom Modelfiles and strict two-layer test suites. Practical playbook for going fully offline.</p>
+        <div class="repo-meta">
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 31</span>
+        </div>
+      </div>
+      <div class="stars">57</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="top-30d">
+  <h2 class="section-title"><span class="badge badge-30d">30 days</span> Top 5 — Created May 6 – Jun 5</h2>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener">nexu-io/html-anything</a></h3>
+        <p class="desc">Agentic HTML editor where your local AI agent writes the HTML and you ship it. The month's runaway hit. Sits at the intersection of visual editing and LLM generation, filling a gap that traditional WYSIWYG editors never closed.</p>
+        <div class="repo-meta">
+          <span class="meta-item">Created May 11</span>
+        </div>
+      </div>
+      <div class="stars">6,085</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/Doorman11991/smallcode" target="_blank" rel="noopener">Doorman11991/smallcode</a></h3>
+        <p class="desc">AI coding agent optimized for small LLMs, achieving 87% on standard benchmarks with a 4B-active-parameter model. Proves that careful engineering can close much of the gap with frontier models at a fraction of the compute cost.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-js"></span> JavaScript</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 18</span>
+        </div>
+      </div>
+      <div class="stars">1,769</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/Helvesec/rmux" target="_blank" rel="noopener">Helvesec/rmux</a></h3>
+        <p class="desc">Universal Rust multiplexer with a typed SDK that lets you drive any CLI or TUI app from code. Not an agent itself, but the kind of infrastructure that makes programmatic agent-to-tool communication reliable rather than brittle.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-rust"></span> Rust</span>
+          <span class="meta-item">Created May 15</span>
+        </div>
+      </div>
+      <div class="stars">1,539</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/study8677/awesome-architecture" target="_blank" rel="noopener">study8677/awesome-architecture</a></h3>
+        <p class="desc">Architecture-first system design resource with 26 bilingual tutorials, 25 templates, and 6 end-to-end cases covering distributed systems, AI-native systems, RAG, and coding agents. The most organized learning resource to emerge this month.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-vue"></span> Vue</span>
+          <span class="meta-item">MIT</span>
+          <span class="meta-item">Created May 23</span>
+        </div>
+      </div>
+      <div class="stars">1,168</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <h3><a href="https://github.com/gi-dellav/zerostack" target="_blank" rel="noopener">gi-dellav/zerostack</a></h3>
+        <p class="desc">Minimal coding agent written in Rust, optimized for memory footprint and performance. Ships a lean binary that competes with heavier Node/Python agents on task completion while using significantly less RAM.</p>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="dot lang-rust"></span> Rust</span>
+          <span class="meta-item">GPL-3.0</span>
+          <span class="meta-item">Created May 12</span>
+        </div>
+      </div>
+      <div class="stars">1,101</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Generated 2026-06-05 UTC by the <a href="https://github.com/skyremote/trending-github-repositories">Trending GitHub Repos</a> routine. Star counts sampled at generation time.</p>
+</footer>
+
+</div>
+</body>
+</html>
