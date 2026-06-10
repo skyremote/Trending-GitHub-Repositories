@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-06-10</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --gold: #f0c000;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header h1 span { color: var(--accent); }
+  .date-badge {
+    display: inline-block;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    border: 1px solid #1f6feb44;
+  }
+  .editors-take {
+    background: linear-gradient(135deg, #1a1e2e 0%, #161b22 100%);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .editors-take h2 {
+    color: var(--purple);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .section-header .badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .badge-week {
+    background: #f0c00018;
+    color: var(--gold);
+    border: 1px solid #f0c00033;
+  }
+  .badge-month {
+    background: #3fb95018;
+    color: var(--green);
+    border: 1px solid #3fb95033;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s, transform 0.15s;
+    position: relative;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .repo-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #30363d55;
+    flex-shrink: 0;
+  }
+  .repo-rank.top-3 {
+    background: #f0c00020;
+    color: var(--gold);
+  }
+  .repo-name {
+    flex: 1;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-left: 2.75rem;
+  }
+  .lang-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: #30363d55;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 2.75rem;
+    margin-top: 0.5rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 2rem 0 1rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 640px) {
+    .container { padding: 1rem; }
+    header { padding: 2rem 0 1.5rem; }
+    header h1 { font-size: 1.5rem; }
+    .editors-take { padding: 1rem 1.25rem; }
+    .repo-card { padding: 1rem; }
+    .repo-desc { margin-left: 0; margin-top: 0.4rem; }
+    .lang-tag { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending <span>AI</span> Repos</h1>
+    <div class="date-badge">2026-06-10 UTC</div>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>
+      AI left the chat window this week. Apple dropped <strong>coreai-models</strong>, its first open-source toolkit for shipping models to device &mdash; a clear signal that on-device inference is now a first-party platform concern, not a research project. Meanwhile, the agent-skills-as-distribution pattern is accelerating hard: baoyu-design, GordenSuperPPTSkills, and guard-skills all package domain expertise into portable skill units that slot into Claude Code, Cursor, or Codex. The ecosystem is past &ldquo;make it work&rdquo; and into &ldquo;make it reliable and cheap&rdquo; &mdash; TokenTamer cuts LLM costs 50&ndash;80% with a drop-in proxy, and guard-skills catches AI-generated failure modes before they ship. The 30-day view is dominated by odysseus, a self-hosted AI workspace that pulled 65k stars in ten days, signaling serious community appetite for owned infrastructure over hosted solutions. Alibaba&rsquo;s open-code-review industrializes what was a cottage industry of code-review bots, and smallcode proves you can hit 87% on coding benchmarks with a 4B-parameter model. The message: the moat is moving from model size to workflow integration.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 10 &mdash; Last 7 Days</h2>
+      <span class="badge badge-week">Jun 3 &ndash; Jun 10</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">1</span>
+          <div class="repo-name"><a href="https://github.com/JimLiu/baoyu-design" target="_blank" rel="noopener">JimLiu/baoyu-design</a></div>
+          <span class="repo-stars">&#9733; 648</span>
+        </div>
+        <div class="repo-desc">Run Claude Design locally as an agent skill. Produces polished UI mockups, prototypes, decks, and wireframes as self-contained HTML without needing claude.ai/design.</div>
+        <span class="lang-tag">JavaScript</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">2</span>
+          <div class="repo-name"><a href="https://github.com/GordenSun/GordenSuperPPTSkills" target="_blank" rel="noopener">GordenSun/GordenSuperPPTSkills</a></div>
+          <span class="repo-stars">&#9733; 640</span>
+        </div>
+        <div class="repo-desc">Uses GPT to generate image-format presentations, then converts them to fully editable PPTX files. Targets the gap between &ldquo;AI can draft slides&rdquo; and &ldquo;I can actually use these in a meeting.&rdquo;</div>
+        <span class="lang-tag">Python</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">3</span>
+          <div class="repo-name"><a href="https://github.com/amElnagdy/guard-skills" target="_blank" rel="noopener">amElnagdy/guard-skills</a></div>
+          <span class="repo-stars">&#9733; 519</span>
+        </div>
+        <div class="repo-desc">Quality gates that catch AI-generated failure modes in code, tests, and docs. Plugs into Claude Code and Codex as a skill, acting as a linter for the patterns that LLMs get wrong.</div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">4</span>
+          <div class="repo-name"><a href="https://github.com/apple/coreai-models" target="_blank" rel="noopener">apple/coreai-models</a></div>
+          <span class="repo-stars">&#9733; 398</span>
+        </div>
+        <div class="repo-desc">Apple&rsquo;s official model export recipes, Python primitives, and Swift runtime utilities for on-device AI. The first open-source toolkit from Apple aimed squarely at getting models running on Apple silicon.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">5</span>
+          <div class="repo-name"><a href="https://github.com/xiaohuailabs/xiaohu-video-translate" target="_blank" rel="noopener">xiaohuailabs/xiaohu-video-translate</a></div>
+          <span class="repo-stars">&#9733; 361</span>
+        </div>
+        <div class="repo-desc">Tell an AI agent one sentence and it adds Chinese subtitles to foreign-language video. Download, transcribe, translate, polish, and burn-in &mdash; fully local, zero API cost for transcription.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">6</span>
+          <div class="repo-name"><a href="https://github.com/FerroxLabs/wayland" target="_blank" rel="noopener">FerroxLabs/wayland</a></div>
+          <span class="repo-stars">&#9733; 336</span>
+        </div>
+        <div class="repo-desc">TypeScript-based AI agent framework built around a perceive-reason-act-evolve loop. Aims for persistent, self-improving agents rather than one-shot completions.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">7</span>
+          <div class="repo-name"><a href="https://github.com/CWS6206/ai-coding-starter-kit" target="_blank" rel="noopener">CWS6206/ai-coding-starter-kit</a></div>
+          <span class="repo-stars">&#9733; 260</span>
+        </div>
+        <div class="repo-desc">Curated agent skills, checklists, templates, and guides distilled from blog posts. Oriented toward Swiss development teams adopting AI coding workflows.</div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">8</span>
+          <div class="repo-name"><a href="https://github.com/techjarves/Local-AI-Image-Generator" target="_blank" rel="noopener">techjarves/Local-AI-Image-Generator</a></div>
+          <span class="repo-stars">&#9733; 163</span>
+        </div>
+        <div class="repo-desc">Fully offline AI image generation studio for Windows. Runs Stable Diffusion locally with zero manual setup, auto-detecting CUDA for Nvidia and Vulkan for AMD/Intel Arc.</div>
+        <span class="lang-tag">JavaScript</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">9</span>
+          <div class="repo-name"><a href="https://github.com/12britz/awesome-free-models" target="_blank" rel="noopener">12britz/awesome-free-models</a></div>
+          <span class="repo-stars">&#9733; 162</span>
+        </div>
+        <div class="repo-desc">Curated list of free AI models, APIs, and tools. Useful reference for builders looking to prototype without spend.</div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">10</span>
+          <div class="repo-name"><a href="https://github.com/thisishowen-spec/eatlah" target="_blank" rel="noopener">thisishowen-spec/eatlah</a></div>
+          <span class="repo-stars">&#9733; 160</span>
+        </div>
+        <div class="repo-desc">Snap a menu photo, spin up a QR ordering system. AI-powered ordering for hawker stalls, small restaurants, and independent food businesses. Five-minute setup.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 5 &mdash; Last 30 Days</h2>
+      <span class="badge badge-month">May 11 &ndash; Jun 10</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">1</span>
+          <div class="repo-name"><a href="https://github.com/pewdiepie-archdaemon/odysseus" target="_blank" rel="noopener">pewdiepie-archdaemon/odysseus</a></div>
+          <span class="repo-stars">&#9733; 65,712</span>
+        </div>
+        <div class="repo-desc">Self-hosted AI workspace that exploded to 65k stars in under two weeks. Positions itself as the own-your-infrastructure alternative to hosted AI platforms.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">2</span>
+          <div class="repo-name"><a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">alibaba/open-code-review</a></div>
+          <span class="repo-stars">&#9733; 5,842</span>
+        </div>
+        <div class="repo-desc">Battle-tested at Alibaba scale. Hybrid architecture combining deterministic pipelines with LLM agents for precise, line-level code review comments. Built-in rulesets for NPE, thread safety, XSS, and SQL injection.</div>
+        <span class="lang-tag">Go</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank top-3">3</span>
+          <div class="repo-name"><a href="https://github.com/XingYu-Zhong/DeepSeek-GUI" target="_blank" rel="noopener">XingYu-Zhong/DeepSeek-GUI</a></div>
+          <span class="repo-stars">&#9733; 3,421</span>
+        </div>
+        <div class="repo-desc">Full agent workspace for DeepSeek models with Code and Claw modes. Desktop-native approach to model interaction rather than browser-based chat.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">4</span>
+          <div class="repo-name"><a href="https://github.com/datawhalechina/Agent-Learning-Hub" target="_blank" rel="noopener">datawhalechina/Agent-Learning-Hub</a></div>
+          <span class="repo-stars">&#9733; 3,337</span>
+        </div>
+        <div class="repo-desc">Comprehensive AI agent learning roadmap and resource collection from Datawhale, one of China&rsquo;s largest open-source education communities.</div>
+        <span class="lang-tag">HTML</span>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-card-top">
+          <span class="repo-rank">5</span>
+          <div class="repo-name"><a href="https://github.com/OpenBMB/PilotDeck" target="_blank" rel="noopener">OpenBMB/PilotDeck</a></div>
+          <span class="repo-stars">&#9733; 3,099</span>
+        </div>
+        <div class="repo-desc">Task-oriented AI agent productivity platform from the team behind WebArena and AgentBench. Bridges the gap between agent research and daily productivity tooling.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Generated 2026-06-10 UTC by the Trending GitHub Repos routine.
+  </footer>
+</div>
+</body>
+</html>
