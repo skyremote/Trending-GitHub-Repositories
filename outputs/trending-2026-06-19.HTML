@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-06-19</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --gold: #f0c040;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --tag-bg: #1f2937;
+    --tag-border: #374151;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header {
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editors-take {
+    background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-header .badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-7d { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+  .badge-30d { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.15s, transform 0.1s;
+    position: relative;
+  }
+  .repo-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .repo-card .rank {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    width: 1.5rem;
+  }
+  .repo-card .content { padding-left: 2rem; }
+  .repo-card .top-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .repo-card a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .repo-card a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--gold);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .stars svg { width: 14px; height: 14px; fill: var(--gold); }
+  .lang-tag {
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--text-muted);
+  }
+  .repo-card .desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .honorable {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .honorable h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+  .honorable ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .honorable li { font-size: 0.9rem; }
+  .honorable a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .honorable a:hover { text-decoration: underline; }
+  .honorable .stars { font-size: 0.8rem; }
+  .honorable .hm-desc { color: var(--text-muted); font-size: 0.85rem; }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 640px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-06-19 UTC</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The AI agent ecosystem has crossed a threshold: it is now optimizing itself. This week's runaway hit, <strong>ponytail</strong> (37K stars in seven days), does not add capabilities — it removes them, teaching agents to write less code by default. That a YAGNI enforcement layer went more viral than any new model or framework is the clearest signal yet that the community's bottleneck has shifted from "can agents code?" to "can agents know when <em>not</em> to?" Meanwhile, the 30-day window shows self-hosted AI workspaces pulling away from SaaS alternatives, with <strong>odysseus</strong> clearing 73K stars on the promise of full local control. The pattern is consistent: developers want agents that are powerful, opinionated, and entirely theirs.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="badge badge-7d">Last 7 days</span>
+  <div class="line"></div>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <span class="rank">1</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/DietrichGebert/ponytail">DietrichGebert/ponytail</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>37,247</span>
+        <span class="lang-tag">JavaScript</span>
+      </div>
+      <div class="desc">YAGNI-first agent skill that forces coding agents to think like a lazy senior dev. Ruthlessly minimalist: if the code doesn't need to exist, the agent won't write it. The week's most viral repo by a wide margin.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">2</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/Plaer1/junction">Plaer1/junction</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>510</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">VS Code chat sidebar that routes to local AI coding agents. Lightweight bridge between IDE and any local model, avoiding cloud lock-in.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">3</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/rebel0789/codexpro">rebel0789/codexpro</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>401</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">Turns ChatGPT Developer Mode into a local coding agent via MCP. Cloudflare Tunnel or ngrok for remote access — interesting convergence of OpenAI's hosted model with local-agent patterns.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">4</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/baskduf/FableCodex">baskduf/FableCodex</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>308</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="desc">Codex-style coding agent workflow that plans like Fable. Brings structured planning and context engineering to Codex CLI with a skills-based architecture.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">5</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/eli-labz/Third-Eye">eli-labz/Third-Eye</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>302</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">Production-grade OSINT platform providing situational awareness across geospatial and intelligence domains. AI-powered analysis with agent orchestration.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">6</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/dongshuyan/compass-skills">dongshuyan/compass-skills</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>296</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="desc">Personal alignment skills OS for AI agents. A meta-layer that lets you define preferences, constraints, and task routing across Claude Code, Codex, and others.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">7</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/majidmanzarpour/threejs-game-skills">majidmanzarpour/threejs-game-skills</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>284</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="desc">Agent skills for building playable, polished Three.js browser games with gameplay mechanics, AAA-style graphics, and optional AI-generated 3D assets. Creative tooling meets agent infrastructure.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">8</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/gykim80/perfectpixel-studio">gykim80/perfectpixel-studio</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>244</span>
+        <span class="lang-tag">Go</span>
+      </div>
+      <div class="desc">AI-powered sprite sheet generator: one text prompt produces character sheets with 8 directions and 100+ actions. Built with Wails + Go + React.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">9</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/Jeidoban/Ironsmith">Jeidoban/Ironsmith</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>234</span>
+        <span class="lang-tag">Swift</span>
+      </div>
+      <div class="desc">Create personal Mac apps instantly from a prompt. Supports both on-device and cloud LLMs. The "app as conversation artifact" pattern gaining ground.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">10</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/ruvnet/agent-harness-generator">ruvnet/agent-harness-generator</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>199</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">Meta-harness to scaffold your own branded agent harness with npx CLI, MCP server, memory, and learning loop. Works across Claude Code, Codex, Hermes, and OpenClaw.</div>
+    </div>
+  </li>
+
+</ol>
+
+<div class="honorable">
+  <h3>Honorable Mentions</h3>
+  <ul>
+    <li><a href="https://github.com/renee-jia/scholar-loop">renee-jia/scholar-loop</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>126</span> — <span class="hm-desc">Autonomous AI scientist: multi-agent loop over literature, experiments, self-critique, and write-up with deterministic guards.</span></li>
+    <li><a href="https://github.com/tongxuluo/gamecraft-bench">tongxuluo/gamecraft-bench</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>96</span> — <span class="hm-desc">Benchmark for evaluating whether agents can build playable games end-to-end in a real game engine.</span></li>
+    <li><a href="https://github.com/shreyashankar/plain-writing-skill">shreyashankar/plain-writing-skill</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>153</span> — <span class="hm-desc">Plain-language writing skill for AI agents with a revision diff view.</span></li>
+  </ul>
+</div>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="badge badge-30d">Last 30 days</span>
+  <div class="line"></div>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <span class="rank">1</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/pewdiepie-archdaemon/odysseus">pewdiepie-archdaemon/odysseus</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>73,721</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="desc">Self-hosted AI workspace that exploded in June. Full local control over agent orchestration, model routing, and tool access. The scale of adoption (9.4K forks) suggests this is becoming default infrastructure for teams that won't use hosted platforms.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">2</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/XiaomiMiMo/MiMo-Code">XiaomiMiMo/MiMo-Code</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>9,810</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">Xiaomi's entry into coding agents, framed as co-evolution between models and agents. CLI-first, with a growing community (899 forks, 499 open issues) that signals real production use.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">3</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/KunAgent/Kun">KunAgent/Kun</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,476</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">AI agent workspace with dual Code and Write modes built into your application. Clean separation of concerns for teams embedding agents into existing products.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">4</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/omnigent-ai/omnigent">omnigent-ai/omnigent</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,819</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="desc">Open-source agent orchestration framework and meta-harness. Swap between Claude Code, Codex, Cursor, and custom agents without rewriting. Policy enforcement and sandboxing built in.</div>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">5</span>
+    <div class="content">
+      <div class="top-row">
+        <a href="https://github.com/OpenBMB/PilotDeck">OpenBMB/PilotDeck</a>
+        <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,547</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="desc">Task-oriented AI agent productivity platform from OpenBMB. Structured workflows rather than freeform chat, aimed at enterprise adoption.</div>
+    </div>
+  </li>
+
+</ol>
+
+<div class="honorable">
+  <h3>Also Notable This Month</h3>
+  <ul>
+    <li><a href="https://github.com/nexu-io/html-video">nexu-io/html-video</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,300</span> — <span class="hm-desc">Programmatic HTML-to-video pipeline for coding agents. 21 templates, AI soundtrack, Apache-2.0.</span></li>
+    <li><a href="https://github.com/GordenSun/GordenPPTSkill">GordenSun/GordenPPTSkill</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>2,107</span> — <span class="hm-desc">AI PPT builder skill with 17 hand-polished templates and non-destructive editing.</span></li>
+    <li><a href="https://github.com/jd-opensource/JoyAI-Echo">jd-opensource/JoyAI-Echo</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,607</span> — <span class="hm-desc">JD's long audio-visual generation frontier model.</span></li>
+    <li><a href="https://github.com/JimLiu/baoyu-design">JimLiu/baoyu-design</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,566</span> — <span class="hm-desc">Run Claude Design locally as an agent skill for UI mockups and prototypes.</span></li>
+    <li><a href="https://github.com/ClaudioDrews/memory-os">ClaudioDrews/memory-os</a> <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,168</span> — <span class="hm-desc">7-layer memory operating system for agents with Qdrant-backed persistent memory.</span></li>
+  </ul>
+</div>
+
+<footer>
+  Generated 2026-06-19 UTC by the Trending GitHub Repos routine.
+</footer>
+
+</div>
+</body>
+</html>
