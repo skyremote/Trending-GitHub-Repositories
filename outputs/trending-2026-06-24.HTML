@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-06-24</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --gold: #f0c040;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --red: #f85149;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .editors-take {
+    background: linear-gradient(135deg, #1f6feb11, #bc8cff11);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .editors-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-7d {
+    background: #3fb95022;
+    color: var(--green);
+    border: 1px solid #3fb95044;
+  }
+
+  .badge-30d {
+    background: #f0c04022;
+    color: var(--gold);
+    border: 1px solid #f0c04044;
+  }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .repo-card .rank {
+    position: absolute;
+    top: -0.6rem;
+    left: 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .repo-card .top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .repo-card .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .repo-card .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-card .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-card .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .repo-card .description {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .repo-card .take {
+    margin-top: 0.6rem;
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    font-style: italic;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .repo-card .meta {
+    margin-top: 0.6rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .repo-card .meta span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-go { background: #00ADD8; }
+  .lang-rust { background: #dea584; }
+  .lang-ruby { background: #701516; }
+  .lang-html { background: #e34c26; }
+  .lang-swift { background: #F05138; }
+  .lang-vue { background: #41b883; }
+  .lang-shell { background: #89e051; }
+  .lang-other { background: var(--text-muted); }
+
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.4rem; }
+    .repo-card .top-row { flex-direction: column; gap: 0.25rem; }
+    .editors-take { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <p class="date">2026-06-24 UTC</p>
+  </header>
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The signal this week is unmistakable: the AI ecosystem has moved past "build an agent" into "build the world around agents." Five of the top ten 7-day repos are infrastructure plays — memory, orchestration, search, observability — rather than agents themselves. Odysseus obliterating 76K stars in under a month as a self-hosted workspace confirms that developers want to own their AI stack, not rent it. Meanwhile, ponytail's 52K stars for a skill that tells your agent to write <em>less</em> code is the most honest market signal in months — the bottleneck is no longer generation but restraint. The new entrants worth watching: agent-apprenticeship is betting that agents can learn from each other's traces, and PixelRAG is killing the text-parsing pipeline entirely by searching screenshots instead of DOM trees. If you are still building traditional RAG with chunked text, both of these repos are your leading indicators.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/Forsy-AI/agent-apprenticeship" target="_blank" rel="noopener">Forsy-AI/agent-apprenticeship</a></span>
+        <span class="stars">&#9733; 867</span>
+      </div>
+      <p class="description">Living ecosystem where AI agents learn from real-world work through iterative workflow loops, reusable experience, and collective training signal exchange.</p>
+      <p class="take">The bet here is that agent-to-agent knowledge transfer beats fine-tuning. Early, but directionally compelling.</p>
+      <div class="meta">
+        <span>Jun 19, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/sums001/Windows-Copilot-API" target="_blank" rel="noopener">sums001/Windows-Copilot-API</a></span>
+        <span class="stars">&#9733; 552</span>
+      </div>
+      <p class="description">Reverse-engineered Windows Copilot into an OpenAI-compatible REST API. No keys, no billing.</p>
+      <p class="take">A proxy play that will likely draw a takedown, but the pattern keeps recurring. Use at your own risk.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>Jun 19, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/yo-WASSUP/Good-Badminton" target="_blank" rel="noopener">yo-WASSUP/Good-Badminton</a></span>
+        <span class="stars">&#9733; 428</span>
+      </div>
+      <p class="description">AI-powered Hawk-Eye system for badminton. Computer vision applied to a sport the ML community usually ignores.</p>
+      <p class="take">Niche, practical, and a good template for domain-specific vision projects beyond the usual autonomous-driving demo.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>Jun 20, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/raiyanyahya/recall" target="_blank" rel="noopener">raiyanyahya/recall</a></span>
+        <span class="stars">&#9733; 418</span>
+      </div>
+      <p class="description">Durable offline memory for Claude Code. Stop re-explaining your project every session. Local-first, privacy-preserving, TextRank-based summarization.</p>
+      <p class="take">Solves a real daily pain point. The fact that session memory remains unsolved at the platform level is why tools like this keep appearing.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>Jun 19, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/Karovia/fullstack-ai-agent-roadmap" target="_blank" rel="noopener">Karovia/fullstack-ai-agent-roadmap</a></span>
+        <span class="stars">&#9733; 146</span>
+      </div>
+      <p class="description">Zero-to-agent-engineer curriculum: 110 tutorials, 580K words, 400+ curated repos. Chinese-language, Obsidian-friendly.</p>
+      <p class="take">The most complete self-study path for agent engineering published this month. Signals that "AI agent engineer" is crystallizing as a job title.</p>
+      <div class="meta">
+        <span>Jun 19, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">6</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/Johell1NS/browser-search" target="_blank" rel="noopener">Johell1NS/browser-search</a></span>
+        <span class="stars">&#9733; 139</span>
+      </div>
+      <p class="description">Self-hosted web search and browsing skill for AI agents. SearXNG for search, Camoufox for rendering. No API keys required.</p>
+      <p class="take">Fills the gap between "my agent needs the web" and "I don't want to pay per query." Self-hosted search is becoming table stakes.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        <span>Jun 22, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">7</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/iart-ai/motion-skills" target="_blank" rel="noopener">iart-ai/motion-skills</a></span>
+        <span class="stars">&#9733; 114</span>
+      </div>
+      <p class="description">50 open-source skills that teach coding agents to produce motion graphics: kinetic typography, data-viz, explainers, TikTok/Reels, WebGL, Manim. 14 installable packs.</p>
+      <p class="take">Creative tooling for agents is an underserved category. This library makes "agent as motion designer" more than a demo.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-html"></span> HTML</span>
+        <span>Jun 22, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">8</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/trotsky1997/OpenFugu" target="_blank" rel="noopener">trotsky1997/OpenFugu</a></span>
+        <span class="stars">&#9733; 110</span>
+      </div>
+      <p class="description">Open reimplementation of Sakana AI's Fugu — the "one model to command them all" LLM orchestrator. Read, run, train, serve.</p>
+      <p class="take">Early but directionally important for multi-model coordination. The orchestration layer between your agent and the model zoo.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>Jun 22, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">9</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/binghe1980/AI-Canvas" target="_blank" rel="noopener">binghe1980/AI-Canvas</a></span>
+        <span class="stars">&#9733; 109</span>
+      </div>
+      <p class="description">Codex-integrated infinite canvas for AI image generation, annotation, and iterative editing.</p>
+      <p class="take">Bridges text-driven coding agents and visual workflows. The infinite-canvas metaphor applied to AI-assisted image work.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        <span>Jun 20, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">10</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/databufflabs/databuff" target="_blank" rel="noopener">databufflabs/databuff</a></span>
+        <span class="stars">&#9733; 101</span>
+      </div>
+      <p class="description">AI-native OpenTelemetry APM with automated root cause analysis. Built for multi-agent systems from day one.</p>
+      <p class="take">Observability tooling designed for agents, not retrofitted. As agent systems grow, debugging them becomes the next infrastructure gap.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-vue"></span> Vue</span>
+        <span>Jun 18, 2026</span>
+      </div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/pewdiepie-archdaemon/odysseus" target="_blank" rel="noopener">pewdiepie-archdaemon/odysseus</a></span>
+        <span class="stars">&#9733; 76,970</span>
+      </div>
+      <p class="description">Self-hosted AI workspace.</p>
+      <p class="take">76K stars in under a month makes this the most-watched new AI project of the quarter. Developers want sovereignty over their AI stack, and this is the repo they're voting with.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>May 31, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener">DietrichGebert/ponytail</a></span>
+        <span class="stars">&#9733; 52,857</span>
+      </div>
+      <p class="description">Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.</p>
+      <p class="take">A YAGNI-enforcing prompt skill for Claude Code and Cursor. 52K stars for "write less code" tells you exactly where agent UX friction lives.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-javascript"></span> JavaScript</span>
+        <span>Jun 12, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/XiaomiMiMo/MiMo-Code" target="_blank" rel="noopener">XiaomiMiMo/MiMo-Code</a></span>
+        <span class="stars">&#9733; 10,512</span>
+      </div>
+      <p class="description">MiMo Code: Where Models and Agents Co-Evolve.</p>
+      <p class="take">Xiaomi's entry into coding agents. Not another CLI wrapper — a tightly coupled model+agent platform. Worth watching as a signal of where hardware OEMs think the value accrues.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+        <span>Jun 10, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">omnigent-ai/omnigent</a></span>
+        <span class="stars">&#9733; 4,606</span>
+      </div>
+      <p class="description">Open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, and custom agents. Swap harnesses without rewriting, enforce policies and sandboxing.</p>
+      <p class="take">The "Kubernetes for coding agents" pitch. Solves the real problem of being locked into one harness while needing to use three.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>Jun 11, 2026</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="top-row">
+        <span class="repo-name"><a href="https://github.com/StarTrail-org/PixelRAG" target="_blank" rel="noopener">StarTrail-org/PixelRAG</a></span>
+        <span class="stars">&#9733; 4,599</span>
+      </div>
+      <p class="description">The end of web parsing. The beginning of scalable pixel-native search.</p>
+      <p class="take">Instead of extracting text from pages, it searches screenshots with vision models. A fundamental rethink of RAG infrastructure that could obsolete an entire class of parsing tools.</p>
+      <div class="meta">
+        <span><span class="lang-dot lang-python"></span> Python</span>
+        <span>May 29, 2026</span>
+      </div>
+    </li>
+  </ol>
+
+  <footer>
+    <p>Generated 2026-06-24 UTC by the Trending GitHub Repos routine.</p>
+    <p style="margin-top:0.25rem;">Star counts captured at time of generation. Links open in new tabs.</p>
+  </footer>
+</div>
+</body>
+</html>
