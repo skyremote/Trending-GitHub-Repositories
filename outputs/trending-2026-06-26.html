@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-06-26</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+  header .date { color: var(--text-muted); font-size: 0.9rem; }
+  .editors-take {
+    background: linear-gradient(135deg, #1f6feb11, #bc8cff11);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .editors-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-title h2 { font-size: 1.2rem; font-weight: 600; white-space: nowrap; }
+  .section-title .line { flex: 1; height: 1px; background: var(--border); }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    vertical-align: middle;
+  }
+  .badge-7d { background: #3fb95022; color: var(--green); }
+  .badge-30d { background: #d2992222; color: var(--orange); }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .repo-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .repo-header { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 1.5rem;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: var(--orange);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; margin-left: 1.75rem; }
+  footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-header { flex-direction: column; gap: 0.2rem; }
+    .repo-stars { margin-left: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-06-26 UTC</div>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The agent infrastructure layer is consolidating fast. This week's standout pattern: the market has moved past "build an agent" and into "build the thing agents run inside." Sandboxing (tupper), orchestration (omnigent), and agent-native dev environments (peerd, Accordion) are all racing to become the default substrate. Meanwhile, Xiaomi's MiMo-Code signals that non-US big tech is shipping full coding-agent products, not just foundation models. The sleeper hit is PixelRAG &mdash; ditching text extraction entirely in favor of pixel-native search is an architectural bet that, if it scales, obsoletes an entire class of parsing tooling. If you're building agent infrastructure, the competitive window is narrowing. If you're building on top of agents, the tooling has never been better.</p>
+  </section>
+
+  <div class="section-title">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <span class="badge badge-7d">7d</span>
+    <span class="line"></span>
+  </div>
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/yo-WASSUP/Good-Badminton" target="_blank" rel="noopener">yo-WASSUP/Good-Badminton</a></span>
+        <span class="repo-stars">&#9733; 523</span>
+      </div>
+      <p class="repo-desc">AI-powered badminton Hawk-Eye system built in Python. Uses computer vision for real-time shuttlecock tracking, line-call adjudication, and trajectory replay. A polished vertical-sports-AI project that shipped in under a week.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/benchflow-ai/awesome-evals" target="_blank" rel="noopener">benchflow-ai/awesome-evals</a></span>
+        <span class="repo-stars">&#9733; 325</span>
+      </div>
+      <p class="repo-desc">Curated library of agent evaluation resources: papers, benchmarks, tools, and talks. No filler. Fills the gap between "I built an agent" and "I know whether it works." Essential bookmark for anyone shipping agents into production.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/trotsky1997/OpenFugu" target="_blank" rel="noopener">trotsky1997/OpenFugu</a></span>
+        <span class="repo-stars">&#9733; 234</span>
+      </div>
+      <p class="repo-desc">Open reimplementation of Sakana AI's Fugu orchestrator. One LLM reads, runs, trains, and serves other models. Early but functional attempt at the "model that manages models" pattern.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/iart-ai/motion-skills" target="_blank" rel="noopener">iart-ai/motion-skills</a></span>
+        <span class="repo-stars">&#9733; 209</span>
+      </div>
+      <p class="repo-desc">50 open-source skills that teach AI coding agents to produce motion graphics: kinetic typography, data-viz animations, TikTok/Reels content, WebGL, and Manim. Ships as 14 installable packs.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/i5ting/learn-ai-practice" target="_blank" rel="noopener">i5ting/learn-ai-practice</a></span>
+        <span class="repo-stars">&#9733; 182</span>
+      </div>
+      <p class="repo-desc">Structured AI learning path with hands-on exercises. Covers prompt engineering, agent patterns, and tool integration in a progressive curriculum format.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#6</span>
+        <span class="repo-name"><a href="https://github.com/Johell1NS/browser-search" target="_blank" rel="noopener">Johell1NS/browser-search</a></span>
+        <span class="repo-stars">&#9733; 172</span>
+      </div>
+      <p class="repo-desc">Agent skill for web search via SearXNG plus stealth browsing with Camoufox and CloakBrowser. Self-hosted, no API keys, designed to prevent hallucination by grounding agents in real search results.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#7</span>
+        <span class="repo-name"><a href="https://github.com/binghe1980/AI-Canvas" target="_blank" rel="noopener">binghe1980/AI-Canvas</a></span>
+        <span class="repo-stars">&#9733; 158</span>
+      </div>
+      <p class="repo-desc">Codex-integrated infinite canvas for AI image generation and iterative editing. Think Figma meets DALL-E with annotation layers and version history baked in.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#8</span>
+        <span class="repo-name"><a href="https://github.com/Reyzowter/Hello-Agents" target="_blank" rel="noopener">Reyzowter/Hello-Agents</a></span>
+        <span class="repo-stars">&#9733; 131</span>
+      </div>
+      <p class="repo-desc">Comprehensive tutorial for building multi-agent systems from scratch. Covers LangChain, RAG, and production-grade agent orchestration with working code at every step.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#9</span>
+        <span class="repo-name"><a href="https://github.com/lightbearco/tupper" target="_blank" rel="noopener">lightbearco/tupper</a></span>
+        <span class="repo-stars">&#9733; 124</span>
+      </div>
+      <p class="repo-desc">Open-source sandboxes for running untrusted AI-generated code on your own hardware. Positions itself as a self-hosted E2B alternative using Apple Container and Firecracker.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#10</span>
+        <span class="repo-name"><a href="https://github.com/per-simmons/unreal-agent-harness" target="_blank" rel="noopener">per-simmons/unreal-agent-harness</a></span>
+        <span class="repo-stars">&#9733; 122</span>
+      </div>
+      <p class="repo-desc">AI agents building procedural cities in Unreal Engine 5.8 via MCP. Includes facade kits for glass, Parisian, and Art-Deco styles, plus real NYC data via Cesium. A creative-AI showcase.</p>
+    </li>
+
+  </ol>
+
+  <div class="section-title">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <span class="badge badge-30d">30d</span>
+    <span class="line"></span>
+  </div>
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/pewdiepie-archdaemon/odysseus" target="_blank" rel="noopener">pewdiepie-archdaemon/odysseus</a></span>
+        <span class="repo-stars">&#9733; 77,923</span>
+      </div>
+      <p class="repo-desc">Self-hosted AI workspace that exploded past 75k stars in under a month. Full-stack platform for running, chaining, and deploying AI workflows locally. The velocity alone makes it the month's defining project.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener">DietrichGebert/ponytail</a></span>
+        <span class="repo-stars">&#9733; 58,442</span>
+      </div>
+      <p class="repo-desc">Makes your AI coding agent "think like the laziest senior dev in the room." A YAGNI-enforcing skill for Claude Code and Cursor that aggressively prunes unnecessary code. The joke is the pitch; the adoption is real.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/XiaomiMiMo/MiMo-Code" target="_blank" rel="noopener">XiaomiMiMo/MiMo-Code</a></span>
+        <span class="repo-stars">&#9733; 10,766</span>
+      </div>
+      <p class="repo-desc">Xiaomi's full coding-agent CLI where models and agents co-evolve. First major non-US big-tech entry into the coding-agent space, shipping as a complete product rather than a model checkpoint.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/StarTrail-org/PixelRAG" target="_blank" rel="noopener">StarTrail-org/PixelRAG</a></span>
+        <span class="repo-stars">&#9733; 5,338</span>
+      </div>
+      <p class="repo-desc">Pixel-native search engine that skips text extraction entirely. Treats documents as images and retrieves by visual similarity. If the approach generalizes, it obsoletes the PDF-parsing stack.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">omnigent-ai/omnigent</a></span>
+        <span class="repo-stars">&#9733; 4,925</span>
+      </div>
+      <p class="repo-desc">Meta-harness for orchestrating Claude Code, Codex, Cursor, and custom agents. Swap coding-agent backends without rewriting, enforce governance policies, and collaborate across devices. The "Kubernetes for agents" pitch.</p>
+    </li>
+
+  </ol>
+
+  <footer>
+    <p>Generated 2026-06-26 UTC by the Trending GitHub Repos routine.</p>
+  </footer>
+</div>
+</body>
+</html>
