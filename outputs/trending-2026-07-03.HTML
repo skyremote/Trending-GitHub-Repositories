@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-03</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --badge-bg: #f0f4ff;
+    --badge-text: #2563eb;
+    --star: #eab308;
+    --section-bg: #f8fafc;
+    --tag-bg: #e2e8f0;
+    --tag-text: #475569;
+    --rank-bg: #2563eb;
+    --rank-text: #fff;
+    --editor-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --editor-text: #e2e8f0;
+    --editor-accent: #60a5fa;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93c5fd;
+      --border: #334155;
+      --badge-bg: #1e3a5f;
+      --badge-text: #93c5fd;
+      --section-bg: #1a2332;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --rank-bg: #3b82f6;
+      --rank-text: #fff;
+      --editor-bg: linear-gradient(135deg, #0c1524 0%, #0a0f1a 100%);
+      --editor-text: #cbd5e1;
+      --editor-accent: #93c5fd;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .editor-take {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .editor-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--editor-accent);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .editor-take h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--editor-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .editor-take p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.92;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+  }
+
+  .repo-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-top: 2px;
+  }
+
+  .repo-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .repo-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .repo-name:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .star-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+
+  .star-count svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--star);
+  }
+
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .repo-lang {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0.5rem 0 2rem;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.4rem; }
+    .editor-take { padding: 1.25rem 1.25rem 1.25rem 1.5rem; }
+    .repo-card { padding: 1rem 1.15rem; }
+    .rank { width: 24px; height: 24px; min-width: 24px; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-07-03 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>Agent skills are the new packages. This week's 7-day window is almost entirely composable agent capabilities &mdash; self-learning loops, video understanding, reverse-engineering flows &mdash; rather than standalone agents or models. The shift mirrors what happened to web development a decade ago: once the framework wars settled, the ecosystem moved to plugins. The 30-day view confirms the pattern at scale: ponytail (71k stars in three weeks) proves that a single well-scoped skill can outpace entire agent frameworks in adoption. Builders still launching new agent runtimes are arriving late; the leverage is now in what agents can <em>do</em>, not how they run.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="section-badge">Last 7 days</span>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/Kulaxyz/self-learning-skills" target="_blank" rel="noopener">Kulaxyz/self-learning-skills</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 901</span>
+          </div>
+          <p class="repo-desc">Self-improving skill for AI coding agents (Claude Code, Cursor, AGENTS.md): recognizes hard-won golden paths in a session and harvests them into reusable skills. The meta-skill pattern &mdash; agents that teach themselves to be better agents.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/TianhangZhuzth/Fundamental-Ava" target="_blank" rel="noopener">TianhangZhuzth/Fundamental-Ava</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 756</span>
+          </div>
+          <p class="repo-desc">Framework for building digital human beings: autonomous, collaborative, and socially intelligent agents. Ambitious scope bundling personality, memory, and multi-agent social dynamics into one stack.</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/JasonLiu0826/ackem" target="_blank" rel="noopener">JasonLiu0826/ackem</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 294</span>
+          </div>
+          <p class="repo-desc">Local-first AI desktop companion with memory, emotion modeling, and an extension system. Privacy-forward: no data leaves the machine. AGPL-3.0 licensed.</p>
+          <span class="repo-lang">TypeScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/Evolink-AI/Awesome-Blender-Seedance-Workflow-Usecases" target="_blank" rel="noopener">Evolink-AI/Awesome-Blender-Seedance-Workflow-Usecases</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 289</span>
+          </div>
+          <p class="repo-desc">Curated Blender + Seedance workflows for AI filmmaking: previs, camera control, Blender MCP, reference video, and agent-driven pipelines. The first serious open collection bridging 3D tools and generative video.</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/lingbol088-spec/reverse-flow-skill" target="_blank" rel="noopener">lingbol088-spec/reverse-flow-skill</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 281</span>
+          </div>
+          <p class="repo-desc">Reverse-engineering flow skill for AI agents targeting CTF, crackme, and wargame environments. Structured pipeline from analysis through deep reversing to vulnerability reporting.</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">6</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/eli-labz/Godcoder" target="_blank" rel="noopener">eli-labz/Godcoder</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 272</span>
+          </div>
+          <p class="repo-desc">Open-source, local-first coding agent written in Rust. Bring your own LLM key; code stays on your machine. The Rust choice signals a bet on speed and memory safety for long-running agent sessions.</p>
+          <span class="repo-lang">Rust</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">7</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/revfactory/webtoon-harness" target="_blank" rel="noopener">revfactory/webtoon-harness</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 248</span>
+          </div>
+          <p class="repo-desc">A 27-agent Claude Code harness that produces a full webtoon episode end-to-end: trend research, scripting, art direction, panel layout, and vertical-scroll viewer. The most elaborate multi-agent creative pipeline this week.</p>
+          <span class="repo-lang">HTML</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">8</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video" target="_blank" rel="noopener">HUANGCHIHHUNGLeo/claude-real-video</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 209</span>
+          </div>
+          <p class="repo-desc">Lets Claude (or any LLM) actually watch a video &mdash; scene-aware, deduplicated frame extraction plus transcript, from a URL or local file. Solves the practical gap between "vision models exist" and "agents can understand video."</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">9</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/kdsuomi/cc-simplerouter" target="_blank" rel="noopener">kdsuomi/cc-simplerouter</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 178</span>
+          </div>
+          <p class="repo-desc">Configures Claude Code to use any compatible OpenRouter model in 26 seconds. Written in Go. A routing shim that quietly makes model-switching a non-event.</p>
+          <span class="repo-lang">Go</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">10</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/ai4s-research/ai4s-skills" target="_blank" rel="noopener">ai4s-research/ai4s-skills</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 71</span>
+          </div>
+          <p class="repo-desc">Agent skills for AI-for-Science workflows: topic exploration, literature survey, experiment design, paper writing, and integrity audit. The scientific method, decomposed into installable agent capabilities.</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="section-badge">Last 30 days</span>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener">DietrichGebert/ponytail</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 71,893</span>
+          </div>
+          <p class="repo-desc">Makes your AI agent think like the laziest senior dev in the room. "The best code is the code you never wrote." A single-purpose skill that went viral because it measurably reduces agent-generated bloat.</p>
+          <span class="repo-lang">JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/XiaomiMiMo/MiMo-Code" target="_blank" rel="noopener">XiaomiMiMo/MiMo-Code</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 11,304</span>
+          </div>
+          <p class="repo-desc">Xiaomi's "where models and agents co-evolve" platform. TypeScript-based, combining model fine-tuning feedback loops with agent execution &mdash; the first major corporate bet on co-evolutionary agent architectures.</p>
+          <span class="repo-lang">TypeScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">omnigent-ai/omnigent</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,075</span>
+          </div>
+          <p class="repo-desc">Open-source meta-harness: orchestrate Claude Code, Codex, Cursor, and custom agents without rewriting. Swap harnesses, enforce policies, sandbox execution, collaborate in real time. The "Kubernetes for agents" play.</p>
+          <span class="repo-lang">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/cobusgreyling/loop-engineering" target="_blank" rel="noopener">cobusgreyling/loop-engineering</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 4,947</span>
+          </div>
+          <p class="repo-desc">Practical patterns, starters, and CLI tools for loop engineering with AI coding agents. Design systems that prompt and orchestrate themselves. Filling the gap between "use an agent" and "build a reliable agent workflow."</p>
+          <span class="repo-lang">JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-card-top">
+        <span class="rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name-row">
+            <a class="repo-name" href="https://github.com/BuilderIO/skills" target="_blank" rel="noopener">BuilderIO/skills</a>
+            <span class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 3,220</span>
+          </div>
+          <p class="repo-desc">Builder.io's official skills collection for coding agents. A curated registry that is quickly becoming the npm-like distribution point for agent capabilities.</p>
+          <span class="repo-lang">JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-07-03 UTC
+  </footer>
+
+</div>
+</body>
+</html>
