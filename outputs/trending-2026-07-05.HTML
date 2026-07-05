@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-05</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --badge-bg: #f0f4ff;
+    --badge-text: #1e40af;
+    --section-bg: #f8fafc;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.08);
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --editor-bg: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    --editor-text: #ffffff;
+    --tag-bg: #e8edf5;
+    --tag-text: #374151;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --text: #e4e4e7;
+      --text-secondary: #9ca3af;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --border: #2d3040;
+      --badge-bg: #1e293b;
+      --badge-text: #93c5fd;
+      --section-bg: #151820;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+      --gradient-start: #0f172a;
+      --gradient-end: #1e40af;
+      --editor-bg: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+      --editor-text: #e2e8f0;
+      --tag-bg: #1e293b;
+      --tag-text: #94a3b8;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    padding: 48px 20px 40px;
+    text-align: center;
+  }
+  header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+  header .date { font-size: 15px; opacity: 0.8; font-weight: 400; }
+  .editor-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: -24px auto 32px;
+    max-width: 880px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .editor-take .label {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .editor-take p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 { font-size: 20px; font-weight: 700; }
+  .section-header .count {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 24px;
+  }
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--star);
+  }
+  .lang-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .repo-desc {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .honorable { background: var(--section-bg); border-radius: 12px; padding: 24px 28px; }
+  .honorable h2 { font-size: 18px; margin-bottom: 14px; }
+  .honorable .mini-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .honorable .mini-card:last-child { border-bottom: none; }
+  .honorable .mini-card .stars { font-size: 13px; min-width: 60px; }
+  .honorable .mini-card a {
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .honorable .mini-card a:hover { text-decoration: underline; }
+  .honorable .mini-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  @media (max-width: 600px) {
+    header { padding: 32px 16px 28px; }
+    header h1 { font-size: 22px; }
+    .editor-take { padding: 20px; margin: -16px 12px 24px; }
+    .repo-card { padding: 16px; }
+    .repo-top { flex-direction: column; gap: 6px; }
+    .repo-meta { margin-top: 4px; }
+    .honorable { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Trending AI Repositories</h1>
+    <div class="date">July 5, 2026 &middot; Weekly Briefing</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="editor-take">
+    <div class="label">Editor's Take</div>
+    <p>The agent-skills ecosystem has gone from novelty to commodity in under a month. Ponytail's 74k stars prove the market rewards opinionated constraints over raw capability — "do less, better" is now a category. Meanwhile, the infrastructure layer is splitting in two: meta-harnesses like Omnigent that abstract over multiple coding agents, and vertical tools like Talos and the agentic trading desk that wire agents into specific money-making loops. The most technically interesting work this week is at the edges — a full transformer on an FPGA, video-native context for LLMs, and a PII-scrubbing proxy that keeps your data off cloud endpoints entirely. If you shipped a new agent framework this month and it doesn't have a differentiated take on context engineering or governance, you're already competing on price.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Top 10 — Last 7 Days</h2>
+      <span class="count">Jun 28 – Jul 5</span>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-name"><a href="https://github.com/jamesob/local-llm" target="_blank" rel="noopener">jamesob/local-llm</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 773</span>
+          <span class="lang-tag">Shell</span>
+        </div>
+      </div>
+      <div class="repo-desc">Comprehensive, opinionated guide to running LLMs locally. Covers hardware selection, quantization trade-offs, and inference stacks. Useful as a single-document reference rather than spelunking through scattered blog posts.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-name"><a href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video" target="_blank" rel="noopener">HUANGCHIHHUNGLeo/claude-real-video</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 759</span>
+          <span class="lang-tag">Python</span>
+        </div>
+      </div>
+      <div class="repo-desc">Feeds video to Claude (or any LLM) with scene-aware frame deduplication and transcript alignment. Turns a URL or local file into structured visual context. Solves the "paste 200 screenshots" problem properly.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-name"><a href="https://github.com/jmerelnyc/Talos" target="_blank" rel="noopener">jmerelnyc/Talos</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 597</span>
+          <span class="lang-tag">Python</span>
+        </div>
+      </div>
+      <div class="repo-desc">GPU worker client for the Talos distributed inference network. Pairs with an account, serves open-model inference over WebSocket, and reports uptime for payouts. The "Airbnb for GPUs" pattern, now with a working client.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-name"><a href="https://github.com/uzairansaruzi/hermex" target="_blank" rel="noopener">uzairansaruzi/hermex</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 558</span>
+          <span class="lang-tag">Swift</span>
+        </div>
+      </div>
+      <div class="repo-desc">Native iPhone app for the Hermes agent framework. Brings multi-platform AI agents to iOS with a polished native UI rather than a webview wrapper.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-name"><a href="https://github.com/TianhangZhuzth/Fundamental-Ava" target="_blank" rel="noopener">TianhangZhuzth/Fundamental-Ava</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 523</span>
+          <span class="lang-tag">Python</span>
+        </div>
+      </div>
+      <div class="repo-desc">Framework for building autonomous, collaborative, and socially intelligent digital human agents. Aims at the full stack from perception to social reasoning.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#6</span>
+        <div class="repo-name"><a href="https://github.com/Kulaxyz/token-diet" target="_blank" rel="noopener">Kulaxyz/token-diet</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 473</span>
+          <span class="lang-tag">Shell</span>
+        </div>
+      </div>
+      <div class="repo-desc">Always-on token-efficiency skill for coding agents (Claude Code, Codex, Cursor, Windsurf, Cline). Claims ~31% lower bills with no loss of correctness. The caveman approach, productized.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#7</span>
+        <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 307</span>
+          <span class="lang-tag">TypeScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">Autonomous red-teaming platform built as a multi-agent offensive-security meta-harness. Useful for security teams stress-testing their own systems with agent-driven attack simulations.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#8</span>
+        <div class="repo-name"><a href="https://github.com/Evolink-AI/Awesome-Blender-Seedance-Workflow-Usecases" target="_blank" rel="noopener">Evolink-AI/Awesome-Blender-Seedance-Workflow-Usecases</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 299</span>
+          <span class="lang-tag">Python</span>
+        </div>
+      </div>
+      <div class="repo-desc">Curated Blender + Seedance workflows for AI filmmaking: previs, camera control, reference video, and agent-guided use cases. The AI-native filmmaking toolkit is getting real.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#9</span>
+        <div class="repo-name"><a href="https://github.com/xt4d/GameBlocks" target="_blank" rel="noopener">xt4d/GameBlocks</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 230</span>
+          <span class="lang-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">Concise, self-explanatory building blocks that help coding agents prototype browser-based 3D games. Designed so an agent can compose blocks without needing game-engine expertise.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#10</span>
+        <div class="repo-name"><a href="https://github.com/SuperJJ007/CSSwitch" target="_blank" rel="noopener">SuperJJ007/CSSwitch</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 224</span>
+          <span class="lang-tag">Rust</span>
+        </div>
+      </div>
+      <div class="repo-desc">One-click API switcher for Claude Science. Routes to DeepSeek, Qwen, GLM, Kimi, MiniMax, MiMo, or any OpenAI/Anthropic-compatible endpoint via a macOS menu bar app built in Tauri.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Top 5 — Last 30 Days</h2>
+      <span class="count">Jun 5 – Jul 5</span>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-name"><a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener">DietrichGebert/ponytail</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 74,019</span>
+          <span class="lang-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">"Makes your AI agent think like the laziest senior dev in the room." A YAGNI-first agent skill that has become the month's runaway hit. The premise — the best code is the code you never wrote — resonates because it measurably reduces agent-generated bloat.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-name"><a href="https://github.com/XiaomiMiMo/MiMo-Code" target="_blank" rel="noopener">XiaomiMiMo/MiMo-Code</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 11,421</span>
+          <span class="lang-tag">TypeScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">Xiaomi's open-source coding agent where models and agents co-evolve. Not just another CLI wrapper — the co-evolution loop between the model and the harness is the differentiator. 717 open issues suggest heavy adoption and rough edges in equal measure.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-name"><a href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">omnigent-ai/omnigent</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 6,243</span>
+          <span class="lang-tag">Python</span>
+        </div>
+      </div>
+      <div class="repo-desc">Agent meta-harness that orchestrates Claude Code, Codex, Cursor, Pi, and custom agents. Swap harnesses without rewriting, enforce policies, sandbox execution. The "Kubernetes for coding agents" bet.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-name"><a href="https://github.com/cobusgreyling/loop-engineering" target="_blank" rel="noopener">cobusgreyling/loop-engineering</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 5,682</span>
+          <span class="lang-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">Practical patterns, starters, and CLI tools for loop engineering with AI coding agents. Includes loop-audit, loop-init, and loop-cost utilities. Turning agent orchestration from art to engineering discipline.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-name"><a href="https://github.com/vercel/eve" target="_blank" rel="noopener">vercel/eve</a></div>
+        <div class="repo-meta">
+          <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 3,186</span>
+          <span class="lang-tag">TypeScript</span>
+        </div>
+      </div>
+      <div class="repo-desc">Vercel's framework for building agents. Opinionated, TypeScript-native, with first-class support for workflows and sandboxing. Vercel entering the agent-framework space signals that agents are now a deployment primitive, not a research curiosity.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="honorable">
+      <h2>Honorable Mentions</h2>
+
+      <div class="mini-card">
+        <span class="stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 599</span>
+        <div>
+          <a href="https://github.com/fguzman82/gateGPT" target="_blank" rel="noopener">fguzman82/gateGPT</a>
+          <div class="desc">Full transformer in RTL running on a Virtex-5 FPGA at ~56k tokens/second. Hardware ML is alive.</div>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <span class="stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 146</span>
+        <div>
+          <a href="https://github.com/oomol-lab/open-connector" target="_blank" rel="noopener">oomol-lab/open-connector</a>
+          <div class="desc">Open-source auth gateway connecting 1,000+ SaaS providers to AI agents through MCP, CLI, and HTTP.</div>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <span class="stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 127</span>
+        <div>
+          <a href="https://github.com/Oft3r/agentic-trading-desk" target="_blank" rel="noopener">Oft3r/agentic-trading-desk</a>
+          <div class="desc">AI-assisted trading desk for stocks and ETFs via Robinhood MCP. Deterministic scoring; the AI fetches, the scripts compute, the human approves.</div>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <span class="stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 87</span>
+        <div>
+          <a href="https://github.com/redevops-io/context-runtime" target="_blank" rel="noopener">redevops-io/context-runtime</a>
+          <div class="desc">A database query planner for LLM context. Decides what a model sees before it answers.</div>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <span class="stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 85</span>
+        <div>
+          <a href="https://github.com/ai4s-research/open-science" target="_blank" rel="noopener">ai4s-research/open-science</a>
+          <div class="desc">Open-source alternative to Claude Science: local-first, model-agnostic research desktop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    Generated by the Trending GitHub Repos routine &middot; 2026-07-05 UTC
+  </div>
+</footer>
+
+</body>
+</html>
