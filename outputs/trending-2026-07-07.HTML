@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-07-07</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-card-hover: #f0f1f3;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star-color: #eab308;
+    --badge-bg: #e0e7ff;
+    --badge-text: #3730a3;
+    --badge-hot-bg: #fef2f2;
+    --badge-hot-text: #b91c1c;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --hero-text: #ffffff;
+    --table-stripe: #f8fafc;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #273548;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star-color: #facc15;
+      --badge-bg: #1e1b4b;
+      --badge-text: #a5b4fc;
+      --badge-hot-bg: #450a0a;
+      --badge-hot-text: #fca5a5;
+      --gradient-start: #0c1929;
+      --gradient-end: #1e40af;
+      --hero-text: #f1f5f9;
+      --table-stripe: #1a2536;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: var(--hero-text);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .hero .date { font-size: 1rem; opacity: 0.85; }
+  .hero .subtitle { font-size: 0.95rem; opacity: 0.7; margin-top: 0.5rem; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 1.25rem; }
+  .editors-take {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin: -1.5rem auto 2rem;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .editors-take p { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.75rem; }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+  }
+  .section-header h2 { font-size: 1.35rem; font-weight: 700; }
+  .section-header .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+  }
+  .section-header .badge.hot {
+    background: var(--badge-hot-bg);
+    color: var(--badge-hot-text);
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    transition: background 0.15s, box-shadow 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-hover);
+  }
+  .repo-card .top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .repo-card .rank {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 2rem;
+    line-height: 1;
+  }
+  .repo-card .info { flex: 1; min-width: 0; }
+  .repo-card .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    word-break: break-word;
+  }
+  .repo-card .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-card .repo-name a:hover { text-decoration: underline; color: var(--accent-hover); }
+  .repo-card .desc { color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.35rem; }
+  .repo-card .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .repo-card .stars {
+    font-weight: 600;
+    color: var(--star-color);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .repo-card .lang-badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .repo-card .analysis {
+    margin-top: 0.65rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    padding-top: 0.65rem;
+  }
+  .also-notable { margin-top: 2.5rem; }
+  .also-notable h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+  .notable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.75rem;
+  }
+  .notable-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .notable-card:hover {
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-hover);
+  }
+  .notable-card .repo-name { font-size: 0.92rem; font-weight: 600; }
+  .notable-card .repo-name a { color: var(--accent); text-decoration: none; }
+  .notable-card .repo-name a:hover { text-decoration: underline; }
+  .notable-card .note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem; }
+  .notable-card .stars {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--star-color);
+    margin-top: 0.35rem;
+  }
+  .footer {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.75rem; }
+    .hero h1 { font-size: 1.5rem; }
+    .editors-take { padding: 1.25rem; margin-top: -1rem; }
+    .repo-card { padding: 1rem; }
+    .notable-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-07-07</div>
+  <div class="subtitle">Curated from the GitHub Search API &mdash; sorted by stars</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <h2>&#9998; Editor's Take</h2>
+    <p>The AI-agent tooling layer is consolidating fast. This week's standout signal: developers are no longer debating whether to use coding agents &mdash; they are building the connective tissue around them. Merge queues for parallel agents, token-efficiency skills, judgment layers, and meta-harnesses that swap one agent for another without rewriting.</p>
+    <p>The 30-day chart tells the same story at scale: <strong>ponytail</strong> (76k stars in three weeks) is a set of system prompts that tells your agent to write less code, and it is the most-starred new repo of the month. The entire top five is infrastructure for agents, not agents themselves.</p>
+    <p>Two other threads worth watching. First, AI-for-science is splitting into competing camps (<strong>openscience</strong> vs. <strong>open-science</strong>) days after Anthropic shipped Claude Science &mdash; both positioning as the open, model-agnostic alternative. Second, hardware-level AI continues to surface: <strong>gateGPT</strong> implements a full transformer in Verilog on an FPGA, running inference at 56k tokens/second with zero software stack.</p>
+  </div>
+
+  <!-- =========== 7 DAYS =========== -->
+  <div class="section-header">
+    <h2>Hot This Week</h2>
+    <span class="badge hot">Last 7 days</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">1</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST">elder-plinius/T3MP3ST</a></div>
+        <div class="desc">Autonomous red-teaming platform built as a multi-agent offensive-security meta-harness.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 2,709</span>
+          <span class="lang-badge">TypeScript</span>
+          <span>Created 2026-07-02</span>
+        </div>
+        <div class="analysis">Orchestrates multiple agents to probe systems for vulnerabilities. Notable for framing security testing as a first-class agent workflow rather than a bolt-on scan.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">2</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/jamesob/local-llm">jamesob/local-llm</a></div>
+        <div class="desc">Everything I know about running LLMs locally.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 1,085</span>
+          <span class="lang-badge">Shell</span>
+          <span>Created 2026-07-03</span>
+        </div>
+        <div class="analysis">Comprehensive, opinionated guide covering hardware selection, quantization trade-offs, serving stacks, and practical benchmarks. Unlike most "awesome" lists, this consolidates working knowledge into a single document.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">3</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience">synthetic-sciences/openscience</a></div>
+        <div class="desc">The open-source AI workbench for scientific research.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 835</span>
+          <span class="lang-badge">TypeScript</span>
+          <span>Created 2026-07-03</span>
+        </div>
+        <div class="analysis">CLI-first, supports multiple LLM backends, designed for reproducible experiments. One of two "open Claude Science alternative" repos that appeared within hours of each other this week.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">4</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/jmerelnyc/Talos">jmerelnyc/Talos</a></div>
+        <div class="desc">GPU worker client for the Talos distributed inference network.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 722</span>
+          <span class="lang-badge">Python</span>
+          <span>Created 2026-07-02</span>
+        </div>
+        <div class="analysis">Run a worker, serve open-model inference jobs over WebSocket, earn payouts for uptime. Decentralized inference is getting its first usable client software.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">5</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/uzairansaruzi/hermex">uzairansaruzi/hermex</a></div>
+        <div class="desc">Native iPhone app for your Hermes agent.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 660</span>
+          <span class="lang-badge">Swift</span>
+          <span>Created 2026-07-02</span>
+        </div>
+        <div class="analysis">Self-hosted, local-first SwiftUI app that gives mobile users a proper interface to their own LLM agent rather than a chat wrapper.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">6</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/Kulaxyz/token-diet">Kulaxyz/token-diet</a></div>
+        <div class="desc">Always-on token-efficiency skill for coding agents. ~31% lower bill on average, no loss of correctness.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 596</span>
+          <span class="lang-badge">Shell</span>
+          <span>Created 2026-07-03</span>
+        </div>
+        <div class="analysis">Compatible with Claude Code, Codex, Cursor, Windsurf, and Cline. Operates at the skill/prompt layer, not the model layer &mdash; a meta-optimization for agent cost.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">7</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/HKUDS/OpenOPC">HKUDS/OpenOPC</a></div>
+        <div class="desc">Build Your Personal AI-Native Company &mdash; Self-Built, Self-Run, Self-Grown.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 522</span>
+          <span class="lang-badge">Python</span>
+          <span>Created 2026-07-01</span>
+        </div>
+        <div class="analysis">A framework from HKU for self-building, self-running AI-powered organizations. Academic in origin, ambitious in scope.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">8</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/Pluviobyte/rnskill">Pluviobyte/rnskill</a></div>
+        <div class="desc">AI Agent Skills collection.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 335</span>
+          <span class="lang-badge">Python</span>
+          <span>Created 2026-07-04</span>
+        </div>
+        <div class="analysis">Practical, task-oriented skills designed to be composable across agent harnesses. From a prominent community contributor.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">9</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/xt4d/GameBlocks">xt4d/GameBlocks</a></div>
+        <div class="desc">Building blocks that help coding agents prototype browser-based 3D games.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 324</span>
+          <span class="lang-badge">JavaScript</span>
+          <span>Created 2026-07-01</span>
+        </div>
+        <div class="analysis">Concise, self-explanatory modules designed to fit inside an agent's context window. Scaffolding that exists to be consumed by agents, not humans.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">10</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/funador/claude-code-merge-queue">funador/claude-code-merge-queue</a></div>
+        <div class="desc">The local merge queue for parallel Claude Code agents.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 295</span>
+          <span class="lang-badge">TypeScript</span>
+          <span>Created 2026-07-02</span>
+        </div>
+        <div class="analysis">When multiple agents write code on separate branches, this serializes their merges to avoid conflicts. Solves a real pain point in multi-agent development workflows.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== 30 DAYS =========== -->
+  <div class="section-header">
+    <h2>Rising This Month</h2>
+    <span class="badge">Last 30 days</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">1</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/DietrichGebert/ponytail">DietrichGebert/ponytail</a></div>
+        <div class="desc">Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 76,066</span>
+          <span class="lang-badge">JavaScript</span>
+          <span>Created 2026-06-12</span>
+        </div>
+        <div class="analysis">The viral hit of the month. Agent skills and system prompts that enforce YAGNI discipline on AI coding agents. The star count reflects a genuine nerve: developers want their agents to write less, not more.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">2</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/XiaomiMiMo/MiMo-Code">XiaomiMiMo/MiMo-Code</a></div>
+        <div class="desc">MiMo Code: Where Models and Agents Co-Evolve.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 11,551</span>
+          <span class="lang-badge">TypeScript</span>
+          <span>Created 2026-06-10</span>
+        </div>
+        <div class="analysis">Xiaomi's coding-agent entry. The agent improves through use while the underlying model adapts. Backed by Xiaomi's MiMo foundation model family.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">3</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/langchain-ai/openwiki">langchain-ai/openwiki</a></div>
+        <div class="desc">OpenWiki is a CLI that writes and maintains agent documentation for your codebase.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 7,813</span>
+          <span class="lang-badge">TypeScript</span>
+          <span>Created 2026-06-22</span>
+        </div>
+        <div class="analysis">Auto-generates structured docs that other agents can consume. Addresses the meta-problem: agents need to understand codebases, and human-written docs are always stale.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">4</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/omnigent-ai/omnigent">omnigent-ai/omnigent</a></div>
+        <div class="desc">Open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, and custom agents.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 6,470</span>
+          <span class="lang-badge">Python</span>
+          <span>Created 2026-06-11</span>
+        </div>
+        <div class="analysis">Swap harnesses without rewriting, enforce policies and sandboxing, collaborate in real time from any device. The abstraction layer above individual coding agents.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="top-row">
+      <div class="rank">5</div>
+      <div class="info">
+        <div class="repo-name"><a href="https://github.com/cobusgreyling/loop-engineering">cobusgreyling/loop-engineering</a></div>
+        <div class="desc">Practical patterns, starters &amp; CLI tools for loop engineering with AI coding agents.</div>
+        <div class="meta-row">
+          <span class="stars">&#9733; 6,245</span>
+          <span class="lang-badge">JavaScript</span>
+          <span>Created 2026-06-09</span>
+        </div>
+        <div class="analysis">Design systems that prompt and orchestrate agents in repeatable feedback loops. Includes <code>loop-audit</code>, <code>loop-init</code>, and <code>loop-cost</code> utilities.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== ALSO NOTABLE =========== -->
+  <div class="also-notable">
+    <h2>Also Notable</h2>
+    <div class="notable-grid">
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/fguzman82/gateGPT">fguzman82/gateGPT</a></div>
+        <div class="note">Full transformer in Verilog on a Virtex-5 FPGA &mdash; 56k tokens/sec</div>
+        <div class="stars">&#9733; 605</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/vercel/eve">vercel/eve</a></div>
+        <div class="note">Vercel's framework for building agents</div>
+        <div class="stars">&#9733; 3,275</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/cloudflare/security-audit-skill">cloudflare/security-audit-skill</a></div>
+        <div class="note">Multi-phase security audit skill for coding agents</div>
+        <div class="stars">&#9733; 2,321</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/Tencent-Hunyuan/Hy3">Tencent-Hunyuan/Hy3</a></div>
+        <div class="note">Tencent's 295B (A21B) reasoning and agent model</div>
+        <div class="stars">&#9733; 208</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/SuperJJ007/CSSwitch">SuperJJ007/CSSwitch</a></div>
+        <div class="note">Route Claude Science through your own API endpoint</div>
+        <div class="stars">&#9733; 291</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/ai4s-research/open-science">ai4s-research/open-science</a></div>
+        <div class="note">Open Claude Science alternative &mdash; local-first, model-agnostic</div>
+        <div class="stars">&#9733; 247</div>
+      </div>
+      <div class="notable-card">
+        <div class="repo-name"><a href="https://github.com/oxbshw/watch-skill">oxbshw/watch-skill</a></div>
+        <div class="note">Give any AI agent the ability to watch and understand video</div>
+        <div class="stars">&#9733; 85</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Data sourced from the GitHub Search API on 2026-07-07. Stars are approximate and reflect the count at query time.
+  </div>
+
+</div>
+
+</body>
+</html>
