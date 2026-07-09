@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-09</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --text: #1a1a2e;
+    --text-muted: #6c757d;
+    --text-hero: #ffffff;
+    --accent: #e94560;
+    --accent-light: #fff0f3;
+    --border: #e9ecef;
+    --star: #f59e0b;
+    --link: #0f3460;
+    --tag-bg: #e9ecef;
+    --tag-text: #495057;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-hero: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --text-hero: #e6edf3;
+      --accent: #f47089;
+      --accent-light: #2d1620;
+      --border: #30363d;
+      --link: #58a6ff;
+      --tag-bg: #21262d;
+      --tag-text: #8b949e;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: var(--bg-hero);
+    color: var(--text-hero);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .hero .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .editor-take {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    word-break: break-word;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .repo-desc {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .repo-tags {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+  .honorable {
+    margin-top: 1.5rem;
+  }
+  .honorable-item {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .honorable-item:last-child { border-bottom: none; }
+  .honorable-item a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .honorable-item a:hover { text-decoration: underline; }
+  .honorable-stars {
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .hero h1 { font-size: 1.5rem; }
+    .repo-header { flex-direction: column; gap: 0.4rem; }
+    .repo-stars { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-09 UTC</div>
+</div>
+
+<div class="container">
+
+  <div class="editor-take">
+    <strong>Editor's take:</strong> The theme this week is convergence on "AI for X" verticals &mdash; science, finance, DevOps &mdash; displacing the generic "wrapper around an LLM" pattern that dominated Q1. Two independent AI-for-science workbenches landed in the same week (<em>openscience</em> and <em>open-science</em>), both built on agent skills and MCP, suggesting the research-desktop category is about to get crowded. Meanwhile, the agent-skills ecosystem is maturing fast: Cloudflare shipped a security-audit skill, Builder.io's skills repo crossed 3.5k stars, and token-efficiency and self-learning skills are becoming table stakes. The most telling signal is <em>ponytail</em> at 78k stars &mdash; a skill that makes agents write less code &mdash; which says the market has moved past "can my agent code" to "can my agent exercise judgment about when not to."
+  </div>
+
+  <div class="section-title">Top 10 &mdash; Last 7 Days</div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience">synthetic-sciences/openscience</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,802</span>
+      </div>
+      <div class="repo-desc">Open-source AI workbench for scientific research. CLI-first, TypeScript, built on Bun with agent skills for experiment orchestration. The week's runaway hit.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">ai-agent</span><span class="tag">science</span><span class="tag">research-tools</span><span class="tag">llm</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/jamesob/local-llm">jamesob/local-llm</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,278</span>
+      </div>
+      <div class="repo-desc">Comprehensive guide to running LLMs locally. Shell scripts, hardware recs, quantization tips. Practical knowledge base, not another framework.</div>
+      <div class="repo-tags"><span class="tag">Shell</span><span class="tag">local-inference</span><span class="tag">guide</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/Kulaxyz/token-diet">Kulaxyz/token-diet</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 566</span>
+      </div>
+      <div class="repo-desc">Always-on skill that cuts coding-agent token usage by ~31% without correctness loss. Works across Claude Code, Codex, Cursor, and Windsurf.</div>
+      <div class="repo-tags"><span class="tag">Shell</span><span class="tag">token-efficiency</span><span class="tag">coding-agent</span><span class="tag">skill</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/simonlin1212/Vibe-Research">simonlin1212/Vibe-Research</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 557</span>
+      </div>
+      <div class="repo-desc">Personal trading research agent for A-share, US, and HK markets. Daily reviews, news radar, portfolio tracking, powered by MCP and FastAPI.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">fintech</span><span class="tag">ai-agent</span><span class="tag">mcp</span><span class="tag">trading</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/ai4s-research/open-science">ai4s-research/open-science</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 401</span>
+      </div>
+      <div class="repo-desc">Local-first, model-agnostic science desktop built on Tauri + MCP. Positions itself as the open-source Claude Science alternative.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">tauri</span><span class="tag">ai-for-science</span><span class="tag">mcp</span><span class="tag">local-first</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <div class="repo-name"><a href="https://github.com/Pluviobyte/rnskill">Pluviobyte/rnskill</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 382</span>
+      </div>
+      <div class="repo-desc">Collection of AI agent skills from the Chinese-language community. Growing fast as the skill-authoring pattern goes global.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">agent-skills</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <div class="repo-name"><a href="https://github.com/SmileLikeYe/agent-chief">SmileLikeYe/agent-chief</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 319</span>
+      </div>
+      <div class="repo-desc">Local-first attention management layer: turns every agent, alert, and feed into a binary "interrupt or not" decision. The anti-notification-fatigue play.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">local-first</span><span class="tag">harness</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <div class="repo-name"><a href="https://github.com/nexu-io/motion-anything">nexu-io/motion-anything</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 309</span>
+      </div>
+      <div class="repo-desc">Chat-native motion engine: describe the feeling, get the animation. Open-source Figma Motion alternative using WebGL.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">animation</span><span class="tag">ai-agent</span><span class="tag">webgl</span><span class="tag">motion-design</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <div class="repo-name"><a href="https://github.com/eli-labz/Cognitive-Core-Skills">eli-labz/Cognitive-Core-Skills</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 273</span>
+      </div>
+      <div class="repo-desc">Universal taxonomy of 159 cognitive skills for LLMs and agents (perception, memory, reasoning, planning). Includes schemas, benchmarks, and CI.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">cognitive-architecture</span><span class="tag">benchmarks</span><span class="tag">taxonomy</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <div class="repo-name"><a href="https://github.com/OmarH-creator/Autonomous-Forge">OmarH-creator/Autonomous-Forge</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 210</span>
+      </div>
+      <div class="repo-desc">Fully AI-built and AI-maintained project that continuously plans, codes, tests, and improves itself. An experiment in recursive self-improvement.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">self-improving</span><span class="tag">autonomous</span></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Top 5 &mdash; Last 30 Days</div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/DietrichGebert/ponytail">DietrichGebert/ponytail</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 78,192</span>
+      </div>
+      <div class="repo-desc">Makes your AI agent think like the laziest senior dev. The best code is the code you never wrote. YAGNI enforcement as a skill &mdash; and the month's most-starred AI repo by a wide margin.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">agent-skills</span><span class="tag">claude-code</span><span class="tag">prompt-engineering</span><span class="tag">yagni</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/omnigent-ai/omnigent">omnigent-ai/omnigent</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,798</span>
+      </div>
+      <div class="repo-desc">Open-source meta-harness: orchestrate Claude Code, Codex, Cursor, and custom agents without rewriting. Policy enforcement, sandboxing, real-time collaboration.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">agent-orchestration</span><span class="tag">multi-agent</span><span class="tag">sandbox</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/BuilderIO/skills">BuilderIO/skills</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 3,551</span>
+      </div>
+      <div class="repo-desc">Builder.io's official skill library for coding agents. Becoming the npm of agent capabilities.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">skills</span><span class="tag">coding-agents</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/cloudflare/security-audit-skill">cloudflare/security-audit-skill</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,353</span>
+      </div>
+      <div class="repo-desc">Multi-phase security audit skill with independently verified, machine-readable findings. Cloudflare's stamp of approval on the skills pattern.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">security</span><span class="tag">coding-agent</span><span class="tag">audit</span></div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/jamesob/local-llm">jamesob/local-llm</a></div>
+        <span class="repo-stars"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,278</span>
+      </div>
+      <div class="repo-desc">Also trending weekly. The local-inference guide that keeps gaining stars as on-device LLM interest surges.</div>
+      <div class="repo-tags"><span class="tag">Shell</span><span class="tag">local-inference</span><span class="tag">guide</span></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Honorable Mentions</div>
+
+  <div class="honorable">
+    <div class="honorable-item">
+      <a href="https://github.com/ninjahawk/Subtext">ninjahawk/Subtext</a> <span class="honorable-stars"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-1px"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 141</span> &mdash; Mechanistic interpretability visualizer for transformer models. "To know what models don't say out loud."
+    </div>
+    <div class="honorable-item">
+      <a href="https://github.com/olemeyer/rocketplaneIO">olemeyer/rocketplaneIO</a> <span class="honorable-stars"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-1px"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 121</span> &mdash; AI SRE for Kubernetes with eBPF observability and a copilot that fixes incidents through guardrailed actions. BYO-LLM, air-gapped capable.
+    </div>
+    <div class="honorable-item">
+      <a href="https://github.com/oxbshw/watch-skill">oxbshw/watch-skill</a> <span class="honorable-stars"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-1px"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 118</span> &mdash; Gives any AI agent the ability to watch video and monitor its own work. MCP + CLI + REST with scene-aware frames and OCR.
+    </div>
+    <div class="honorable-item">
+      <a href="https://github.com/ahwanulm/AMRouter">ahwanulm/AMRouter</a> <span class="honorable-stars"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-1px"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 113</span> &mdash; Self-hosted AI gateway: one endpoint, many providers, auto-fallback. OpenAI-compatible on Cloudflare Workers.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Generated 2026-07-09 UTC by the Trending GitHub Repos routine.
+</footer>
+
+</body>
+</html>
