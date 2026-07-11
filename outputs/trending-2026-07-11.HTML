@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-11</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #e0edff;
+    --border: #e5e7eb;
+    --star: #d97706;
+    --tag-bg: #f3f4f6;
+    --tag-text: #374151;
+    --section-bg: #f8fafc;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d28;
+      --text: #e4e4e7;
+      --text-secondary: #9ca3af;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --border: #2d3140;
+      --star: #fbbf24;
+      --tag-bg: #272b38;
+      --tag-text: #c4c8d4;
+      --section-bg: #141722;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .editors-take {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editors-take strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-rank {
+    position: absolute;
+    top: -0.55rem;
+    left: 1rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .repo-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.55;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .repo-tag {
+    font-size: 0.72rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { padding: 1rem 1.15rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-11 UTC</div>
+</header>
+
+<div class="editors-take">
+  <strong>Editor's take:</strong> The agent-skill ecosystem has hit escape velocity. Six of this week's top ten repos are skills, MCP integrations, or agent-drivable tools rather than standalone applications &mdash; the platform layer is now the product. Creative AI is the other clear signal: motion engines, film previsualization, and agent-operated video editors suggest the next wave of AI tooling targets directors and animators, not just developers. Meanwhile, the 30-day chart is dominated by <em>ponytail</em>, which hit 80K stars by packaging a deceptively simple idea &mdash; tell your agent to write less code &mdash; into a distributable skill. The meta-lesson: the repos winning stars are the ones that change how agents behave, not what they can access.
+</div>
+
+<div class="section-header">
+  <h2>Top 10 &mdash; last 7 days</h2>
+  <div class="line"></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">1</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/simonlin1212/Vibe-Research">simonlin1212/Vibe-Research</a></div>
+    <div class="repo-stars">&#9733; 687</div>
+  </div>
+  <div class="repo-desc">AI-driven trading research agent covering A-shares, US, and HK markets with daily recap, news radar, sector analysis, and portfolio tracking.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">finance</span><span class="repo-tag">agent</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">2</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/op7418/guizang-material-illustration">op7418/guizang-material-illustration</a></div>
+    <div class="repo-stars">&#9733; 534</div>
+  </div>
+  <div class="repo-desc">Agent skill for generating annotated material-texture illustrations, chart beautification, and reference-assisted diagrams.</div>
+  <div class="repo-tags"><span class="repo-tag">skill</span><span class="repo-tag">creative</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">3</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/xiaotianfotos/homerail">xiaotianfotos/homerail</a></div>
+    <div class="repo-stars">&#9733; 421</div>
+  </div>
+  <div class="repo-desc">Voice-first local agent orchestration runtime for auditable DAG workflows. Treats speech as the primary input channel rather than an afterthought.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">voice</span><span class="repo-tag">orchestration</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">4</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/nexu-io/motion-anything">nexu-io/motion-anything</a></div>
+    <div class="repo-stars">&#9733; 371</div>
+  </div>
+  <div class="repo-desc">Open-source, chat-native motion engine. Describe the feeling you want; the agent ships the animation.</div>
+  <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">motion</span><span class="repo-tag">animation</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">5</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/Doriandarko/texts-to-transformer">Doriandarko/texts-to-transformer</a></div>
+    <div class="repo-stars">&#9733; 317</div>
+  </div>
+  <div class="repo-desc">Train a tiny Transformer from scratch on your iMessage history, entirely on your Mac using Apple MLX. A weekend project that actually teaches something.</div>
+  <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">MLX</span><span class="repo-tag">transformer</span><span class="repo-tag">local-first</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">6</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/ronak-create/FableCut">ronak-create/FableCut</a></div>
+    <div class="repo-stars">&#9733; 313</div>
+  </div>
+  <div class="repo-desc">Zero-dependency browser video editor designed for AI agents to drive via JSON timeline, MCP, and REST. The first editor built agent-first rather than retrofitted.</div>
+  <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">video</span><span class="repo-tag">MCP</span><span class="repo-tag">agent-tool</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">7</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/wassermanproductions/motion-previs-studio">wassermanproductions/motion-previs-studio</a></div>
+    <div class="repo-stars">&#9733; 275</div>
+  </div>
+  <div class="repo-desc">Desktop app for AI-film motion, depth, pose, and camera-move previsualization. Targets pre-production workflows where storyboards fall short.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">film</span><span class="repo-tag">previsualization</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">8</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/eli-labz/Cognitive-Core-Skills">eli-labz/Cognitive-Core-Skills</a></div>
+    <div class="repo-stars">&#9733; 273</div>
+  </div>
+  <div class="repo-desc">Industry-neutral taxonomy of cognitive skills for LLMs and agents &mdash; 159 skill cards covering perception, memory, reasoning, planning, action, verification, learning, and governance, with schemas and benchmarks.</div>
+  <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">taxonomy</span><span class="repo-tag">benchmarks</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">9</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/yusukebe/ax">yusukebe/ax</a></div>
+    <div class="repo-stars">&#9733; 260</div>
+  </div>
+  <div class="repo-desc">Bills itself as &ldquo;the AI-era curl.&rdquo; A single-binary CLI for making AI-augmented HTTP requests.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">CLI</span><span class="repo-tag">HTTP</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">10</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/avifenesh/bw24">avifenesh/bw24</a></div>
+    <div class="repo-stars">&#9733; 259</div>
+  </div>
+  <div class="repo-desc">From-scratch Rust+CUDA inference engine with NVFP4, MoE, and MTP speculative decoding, hand-tuned against the measured limits of a single RTX 5090 Laptop.</div>
+  <div class="repo-tags"><span class="repo-tag">Rust</span><span class="repo-tag">CUDA</span><span class="repo-tag">inference</span><span class="repo-tag">hardware</span></div>
+</div>
+
+<div class="section-header">
+  <h2>Top 5 &mdash; last 30 days</h2>
+  <div class="line"></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">1</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/DietrichGebert/ponytail">DietrichGebert/ponytail</a></div>
+    <div class="repo-stars">&#9733; 80,229</div>
+  </div>
+  <div class="repo-desc">Makes your AI agent think like the laziest senior dev in the room. The thesis: the best code is the code you never wrote. Went viral because the technique measurably reduces agent-generated bloat.</div>
+  <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">agent-behavior</span><span class="repo-tag">skill</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">2</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/langchain-ai/openwiki">langchain-ai/openwiki</a></div>
+    <div class="repo-stars">&#9733; 10,378</div>
+  </div>
+  <div class="repo-desc">CLI that writes and maintains agent-readable documentation for your codebase. LangChain's bet that context quality is the bottleneck, not context length.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">documentation</span><span class="repo-tag">context</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">3</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST">elder-plinius/T3MP3ST</a></div>
+    <div class="repo-stars">&#9733; 4,341</div>
+  </div>
+  <div class="repo-desc">Autonomous red teaming platform &mdash; a multi-agent offensive-security meta-harness. Useful for security teams who want adversarial testing at agent speed.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">security</span><span class="repo-tag">red-team</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">4</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/vercel/eve">vercel/eve</a></div>
+    <div class="repo-stars">&#9733; 3,411</div>
+  </div>
+  <div class="repo-desc">Vercel's framework for building agents. Opinionated, deployment-ready, and tightly integrated with the Vercel platform.</div>
+  <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">framework</span><span class="repo-tag">agents</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-rank">5</div>
+  <div class="repo-top-row">
+    <div class="repo-name"><a href="https://github.com/Forward-Future/loopy">Forward-Future/loopy</a></div>
+    <div class="repo-stars">&#9733; 2,636</div>
+  </div>
+  <div class="repo-desc">Library of practical AI-agent loops and an installable skill for finding, adapting, and designing repeatable agent workflows. The pattern book the ecosystem was missing.</div>
+  <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">workflows</span><span class="repo-tag">patterns</span></div>
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &mdash; 2026-07-11 UTC
+</footer>
+
+</div>
+</body>
+</html>
