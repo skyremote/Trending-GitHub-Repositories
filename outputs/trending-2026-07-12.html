@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-12</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a2e;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --card-bg: #f8fafc;
+    --card-border: #e2e8f0;
+    --badge-bg: #fef3c7;
+    --badge-fg: #92400e;
+    --section-bg: #f1f5f9;
+    --star: #eab308;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --badge-bg: #422006;
+      --badge-fg: #fbbf24;
+      --section-bg: #1e293b;
+      --star: #facc15;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--card-border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .editors-take {
+    background: var(--section-bg);
+    border-left: 4px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    border-radius: 0 8px 8px 0;
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--fg);
+  }
+  section { margin-bottom: 2.5rem; }
+  section > h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .repo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .repo-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .repo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .repo-stars svg {
+    width: 12px;
+    height: 12px;
+    fill: var(--star);
+  }
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-left: 2.5rem;
+  }
+  .topics {
+    margin-left: 2.5rem;
+    margin-top: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .topic {
+    font-size: 0.7rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--card-border);
+  }
+  @media (max-width: 600px) {
+    body { padding: 1rem 0.75rem; }
+    header h1 { font-size: 1.4rem; }
+    .repo-desc, .topics { margin-left: 0; margin-top: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-12 UTC</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The week's strongest signal: AI is leaving the chatbox and entering the control plane. The top new repos are not chatbots or RAG wrappers — they are autonomous SRE agents diagnosing Kubernetes clusters via eBPF, video editors driven entirely by agent commands, and vulnerability pipelines running 14B models against every source file in a codebase. Meanwhile, the "agent profile" pattern is emerging — mining your own coding logs to build a portable persona that follows you across tools. The 30-day view confirms this direction: generative science (protein design, on-policy distillation) and Arabic-first speech models show that the most durable projects are the ones solving hard vertical problems rather than wrapping APIs. If your AI project still starts with "chat with your X," you are building last quarter's product.</p>
+</div>
+
+<section>
+  <h2>Top 10 — Last 7 Days</h2>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">1</span>
+      <span class="repo-name"><a href="https://github.com/ronak-create/FableCut" target="_blank" rel="noopener">ronak-create/FableCut</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 339</span>
+    </div>
+    <div class="repo-desc">Zero-dependency browser video editor that AI agents can drive via JSON timeline and MCP+REST; positions NLE as an agent skill rather than a standalone app.</div>
+    <div class="topics"><span class="topic">ai-agent</span><span class="topic">mcp</span><span class="topic">video-editor</span><span class="topic">javascript</span><span class="topic">zero-dependency</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">2</span>
+      <span class="repo-name"><a href="https://github.com/SilentFleetKK/ai-market-pulse" target="_blank" rel="noopener">SilentFleetKK/ai-market-pulse</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 148</span>
+    </div>
+    <div class="repo-desc">Turns any stock watchlist into a daily AI research report; quant research cockpit with zero-code setup and GitHub Pages output.</div>
+    <div class="topics"><span class="topic">ai</span><span class="topic">llm</span><span class="topic">quant</span><span class="topic">stock-analysis</span><span class="topic">python</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">3</span>
+      <span class="repo-name"><a href="https://github.com/olemeyer/rocketplaneIO" target="_blank" rel="noopener">olemeyer/rocketplaneIO</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 131</span>
+    </div>
+    <div class="repo-desc">Self-hosted AI SRE for Kubernetes with zero-instrumentation eBPF observability and a copilot that fixes issues through guardrailed, self-verifying actions. BYO-LLM, air-gap capable.</div>
+    <div class="topics"><span class="topic">ai-agent</span><span class="topic">kubernetes</span><span class="topic">ebpf</span><span class="topic">sre</span><span class="topic">golang</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">4</span>
+      <span class="repo-name"><a href="https://github.com/zai-project/glm-5.2-free-desktop-app" target="_blank" rel="noopener">zai-project/glm-5.2-free-desktop-app</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 131</span>
+    </div>
+    <div class="repo-desc">Desktop wrapper for the GLM-5.2 open-weight model (753B parameters, MoE); signals demand for local-first access to frontier-class open models.</div>
+    <div class="topics"><span class="topic">glm</span><span class="topic">desktop-ai</span><span class="topic">open-weights</span><span class="topic">moe</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">5</span>
+      <span class="repo-name"><a href="https://github.com/ohad6k/ditto" target="_blank" rel="noopener">ohad6k/ditto</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 107</span>
+    </div>
+    <div class="repo-desc">Mines your Claude Code and Codex logs into a local you.md agent profile; the portable-developer-persona pattern gaining traction.</div>
+    <div class="topics"><span class="topic">agent-memory</span><span class="topic">claude-code</span><span class="topic">context-engineering</span><span class="topic">personalization</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">6</span>
+      <span class="repo-name"><a href="https://github.com/AudarAI/Audar-ASR-V1" target="_blank" rel="noopener">AudarAI/Audar-ASR-V1</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 96</span>
+    </div>
+    <div class="repo-desc">Arabic-first generative speech recognition (Flash + Turbo variants); currently #1 on the Open Universal Arabic ASR Leaderboard.</div>
+    <div class="topics"><span class="topic">arabic</span><span class="topic">asr</span><span class="topic">speech-recognition</span><span class="topic">huggingface</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">7</span>
+      <span class="repo-name"><a href="https://github.com/theteatoast/local-vuln-research-pipeline" target="_blank" rel="noopener">theteatoast/local-vuln-research-pipeline</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 87</span>
+    </div>
+    <div class="repo-desc">Fully local vulnerability research pipeline using a 14B code-specialized LLM to review every source file exhaustively; offensive security meets on-device inference.</div>
+    <div class="topics"><span class="topic">agents</span><span class="topic">offensive-security</span><span class="topic">qwen</span><span class="topic">vulnerability-research</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">8</span>
+      <span class="repo-name"><a href="https://github.com/Alisa0808/vox-director" target="_blank" rel="noopener">Alisa0808/vox-director</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 74</span>
+    </div>
+    <div class="repo-desc">Turns one topic into a finished Vox-style paper-collage explainer video end-to-end on Atlas Cloud + ffmpeg; packaged as an agent skill.</div>
+    <div class="topics"><span class="topic">ai-video</span><span class="topic">claude-skill</span><span class="topic">video-generation</span><span class="topic">ffmpeg</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">9</span>
+      <span class="repo-name"><a href="https://github.com/amitshekhariitbhu/100-days-of-ai" target="_blank" rel="noopener">amitshekhariitbhu/100-days-of-ai</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 42</span>
+    </div>
+    <div class="repo-desc">Structured 100-day challenge from ML basics to AI agents in production; curriculum-as-repo format from a creator with proven reach.</div>
+    <div class="topics"><span class="topic">ai-agents</span><span class="topic">machine-learning</span><span class="topic">llm</span><span class="topic">100daysofai</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">10</span>
+      <span class="repo-name"><a href="https://github.com/katipally/openlive" target="_blank" rel="noopener">katipally/openlive</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 32</span>
+    </div>
+    <div class="repo-desc">Live voice + vision AI assistant with on-device voice pipeline and thin LLM proxy; real-time multimodal on consumer hardware.</div>
+    <div class="topics"><span class="topic">voice</span><span class="topic">vision</span><span class="topic">on-device</span><span class="topic">typescript</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Top 5 — Last 30 Days</h2>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">1</span>
+      <span class="repo-name"><a href="https://github.com/worldbench/DanceOPD" target="_blank" rel="noopener">worldbench/DanceOPD</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 166</span>
+    </div>
+    <div class="repo-desc">On-Policy Generative Field Distillation for image generation; a research-grade contribution to efficient diffusion training that could reshape fine-tuning economics.</div>
+    <div class="topics"><span class="topic">aigc</span><span class="topic">image-generation</span><span class="topic">on-policy-distillation</span><span class="topic">python</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">2</span>
+      <span class="repo-name"><a href="https://github.com/benlamiro/ShipGenAI" target="_blank" rel="noopener">benlamiro/ShipGenAI</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 158</span>
+    </div>
+    <div class="repo-desc">50 production-ready generative AI SaaS templates (Stripe, OAuth, Vercel deploy, MIT); the "clone and ship" pattern applied to AI products at scale.</div>
+    <div class="topics"><span class="topic">generative-ai</span><span class="topic">saas</span><span class="topic">nextjs</span><span class="topic">starter-kit</span><span class="topic">stripe</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">3</span>
+      <span class="repo-name"><a href="https://github.com/evo-design/proto-language" target="_blank" rel="noopener">evo-design/proto-language</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 140</span>
+    </div>
+    <div class="repo-desc">High-level programming language for generative biology; domain-specific languages for science are where the real leverage lives.</div>
+    <div class="topics"><span class="topic">generative-biology</span><span class="topic">python</span><span class="topic">dsl</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">4</span>
+      <span class="repo-name"><a href="https://github.com/LOGOS-Hub/LOGOS" target="_blank" rel="noopener">LOGOS-Hub/LOGOS</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 132</span>
+    </div>
+    <div class="repo-desc">First multi-domain generative foundation model for natural sciences, built on a unified scientific grammar; autoregressive paradigm across chemistry, materials, and biology.</div>
+    <div class="topics"><span class="topic">foundation-model</span><span class="topic">science</span><span class="topic">autoregressive</span><span class="topic">python</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <span class="repo-rank">5</span>
+      <span class="repo-name"><a href="https://github.com/calesthio/generative-media-skills" target="_blank" rel="noopener">calesthio/generative-media-skills</a></span>
+      <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 28</span>
+    </div>
+    <div class="repo-desc">Research-backed agent skills for image, video, audio, and voice production across AI coding assistants; the agent-skill-as-library pattern maturing.</div>
+    <div class="topics"><span class="topic">generative-media</span><span class="topic">agent</span><span class="topic">skills</span><span class="topic">video-generation</span></div>
+  </div>
+</section>
+
+<footer>
+  Generated by the Trending GitHub Repos routine — 2026-07-12 UTC
+</footer>
+</body>
+</html>
