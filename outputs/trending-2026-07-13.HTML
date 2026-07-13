@@ -1,0 +1,498 @@
+<title>Trending AI Repos — 2026-07-13</title>
+<style>
+@font-face {
+  font-family: 'Departure';
+  src: url(data:font/woff2;base64,) format('woff2');
+}
+
+:root {
+  --bg: #f6f5f0;
+  --bg-card: #eceae3;
+  --text: #1a1915;
+  --text-secondary: #5c584d;
+  --accent: #c44b2b;
+  --accent-muted: #d4816b;
+  --border: #d5d2c8;
+  --star: #b8860b;
+  --tag-bg: #e2dfd6;
+  --tag-text: #4a473e;
+  --section-label: #8a8578;
+  --highlight: rgba(196, 75, 43, 0.07);
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1915;
+    --bg-card: #25231d;
+    --text: #e8e5dc;
+    --text-secondary: #9e9a8e;
+    --accent: #e0673f;
+    --accent-muted: #a85a3e;
+    --border: #3a3730;
+    --star: #d4a940;
+    --tag-bg: #2e2b24;
+    --tag-text: #b5b1a5;
+    --section-label: #7a7568;
+    --highlight: rgba(224, 103, 63, 0.08);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1a1915;
+  --bg-card: #25231d;
+  --text: #e8e5dc;
+  --text-secondary: #9e9a8e;
+  --accent: #e0673f;
+  --accent-muted: #a85a3e;
+  --border: #3a3730;
+  --star: #d4a940;
+  --tag-bg: #2e2b24;
+  --tag-text: #b5b1a5;
+  --section-label: #7a7568;
+  --highlight: rgba(224, 103, 63, 0.08);
+}
+:root[data-theme="light"] {
+  --bg: #f6f5f0;
+  --bg-card: #eceae3;
+  --text: #1a1915;
+  --text-secondary: #5c584d;
+  --accent: #c44b2b;
+  --accent-muted: #d4816b;
+  --border: #d5d2c8;
+  --star: #b8860b;
+  --tag-bg: #e2dfd6;
+  --tag-text: #4a473e;
+  --section-label: #8a8578;
+  --highlight: rgba(196, 75, 43, 0.07);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+@media (max-width: 520px) {
+  .page { padding: 2rem 1rem 3rem; }
+}
+
+/* Header */
+.header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--section-label);
+  margin-bottom: 0.5rem;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@media (max-width: 520px) {
+  .header h1 { font-size: 1.6rem; }
+}
+
+/* Editor's take */
+.editors-take {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: var(--highlight);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+.editors-take-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.editors-take p {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  max-width: 62ch;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.section-window {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--section-label);
+  white-space: nowrap;
+}
+
+/* Repo cards */
+.repo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.repo {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.repo:last-child { border-bottom: none; }
+
+.repo-rank {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-muted);
+  padding-top: 0.15rem;
+  text-align: right;
+}
+
+.repo-body {
+  min-width: 0;
+}
+
+.repo-top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.repo-name {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.repo-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.repo-name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.repo-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--star);
+  white-space: nowrap;
+}
+
+.repo-stars svg {
+  width: 12px;
+  height: 12px;
+  fill: var(--star);
+  flex-shrink: 0;
+}
+
+.repo-lang {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+.repo-desc {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 58ch;
+}
+
+/* Footer */
+.footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--section-label);
+  letter-spacing: 0.04em;
+}
+</style>
+
+<div class="page">
+  <header class="header">
+    <div class="header-date">July 13, 2026</div>
+    <h1>Trending AI Repositories</h1>
+  </header>
+
+  <div class="editors-take">
+    <div class="editors-take-label">Editor's Take</div>
+    <p>The week's strongest signal is the backlash against AI-generated content. Two of the top three 7-day repos exist solely to detect and strip AI writing patterns from projects and prose. The community is now building tools to undo AI output, not just generate it. Meanwhile, the 30-day view reveals security tooling as the first serious job for agent skills: Cloudflare shipping a multi-phase audit skill and T3MP3ST reaching 4.5k stars as an autonomous red team harness suggest offense and defense are the use cases where agent loops deliver measurable value over one-shot prompts. A third thread worth watching: AI meeting the physical world through video comprehension, SaaS auth gateways, and local-first research workbenches that treat models as lab instruments rather than chatbots.</p>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Top 10</h2>
+      <span class="section-window">Last 7 days</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo">
+        <div class="repo-rank">1</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/Raymondhou0917/speak-human-tw" target="_blank" rel="noopener">Raymondhou0917/speak-human-tw</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>404</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Traditional Chinese "de-AI-ifier" skill that catches 38 AI writing tics and corrects mainland phrasing for Taiwanese audiences. Works with Claude Code, Codex, and Cursor.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">2</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/Doriandarko/texts-to-transformer" target="_blank" rel="noopener">Doriandarko/texts-to-transformer</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>372</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Train a tiny Transformer from scratch on your iMessage history, entirely on-device with Apple MLX. A clean pedagogical project that doubles as a personal language model.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">3</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/yetone/kill-ai-slop" target="_blank" rel="noopener">yetone/kill-ai-slop</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>336</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Field guide to the visual and copy tics of AI-generated products, bundled with an agent skill that scans your project and strips them out. The anti-slop linter the industry needed.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">4</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/bkingfilm/lapian-notes" target="_blank" rel="noopener">bkingfilm/lapian-notes</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>291</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">AI-assisted film analysis tool: local frame extraction, narrative swim-lane timelines, structure trees, and emotion curves. Built for screenwriters who study films by dissection.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">5</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/AlephAITech/WorkBuddyGuide" target="_blank" rel="noopener">AlephAITech/WorkBuddyGuide</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>176</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Open-source playbook for WorkBuddy covering real-world workflows, skills, MCP, automation, and multi-agent patterns. Tutorials plus worked examples.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">6</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/SilentFleetKK/ai-market-pulse" target="_blank" rel="noopener">SilentFleetKK/ai-market-pulse</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>154</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Turn any stock watchlist into a daily AI-driven market research report. Zero-code setup, GitHub Pages output, backed by AkShare and yFinance data.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">7</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/EXXETA/exxperts" target="_blank" rel="noopener">EXXETA/exxperts</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>143</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Persistent AI rooms with governed, approval-gated memory. Local-first architecture where context persists across sessions without leaking between workspaces.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">8</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/ohad6k/ditto" target="_blank" rel="noopener">ohad6k/ditto</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>140</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Mine your Claude Code and Codex session logs into a local you.md agent profile. Extracts your patterns and preferences so future agents start with context about how you work.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">9</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/ronikobrosly/RigorLoop" target="_blank" rel="noopener">ronikobrosly/RigorLoop</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>126</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Agentic build framework that splits verification data into dev, validation, and test sets to prevent overfitting. The data-science discipline applied to agent loops.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">10</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/Alisa0808/vox-director" target="_blank" rel="noopener">Alisa0808/vox-director</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>80</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Turn one topic into a finished Vox-style paper-collage explainer video, end to end, using Atlas Cloud and ffmpeg. An agent skill for automated video essays.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Top 5</h2>
+      <span class="section-window">Last 30 days</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo">
+        <div class="repo-rank">1</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,541</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Autonomous red teaming platform built as a multi-agent offensive-security meta-harness. The most-starred new security-agent project this month. AGPL-3.0.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">2</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener">cloudflare/security-audit-skill</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>2,454</span>
+            <span class="repo-lang">JavaScript</span>
+          </div>
+          <div class="repo-desc">Cloudflare's coding-agent skill for multi-phase security audits with independently verified, machine-readable findings. The first major vendor-backed agent skill for security.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">3</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/synthetic-sciences/openscience" target="_blank" rel="noopener">synthetic-sciences/openscience</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>2,288</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Open-source AI workbench for scientific research. CLI-first, model-agnostic, with deep integrations for ML engineering and reproducible experiments. Apache-2.0.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">4</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/oomol-lab/open-connector" target="_blank" rel="noopener">oomol-lab/open-connector</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,701</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Auth gateway connecting 1,000+ SaaS providers to AI agents through SDK, CLI, MCP, HTTP, and OpenAPI. Self-hosted, Apache-2.0.</div>
+        </div>
+      </div>
+
+      <div class="repo">
+        <div class="repo-rank">5</div>
+        <div class="repo-body">
+          <div class="repo-top">
+            <a class="repo-name" href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video" target="_blank" rel="noopener">HUANGCHIHHUNGLeo/claude-real-video</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,564</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <div class="repo-desc">Let Claude or any LLM actually watch a video with scene-aware, deduplicated frames plus transcript. Works from URL or local file. Runs locally, MIT.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    Generated by the Trending GitHub Repos routine on 2026-07-13.
+  </footer>
+</div>
