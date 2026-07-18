@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-18</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a2e;
+    --muted: #64748b;
+    --accent: #6366f1;
+    --accent-light: #e0e7ff;
+    --card-bg: #f8fafc;
+    --card-border: #e2e8f0;
+    --star: #eab308;
+    --section-bg: #f1f5f9;
+    --link: #4f46e5;
+    --tag-bg: #e0e7ff;
+    --tag-fg: #4338ca;
+    --editor-bg: #fefce8;
+    --editor-border: #fde68a;
+    --badge-7d-bg: #dbeafe;
+    --badge-7d-fg: #1e40af;
+    --badge-30d-bg: #ede9fe;
+    --badge-30d-fg: #5b21b6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #818cf8;
+      --accent-light: #1e1b4b;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --star: #facc15;
+      --section-bg: #1e293b;
+      --link: #a5b4fc;
+      --tag-bg: #312e81;
+      --tag-fg: #c7d2fe;
+      --editor-bg: #1c1917;
+      --editor-border: #78716c;
+      --badge-7d-bg: #1e3a5f;
+      --badge-7d-fg: #93c5fd;
+      --badge-30d-bg: #2e1065;
+      --badge-30d-fg: #c4b5fd;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--card-border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editor-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2em 0.65em;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-7d { background: var(--badge-7d-bg); color: var(--badge-7d-fg); }
+  .badge-30d { background: var(--badge-30d-bg); color: var(--badge-30d-fg); }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s ease;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .repo-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+  .rank {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.85rem;
+    min-width: 1.8em;
+  }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .stars {
+    margin-left: auto;
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding-left: 2.3em;
+  }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-top { flex-direction: column; gap: 0.25rem; }
+    .stars { margin-left: 2.3em; }
+    .repo-desc { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-07-18 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The agent ecosystem is splitting into two distinct layers: <em>infrastructure</em> and <em>taste</em>. Infrastructure projects like Open Connector (auth gateway for 1,000+ SaaS endpoints) and sim-use (mobile-simulator eyes and hands) are solving the plumbing that lets agents touch the real world. Meanwhile, a new class of "taste" tools &mdash; kill-ai-slop, self-learning-skills, and Brain0's provenance tracking &mdash; exist solely to make AI-written output less terrible and more auditable.</p>
+    <p style="margin-top:0.75rem;">The most interesting signal this week is J-Wash, which hands users Anthropic's own Jacobian Lens to manually edit model alignment. That a tool for <em>un-aligning</em> models can gain 170+ stars in four days says something about where the community's curiosity is pointing. Science workbenches (openscience, open-science) are suddenly a two-horse race, both born the same week. If you ship AI tools, the takeaway is clear: the market now expects your output to be traceable, your integrations to be turnkey, and your defaults to be tasteful.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/Blueturboguy07/cue" target="_blank" rel="noopener">Blueturboguy07/cue</a></span>
+        <span class="stars">&#9733; 487</span>
+      </div>
+      <div class="repo-desc">Open-source macOS AI copilot that floats over your screen, sees and hears your meetings, and hides from screen shares. BYOK alternative to Cluely with local-first privacy.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/PengZhang64/circuit-framework" target="_blank" rel="noopener">PengZhang64/circuit-framework</a></span>
+        <span class="stars">&#9733; 479</span>
+      </div>
+      <div class="repo-desc">Multi-agent LLM trading research system. Orchestrates specialized agents for market analysis, backtesting, and signal generation in a single framework.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/QuantumByteOSS/quantumbyte" target="_blank" rel="noopener">QuantumByteOSS/quantumbyte</a></span>
+        <span class="stars">&#9733; 324</span>
+      </div>
+      <div class="repo-desc">Open-source app builder engine that turns natural-language intent into working apps. Python backend with Next.js frontend generation.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/nethical6/conversation-steganography" target="_blank" rel="noopener">nethical6/conversation-steganography</a></span>
+        <span class="stars">&#9733; 306</span>
+      </div>
+      <div class="repo-desc">Uses LLMs to hide secret messages inside normal-looking chat text. A Go implementation of conversational steganography with practical covert-channel implications.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/nihe0909/xiaohongshu-ai-workbench" target="_blank" rel="noopener">nihe0909/xiaohongshu-ai-workbench</a></span>
+        <span class="stars">&#9733; 234</span>
+      </div>
+      <div class="repo-desc">Free Codex skills for Xiaohongshu (Little Red Book) content operations. Signals AI-agent skills becoming vertical SaaS for Chinese social platforms.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#6</span>
+        <span class="repo-name"><a href="https://github.com/yuwen-cool/yuwen-publish-precheck" target="_blank" rel="noopener">yuwen-cool/yuwen-publish-precheck</a></span>
+        <span class="stars">&#9733; 223</span>
+      </div>
+      <div class="repo-desc">AI pre-publication compliance checker for Douyin, Xiaohongshu, and WeChat Channels. Flags policy violations with citations to official rules before you post.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#7</span>
+        <span class="repo-name"><a href="https://github.com/thesysdev/appless" target="_blank" rel="noopener">thesysdev/appless</a></span>
+        <span class="stars">&#9733; 198</span>
+      </div>
+      <div class="repo-desc">"What if your phone had no apps?" A generative-UI experiment using React Native and LLMs to replace discrete apps with on-demand interfaces.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#8</span>
+        <span class="repo-name"><a href="https://github.com/Encod3d-Sec/ClaudeBrain" target="_blank" rel="noopener">Encod3d-Sec/ClaudeBrain</a></span>
+        <span class="stars">&#9733; 195</span>
+      </div>
+      <div class="repo-desc">Karpathy-style LLM-based Claude harness for penetration testing and bug bounty, using Obsidian as a knowledge graph backend.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#9</span>
+        <span class="repo-name"><a href="https://github.com/h9-tec/Awesome_ai_learning" target="_blank" rel="noopener">h9-tec/Awesome_ai_learning</a></span>
+        <span class="stars">&#9733; 181</span>
+      </div>
+      <div class="repo-desc">Curated AI learning resource list covering fundamentals through advanced topics. Early traction suggests demand for structured learning paths remains strong.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#10</span>
+        <span class="repo-name"><a href="https://github.com/Extraltodeus/J-Wash" target="_blank" rel="noopener">Extraltodeus/J-Wash</a></span>
+        <span class="stars">&#9733; 173</span>
+      </div>
+      <div class="repo-desc">Manual alignment editing tool for LLMs built on Anthropic's Jacobian Lens. Lets researchers visualize and export steering vectors for model behaviour modification.</div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a></span>
+        <span class="stars">&#9733; 4,904</span>
+      </div>
+      <div class="repo-desc">Autonomous red-teaming platform with a multi-agent offensive-security meta-harness. The month's breakout, reflecting intense demand for automated adversarial testing at scale.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/oomol-lab/open-connector" target="_blank" rel="noopener">oomol-lab/open-connector</a></span>
+        <span class="stars">&#9733; 2,867</span>
+      </div>
+      <div class="repo-desc">Open-source auth gateway connecting 1,000+ SaaS providers to AI agents via SDK, CLI, MCP, HTTP, and OpenAPI. The plumbing layer agents have been missing.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/synthetic-sciences/openscience" target="_blank" rel="noopener">synthetic-sciences/openscience</a></span>
+        <span class="stars">&#9733; 2,554</span>
+      </div>
+      <div class="repo-desc">Open-source AI workbench for scientific research. CLI-first, model-agnostic, positioned as the open alternative to proprietary co-scientist tools.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/isjiamu/gzh-design-skill" target="_blank" rel="noopener">isjiamu/gzh-design-skill</a></span>
+        <span class="stars">&#9733; 2,286</span>
+      </div>
+      <div class="repo-desc">AI-agent skill that converts Markdown into paste-ready WeChat article HTML with six themes and a theme generator. Proof that skills are becoming a distribution channel.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/ray-r-ren/agent-apprenticeship" target="_blank" rel="noopener">ray-r-ren/agent-apprenticeship</a></span>
+        <span class="stars">&#9733; 1,316</span>
+      </div>
+      <div class="repo-desc">Living ecosystem where AI agents learn through workflow loops, mentor evaluation, and reusable work experience. Turns completed tasks into training signal for future agents.</div>
+    </li>
+  </ol>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-07-18 UTC
+  </footer>
+</div>
+</body>
+</html>
