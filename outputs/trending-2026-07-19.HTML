@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-07-19</title>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --border: #e5e7eb;
+  --star: #f59e0b;
+  --tag-bg: #f3f4f6;
+  --section-bg: #f0f4ff;
+  --gradient-start: #1e3a5f;
+  --gradient-end: #2563eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --star: #fbbf24;
+    --tag-bg: #334155;
+    --section-bg: #162032;
+    --gradient-start: #0f172a;
+    --gradient-end: #1e40af;
+  }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.header {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: #fff;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.header .date {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+.editors-take {
+  background: var(--section-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.editors-take h2 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.editors-take p {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.repo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.repo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.repo-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.repo-rank {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  min-width: 2rem;
+}
+.repo-info { flex: 1; min-width: 200px; }
+.repo-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.repo-name a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.repo-name a:hover { text-decoration: underline; }
+.repo-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+.repo-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.star-count {
+  color: var(--star);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.lang-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.lang-rust { background: #dea584; }
+.lang-go { background: #00ADD8; }
+.lang-python { background: #3572A5; }
+.lang-typescript { background: #3178C6; }
+.lang-javascript { background: #f1e05a; }
+.lang-shell { background: #89e051; }
+.lang-swift { background: #F05138; }
+.lang-html { background: #e34c26; }
+.themes {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+.themes h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.themes ul {
+  list-style: none;
+  padding: 0;
+}
+.themes li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.themes li:last-child { border-bottom: none; }
+.themes li strong { color: var(--accent); }
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.5rem; }
+  .repo-header { flex-direction: column; gap: 0.5rem; }
+  .container { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Trending AI Repositories</h1>
+  <div class="date">Weekly Brief — 2026-07-19 UTC</div>
+</div>
+<div class="container">
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The coding-agent ecosystem just got its biggest signal yet: xAI dropped <code>grok-build</code> and sucked up 19k stars in five days flat. That one repo now has more forks than most frameworks get in a year. But look past the headline number and you see the real story — the infrastructure layer around agents is filling in fast. Memory (deja-vu), auth (open-connector), security testing (T3MP3ST, LLMVault), and cross-agent harnesses (agentsmith) all shipped this month. The market is no longer asking "should we use AI agents?" but "how do we operate them safely at scale?" Meanwhile, steganography via LLMs is a reminder that every capability cuts both ways.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 — Last 7 Days</h2>
+  <div class="repo-list">
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/xai-org/grok-build" target="_blank">xai-org/grok-build</a></div>
+          <div class="repo-desc">SpaceXAI's coding agent harness and TUI. Fullscreen, mouse-interactive, extensible.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">19,077</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-rust"></span> Rust</span>
+            <span class="meta-item">Created Jul 14</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/nethical6/conversation-steganography" target="_blank">nethical6/conversation-steganography</a></div>
+          <div class="repo-desc">Use LLMs to hide messages inside normal-looking conversations. Dual-use technique with security implications.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">713</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-go"></span> Go</span>
+            <span class="meta-item">Created Jul 17</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Blueturboguy07/cue" target="_blank">Blueturboguy07/cue</a></div>
+          <div class="repo-desc">Open-source macOS AI copilot that floats over your screen, sees/hears your meetings, and stays hidden.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">554</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-item">Created Jul 15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/PengZhang64/circuit-framework" target="_blank">PengZhang64/circuit-framework</a></div>
+          <div class="repo-desc">Multi-agent LLM trading research system. Connects specialized agents for quantitative workflows.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">482</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jul 16</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/stackblitz/bolt-slides" target="_blank">stackblitz/bolt-slides</a></div>
+          <div class="repo-desc">Use any agent to create stunning, interactive presentations.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">388</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-item">Created Jul 14</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/vshulcz/deja-vu" target="_blank">vshulcz/deja-vu</a></div>
+          <div class="repo-desc">Memory layer for coding agents: search, MCP recall, auto-context, secret redaction. One zero-dep Go binary.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">365</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-go"></span> Go</span>
+            <span class="meta-item">Created Jul 14</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/pyang5166/gbro-collage-broll" target="_blank">pyang5166/gbro-collage-broll</a></div>
+          <div class="repo-desc">Editorial halftone paper-collage B-roll generation skill. Gemini-powered first/last frame animation assembly.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">364</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jul 15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/QuantumByteOSS/quantumbyte" target="_blank">QuantumByteOSS/quantumbyte</a></div>
+          <div class="repo-desc">Open-source app builder engine — intent to working app.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">328</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jul 14</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/PromptPartner/agentsmith" target="_blank">PromptPartner/agentsmith</a></div>
+          <div class="repo-desc">Universal, model-agnostic operating harness for AI agents (Claude, Codex, Gemini). Lean core + work-type profiles.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">308</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-shell"></span> Shell</span>
+            <span class="meta-item">Created Jul 16</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yuwen-cool/yuwen-publish-precheck" target="_blank">yuwen-cool/yuwen-publish-precheck</a></div>
+          <div class="repo-desc">AI pre-check before publishing to Douyin/Xiaohongshu: flags risky content, cites official rules, suggests edits.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">249</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jul 15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Top 5 — Last 30 Days</h2>
+  <div class="repo-list">
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank">elder-plinius/T3MP3ST</a></div>
+          <div class="repo-desc">Autonomous red teaming platform. Multi-agent offensive-security meta-harness. 1,000+ forks in three weeks.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">4,948</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-item">Created Jul 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/oomol-lab/open-connector" target="_blank">oomol-lab/open-connector</a></div>
+          <div class="repo-desc">Open-source auth gateway connecting 1,000+ SaaS providers to AI agents through SDK, CLI, MCP, HTTP, and OpenAPI.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">2,945</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-item">Created Jun 29</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience" target="_blank">synthetic-sciences/openscience</a></div>
+          <div class="repo-desc">The open-source AI workbench for scientific research.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">2,580</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-item">Created Jul 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video" target="_blank">HUANGCHIHHUNGLeo/claude-real-video</a></div>
+          <div class="repo-desc">Let Claude (or any LLM) actually watch a video — scene-aware, deduplicated frames + transcript, from URL or local file.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">1,732</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jun 30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Sahir619/fable-method" target="_blank">Sahir619/fable-method</a></div>
+          <div class="repo-desc">The Fable Workflow: how Claude Fable 5 worked, distilled into skills any model can run, with evals that keep it honest.</div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">1,706</span> stars</span>
+            <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-item">Created Jul 6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="themes">
+    <h2>Themes This Week</h2>
+    <ul>
+      <li><strong>Agent infrastructure dominance</strong> — 8 of 15 repos are tools for building, operating, or securing AI agents rather than end-user applications.</li>
+      <li><strong>Security cuts both ways</strong> — Steganography, red teaming, and vulnerability labs all trending simultaneously. The offense/defense arms race is accelerating.</li>
+      <li><strong>Memory and auth</strong> — The two biggest unsolved problems for deployed agents (persistent context and authenticated API access) both got serious open-source answers this month.</li>
+      <li><strong>Terminal-first UX</strong> — grok-build and deja-vu both bet on CLI/TUI over GUI. Developers building for developers still prefer the terminal.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>Data sourced from GitHub Search API. Stars counted at time of collection (2026-07-19 UTC).<br>Repos ranked by star velocity relative to creation date.</p>
+  </div>
+</div>
+</body>
+</html>
