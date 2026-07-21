@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-21</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --badge-7d: #dbeafe;
+    --badge-7d-text: #1e40af;
+    --badge-30d: #fef3c7;
+    --badge-30d-text: #92400e;
+    --editor-bg: #f0f4ff;
+    --editor-border: #bfdbfe;
+    --rank-bg: #2563eb;
+    --rank-text: #fff;
+    --lang-bg: #e2e8f0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --badge-7d: #1e3a5f;
+      --badge-7d-text: #93c5fd;
+      --badge-30d: #422006;
+      --badge-30d-text: #fcd34d;
+      --editor-bg: #1e293b;
+      --editor-border: #334155;
+      --rank-bg: #3b82f6;
+      --rank-text: #fff;
+      --lang-bg: #334155;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 2rem 1.25rem; }
+  header { text-align: center; margin-bottom: 2.5rem; }
+  header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+  header .date { color: var(--text-muted); font-size: 0.9rem; }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editor-take h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.75rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem; margin-top: 2rem;
+  }
+  .section-header h2 { font-size: 1.15rem; font-weight: 700; white-space: nowrap; }
+  .section-header .line { flex: 1; height: 1px; background: var(--border); }
+  .badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 600;
+    padding: 0.15rem 0.55rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .badge-7d { background: var(--badge-7d); color: var(--badge-7d-text); }
+  .badge-30d { background: var(--badge-30d); color: var(--badge-30d-text); }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .repo-card {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow);
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .rank {
+    width: 2.2rem; height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--rank-bg); color: var(--rank-text);
+    font-weight: 700; font-size: 0.85rem; border-radius: 6px;
+    grid-row: span 2;
+  }
+  .repo-name a {
+    color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1rem;
+  }
+  .repo-name a:hover { text-decoration: underline; color: var(--accent-hover); }
+  .stars {
+    font-weight: 600; font-size: 0.9rem; white-space: nowrap; text-align: right;
+  }
+  .stars::before { content: '\2605 '; color: var(--star); }
+  .repo-desc {
+    grid-column: 2 / -1;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-top: 0.2rem;
+  }
+  .lang-tag {
+    display: inline-block;
+    background: var(--lang-bg);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center; margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.8rem;
+  }
+  @media (max-width: 540px) {
+    .container { padding: 1.25rem 1rem; }
+    .repo-card { grid-template-columns: 1.8rem 1fr auto; padding: 0.85rem 1rem; }
+    .rank { width: 1.8rem; height: 1.8rem; font-size: 0.75rem; }
+    header h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-07-21 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The centre of gravity in AI open source has shifted from building agents to governing them. This week's standout is Machine Genome, a provenance protocol that gives every model, agent, and dataset a resolvable identity &mdash; the kind of boring infrastructure that becomes load-bearing once enterprises start auditing their AI supply chains. Meanwhile, harness engineering is crystallising as its own discipline: three of the top ten repos are either field guides, universal harnesses, or context-efficiency tooling for the agent runtime layer. The other signal worth noting is steganography. Conversation-steganography hit 884 stars in four days, suggesting the security community is now stress-testing LLMs as covert channels, not just attack surfaces. If you ship agents into production, you should care about both sides of that coin.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-name"><a href="https://github.com/hoainho/img2threejs" target="_blank" rel="noopener">hoainho/img2threejs</a><span class="lang-tag">Python</span></div>
+      <div class="stars">1,096</div>
+      <div class="repo-desc">Agent skill that rebuilds a reference image as a procedural, animation-ready Three.js object; quality-gated pipeline from photo to code-only 3D.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-name"><a href="https://github.com/nethical6/conversation-steganography" target="_blank" rel="noopener">nethical6/conversation-steganography</a><span class="lang-tag">Go</span></div>
+      <div class="stars">884</div>
+      <div class="repo-desc">Uses LLMs to hide messages inside normal-looking conversations; a Go implementation that makes the covert-channel risk in generative text concrete.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-name"><a href="https://github.com/lopopolo/harness-engineering" target="_blank" rel="noopener">lopopolo/harness-engineering</a><span class="lang-tag">Python</span></div>
+      <div class="stars">865</div>
+      <div class="repo-desc">Ryan Lopopolo's anthology and field guide for agent harness engineering, packaged as an agent context bundle; the first serious textbook for the discipline.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-name"><a href="https://github.com/Blueturboguy07/cue" target="_blank" rel="noopener">Blueturboguy07/cue</a><span class="lang-tag">JavaScript</span></div>
+      <div class="stars">666</div>
+      <div class="repo-desc">Open-source macOS copilot that floats invisibly over the screen, watches and hears meetings, and surfaces contextual actions without switching windows.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-name"><a href="https://github.com/EthanXiang777/circuit-framework" target="_blank" rel="noopener">EthanXiang777/circuit-framework</a><span class="lang-tag">Python</span></div>
+      <div class="stars">486</div>
+      <div class="repo-desc">Multi-agent LLM framework purpose-built for trading research; routes data through analyst, risk, and execution agents with structured handoffs.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-name"><a href="https://github.com/yuwen-cool/yuwen-publish-precheck" target="_blank" rel="noopener">yuwen-cool/yuwen-publish-precheck</a><span class="lang-tag">Python</span></div>
+      <div class="stars">358</div>
+      <div class="repo-desc">AI compliance checker for Douyin, Xiaohongshu, and WeChat Channels; flags risky sentences, cites the official rule, and suggests rewrites.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-name"><a href="https://github.com/PromptPartner/agentsmith" target="_blank" rel="noopener">PromptPartner/agentsmith</a><span class="lang-tag">Shell</span></div>
+      <div class="stars">314</div>
+      <div class="repo-desc">Universal, model-agnostic operating harness for AI agents; a lean core that wraps Claude, Codex, and Gemini behind a single runtime contract.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-name"><a href="https://github.com/thesysdev/appless" target="_blank" rel="noopener">thesysdev/appless</a><span class="lang-tag">TypeScript</span></div>
+      <div class="stars">301</div>
+      <div class="repo-desc">Generative-UI experiment: what if your phone had no apps? Uses LLMs and React Native to render intent-driven interfaces on the fly.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-name"><a href="https://github.com/paxlabs-inc/machine-genome" target="_blank" rel="noopener">paxlabs-inc/machine-genome</a><span class="lang-tag">Go</span></div>
+      <div class="stars">271</div>
+      <div class="repo-desc">Open identity and provenance protocol for models, agents, harnesses, and datasets; a DNS-like registry for the AI supply chain.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-name"><a href="https://github.com/Blaizzy/nativ" target="_blank" rel="noopener">Blaizzy/nativ</a><span class="lang-tag">Swift</span></div>
+      <div class="stars">256</div>
+      <div class="repo-desc">Local AI native to macOS: chat, serve, monitor, and connect MLX models from one Swift app; a clean alternative to Ollama for Apple Silicon.</div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a><span class="lang-tag">TypeScript</span></div>
+      <div class="stars">5,046</div>
+      <div class="repo-desc">Autonomous multi-agent red teaming platform; orchestrates offensive-security probes across models and surfaces vulnerabilities at scale.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-name"><a href="https://github.com/oomol-lab/open-connector" target="_blank" rel="noopener">oomol-lab/open-connector</a><span class="lang-tag">TypeScript</span></div>
+      <div class="stars">3,029</div>
+      <div class="repo-desc">Open-source auth gateway that connects 1,000+ SaaS providers to AI agents via SDK, CLI, MCP, HTTP, and OpenAPI; the plumbing layer agents were missing.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience" target="_blank" rel="noopener">synthetic-sciences/openscience</a><span class="lang-tag">TypeScript</span></div>
+      <div class="stars">2,637</div>
+      <div class="repo-desc">AI workbench for scientific research with co-scientist agent, ML pipelines, and reproducible experiment tracking; the month's biggest bet on AI-for-science.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-name"><a href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video" target="_blank" rel="noopener">HUANGCHIHHUNGLeo/claude-real-video</a><span class="lang-tag">Python</span></div>
+      <div class="stars">1,783</div>
+      <div class="repo-desc">Gives Claude (or any LLM) actual video comprehension: scene-aware deduplicated keyframes plus aligned transcript, from a single CLI command.</div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-name"><a href="https://github.com/Sahir619/fable-method" target="_blank" rel="noopener">Sahir619/fable-method</a><span class="lang-tag">Python</span></div>
+      <div class="stars">1,756</div>
+      <div class="repo-desc">Distills the Fable Workflow into portable skills any model can run, with evaluation harnesses; the reference implementation for cross-model skill transfer.</div>
+    </li>
+  </ol>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-07-21 UTC
+  </footer>
+</div>
+</body>
+</html>
