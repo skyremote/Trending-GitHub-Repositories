@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-23</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --badge-7d: #059669;
+    --badge-30d: #7c3aed;
+    --section-bg: #f1f5f9;
+    --editor-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --editor-text: #e2e8f0;
+    --editor-accent: #38bdf8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --section-bg: #1a2332;
+      --editor-bg: linear-gradient(135deg, #0c1222 0%, #162032 100%);
+      --editor-text: #cbd5e1;
+      --editor-accent: #7dd3fc;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+  header {
+    text-align: center;
+    padding: 48px 20px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .editor-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--editor-accent), #a78bfa, #f472b6);
+  }
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--editor-accent);
+    margin-bottom: 14px;
+  }
+  .editor-take p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    opacity: 0.92;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    color: #fff;
+  }
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+  .repo-list { list-style: none; margin-bottom: 48px; }
+  .repo-card {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .rank {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 8px;
+    background: var(--section-bg);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .repo-name a {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .lang {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--section-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    header { padding: 32px 16px 24px; }
+    header h1 { font-size: 1.35rem; }
+    .editor-take { padding: 20px; }
+    .repo-card { padding: 16px; gap: 12px; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-23 UTC</div>
+</header>
+<div class="container">
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The week's dominant pattern is the video production pipeline moving into agent territory. Two of the top ten 7-day repos &mdash; <strong>video-shotcraft</strong> and <strong>pireel</strong> &mdash; treat video editing as an MCP-drivable skill rather than a standalone app, making the leap from &ldquo;AI generates clips&rdquo; to &ldquo;agents compose full productions.&rdquo; Meanwhile, the security lane is splitting in two directions: <strong>open-kritt</strong> orchestrates agents offensively to find real vulnerabilities, while <strong>Agent-Execution-Partnership</strong> builds the guardrails to make sure those agents stay authorized. The 30-day view confirms that infrastructure is winning over demos &mdash; <strong>open-connector</strong> wiring auth to 1,000+ SaaS providers has quietly tripled <strong>T3MP3ST</strong>'s growth rate despite launching four days later. Science workbenches (<strong>openscience</strong>) are the new &ldquo;awesome-list&rdquo; &mdash; every research lab wants one, and the first credible open-source option is pulling away.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/nethical6/conversation-steganography">nethical6/conversation-steganography</a>
+          <span class="stars">&#9733; 1,002</span>
+          <span class="lang">Go</span>
+        </div>
+        <div class="repo-desc">Uses LLMs to hide messages inside normal-looking conversations. A clever security-research tool that turns conversational AI into a covert channel &mdash; practical for red-teaming and privacy research.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Blaizzy/nativ">Blaizzy/nativ</a>
+          <span class="stars">&#9733; 767</span>
+          <span class="lang">Swift</span>
+        </div>
+        <div class="repo-desc">Native macOS app for chatting, serving, and monitoring MLX models locally. One app replaces the usual stack of Ollama + a web UI + a monitoring dashboard, all in Swift.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Jakubantalik/thinking-orbs">Jakubantalik/thinking-orbs</a>
+          <span class="stars">&#9733; 653</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">Dotted thought-orb loading indicators for AI and agent UIs. Six tuned states, two sizes, auto dark/light. The kind of polished micro-component that signals AI UX is maturing past spinners.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Vincentwei1021/video-shotcraft">Vincentwei1021/video-shotcraft</a>
+          <span class="stars">&#9733; 548</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">AI video skill for Claude Code and Codex: 106 shot recipe cards, 161 motion previews, production-ready Remotion templates. Treats cinematic product videos as agent-composable units.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/pireel/pireel">pireel/pireel</a>
+          <span class="stars">&#9733; 488</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">Open-source, backend-free AI video editor for talking-head content. Storyboarding, kinetic captions, WebCodecs export &mdash; all drivable by any agent over MCP.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/KinetiNode/claude-fable-5-system-prompt-clean">KinetiNode/claude-fable-5-system-prompt-clean</a>
+          <span class="stars">&#9733; 379</span>
+        </div>
+        <div class="repo-desc">Token-efficient re-engineering of the leaked Claude Fable 5 system prompt into clean Markdown. Useful as a prompt-engineering reference regardless of which model you target.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/yc-duan/fastctx">yc-duan/fastctx</a>
+          <span class="stars">&#9733; 347</span>
+          <span class="lang">Rust</span>
+        </div>
+        <div class="repo-desc">Fast, context-efficient repository tools for AI agents, delivered as an MCP server. Written in Rust for speed when agents need to ingest large codebases without blowing context windows.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Kritt-ai/open-kritt">Kritt-ai/open-kritt</a>
+          <span class="stars">&#9733; 325</span>
+          <span class="lang">JavaScript</span>
+        </div>
+        <div class="repo-desc">Orchestrates AI agents to find real vulnerabilities in code. Aimed at bug-bounty workflows where multiple agents sweep a target from different angles.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/eli-labz/Agent-Execution-Partnership">eli-labz/Agent-Execution-Partnership</a>
+          <span class="stars">&#9733; 251</span>
+          <span class="lang">Python</span>
+        </div>
+        <div class="repo-desc">Open-source control plane ensuring every AI agent action is authorized before it runs, observable while it runs, and verifiable after it completes. The governance layer the agent ecosystem has been missing.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/OpenBMB/MiniCPM-Robot">OpenBMB/MiniCPM-Robot</a>
+          <span class="stars">&#9733; 223</span>
+          <span class="lang">Python</span>
+        </div>
+        <div class="repo-desc">On-device AI brain for robots from the MiniCPM team. Optimized for edge inference on physical hardware &mdash; a step toward embodied agents that think locally.</div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 days</span>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/elder-plinius/T3MP3ST">elder-plinius/T3MP3ST</a>
+          <span class="stars">&#9733; 5,106</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">Autonomous red-teaming platform using a multi-agent offensive-security meta-harness. The month's highest-starred new AI repo, signaling serious demand for automated security testing.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/oomol-lab/open-connector">oomol-lab/open-connector</a>
+          <span class="stars">&#9733; 3,107</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">Open-source auth gateway connecting 1,000+ SaaS providers to AI agents through SDK, CLI, MCP, HTTP, and OpenAPI. The plumbing that makes agents useful in enterprise workflows.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/synthetic-sciences/openscience">synthetic-sciences/openscience</a>
+          <span class="stars">&#9733; 2,688</span>
+          <span class="lang">TypeScript</span>
+        </div>
+        <div class="repo-desc">Open-source AI workbench for scientific research. Model-agnostic, CLI-first, positioned as the open alternative to proprietary research copilots.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/isjiamu/gzh-design-skill">isjiamu/gzh-design-skill</a>
+          <span class="stars">&#9733; 2,431</span>
+          <span class="lang">HTML</span>
+        </div>
+        <div class="repo-desc">Agent skill that turns Markdown into paste-ready WeChat article HTML with six curated themes. A vertical skill doing one thing well &mdash; proof that narrow, polished skills outperform Swiss-army-knife plugins.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/HUANGCHIHHUNGLeo/claude-real-video">HUANGCHIHHUNGLeo/claude-real-video</a>
+          <span class="stars">&#9733; 1,825</span>
+          <span class="lang">Python</span>
+        </div>
+        <div class="repo-desc">Lets Claude (or any LLM) actually watch a video &mdash; scene-aware, deduplicated frames plus transcript, from a URL or local file. Runs locally, MIT-licensed.</div>
+      </div>
+    </li>
+  </ol>
+</div>
+<footer>
+  Generated by the Trending GitHub Repos routine &mdash; 2026-07-23 UTC
+</footer>
+</body>
+</html>
