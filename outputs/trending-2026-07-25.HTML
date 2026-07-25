@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories -- 2026-07-25</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-highlight: #e8f4f8;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e4e9;
+    --star: #eab308;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --divider: #d1d5db;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-highlight: #1e3a5f;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfc;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #312e81;
+      --tag-text: #c7d2fe;
+      --divider: #475569;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--divider);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  .editors-take {
+    background: var(--bg-highlight);
+    border-left: 4px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 2.5rem;
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .editors-take strong { color: var(--text); }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    flex: 1;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .stars svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--star);
+  }
+  .lang-badge, .license-badge {
+    display: inline-block;
+    font-size: 0.78rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-weight: 500;
+  }
+  .repo-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+  }
+  .repo-take {
+    font-size: 0.88rem;
+    color: var(--text);
+    font-style: italic;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .mentions-section {
+    margin-top: 2.5rem;
+  }
+  .mentions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    display: block;
+  }
+  .mentions-table th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--divider);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .mentions-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mentions-table a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .mentions-table a:hover { text-decoration: underline; }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-header { flex-direction: column; gap: 0.5rem; }
+    .repo-meta { gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-07-25 UTC</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The AI tooling ecosystem this week is converging on one theme: <strong>agents need better plumbing</strong>. The highest-velocity new repos aren't building new models &mdash; they're building the connective tissue around them. Caspian SDK unifies messaging channels behind a single handler. BossConsole and Penguin Harness both tackle the "operator's console" problem from different angles (JVM native vs. desktop-first TypeScript). Collective Intelligence takes ensemble orchestration seriously, routing queries through dozens of coordination strategies.</p>
+  <p>Meanwhile, the 30-day leaders tell a clearer story about where real demand sits. OpenScience (2.7k stars in three weeks) signals that researchers are tired of duct-taping LLMs into their workflows and want purpose-built tooling. Vibe-Research and Flawless show that finance and SRE teams have moved past "can AI help?" to "which agent framework do we deploy?"</p>
+  <p>The pattern to watch: <strong>MCP adoption is no longer experimental.</strong> Four of this week's top repos ship with MCP support out of the box.</p>
+</div>
+
+<h2 class="section-title">Top Trending &mdash; Last 7 Days</h2>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">1</span>
+    <div class="repo-name"><a href="https://github.com/TryCaspian/caspian-sdk" target="_blank" rel="noopener">TryCaspian/caspian-sdk</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 220</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">AGPL-3.0</span>
+    </div>
+  </div>
+  <div class="repo-desc">One identity for your AI agent across Slack, Discord, Telegram, WhatsApp, Instagram, email, SMS, and X. A single <code>on_message</code> handler with open-source channel adapters. Python &amp; TypeScript SDKs + CLI.</div>
+  <div class="repo-take">Eliminates the per-platform integration tax for agent builders. If your agent talks to humans on more than one channel, this replaces a pile of boilerplate.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">2</span>
+    <div class="repo-name"><a href="https://github.com/risa-labs-inc/BossConsole" target="_blank" rel="noopener">risa-labs-inc/BossConsole</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 175</span>
+      <span class="lang-badge">Kotlin</span>
+      <span class="license-badge">Apache-2.0</span>
+    </div>
+  </div>
+  <div class="repo-desc">Native, multi-threaded operator's console (JVM, not Electron) to run Claude Code, Codex, Gemini, or OpenCode with a real browser, terminal, editor, secrets, and 100+ MCP tools. Built for enterprise and research.</div>
+  <div class="repo-take">Bets that Electron's resource overhead is unacceptable for serious agent workloads. Hot-reload and RBAC built in from day one.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">3</span>
+    <div class="repo-name"><a href="https://github.com/Prism-Shadow/penguin-harness" target="_blank" rel="noopener">Prism-Shadow/penguin-harness</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 152</span>
+      <span class="lang-badge">TypeScript</span>
+      <span class="license-badge">Apache-2.0</span>
+    </div>
+  </div>
+  <div class="repo-desc">An automated agent builder that lives on your desktop. A self-improving harness that wraps Claude Code and other coding agents with skills, workflows, and build tooling.</div>
+  <div class="repo-take">Takes the "skills" pattern from Claude Code and makes it the primary interface. Agents that can install and improve their own capabilities.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">4</span>
+    <div class="repo-name"><a href="https://github.com/ailinone/collective-intelligence" target="_blank" rel="noopener">ailinone/collective-intelligence</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 115</span>
+      <span class="lang-badge">TypeScript</span>
+      <span class="license-badge">AGPL-3.0</span>
+    </div>
+  </div>
+  <div class="repo-desc">Open-source collective intelligence engine where tens of thousands of AI models collaborate through dozens of coordination strategies. Applies structured diversity and independent reasoning for reliability.</div>
+  <div class="repo-take">Moves beyond simple model routing into genuine ensemble coordination. The bet is that structured disagreement between models produces more reliable outputs.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">5</span>
+    <div class="repo-name"><a href="https://github.com/pazo01/awesome-cyber-ai-arsenal" target="_blank" rel="noopener">pazo01/awesome-cyber-ai-arsenal</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 101</span>
+      <span class="lang-badge">Markdown</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">Curated collection of offensive, defensive, and AI/LLM security tools. Covers red team, blue team, bug bounty, OSINT, and LLM-specific security tooling.</div>
+  <div class="repo-take">As AI agents gain more system access, the attack surface grows. This list maps the current state of AI security tooling across both sides.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">6</span>
+    <div class="repo-name"><a href="https://github.com/haoran-zha/Awesome-Spiking-Neural-Networks-Hub" target="_blank" rel="noopener">haoran-zha/Awesome-Spiking-Neural-Networks-Hub</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 91</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">Comprehensive bilingual (EN/CN) hub for Spiking Neural Networks &mdash; 340+ papers, models, neuromorphic hardware, datasets, tools, and research groups.</div>
+  <div class="repo-take">Neuromorphic computing is the long bet on energy-efficient AI. The most organized starting point for the field right now.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">7</span>
+    <div class="repo-name"><a href="https://github.com/smixs/mentor" target="_blank" rel="noopener">smixs/mentor</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 63</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">A session-insights skill for AI coding agents. Reads local Claude Code and OpenAI Codex history, writes a report on how you work: what you build, where you lose time, and concrete fixes.</div>
+  <div class="repo-take">Meta-tooling for agent-assisted development. Analyzes how you use coding agents and surfaces improvement patterns.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">8</span>
+    <div class="repo-name"><a href="https://github.com/krakonjac300-pixel/podcast-shorts-factory" target="_blank" rel="noopener">krakonjac300-pixel/podcast-shorts-factory</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 62</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">Ten cooperating AI agents that turn long podcasts into short-form videos automatically. Runs on free AI providers, uses Whisper for transcription and FFmpeg for video assembly.</div>
+  <div class="repo-take">A practical multi-agent pipeline for content repurposing. The ten-agent architecture is a useful reference for similar workflows.</div>
+</div>
+
+<h2 class="section-title" style="margin-top:2.5rem;">Top Trending &mdash; Last 30 Days</h2>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">1</span>
+    <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience" target="_blank" rel="noopener">synthetic-sciences/openscience</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,728</span>
+      <span class="lang-badge">TypeScript</span>
+      <span class="license-badge">Apache-2.0</span>
+    </div>
+  </div>
+  <div class="repo-desc">The open-source AI workbench for scientific research. A CLI-first tool that integrates LLMs into the research workflow: literature review, experiment design, data analysis, and paper drafting.</div>
+  <div class="repo-take">The breakout hit of the month. Scientists want agent tooling built for their workflows, not adapted from developer tools. 378 forks suggest real adoption.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">2</span>
+    <div class="repo-name"><a href="https://github.com/simonlin1212/Vibe-Research" target="_blank" rel="noopener">simonlin1212/Vibe-Research</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 992</span>
+      <span class="lang-badge">TypeScript</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">Personal trading research agent for A-shares, US stocks, and HK stocks. Daily reviews, news radar, stock data dashboards, sector analysis, portfolio tracking, and research notes. React + FastAPI.</div>
+  <div class="repo-take">Domain-specific agent applications are where real value accrues. This packages daily market review, sector tracking, and portfolio analysis into a single agent-driven dashboard.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">3</span>
+    <div class="repo-name"><a href="https://github.com/jmerelnyc/Talos" target="_blank" rel="noopener">jmerelnyc/Talos</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 892</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">MIT</span>
+    </div>
+  </div>
+  <div class="repo-desc">GPU worker client for the Talos distributed inference network. Pairs with your account, serves open-model inference jobs over WebSocket, and reports uptime for payouts.</div>
+  <div class="repo-take">Distributed GPU networks keep growing. Clean worker client that handles job routing and uptime tracking automatically.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">4</span>
+    <div class="repo-name"><a href="https://github.com/William-Lu-stack/Flawless" target="_blank" rel="noopener">William-Lu-stack/Flawless</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 850</span>
+      <span class="lang-badge">Python</span>
+      <span class="license-badge">Other</span>
+    </div>
+  </div>
+  <div class="repo-desc">AI SRE AgenticOps for Kubernetes and cloud infrastructure. Monitors, diagnoses, and resolves infrastructure issues with MCP integration.</div>
+  <div class="repo-take">SRE is one of the first domains where autonomous agents can deliver immediate ROI. Bets on MCP as the integration layer between AI reasoning and infra tooling.</div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-header">
+    <span class="repo-rank">5</span>
+    <div class="repo-name"><a href="https://github.com/linxidnju/OpenTag" target="_blank" rel="noopener">linxidnju/OpenTag</a></div>
+    <div class="repo-meta">
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 573</span>
+      <span class="lang-badge">JavaScript</span>
+      <span class="license-badge">Other</span>
+    </div>
+  </div>
+  <div class="repo-desc">Open-source, channel-native agent gateway for Slack. Routes team threads to Claude Code, Codex, OpenCode, Docker, HTTP agents, and custom CLIs. Policy controls, approvals, memory, audit logs.</div>
+  <div class="repo-take">Enterprise teams need to manage how agents interact with their communication channels. OpenTag provides the policy and audit layer missing from raw agent deployments.</div>
+</div>
+
+<div class="mentions-section">
+  <h2 class="section-title">Honorable Mentions</h2>
+  <table class="mentions-table">
+    <thead>
+      <tr><th>Repo</th><th>Stars</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://github.com/ronak-create/FableCut" target="_blank" rel="noopener">ronak-create/FableCut</a></td>
+        <td><span class="stars"><svg viewBox="0 0 16 16" style="width:14px;height:14px;fill:var(--star)"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 517</span></td>
+        <td>Zero-dependency browser video editor that AI agents can drive via JSON timeline + MCP</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/yc-duan/fastctx" target="_blank" rel="noopener">yc-duan/fastctx</a></td>
+        <td><span class="stars"><svg viewBox="0 0 16 16" style="width:14px;height:14px;fill:var(--star)"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 446</span></td>
+        <td>Fast, context-efficient repository tools for AI agents (MCP), written in Rust</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/tiliondev/fortress" target="_blank" rel="noopener">tiliondev/fortress</a></td>
+        <td><span class="stars"><svg viewBox="0 0 16 16" style="width:14px;height:14px;fill:var(--star)"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 405</span></td>
+        <td>Stealth Chromium engine that prevents browser agents from getting blocked</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  Generated 2026-07-25 UTC. Star counts reflect the time of data collection and may have changed.
+</footer>
+
+</div>
+</body>
+</html>
