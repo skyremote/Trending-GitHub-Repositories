@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-27</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --section-bg: #f8fafc;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --editor-bg: #f0f7ff;
+    --editor-border: #bfdbfe;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --section-bg: #1e293b;
+      --gradient-start: #0f172a;
+      --gradient-end: #1e40af;
+      --editor-bg: #1e293b;
+      --editor-border: #334155;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .header .date {
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0 2rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--text);
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  }
+  .repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-left: 2.5rem;
+  }
+  .lang-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .header { padding: 2rem 1rem 1.5rem; }
+    .header h1 { font-size: 1.35rem; }
+    .repo-card { padding: 0.85rem 1rem; }
+    .repo-desc { margin-left: 0; margin-top: 0.35rem; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-27 UTC</div>
+</div>
+<div class="container">
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The agent harness war has moved from "which model" to "which control plane." Five of the top 10 weekly repos are orchestration layers, software factories, or operator consoles — the model is a commodity input now, and the fight is over who owns the loop. Meanwhile, <strong>esp32-ai</strong> quietly gathered 1,400 stars in four days, proving there is pent-up demand for running AI on microcontrollers, not just servers. The 30-day view shows a clear split: security tooling (T3MP3ST, VulnHunter) and science workbenches (three competing open-science projects) are pulling ahead as the first verticals beyond coding assistants. If you are building yet another general-purpose agent wrapper, the window is closing — the market is rewarding domain specificity.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 — Last 7 Days</h2>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/slvDev/esp32-ai">slvDev/esp32-ai</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 1,425</span>
+      </div>
+      <div class="repo-desc">Python-based AI stack for ESP32 microcontrollers. Four days old, already the week's fastest mover. Embedded AI is not waiting for the cloud.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/Jakubantalik/thinking-orbs">Jakubantalik/thinking-orbs</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 1,104</span>
+      </div>
+      <div class="repo-desc">Dotted thought-orb loading indicators for AI and agent UIs, with six tuned states and auto dark/light. The small polish layer every agent frontend was copy-pasting anyway.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/mikiarlo3/ai-copywriter">mikiarlo3/ai-copywriter</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 861</span>
+      </div>
+      <div class="repo-desc">AI copywriter grounded in real marketing frameworks, not just "rewrite this." Aims for human tone over template slop.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/makecindy/cindy">makecindy/cindy</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 591</span>
+      </div>
+      <div class="repo-desc">Cross-platform open-source AI agent (Electron + React Native) that ships working on iOS, Android, macOS, and Windows out of the box. 151 open issues in five days says adoption is real.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/hahhforest/pi-textbook">hahhforest/pi-textbook</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 494</span>
+      </div>
+      <div class="repo-desc">Build a Pi-style conversational agent from scratch across 15 checkpoints. A Chinese-language hands-on textbook, not a framework — the teaching-first approach is what sets it apart.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <span class="repo-name"><a href="https://github.com/VictorTaelin/OptMem">VictorTaelin/OptMem</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 378</span>
+      </div>
+      <div class="repo-desc">Permanent memory for AI agents in a 426-token prompt and a script. Plug-and-play, no vector DB, no infra. From the creator of HVM — credibility carries.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <span class="repo-name"><a href="https://github.com/Role1776/netmon">Role1776/netmon</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 226</span>
+      </div>
+      <div class="repo-desc">Self-hosted network monitor: hourly speed tests, ARP-scans LAN devices, delivers sarcastic AI-generated reports to Telegram or Discord. Practical home-lab tool.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <span class="repo-name"><a href="https://github.com/finna/Finn-loop">finna/Finn-loop</a><span class="lang-tag">JavaScript</span></span>
+        <span class="repo-stars">&#9733; 220</span>
+      </div>
+      <div class="repo-desc">Three-skill AI software factory for Claude Code: spec, build, review. Humans merge. Linear + GitHub integration makes it a lightweight CI-for-agents.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <span class="repo-name"><a href="https://github.com/XYZ-AI-Lab/axrl">XYZ-AI-Lab/axrl</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 208</span>
+      </div>
+      <div class="repo-desc">Agentic RL post-training framework built on SGLang rollout and Megatron training. Bridges agent workflows and reinforcement learning — a research-grade tool, not a wrapper.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <span class="repo-name"><a href="https://github.com/risa-labs-inc/BossConsole">risa-labs-inc/BossConsole</a><span class="lang-tag">Kotlin</span></span>
+        <span class="repo-stars">&#9733; 199</span>
+      </div>
+      <div class="repo-desc">JVM-native, multi-threaded operator console for running Claude Code, Codex, Gemini, or OpenCode with a real browser, terminal, and 100+ MCP tools. The Electron-free alternative enterprises keep asking for.</div>
+    </li>
+  </ol>
+
+  <h2 class="section-title">Top 5 — Last 30 Days</h2>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST">elder-plinius/T3MP3ST</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 5,232</span>
+      </div>
+      <div class="repo-desc">Autonomous multi-agent red-teaming platform. Offensive security finally gets its own meta-harness — agents attacking other agents' defences, at scale.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/oomol-lab/open-connector">oomol-lab/open-connector</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 3,368</span>
+      </div>
+      <div class="repo-desc">Open-source auth gateway connecting 1,000+ SaaS providers to AI agents via SDK, CLI, MCP, HTTP, and OpenAPI. The plumbing layer agents need to actually do real work.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/synthetic-sciences/openscience">synthetic-sciences/openscience</a><span class="lang-tag">TypeScript</span></span>
+        <span class="repo-stars">&#9733; 2,846</span>
+      </div>
+      <div class="repo-desc">Open-source AI workbench for scientific research. One of three competing "open science" desktops this month; this one leads on stars and community momentum.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/petergyang/no-ai-slop">petergyang/no-ai-slop</a><span class="lang-tag">Python</span></span>
+        <span class="repo-stars">&#9733; 2,802</span>
+      </div>
+      <div class="repo-desc">Strips 20+ patterns of AI slop from writing. The anti-slop movement now has tooling, not just taste.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/isjiamu/gzh-design-skill">isjiamu/gzh-design-skill</a><span class="lang-tag">HTML</span></span>
+        <span class="repo-stars">&#9733; 2,546</span>
+      </div>
+      <div class="repo-desc">Agent skill that turns Markdown into paste-ready WeChat article HTML with six themes and a theme generator. Proof that the biggest skill markets are not English-first.</div>
+    </li>
+  </ol>
+
+  <div class="footer">
+    Generated by the Trending GitHub Repos routine — 2026-07-27 UTC
+  </div>
+</div>
+</body>
+</html>
