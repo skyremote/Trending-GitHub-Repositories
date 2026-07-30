@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-07-30</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --text: #1a1a2e;
+    --text-muted: #5a5a7a;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --section-bg: #f0f4ff;
+    --editor-bg: #fefce8;
+    --editor-border: #fbbf24;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfc;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #1e1b4b;
+      --tag-text: #a5b4fc;
+      --section-bg: #1e293b;
+      --editor-bg: #1c1917;
+      --editor-border: #a16207;
+      --rank-bg: #3b82f6;
+      --rank-text: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editor-take strong {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    background: var(--section-bg);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.15s, border-color 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+  .rank {
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .repo-info { min-width: 0; }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+  .repo-tags span {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .star-count {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--star);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+  .star-count svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--star);
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 600px) {
+    body { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.4rem; }
+    .repo-card {
+      grid-template-columns: 1.8rem 1fr;
+      gap: 0 0.75rem;
+      padding: 0.85rem 1rem;
+    }
+    .star-count {
+      grid-column: 2;
+      margin-top: 0.4rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-07-30 &middot; Daily Brief</div>
+</header>
+
+<div class="editor-take">
+  <strong>Editor's Take</strong>
+  The coding-agent ecosystem has moved past "can an agent write code" and into "who controls the agent." Five of this week's top 10 repos are governance and infrastructure &mdash; cost tracking (agentacct), workflow orchestration (deer-workflow), prompt discipline (ponytail-improved), agent memory (OptMem), and provider-agnostic portability (openclaude-improved). The model layer, meanwhile, keeps pushing downward: deltafin streams a 2.8-trillion-parameter MoE onto a single MacBook. The month's top repo isn't about language at all &mdash; img2threejs turns reference photos into procedural 3D models and crossed 8,000 stars, the strongest sign yet that AI coding agents are entering creative pipelines beyond text. Science workbenches and vertical production skills are consolidating fast, suggesting the era of general-purpose agent wrappers is giving way to purpose-built tools.
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="badge">Last 7 days</span>
+</div>
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/mikiarlo3/ai-copywriter" target="_blank" rel="noopener">mikiarlo3/ai-copywriter</a></div>
+      <div class="repo-desc">AI copywriter that applies real copywriting frameworks and marketing knowledge with a human tone. Ships with domain-specific skill prompts.</div>
+      <div class="repo-tags"><span>Python</span><span>AI</span><span>copywriting</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,048</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/VictorTaelin/OptMem" target="_blank" rel="noopener">VictorTaelin/OptMem</a></div>
+      <div class="repo-desc">Permanent memory for AI agents in a 426-token prompt and a script. Plug-and-play persistence without a vector database.</div>
+      <div class="repo-tags"><span>Python</span><span>agent-memory</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 884</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/0xwilliamortiz/openclaude-improved" target="_blank" rel="noopener">0xwilliamortiz/openclaude-improved</a></div>
+      <div class="repo-desc">Provider-agnostic Claude Code alternative. Runs on OpenRouter, Gemini, or Anthropic &mdash; whichever is available.</div>
+      <div class="repo-tags"><span>TypeScript</span><span>agentic-ai</span><span>claude-code</span><span>MCP</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 556</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/0xwilliamortiz/ponytail-improved" target="_blank" rel="noopener">0xwilliamortiz/ponytail-improved</a></div>
+      <div class="repo-desc">Prompt optimization skill that teaches AI agents to think like "the laziest senior dev." Enforces YAGNI discipline and cuts token waste.</div>
+      <div class="repo-tags"><span>JavaScript</span><span>prompt-engineering</span><span>YAGNI</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 547</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/mikehasa/agentacct" target="_blank" rel="noopener">mikehasa/agentacct</a></div>
+      <div class="repo-desc">Local-first dashboard showing what coding agents did and what it cost. Breaks tasks into work steps &mdash; tools, files, tests, tokens &mdash; across Claude Code, Codex, and OpenCode.</div>
+      <div class="repo-tags"><span>Python</span><span>observability</span><span>cost-tracking</span><span>local-first</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 532</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">6</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/deerwork-ai/deer-workflow" target="_blank" rel="noopener">deerwork-ai/deer-workflow</a></div>
+      <div class="repo-desc">Open-source graph engineering runtime. Keeps orchestration in TypeScript and delegates semantic work to replaceable agent runtimes.</div>
+      <div class="repo-tags"><span>TypeScript</span><span>workflow</span><span>graph-engineering</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 348</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">7</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/gavamedia/deltafin" target="_blank" rel="noopener">gavamedia/deltafin</a></div>
+      <div class="repo-desc">Run Kimi K3, a 2.8T-parameter MoE, on a single Apple Silicon Mac. Streams MXFP4 experts on demand with fused NEON kernels and Metal compute.</div>
+      <div class="repo-tags"><span>Python</span><span>local-llm</span><span>Kimi K3</span><span>Apple Silicon</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 345</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">8</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/qaml-ai/camelAI" target="_blank" rel="noopener">qaml-ai/camelAI</a></div>
+      <div class="repo-desc">AI coding assistant platform built on Cloudflare Workers and Durable Objects. Edge-native architecture, no persistent server.</div>
+      <div class="repo-tags"><span>TypeScript</span><span>Cloudflare</span><span>edge</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 270</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">9</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/QwenAudio/qwen-audio-agent" target="_blank" rel="noopener">QwenAudio/qwen-audio-agent</a></div>
+      <div class="repo-desc">Real-time voice runtime from the Qwen team. Keeps AI agents talking, working, and present with continuous audio I/O.</div>
+      <div class="repo-tags"><span>JavaScript</span><span>voice-agent</span><span>real-time</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 224</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">10</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/LYiHub/pub-local-jarvis" target="_blank" rel="noopener">LYiHub/pub-local-jarvis</a></div>
+      <div class="repo-desc">Local multimodal AI desktop assistant for Windows with screen perception and audio awareness. Runs entirely on-device.</div>
+      <div class="repo-tags"><span>Python</span><span>desktop-assistant</span><span>local-ai</span><span>multimodal</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 215</div>
+  </div>
+
+</div>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="badge">Last 30 days</span>
+</div>
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/img2threejs/img2threejs" target="_blank" rel="noopener">img2threejs/img2threejs</a></div>
+      <div class="repo-desc">Rebuilds objects from reference images as procedural, animation-ready Three.js models. Token-efficient image-to-3D that bypasses mesh generation entirely.</div>
+      <div class="repo-tags"><span>Python</span><span>3D</span><span>Three.js</span><span>image-to-3D</span><span>generative</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 8,255</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience" target="_blank" rel="noopener">synthetic-sciences/openscience</a></div>
+      <div class="repo-desc">Open-source AI workbench for scientific research. CLI-first, multi-model, built for ML engineering and reproducible experiments.</div>
+      <div class="repo-tags"><span>TypeScript</span><span>science</span><span>research</span><span>ML</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,931</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft" target="_blank" rel="noopener">Vincentwei1021/video-shotcraft</a></div>
+      <div class="repo-desc">AI video skill for Claude Code and Codex. Ships 106 cinematic shot recipe cards, 161 motion previews, and a production-ready Remotion template.</div>
+      <div class="repo-tags"><span>TypeScript</span><span>video</span><span>Remotion</span><span>claude-code</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,754</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/isjiamu/gzh-design-skill" target="_blank" rel="noopener">isjiamu/gzh-design-skill</a></div>
+      <div class="repo-desc">Turns Markdown into paste-ready WeChat article HTML with six curated themes and a theme generator. The most-starred non-English agent skill this month.</div>
+      <div class="repo-tags"><span>HTML</span><span>WeChat</span><span>agent-skill</span><span>typesetting</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,644</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Sahir619/fable-method" target="_blank" rel="noopener">Sahir619/fable-method</a></div>
+      <div class="repo-desc">Distills how Claude Fable 5 worked into portable skills any model can run, bundled with the eval that keeps it honest. Think, act, prove.</div>
+      <div class="repo-tags"><span>Python</span><span>evaluation</span><span>agent-skills</span><span>fable</span></div>
+    </div>
+    <div class="star-count"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,968</div>
+  </div>
+
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; 2026-07-30 UTC
+</footer>
+
+</body>
+</html>
