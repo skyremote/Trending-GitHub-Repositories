@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-01</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-editor: #f0f4ff;
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --badge-weekly: #dbeafe;
+    --badge-weekly-text: #1e40af;
+    --badge-monthly: #fef3c7;
+    --badge-monthly-text: #92400e;
+    --rank-bg: #2563eb;
+    --rank-text: #fff;
+    --divider: #cbd5e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-editor: #1a2744;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star: #facc15;
+      --badge-weekly: #1e3a5f;
+      --badge-weekly-text: #93c5fd;
+      --badge-monthly: #422006;
+      --badge-monthly-text: #fcd34d;
+      --rank-bg: #3b82f6;
+      --rank-text: #fff;
+      --divider: #475569;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--divider);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .editor-take {
+    background: var(--bg-editor);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editor-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+  }
+  .badge-weekly {
+    background: var(--badge-weekly);
+    color: var(--badge-weekly-text);
+  }
+  .badge-monthly {
+    background: var(--badge-monthly);
+    color: var(--badge-monthly-text);
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    align-items: flex-start;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+  }
+  .rank {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .repo-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+  }
+  .repo-stars {
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--divider);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { padding: 0.85rem 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-08-01 &middot; Daily Brief</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>One developer &mdash; 0xwilliamortiz &mdash; holds three of this week's top ten slots with ponytail-improved, openclaude-improved, and ratchet, each attacking a different failure mode of AI-assisted coding: over-engineering, vendor lock-in, and rule drift. That a single person can ship an entire guardrail stack in a week says more about the ecosystem's maturity than any individual repo. Voice agents got proper runtime infrastructure (qwen-audio-agent), Grafana added first-party AI plumbing in Go, and the month's biggest story is autonomous red-teaming going open-source with T3MP3ST clearing 5,300 stars. The pattern: last month people built agents; this month they are building the tools that keep agents honest.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-weekly">Last 7 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ul class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/QwenAudio/qwen-audio-agent">QwenAudio/qwen-audio-agent</a><span class="repo-stars">&#9733; 622</span></div>
+        <div class="repo-desc">Realtime voice runtime that keeps AI agents talking and present; supports persistent voice sessions across agent runtimes.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/0xwilliamortiz/ponytail-improved">0xwilliamortiz/ponytail-improved</a><span class="repo-stars">&#9733; 570</span></div>
+        <div class="repo-desc">Claude Code skill that enforces YAGNI by making your agent think like the laziest senior dev in the room.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/0xwilliamortiz/openclaude-improved">0xwilliamortiz/openclaude-improved</a><span class="repo-stars">&#9733; 563</span></div>
+        <div class="repo-desc">Provider-agnostic Claude Code clone that runs anywhere via OpenRouter, Gemini, or local models with MCP support.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/0xwilliamortiz/ratchet">0xwilliamortiz/ratchet</a><span class="repo-stars">&#9733; 402</span></div>
+        <div class="repo-desc">Post-hoc compliance checker: your agent read the rules, ratchet verifies it actually followed them.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/deerwork-ai/deer-workflow">deerwork-ai/deer-workflow</a><span class="repo-stars">&#9733; 368</span></div>
+        <div class="repo-desc">Open-source graph engineering runtime; keeps orchestration in TypeScript and delegates semantic work to pluggable agent runtimes.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/elayadesign/ai-design-skills">elayadesign/ai-design-skills</a><span class="repo-stars">&#9733; 247</span></div>
+        <div class="repo-desc">Packaged design skills for coding agents, covering UI review, asset generation, and brand consistency checks.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/Autumn-27/ARTEX">Autumn-27/ARTEX</a><span class="repo-stars">&#9733; 176</span></div>
+        <div class="repo-desc">AI-driven autonomous penetration testing system; plans and executes security assessments with minimal human direction.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/grafana/ai-sdk">grafana/ai-sdk</a><span class="repo-stars">&#9733; 162</span></div>
+        <div class="repo-desc">Grafana's official Go SDK for building streaming, tool-calling AI backends that speak fluent @ai-sdk/react.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/aigclink/geolook">aigclink/geolook</a><span class="repo-stars">&#9733; 151</span></div>
+        <div class="repo-desc">End-to-end open-source GEO implementation: status analysis, diagnosis, strategy, ticket generation, execution, and verification.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/nopnoping/micro-vllm">nopnoping/micro-vllm</a><span class="repo-stars">&#9733; 110</span></div>
+        <div class="repo-desc">Small, educational vLLM implementation for exploring inference scheduling, KV-cache management, and GPU execution paths.</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-monthly">Last 30 days</span>
+    <span class="line"></span>
+  </div>
+
+  <ul class="repo-list">
+    <li class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/elder-plinius/T3MP3ST">elder-plinius/T3MP3ST</a><span class="repo-stars">&#9733; 5,327</span></div>
+        <div class="repo-desc">Autonomous red-teaming platform; multi-agent offensive-security meta-harness that chains attack steps without hand-holding.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/synthetic-sciences/openscience">synthetic-sciences/openscience</a><span class="repo-stars">&#9733; 3,007</span></div>
+        <div class="repo-desc">Open-source AI workbench for scientific research; positions itself as the open alternative to Claude Science.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/Jakubantalik/thinking-orbs">Jakubantalik/thinking-orbs</a><span class="repo-stars">&#9733; 1,287</span></div>
+        <div class="repo-desc">Dotted thought-orb loading indicators for AI and agent UIs; six tuned states, two sizes, auto dark/light.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/makecindy/cindy">makecindy/cindy</a><span class="repo-stars">&#9733; 1,277</span></div>
+        <div class="repo-desc">Open-source AI agent that works out of the box; cross-platform via Electron and React Native on desktop and mobile.</div>
+      </div>
+    </li>
+    <li class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name"><a href="https://github.com/AminBlg/SimpleEnglish">AminBlg/SimpleEnglish</a><span class="repo-stars">&#9733; 1,154</span></div>
+        <div class="repo-desc">Agent skill that forces LLMs to write documentation in ASD-STE100 Simplified Technical English; the anti-slop filter.</div>
+      </div>
+    </li>
+  </ul>
+
+  <footer>Generated by the Trending GitHub Repos routine &middot; 2026-08-01 UTC</footer>
+</div>
+</body>
+</html>
