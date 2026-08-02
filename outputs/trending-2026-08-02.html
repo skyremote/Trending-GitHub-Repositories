@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-02</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --section-bg: #f0f4ff;
+    --editor-bg: #fefce8;
+    --editor-border: #fde68a;
+    --badge-7d: #059669;
+    --badge-30d: #7c3aed;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #312e81;
+      --tag-text: #a5b4fc;
+      --section-bg: #1e1b4b;
+      --editor-bg: #422006;
+      --editor-border: #92400e;
+      --badge-7d: #34d399;
+      --badge-30d: #a78bfa;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editor-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2em 0.65em;
+    border-radius: 999px;
+    color: #fff;
+  }
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    min-width: 1.5em;
+  }
+  .repo-name a {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .repo-stars {
+    font-size: 0.85rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 500px) {
+    body { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-top { flex-direction: column; gap: 0.2rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-08-02 &middot; Weekly Brief</div>
+</header>
+
+<div class="editor-take">
+  <h2>Editor's Take</h2>
+  <p>Three signals stand out this week. First, the anti-slop movement has gone from niche complaint to shipping code: three of the fifteen repos below exist solely to detect and strip AI-generated writing tics, and <strong>no-ai-slop</strong> crossed 3,700 stars in under a month. Second, voice and real-time agent runtimes are pulling away from text-only agent frameworks &mdash; Qwen's audio agent grabbed the top 7-day spot by treating voice as a first-class runtime, not a bolted-on TTS layer. Third, AI is moving down the stack in ways that would have sounded absurd a year ago: one project boots an x86 PC straight into an LLM with no operating system underneath, and another runs inference natively on ESP32 microcontrollers. The tools around agents are maturing faster than the agents themselves &mdash; compliance checkers, file-lineage trackers, and loading-state UIs all appeared this week as if the ecosystem decided the plumbing matters more than another wrapper.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="badge badge-7d">Last 7 days</span>
+</div>
+<ol class="repo-list">
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">1.</span> <span class="repo-name"><a href="https://github.com/QwenAudio/qwen-audio-agent">QwenAudio/qwen-audio-agent</a></span></div>
+      <span class="repo-stars">&#9733; 1,383</span>
+    </div>
+    <div class="repo-desc">Real-time voice runtime for AI agents. Keeps agents talking, working, and present with streaming audio rather than request-response TTS.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">2.</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/ponytail-improved">0xwilliamortiz/ponytail-improved</a></span></div>
+      <span class="repo-stars">&#9733; 577</span>
+    </div>
+    <div class="repo-desc">Claude Code skill that makes agents think like lazy senior devs: ship the minimum, delete the rest. The best code is the code you never wrote.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">3.</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/ratchet">0xwilliamortiz/ratchet</a></span></div>
+      <span class="repo-stars">&#9733; 408</span>
+    </div>
+    <div class="repo-desc">Agent compliance checker. Your agent reads the rules; Ratchet checks whether it followed them. Static analysis meets prompt discipline.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">4.</span> <span class="repo-name"><a href="https://github.com/elayadesign/ai-design-skills">elayadesign/ai-design-skills</a></span></div>
+      <span class="repo-stars">&#9733; 253</span>
+    </div>
+    <div class="repo-desc">Packaged design skills for AI agents, turning domain expertise into distributable agent capabilities.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">5.</span> <span class="repo-name"><a href="https://github.com/grafana/ai-sdk">grafana/ai-sdk</a></span></div>
+      <span class="repo-stars">&#9733; 182</span>
+    </div>
+    <div class="repo-desc">Grafana's AI SDK for Go. Streaming, tool-calling backends that speak native @ai-sdk/react &mdash; bringing observability infra into the agent stack.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">6.</span> <span class="repo-name"><a href="https://github.com/ZihangDong/toolknit-desktop">ZihangDong/toolknit-desktop</a></span></div>
+      <span class="repo-stars">&#9733; 177</span>
+    </div>
+    <div class="repo-desc">Open-source desktop toolbox for audio, video, image, PDF, and AI processing in one app. One-stop local media pipeline.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">7.</span> <span class="repo-name"><a href="https://github.com/uczltw6/trace-file-lineage">uczltw6/trace-file-lineage</a></span></div>
+      <span class="repo-stars">&#9733; 172</span>
+    </div>
+    <div class="repo-desc">Answers &ldquo;which script, notebook, or AI agent produced this file?&rdquo; locally, with evidence and honest uncertainty scores.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">8.</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/humanizer-cli">0xwilliamortiz/humanizer-cli</a></span></div>
+      <span class="repo-stars">&#9733; 141</span>
+    </div>
+    <div class="repo-desc">33 patterns to spot AI-written text, right in the terminal. Before/after examples, draft checker, zero dependencies.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">9.</span> <span class="repo-name"><a href="https://github.com/awplanets/awplanet">awplanets/awplanet</a></span></div>
+      <span class="repo-stars">&#9733; 112</span>
+    </div>
+    <div class="repo-desc">AI-native 3D direction workbench and scene creation studio. Cinematic scene composition driven by natural language.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">10.</span> <span class="repo-name"><a href="https://github.com/hardrave/NIGHTRUN">hardrave/NIGHTRUN</a></span></div>
+      <span class="repo-stars">&#9733; 107</span>
+    </div>
+    <div class="repo-desc">Boot your PC straight into an LLM. Rust, UEFI-resident, no operating system underneath. The most literal &ldquo;AI-first device&rdquo; yet.</div>
+  </li>
+</ol>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="badge badge-30d">Last 30 days</span>
+</div>
+<ol class="repo-list">
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">1.</span> <span class="repo-name"><a href="https://github.com/petergyang/no-ai-slop">petergyang/no-ai-slop</a></span></div>
+      <span class="repo-stars">&#9733; 3,752</span>
+    </div>
+    <div class="repo-desc">Removes 20+ patterns of AI slop from any piece of writing. The month's breakout hit &mdash; proof that &ldquo;make AI shut up&rdquo; is a real product category.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">2.</span> <span class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft">Vincentwei1021/video-shotcraft</a></span></div>
+      <span class="repo-stars">&#9733; 3,160</span>
+    </div>
+    <div class="repo-desc">AI video skill for Claude Code and Codex. 106 shot recipe cards, 161 motion previews, cinematic product videos via Remotion.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">3.</span> <span class="repo-name"><a href="https://github.com/slvDev/esp32-ai">slvDev/esp32-ai</a></span></div>
+      <span class="repo-stars">&#9733; 2,718</span>
+    </div>
+    <div class="repo-desc">AI inference running natively on ESP32 microcontrollers. Edge AI without the cloud, on a chip that costs a few dollars.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">4.</span> <span class="repo-name"><a href="https://github.com/penecho/penecho">penecho/penecho</a></span></div>
+      <span class="repo-stars">&#9733; 1,844</span>
+    </div>
+    <div class="repo-desc">Think with AI beyond the chat box. A shared canvas for handwriting, equations, diagrams, and spatial reasoning.</div>
+  </li>
+  <li class="repo-card">
+    <div class="repo-top">
+      <div><span class="repo-rank">5.</span> <span class="repo-name"><a href="https://github.com/makecindy/cindy">makecindy/cindy</a></span></div>
+      <span class="repo-stars">&#9733; 1,374</span>
+    </div>
+    <div class="repo-desc">Open-source AI agent that works out of the box. Cross-platform (Android, desktop), pluggable into Claude Code and Codex ecosystems.</div>
+  </li>
+</ol>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; 2026-08-02
+</footer>
+</body>
+</html>
