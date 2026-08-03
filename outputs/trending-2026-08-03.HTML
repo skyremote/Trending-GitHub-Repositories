@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-08-03</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --section-bg: #f0f4ff;
+    --editor-bg: #f0fdf4;
+    --editor-border: #86efac;
+    --divider: #cbd5e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #312e81;
+      --tag-text: #c7d2fe;
+      --section-bg: #1e1b4b;
+      --editor-bg: #14532d;
+      --editor-border: #22c55e;
+      --divider: #475569;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--divider);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .editors-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .editors-take strong {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+  }
+  .section-header {
+    background: var(--section-bg);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    margin: 2rem 0 1.25rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 1.5rem;
+  }
+  .repo-name a {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+  }
+  .stars {
+    color: var(--star);
+    font-weight: 600;
+  }
+  .stars::before {
+    content: "\2605 ";
+  }
+  .lang-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .repo-desc {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1rem 0.75rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { padding: 1rem; }
+    .repo-header { flex-direction: column; gap: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-08-03 UTC</div>
+  </header>
+
+  <div class="editors-take">
+    <strong>Editor's Take</strong>
+    The AI tooling layer is maturing fast. This week's standout pattern: developers are building guardrails <em>around</em> AI agents rather than more agents themselves. Ratchet validates whether agents followed their instructions. Trace-file-lineage answers "which agent made this file?" Ponytail-improved tells your agent to write less code, not more. Meanwhile, the inference-on-a-budget race continues with Kimi K3's 2.78-trillion-parameter model running in pure C99 on a single CPU, and turbo-fieldfare squeezing Gemma 4 into 2 GB on a MacBook. The message from open source this month: raw model power is table stakes; what matters now is control, provenance, and efficiency.
+  </div>
+
+  <div class="section-header">Top 10 — Last 7 Days</div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#1</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/ponytail-improved" target="_blank" rel="noopener">0xwilliamortiz/ponytail-improved</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">580</span>
+      <span class="lang-tag">JavaScript</span>
+      <span>Created 2026-07-28</span>
+    </div>
+    <div class="repo-desc">Makes your AI agent think like the laziest senior dev in the room. A set of YAGNI-focused skills for Claude Code and Cursor that bias agents toward writing less code, not more. Prompt engineering as code hygiene.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#2</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/humanizer-cli" target="_blank" rel="noopener">0xwilliamortiz/humanizer-cli</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">542</span>
+      <span class="lang-tag">JavaScript</span>
+      <span>Created 2026-08-01</span>
+    </div>
+    <div class="repo-desc">33 patterns that flag AI-written text, right in your terminal. Ships with before/after examples and a draft checker. Zero dependencies. Useful for anyone who needs to audit content before it ships.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#3</span> <span class="repo-name"><a href="https://github.com/0xwilliamortiz/ratchet" target="_blank" rel="noopener">0xwilliamortiz/ratchet</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">411</span>
+      <span class="lang-tag">JavaScript</span>
+      <span>Created 2026-07-31</span>
+    </div>
+    <div class="repo-desc">Your agent reads the rules. This checks whether it followed them. A compliance layer that sits between agent output and your codebase, verifying adherence to constraints you define. The "linter for agent behavior" niche is heating up.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#4</span> <span class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">315</span>
+      <span class="lang-tag">C</span>
+      <span>Created 2026-08-01</span>
+    </div>
+    <div class="repo-desc">Runs Kimi K3 — a 2.78-trillion-parameter model — inference on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no framework, no GPU. A remarkable exercise in from-scratch inference engineering.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#5</span> <span class="repo-name"><a href="https://github.com/Anionex/codex-vision-proxy" target="_blank" rel="noopener">Anionex/codex-vision-proxy</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">212</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-08-01</span>
+    </div>
+    <div class="repo-desc">Bridges the gap between text-only LLMs and visual understanding inside Codex. Lets text-only models call the built-in view_image tool seamlessly, plus ships a vision toolkit designed for models without native multimodal input.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#6</span> <span class="repo-name"><a href="https://github.com/uczltw6/trace-file-lineage" target="_blank" rel="noopener">uczltw6/trace-file-lineage</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">203</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-07-29</span>
+    </div>
+    <div class="repo-desc">Find which script, notebook, data command, or AI agent produced a file — locally, with evidence and honest uncertainty. File provenance tooling that acknowledges AI agents as first-class producers of artifacts.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#7</span> <span class="repo-name"><a href="https://github.com/grafana/ai-sdk" target="_blank" rel="noopener">grafana/ai-sdk</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">194</span>
+      <span class="lang-tag">Go</span>
+      <span>Created 2026-07-28</span>
+    </div>
+    <div class="repo-desc">Grafana's official AI SDK for Go. Builds streaming, tool-calling AI backends that speak the @ai-sdk/react protocol. Significant because it signals Grafana investing in AI-native observability backends.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#8</span> <span class="repo-name"><a href="https://github.com/aigclink/geolook" target="_blank" rel="noopener">aigclink/geolook</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">186</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-07-29</span>
+    </div>
+    <div class="repo-desc">Open-source end-to-end GEO (Generative Engine Optimization) implementation. Covers the full loop: status analysis, diagnosis, strategy, ticket generation, execution, and verification. SEO's successor is getting its first real toolchain.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#9</span> <span class="repo-name"><a href="https://github.com/aws/context-ontology-accelerator" target="_blank" rel="noopener">aws/context-ontology-accelerator</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">173</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-07-28</span>
+    </div>
+    <div class="repo-desc">An AWS open-source project using ontology-based semantic context to help AI agents make more accurate, consistent, and explainable decisions. Structured knowledge meeting agent architectures — an enterprise-grade approach to the "context problem."</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#10</span> <span class="repo-name"><a href="https://github.com/arcships/aimux" target="_blank" rel="noopener">arcships/aimux</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">146</span>
+      <span class="lang-tag">Rust</span>
+      <span>Created 2026-07-28</span>
+    </div>
+    <div class="repo-desc">A unified LLM service layer: one API to access 172+ AI providers. Written in Rust for performance. Solves the multi-provider routing problem that every team with more than one LLM subscription eventually hits.</div>
+  </div>
+
+  <div class="section-header">Top 5 — Last 30 Days</div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#1</span> <span class="repo-name"><a href="https://github.com/drumih/turbo-fieldfare" target="_blank" rel="noopener">drumih/turbo-fieldfare</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">4,234</span>
+      <span class="lang-tag">Swift</span>
+      <span>Created 2026-07-17</span>
+    </div>
+    <div class="repo-desc">Runs Gemma 4 26B-A4B inference in approximately 2 GB of RAM on any M-series MacBook. The hottest local-inference project of the month. Makes a serious model genuinely usable on consumer hardware without quantization tricks that destroy quality.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#2</span> <span class="repo-name"><a href="https://github.com/petergyang/no-ai-slop" target="_blank" rel="noopener">petergyang/no-ai-slop</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">3,823</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-07-07</span>
+    </div>
+    <div class="repo-desc">Removes 20+ patterns of AI slop from any piece of writing. The star count tells the story: people are tired of generated text that sounds generated. A cleanup tool that has clearly hit a nerve.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#3</span> <span class="repo-name"><a href="https://github.com/Sahir619/fable-method" target="_blank" rel="noopener">Sahir619/fable-method</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">2,094</span>
+      <span class="lang-tag">Python</span>
+      <span>Created 2026-07-06</span>
+    </div>
+    <div class="repo-desc">Distills how Claude Fable 5 works into skills any model can run, with an eval framework to keep it honest. Think / act / prove. A structured methodology for reliable agent behavior, extracted from one model and made portable.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#4</span> <span class="repo-name"><a href="https://github.com/penecho/penecho" target="_blank" rel="noopener">penecho/penecho</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">1,855</span>
+      <span class="lang-tag">JavaScript</span>
+      <span>Created 2026-07-14</span>
+    </div>
+    <div class="repo-desc">Think with AI beyond the chat box. A shared canvas for handwriting, equations, diagrams, and spatial reasoning. Attacks the fundamental limitation of chat-based AI interaction: some thinking needs space, not just text.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-header">
+      <div><span class="repo-rank">#5</span> <span class="repo-name"><a href="https://github.com/QwenAudio/qwen-audio-agent" target="_blank" rel="noopener">QwenAudio/qwen-audio-agent</a></span></div>
+    </div>
+    <div class="repo-meta">
+      <span class="stars">1,750</span>
+      <span class="lang-tag">JavaScript</span>
+      <span>Created 2026-07-27</span>
+    </div>
+    <div class="repo-desc">A real-time voice runtime that keeps agents talking, working, and present. From the Qwen team at Alibaba. Voice-first agent interfaces are moving from demo to infrastructure, and this is one of the first serious open-source runtimes for it.</div>
+  </div>
+
+  <footer>
+    Generated 2026-08-03 UTC. Star counts reflect the time of collection and may have changed.
+  </footer>
+</div>
+</body>
+</html>
