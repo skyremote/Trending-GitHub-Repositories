@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-04</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --tag-bg: #f3f4f6;
+    --tag-text: #374151;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --card-hover: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --text: #e4e4e7;
+      --text-secondary: #a1a1aa;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --border: #2d3039;
+      --tag-bg: #27272a;
+      --tag-text: #d4d4d8;
+      --gradient-start: #0c1929;
+      --gradient-end: #1e3a5f;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --card-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+  .header .date {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+  .container {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+  .editors-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: -1.5rem auto 2rem;
+    position: relative;
+    box-shadow: var(--card-shadow);
+  }
+  .editors-note h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .editors-note p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .repo-list { list-style: none; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: var(--card-shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--card-hover);
+    transform: translateY(-1px);
+  }
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .repo-stars svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--star);
+  }
+  .repo-desc {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .repo-meta {
+    margin-top: 0.6rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  @media (max-width: 600px) {
+    .header { padding: 2rem 1rem 2rem; }
+    .header h1 { font-size: 1.4rem; }
+    .container { padding: 0 0.75rem 2rem; }
+    .editors-note { padding: 1.25rem; }
+    .repo-card { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repos</h1>
+  <div class="date">August 4, 2026 &middot; Daily Brief</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-note">
+    <h2>Editor's Take</h2>
+    <p>The week's standout signal is that agents are no longer the product &mdash; the infrastructure around them is. YC's <code>qm</code> hit 10k stars in under a week by treating multi-agent coordination as a multiplayer problem, not a prompt-chaining one. Meanwhile, two repos from the same author (<code>ratchet</code> and <code>humanizer-cli</code>) address the output-quality crisis from opposite ends: one verifies that agents follow their own rules, the other flags AI-written text before it ships. The 30-day window confirms that on-device inference keeps shrinking: Gemma 4 26B now fits in 2&nbsp;GB on a MacBook, and Kimi K3's 2.78T parameters run on a single CPU in 8&nbsp;GB via pure C99. If you are building agent tooling, the market has split &mdash; you are either making agents more capable or making their outputs more trustworthy. Both sides are hiring.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 &mdash; Last 7 Days</h2>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/yc-software/qm">yc-software/qm</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 10,014</span>
+      </div>
+      <p class="repo-desc">YC's multiplayer agent harness for work. Treats multi-agent coordination as a real-time collaboration problem rather than a sequential pipeline.</p>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Agents</span><span class="tag">YC</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/trycompai/crm">trycompai/crm</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 3,438</span>
+      </div>
+      <p class="repo-desc">Open-source agentic-first CRM. Agents handle the data entry and follow-ups; humans handle the relationships.</p>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">CRM</span><span class="tag">Agents</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c">FareedKhan-dev/kimi-k3-in-c</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,314</span>
+      </div>
+      <p class="repo-desc">Runs Kimi K3's 2.78-trillion-parameter model on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no frameworks, no GPU.</p>
+      <div class="repo-meta"><span class="tag">C</span><span class="tag">Inference</span><span class="tag">On-Device</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/thebuggeddev/anatomy">thebuggeddev/anatomy</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 821</span>
+      </div>
+      <p class="repo-desc">Interactive 3D human anatomy explorer built with Three.js and GPT integration. A showcase of what vibe-coded educational tools look like at scale.</p>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Three.js</span><span class="tag">Education</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice">genspark-ai/genoffice</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 760</span>
+      </div>
+      <p class="repo-desc">AI-native office suite for macOS and Windows: word processor, spreadsheet, presentations, and PDF. Not a plugin on top of Office &mdash; a ground-up rebuild.</p>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Productivity</span><span class="tag">Desktop</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <div class="repo-name"><a href="https://github.com/0xwilliamortiz/humanizer-cli">0xwilliamortiz/humanizer-cli</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 560</span>
+      </div>
+      <p class="repo-desc">33 ways to spot AI-written text, right in your terminal. Before/after examples, draft checker, zero dependencies.</p>
+      <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">CLI</span><span class="tag">Detection</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <div class="repo-name"><a href="https://github.com/0xwilliamortiz/ratchet">0xwilliamortiz/ratchet</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 426</span>
+      </div>
+      <p class="repo-desc">Static analysis for AI agent outputs: reads the rules your agent was given, then checks whether it followed them. Useful as a CI gate for agent-generated code.</p>
+      <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">Quality</span><span class="tag">Agents</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <div class="repo-name"><a href="https://github.com/Anionex/codex-vision-proxy">Anionex/codex-vision-proxy</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 262</span>
+      </div>
+      <p class="repo-desc">Lets text-only models call Codex's built-in <code>view_image</code> tool seamlessly, with a vision toolkit designed for text-only LLMs.</p>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Multimodal</span><span class="tag">Codex</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <div class="repo-name"><a href="https://github.com/uczltw6/trace-file-lineage">uczltw6/trace-file-lineage</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 237</span>
+      </div>
+      <p class="repo-desc">Find which script, notebook, or AI agent produced a file &mdash; locally, with evidence and honest uncertainty. Data provenance for the agent era.</p>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Provenance</span><span class="tag">CLI</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <div class="repo-name"><a href="https://github.com/disler/super-simple-software-factory">disler/super-simple-software-factory</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 221</span>
+      </div>
+      <p class="repo-desc">Repeatable agent-plus-code workflows packaged as a single skill. Deterministic Python owns the graph; coding agents are bounded nodes inside it.</p>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Workflows</span><span class="tag">Skills</span></div>
+    </li>
+
+  </ul>
+
+  <h2 class="section-title">Top 5 &mdash; Last 30 Days</h2>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/drumih/turbo-fieldfare">drumih/turbo-fieldfare</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 4,651</span>
+      </div>
+      <p class="repo-desc">Gemma 4 26B-A4B inference in ~2 GB of RAM on any M-series MacBook. The on-device inference bar keeps dropping.</p>
+      <div class="repo-meta"><span class="tag">Swift</span><span class="tag">Inference</span><span class="tag">Apple Silicon</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/petergyang/no-ai-slop">petergyang/no-ai-slop</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 3,897</span>
+      </div>
+      <p class="repo-desc">Removes 20+ patterns of AI slop from any piece of writing. The inverse of "make it sound more professional" &mdash; makes it sound more human.</p>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Writing</span><span class="tag">Quality</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft">Vincentwei1021/video-shotcraft</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 3,453</span>
+      </div>
+      <p class="repo-desc">AI video skill for Claude Code and Codex: cinematic product videos with Remotion. 106 shot recipe cards, 161 motion previews.</p>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Video</span><span class="tag">Remotion</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/Sahir619/fable-method">Sahir619/fable-method</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,115</span>
+      </div>
+      <p class="repo-desc">Distills how Claude Fable 5 worked into portable skills any model can run, with the eval suite that keeps it honest.</p>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Skills</span><span class="tag">Evals</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/penecho/penecho">penecho/penecho</a></div>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,882</span>
+      </div>
+      <p class="repo-desc">Think with AI beyond the chat box. A shared canvas for handwriting, equations, diagrams, and spatial reasoning.</p>
+      <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">Canvas</span><span class="tag">Spatial AI</span></div>
+    </li>
+
+  </ul>
+
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine &middot; 2026-08-04 UTC
+</div>
+
+</body>
+</html>
