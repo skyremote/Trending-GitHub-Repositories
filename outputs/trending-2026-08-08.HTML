@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-08</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-accent: #eef2ff;
+    --text: #1a1a2e;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --link: #4f46e5;
+    --link-hover: #3730a3;
+    --star: #eab308;
+    --badge-bg: #e0e7ff;
+    --badge-text: #3730a3;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --gradient-start: #4f46e5;
+    --gradient-end: #7c3aed;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-accent: #1e1b4b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --link: #818cf8;
+      --link-hover: #a5b4fc;
+      --star: #facc15;
+      --badge-bg: #312e81;
+      --badge-text: #a5b4fc;
+      --tag-bg: #1e293b;
+      --tag-text: #94a3b8;
+      --gradient-start: #6366f1;
+      --gradient-end: #8b5cf6;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-accent: #1e1b4b;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --link: #818cf8;
+    --link-hover: #a5b4fc;
+    --star: #facc15;
+    --badge-bg: #312e81;
+    --badge-text: #a5b4fc;
+    --tag-bg: #1e293b;
+    --tag-text: #94a3b8;
+    --gradient-start: #6366f1;
+    --gradient-end: #8b5cf6;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    padding: 0;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .header .date {
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  .editors-take {
+    background: var(--bg-accent);
+    border-left: 4px solid var(--gradient-start);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--link);
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .section-badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 2rem;
+    line-height: 1;
+    margin-top: 0.15rem;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+  .repo-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .meta-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .star-icon { color: var(--star); }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .lang-c { background: #555555; }
+  .lang-python { background: #3572A5; }
+  .lang-go { background: #00ADD8; }
+  .lang-js { background: #f1e05a; }
+  .lang-ts { background: #3178c6; }
+  .lang-swift { background: #F05138; }
+  .lang-other { background: #94a3b8; }
+  .honorable {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .honorable h3 {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .honorable-item {
+    font-size: 0.88rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.5;
+  }
+  .honorable-item a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .honorable-item a:hover {
+    text-decoration: underline;
+  }
+  .honorable-item .stars-small {
+    color: var(--star);
+    font-size: 0.8rem;
+    margin-left: 0.3rem;
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border-color: var(--badge-text);
+  }
+  @media (max-width: 600px) {
+    .header { padding: 1.5rem 1rem; }
+    .header h1 { font-size: 1.35rem; }
+    .container { padding: 1rem; }
+    .repo-top { flex-direction: column; gap: 0.25rem; }
+    .repo-rank { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-08-08 UTC</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The agent-skill ecosystem has eclipsed the agent itself as the unit of competition. Four of this week's top repos are skills or plugins — slide generators, writing-style enforcers, video shot recipes — designed to plug into whichever harness the developer already chose. The harness wars may be settling; the skill wars are just starting.</p>
+    <p>Meanwhile, the "run a trillion-parameter model on commodity hardware" trend keeps compressing. <code>kimi-k3-in-c</code> fits a 2.78T-parameter model into 8 GB of RAM with zero dependencies, and <code>turbo-fieldfare</code> runs Gemma 4 26B in 2 GB on a MacBook. The message to cloud providers: inference margins face a structural squeeze from below.</p>
+    <p>The other notable signal is office suites. GenOffice, HermesOffice, and the Kimi PPT skill all shipped in the same month. Document creation — not chat, not code — may be the next surface where agents feel inevitable to ordinary users.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all')">All</button>
+    <button class="filter-btn" onclick="filterCards('inference')">Inference</button>
+    <button class="filter-btn" onclick="filterCards('agent')">Agents</button>
+    <button class="filter-btn" onclick="filterCards('skill')">Skills</button>
+    <button class="filter-btn" onclick="filterCards('tools')">Dev Tools</button>
+    <button class="filter-btn" onclick="filterCards('media')">Media / Video</button>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 — Last 7 Days</h2>
+    <span class="section-badge">Since Aug 1</span>
+  </div>
+
+  <div class="repo-card" data-tags="inference">
+    <div class="repo-top">
+      <div class="repo-rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></div>
+        <div class="repo-desc">Runs the 2.78T-parameter Kimi K3 on a single CPU in 8.24 GB RAM. Portable C99 — no BLAS, no framework, no GPU.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 3,352</span>
+          <span class="meta-item"><span class="lang-dot lang-c"></span> C</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="skill">
+    <div class="repo-top">
+      <div class="repo-rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/KKKKhazix/human-writing" target="_blank" rel="noopener">KKKKhazix/human-writing</a></div>
+        <div class="repo-desc">Agent skill that makes AI-generated Chinese read like a specific person's voice. Drop-in for any agent harness.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 1,899</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="skill">
+    <div class="repo-top">
+      <div class="repo-rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Binaryify/open-kimi-ppt-skill" target="_blank" rel="noopener">Binaryify/open-kimi-ppt-skill</a></div>
+        <div class="repo-desc">Unofficial Kimi Slides skill — lets AI agents generate editable PPTD + PPTX with a local browser-based editor.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 1,586</span>
+          <span class="meta-item"><span class="lang-dot lang-other"></span> Mixed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="tools">
+    <div class="repo-top">
+      <div class="repo-rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/magicrew/doc7" target="_blank" rel="noopener">magicrew/doc7</a></div>
+        <div class="repo-desc">Converts documents (PDF, DOCX) into AI-ready Markdown using vision-language models for layout understanding.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 698</span>
+          <span class="meta-item"><span class="lang-dot lang-go"></span> Go</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="media">
+    <div class="repo-top">
+      <div class="repo-rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/sophiamyang/finger-frame-effect-ai" target="_blank" rel="noopener">sophiamyang/finger-frame-effect-ai</a></div>
+        <div class="repo-desc">Generates the "finger frame" photo effect using AI — point your fingers, get a framed scene. Viral demo.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 605</span>
+          <span class="meta-item"><span class="lang-dot lang-js"></span> JavaScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="tools">
+    <div class="repo-top">
+      <div class="repo-rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/MarcosSete/awesome-free-ai-course-notes" target="_blank" rel="noopener">MarcosSete/awesome-free-ai-course-notes</a></div>
+        <div class="repo-desc">Curated ML and AI lecture notes from MIT, Stanford, and other top universities. Free and browsable.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 547</span>
+          <span class="meta-item"><span class="lang-dot lang-other"></span> Docs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="agent tools">
+    <div class="repo-top">
+      <div class="repo-rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/fuxicodex/Fuxi" target="_blank" rel="noopener">fuxicodex/Fuxi</a></div>
+        <div class="repo-desc">Self-contained AI developer terminal. Fast, local-first, designed for agentic coding workflows.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 430</span>
+          <span class="meta-item"><span class="lang-dot lang-other"></span> Mixed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="media">
+    <div class="repo-top">
+      <div class="repo-rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/jd-opensource/JoyAI-Video-Edit" target="_blank" rel="noopener">jd-opensource/JoyAI-Video-Edit</a></div>
+        <div class="repo-desc">JD's real-time open-ended video editing via autoregressive diffusion. Handles cuts, effects, and re-rendering on the fly.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 429</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="tools">
+    <div class="repo-top">
+      <div class="repo-rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/criptogus/HermesOffice" target="_blank" rel="noopener">criptogus/HermesOffice</a></div>
+        <div class="repo-desc">AI-native office suite (word, slides, spreadsheet) forked from GenOffice, with native Hermes Agent integration.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 415</span>
+          <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="agent">
+    <div class="repo-top">
+      <div class="repo-rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/AMAP-ML/LongHorizon-Harness" target="_blank" rel="noopener">AMAP-ML/LongHorizon-Harness</a></div>
+        <div class="repo-desc">Long-horizon computer-use harness. Runs AI agents across desktop apps and CLI for extended periods with durable state recovery.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 394</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="honorable">
+    <h3>Honorable Mentions (7-day)</h3>
+    <div class="honorable-item"><a href="https://github.com/patchy631/time-to-first-token" target="_blank" rel="noopener">patchy631/time-to-first-token</a> <span class="stars-small">&#9733; 343</span> — 10-week roadmap for LLM inference optimization</div>
+    <div class="honorable-item"><a href="https://github.com/joeseesun/qiaomu-seo" target="_blank" rel="noopener">joeseesun/qiaomu-seo</a> <span class="stars-small">&#9733; 320</span> — AI-powered SEO auditing across search surfaces</div>
+    <div class="honorable-item"><a href="https://github.com/alikon-art/DeterminFlow" target="_blank" rel="noopener">alikon-art/DeterminFlow</a> <span class="stars-small">&#9733; 253</span> — Production-grade AI workflow runtime</div>
+    <div class="honorable-item"><a href="https://github.com/KimGLee/Cambium" target="_blank" rel="noopener">KimGLee/Cambium</a> <span class="stars-small">&#9733; 205</span> — Governance standard for LLM-maintained knowledge corpora</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 — Last 30 Days</h2>
+    <span class="section-badge">Since Jul 9</span>
+  </div>
+
+  <div class="repo-card" data-tags="agent tools">
+    <div class="repo-top">
+      <div class="repo-rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></div>
+        <div class="repo-desc">Open-source CRM designed for AI agents. Agentic-first — agents can read, write, and act on CRM data natively.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 7,521</span>
+          <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="inference">
+    <div class="repo-top">
+      <div class="repo-rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/drumih/turbo-fieldfare" target="_blank" rel="noopener">drumih/turbo-fieldfare</a></div>
+        <div class="repo-desc">Runs Gemma 4 26B-A4B in ~2 GB of RAM on any M-series Mac. Metal-accelerated, no Python needed.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 5,343</span>
+          <span class="meta-item"><span class="lang-dot lang-swift"></span> Swift</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="skill media">
+    <div class="repo-top">
+      <div class="repo-rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft" target="_blank" rel="noopener">Vincentwei1021/video-shotcraft</a></div>
+        <div class="repo-desc">AI video skill for Claude Code and Codex — 106 cinematic shot recipes, 161 motion previews, production-ready Remotion template.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 4,006</span>
+          <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="inference tools">
+    <div class="repo-top">
+      <div class="repo-rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/slvDev/esp32-ai" target="_blank" rel="noopener">slvDev/esp32-ai</a></div>
+        <div class="repo-desc">Run AI models on ESP32 microcontrollers. Bridges the gap between embedded hardware and inference.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 3,759</span>
+          <span class="meta-item"><span class="lang-dot lang-python"></span> Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card" data-tags="tools">
+    <div class="repo-top">
+      <div class="repo-rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></div>
+        <div class="repo-desc">AI-native office suite for macOS and Windows: word processor, spreadsheet, presentations, and PDF. Electron-based.</div>
+        <div class="repo-meta">
+          <span class="meta-item"><span class="star-icon">&#9733;</span> 2,188</span>
+          <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="honorable">
+    <h3>Honorable Mentions (30-day)</h3>
+    <div class="honorable-item"><a href="https://github.com/kirodotdev/KiroCrew" target="_blank" rel="noopener">kirodotdev/KiroCrew</a> <span class="stars-small">&#9733; 2,318</span> — Persistent, self-improving dev workspace</div>
+    <div class="honorable-item"><a href="https://github.com/Jakubantalik/thinking-orbs" target="_blank" rel="noopener">Jakubantalik/thinking-orbs</a> <span class="stars-small">&#9733; 2,090</span> — Thought-orb loading indicators for agent UIs</div>
+    <div class="honorable-item"><a href="https://github.com/QwenAudio/qwen-audio-agent" target="_blank" rel="noopener">QwenAudio/qwen-audio-agent</a> <span class="stars-small">&#9733; 1,983</span> — Real-time voice runtime for AI agents</div>
+    <div class="honorable-item"><a href="https://github.com/AminBlg/SimpleEnglish" target="_blank" rel="noopener">AminBlg/SimpleEnglish</a> <span class="stars-small">&#9733; 1,958</span> — Skill for Simplified Technical English docs</div>
+    <div class="honorable-item"><a href="https://github.com/penecho/penecho" target="_blank" rel="noopener">penecho/penecho</a> <span class="stars-small">&#9733; 1,955</span> — Shared canvas for spatial reasoning with AI</div>
+    <div class="honorable-item"><a href="https://github.com/makecindy/cindy" target="_blank" rel="noopener">makecindy/cindy</a> <span class="stars-small">&#9733; 1,882</span> — Cross-platform open-source AI agent</div>
+    <div class="honorable-item"><a href="https://github.com/Kritt-ai/open-kritt" target="_blank" rel="noopener">Kritt-ai/open-kritt</a> <span class="stars-small">&#9733; 1,586</span> — Agent-orchestrated code vulnerability finder</div>
+  </div>
+
+  <div class="footer">
+    Generated by a Claude Code routine on 2026-08-08 UTC. Star counts are snapshots at time of collection.
+  </div>
+</div>
+
+<script>
+function filterCards(tag) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  event.target.classList.add('active');
+  document.querySelectorAll('.repo-card').forEach(function(card) {
+    if (tag === 'all') {
+      card.style.display = '';
+    } else {
+      var tags = card.getAttribute('data-tags') || '';
+      card.style.display = tags.indexOf(tag) !== -1 ? '' : 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
