@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-10</title>
+<style>
+:root {
+  --bg: #FAFAF8;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F5F5F2;
+  --text-primary: #1A1A18;
+  --text-secondary: #5C5C56;
+  --text-tertiary: #8A8A82;
+  --accent: #2D5A3D;
+  --accent-light: #E8F0EB;
+  --accent-muted: #4A7D5C;
+  --border: #E2E2DC;
+  --border-light: #EDEDEA;
+  --star-color: #B8860B;
+  --tag-bg: #F0F0EC;
+  --tag-text: #5C5C56;
+  --section-rule: #D0D0C8;
+  --editor-bg: #F2F1ED;
+  --editor-border-left: #2D5A3D;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141413;
+    --bg-card: #1C1C1A;
+    --bg-card-hover: #242422;
+    --text-primary: #E8E8E4;
+    --text-secondary: #A0A098;
+    --text-tertiary: #6E6E66;
+    --accent: #6BAF82;
+    --accent-light: #1E2E24;
+    --accent-muted: #8BC9A0;
+    --border: #2A2A28;
+    --border-light: #222220;
+    --star-color: #D4A843;
+    --tag-bg: #222220;
+    --tag-text: #A0A098;
+    --section-rule: #2E2E2C;
+    --editor-bg: #1A1E1B;
+    --editor-border-left: #6BAF82;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #141413;
+  --bg-card: #1C1C1A;
+  --bg-card-hover: #242422;
+  --text-primary: #E8E8E4;
+  --text-secondary: #A0A098;
+  --text-tertiary: #6E6E66;
+  --accent: #6BAF82;
+  --accent-light: #1E2E24;
+  --accent-muted: #8BC9A0;
+  --border: #2A2A28;
+  --border-light: #222220;
+  --star-color: #D4A843;
+  --tag-bg: #222220;
+  --tag-text: #A0A098;
+  --section-rule: #2E2E2C;
+  --editor-bg: #1A1E1B;
+  --editor-border-left: #6BAF82;
+}
+
+@font-face {
+  font-family: 'SystemSans';
+  src: local('Inter'), local('SF Pro Text'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'SystemSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+.dateline {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  text-wrap: balance;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.editor-take {
+  background: var(--editor-bg);
+  border-left: 3px solid var(--editor-border-left);
+  padding: 20px 24px;
+  margin: 32px 0 40px;
+  border-radius: 0 6px 6px 0;
+}
+
+.editor-take .label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.editor-take p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 48px 0 20px;
+}
+
+.section-heading h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.section-heading .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--section-rule);
+}
+
+.repo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.repo-card {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0 14px;
+  padding: 16px 16px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.repo-card:hover, .repo-card:focus-visible {
+  background: var(--bg-card-hover);
+  outline: none;
+}
+
+.repo-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.rank {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding-top: 2px;
+}
+
+.repo-body {
+  min-width: 0;
+}
+
+.repo-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.repo-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  word-break: break-word;
+}
+
+.repo-card:hover .repo-name {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.stars {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--star-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.repo-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.repo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  padding: 2px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.01em;
+}
+
+.tag.archived {
+  color: var(--star-color);
+  background: transparent;
+  border: 1px solid var(--star-color);
+}
+
+footer {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .page { padding: 32px 16px 60px; }
+  h1 { font-size: 22px; }
+  .editor-take { padding: 16px 18px; }
+  .repo-card { grid-template-columns: 22px 1fr; gap: 0 10px; padding: 14px 10px; }
+  .rank { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .repo-card { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="dateline">10 August 2026</div>
+  <h1>Trending AI Repositories</h1>
+  <div class="subtitle">Weekly signal from GitHub &mdash; sorted by stars gained</div>
+</header>
+
+<div class="editor-take">
+  <div class="label">Editor&rsquo;s Take</div>
+  <p>The skills marketplace has cracked open. Half of this week&rsquo;s top repos are packaged skills for Claude Code or Codex, not standalone tools&nbsp;&mdash; writing style, slide generation, video production, character design. The shift is structural: developers are building <em>on</em> agent harnesses instead of against raw APIs. Meanwhile, the 30-day view shows full applications being rebuilt agent-first: a CRM, an office suite, a voice runtime. The interesting tension is between &ldquo;skill as sharable atom&rdquo; (human-writing, shuohao-skills) and &ldquo;monolith with AI baked in&rdquo; (GenOffice, Comp&nbsp;AI CRM). Both are gaining stars; neither has won. If you ship developer tools, the skill distribution problem&nbsp;&mdash; discovery, trust, versioning&nbsp;&mdash; is the underserved gap right now.</p>
+</div>
+
+<div class="section-heading">
+  <h2>Top 10 &mdash; Last 7 Days</h2>
+  <div class="rule"></div>
+</div>
+
+<div class="repo-list">
+
+  <a class="repo-card" href="https://github.com/KKKKhazix/human-writing" target="_blank" rel="noopener">
+    <div class="rank">1</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">KKKKhazix/human-writing</span>
+        <span class="stars">&#9733; 2,134</span>
+      </div>
+      <div class="repo-desc">Writing skill that makes AI-generated Chinese read like a specific person&rsquo;s voice. Plug-and-play for Claude Code and Codex; ships with rewriting and drafting modes.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">agent-skills</span><span class="tag">chinese-writing</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/Binaryify/open-kimi-ppt-skill" target="_blank" rel="noopener">
+    <div class="rank">2</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">Binaryify/open-kimi-ppt-skill</span>
+        <span class="stars">&#9733; 1,607</span>
+      </div>
+      <div class="repo-desc">Unofficial Kimi Slides skill for AI agents. Generates editable PPTD + PPTX with a local browser-based editor. Treat as reference &mdash; repo is archived.</div>
+      <div class="repo-tags"><span class="tag archived">archived</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/jd-opensource/JoyAI-Video-Edit" target="_blank" rel="noopener">
+    <div class="rank">3</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">jd-opensource/JoyAI-Video-Edit</span>
+        <span class="stars">&#9733; 632</span>
+      </div>
+      <div class="repo-desc">JD&rsquo;s real-time video editing model using autoregressive diffusion. Open-ended edits from text prompts on existing video, not just generation from scratch.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">diffusion</span><span class="tag">video-editing</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/eternityspring/shuohao-skills" target="_blank" rel="noopener">
+    <div class="rank">4</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">eternityspring/shuohao-skills</span>
+        <span class="stars">&#9733; 554</span>
+      </div>
+      <div class="repo-desc">Skill collection for Claude Code and Codex that turns novels into character bibles: profiles, cartoon-design prompts, voice prompts, and turnaround sheets.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">agent-skills</span><span class="tag">character-design</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/AMAP-ML/LongHorizon-Harness" target="_blank" rel="noopener">
+    <div class="rank">5</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">AMAP-ML/LongHorizon-Harness</span>
+        <span class="stars">&#9733; 522</span>
+      </div>
+      <div class="repo-desc">Long-horizon computer-use harness. Runs AI agents across desktop apps and CLI for extended periods with durable state, fresh-context execution, and recoverable progress.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">agent</span><span class="tag">long-horizon</span><span class="tag">computer-use</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/fuxicodex/Fuxi" target="_blank" rel="noopener">
+    <div class="rank">6</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">fuxicodex/Fuxi</span>
+        <span class="stars">&#9733; 453</span>
+      </div>
+      <div class="repo-desc">Fast, self-contained AI developer terminal. Positions itself as a single-binary alternative to heavier agent IDEs.</div>
+      <div class="repo-tags"><span class="tag">developer-tools</span><span class="tag">terminal</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/criptogus/HermesOffice" target="_blank" rel="noopener">
+    <div class="rank">7</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">criptogus/HermesOffice</span>
+        <span class="stars">&#9733; 425</span>
+      </div>
+      <div class="repo-desc">AI-native office suite forked from GenOffice, adding native Hermes Agent AI integration. Electron-based, handles .docx and .pptx.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">office-suite</span><span class="tag">electron</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/mewamew/my_ai_town" target="_blank" rel="noopener">
+    <div class="rank">8</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">mewamew/my_ai_town</span>
+        <span class="stars">&#9733; 281</span>
+      </div>
+      <div class="repo-desc">AI town simulation built in Godot. Autonomous NPCs with LLM-driven behaviour in a game engine &mdash; an accessible entry point for agent-in-game-world experiments.</div>
+      <div class="repo-tags"><span class="tag">GDScript</span><span class="tag">simulation</span><span class="tag">game-ai</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/sv-number/mcp-server" target="_blank" rel="noopener">
+    <div class="rank">9</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">sv-number/mcp-server</span>
+        <span class="stars">&#9733; 275</span>
+      </div>
+      <div class="repo-desc">MCP server that gives AI agents a phone number: order a private number, read the SMS verification code, hand it back. Solves a specific pain point in agent-driven sign-up flows.</div>
+      <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">mcp</span><span class="tag">sms</span><span class="tag">phone-verification</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/waiterve/wai-play" target="_blank" rel="noopener">
+    <div class="rank">10</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">waiterve/wai-play</span>
+        <span class="stars">&#9733; 247</span>
+      </div>
+      <div class="repo-desc">AI web game testing and quality evaluation platform. Agents play your browser game and score it, targeting QA automation for indie and mid-size studios.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">game-testing</span><span class="tag">ai-agents</span></div>
+    </div>
+  </a>
+
+</div>
+
+<div class="section-heading">
+  <h2>Top 5 &mdash; Last 30 Days</h2>
+  <div class="rule"></div>
+</div>
+
+<div class="repo-list">
+
+  <a class="repo-card" href="https://github.com/trycompai/crm" target="_blank" rel="noopener">
+    <div class="rank">1</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">trycompai/crm</span>
+        <span class="stars">&#9733; 8,004</span>
+      </div>
+      <div class="repo-desc">Open-source, agentic-first CRM. Designed so AI agents are the primary users, not an afterthought bolted onto a human UI. The month&rsquo;s fastest riser by raw star count.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">crm</span><span class="tag">agentic</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/Vincentwei1021/video-shotcraft" target="_blank" rel="noopener">
+    <div class="rank">2</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">Vincentwei1021/video-shotcraft</span>
+        <span class="stars">&#9733; 4,359</span>
+      </div>
+      <div class="repo-desc">AI video skill for Claude Code and Codex. Ships 152 cinematic shot recipe cards, 209 motion previews, and a production-ready Remotion template for product videos.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">video-production</span><span class="tag">remotion</span><span class="tag">claude-code</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/slvDev/esp32-ai" target="_blank" rel="noopener">
+    <div class="rank">3</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">slvDev/esp32-ai</span>
+        <span class="stars">&#9733; 3,861</span>
+      </div>
+      <div class="repo-desc">Brings AI capabilities to ESP32 microcontrollers. The hardware-meets-LLM intersection continues to draw attention as edge inference matures.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">esp32</span><span class="tag">edge-ai</span><span class="tag">hardware</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/kirodotdev/KiroCrew" target="_blank" rel="noopener">
+    <div class="rank">4</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">kirodotdev/KiroCrew</span>
+        <span class="stars">&#9733; 2,474</span>
+      </div>
+      <div class="repo-desc">Persistent workspace that self-improves and continues development work beyond a single session. Built on the Kiro agent platform; tackles the &ldquo;context death at session end&rdquo; problem.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">agent</span><span class="tag">kiro</span><span class="tag">persistent-workspace</span></div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">
+    <div class="rank">5</div>
+    <div class="repo-body">
+      <div class="repo-name-row">
+        <span class="repo-name">genspark-ai/genoffice</span>
+        <span class="stars">&#9733; 2,378</span>
+      </div>
+      <div class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux. Handles Word, Excel, PowerPoint, PDF, and Markdown with built-in AI agents. The base that HermesOffice forked from.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">office-suite</span><span class="tag">electron</span><span class="tag">cross-platform</span></div>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine on 2026-08-10 &middot; Star counts as of publish time
+</footer>
+
+</div>
+</body>
+</html>
