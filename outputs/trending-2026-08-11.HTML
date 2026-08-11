@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-11</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --tag-bg: #eef2ff;
+    --tag-text: #3730a3;
+    --star: #eab308;
+    --section-bg: #f1f5f9;
+    --highlight: #fef3c7;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+    --mention-bg: #f8fafc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --tag-bg: #1e1b4b;
+      --tag-text: #a5b4fc;
+      --star: #facc15;
+      --section-bg: #1e293b;
+      --highlight: #422006;
+      --gradient-start: #0f172a;
+      --gradient-end: #1e40af;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+      --mention-bg: #1e293b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfd;
+    --border: #334155;
+    --tag-bg: #1e1b4b;
+    --tag-text: #a5b4fc;
+    --star: #facc15;
+    --section-bg: #1e293b;
+    --highlight: #422006;
+    --gradient-start: #0f172a;
+    --gradient-end: #1e40af;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    --mention-bg: #1e293b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .header .date { opacity: 0.85; font-size: 0.95rem; }
+  .container { max-width: 52rem; margin: 0 auto; padding: 0 1rem; }
+  .editors-take {
+    background: var(--highlight);
+    border-left: 4px solid var(--star);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editors-take strong { display: block; margin-bottom: 0.5rem; font-size: 1rem; }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.2s, transform 0.15s;
+    box-shadow: var(--card-shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .repo-rank {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.75rem; height: 1.75rem; border-radius: 50%;
+    background: var(--accent); color: #fff; font-weight: 700;
+    font-size: 0.8rem; flex-shrink: 0;
+  }
+  .repo-name { font-weight: 600; font-size: 1rem; }
+  .repo-name a { color: var(--accent); text-decoration: none; }
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .repo-stars {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-weight: 600; color: var(--star); font-size: 0.9rem; white-space: nowrap;
+  }
+  .repo-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.4rem; padding-left: 2.25rem; }
+  .repo-meta { display: flex; gap: 0.75rem; margin-top: 0.5rem; padding-left: 2.25rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 9999px;
+    background: var(--tag-bg); color: var(--tag-text); font-weight: 500;
+  }
+  .mentions { margin-top: 1rem; }
+  .mention-card {
+    background: var(--mention-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .mention-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .mention-card a:hover { text-decoration: underline; }
+  .mention-desc { color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.15rem; }
+  .footer {
+    text-align: center; color: var(--text-secondary);
+    font-size: 0.8rem; padding: 2rem 1rem 1.5rem;
+    border-top: 1px solid var(--border); margin-top: 2rem;
+  }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.35rem; }
+    .repo-header { flex-direction: column; align-items: flex-start; }
+    .repo-desc, .repo-meta { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-08-11 &middot; Weekly Brief</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <strong>Editor's Take</strong>
+    The skill-as-distributable-unit pattern now dominates new AI repos. Half of this week's top 10 are packaged skills or design rules for coding agents, not standalone applications. The Chinese developer ecosystem is producing the most commercially interesting entries: style-transfer writing skills, short-drama production pipelines, and slide generators that slot directly into agent harnesses. Meanwhile, the 30-day view shows the infrastructure layer consolidating around agentic CRM, AI office suites, and persistent agent workspaces. The repos that matter this month are not building new models. They are building the workflow surfaces where models already run.
+  </div>
+
+  <div class="section-title">Top 10 — Last 7 Days</div>
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">1</span>
+          <span class="repo-name"><a href="https://github.com/KKKKhazix/human-writing">KKKKhazix/human-writing</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 2,311</span>
+      </div>
+      <div class="repo-desc">Universal creative-writing and revision skill that makes AI-written Chinese read like a specific person is speaking. Style transfer applied to voice, not just tone.</div>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Skill</span><span class="tag">NLP</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">2</span>
+          <span class="repo-name"><a href="https://github.com/Binaryify/open-kimi-ppt-skill">Binaryify/open-kimi-ppt-skill</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 1,606</span>
+      </div>
+      <div class="repo-desc">Unofficial Kimi Slides skill that lets AI agents generate editable PPTD and PPTX files, bundled with a local browser editor. 1,184 forks in under a week.</div>
+      <div class="repo-meta"><span class="tag">Skill</span><span class="tag">Productivity</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">3</span>
+          <span class="repo-name"><a href="https://github.com/SMNETSTUDIO/WeChat-AI">SMNETSTUDIO/WeChat-AI</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 967</span>
+      </div>
+      <div class="repo-desc">TypeScript-based WeChat AI integration. Created August 10, already approaching 1k stars with 717 forks. Velocity suggests a widely-shared template.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Messaging</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">4</span>
+          <span class="repo-name"><a href="https://github.com/eternityspring/shuohao-skills">eternityspring/shuohao-skills</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 654</span>
+      </div>
+      <div class="repo-desc">Skill collection for AI short-drama production: character bibles, model sheets, adaptation outlines. Runs in Claude Code and Codex. Content-creation agents entering pre-production workflows.</div>
+      <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">Skill</span><span class="tag">Content</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">5</span>
+          <span class="repo-name"><a href="https://github.com/sv-number/mcp-server">sv-number/mcp-server</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 563</span>
+      </div>
+      <div class="repo-desc">MCP server that gives AI agents a phone number: order a private number in 200+ countries, read the SMS verification code, hand it back. Plumbing that makes agents transactional.</div>
+      <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">MCP</span><span class="tag">Infrastructure</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">6</span>
+          <span class="repo-name"><a href="https://github.com/mewamew/my_ai_town">mewamew/my_ai_town</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 374</span>
+      </div>
+      <div class="repo-desc">AI Town simulation built in Godot (GDScript). Multi-agent NPC life-sim where agents inhabit a persistent small-town environment.</div>
+      <div class="repo-meta"><span class="tag">GDScript</span><span class="tag">Simulation</span><span class="tag">Multi-Agent</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">7</span>
+          <span class="repo-name"><a href="https://github.com/UditAkhourii/neuroarxiv">UditAkhourii/neuroarxiv</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 257</span>
+      </div>
+      <div class="repo-desc">Claude skill that queries real arXiv papers before the agent designs a new architecture. Kills from-scratch coding by checking prior art first.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Skill</span><span class="tag">Research</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">8</span>
+          <span class="repo-name"><a href="https://github.com/antinomie-lab/pi-book">antinomie-lab/pi-book</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 240</span>
+      </div>
+      <div class="repo-desc">Source-backed architecture notes on building an agent. A Vue-based reference that reads more like annotated source than documentation.</div>
+      <div class="repo-meta"><span class="tag">Vue</span><span class="tag">Education</span><span class="tag">Agent Architecture</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">9</span>
+          <span class="repo-name"><a href="https://github.com/SaladDay/pi-from-scratch">SaladDay/pi-from-scratch</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 226</span>
+      </div>
+      <div class="repo-desc">A 600-line TypeScript implementation of a pi-style agent, designed to teach agent internals by building one from zero.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Education</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">10</span>
+          <span class="repo-name"><a href="https://github.com/i3T4AN/KADATH">i3T4AN/KADATH</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 173</span>
+      </div>
+      <div class="repo-desc">Evolutionary multi-agent runtime that breeds, evaluates, and improves autonomous agents across reproducible epochs. Genetic algorithms applied to agent populations.</div>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Multi-Agent</span><span class="tag">Evolutionary</span></div>
+    </li>
+
+  </ul>
+
+  <div class="mentions">
+    <strong style="font-size:0.9rem;color:var(--text-secondary)">Honourable Mentions</strong>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/miqdadbadjuber/anti-slop">miqdadbadjuber/anti-slop</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 143</span>
+        <div class="mention-desc">Design rules to stop AI coding agents from generating generic "AI slop" UI.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/Juror-AI/juror">Juror-AI/juror</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 78</span>
+        <div class="mention-desc">Self-hosted code review agent on GitHub Actions. Pitched as a cheaper Greptile alternative.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/p-e-w/lophius">p-e-w/lophius</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 75</span>
+        <div class="mention-desc">Workbench for language model research. Small star count but high-signal tool.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/luvrix/fluxmend">luvrix/fluxmend</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 46</span>
+        <div class="mention-desc">Streaming FSM validation and layered repair for LLM outputs with embedded structured components.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Top 5 — Last 30 Days</div>
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">1</span>
+          <span class="repo-name"><a href="https://github.com/trycompai/crm">trycompai/crm</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 8,130</span>
+      </div>
+      <div class="repo-desc">Open-source CRM designed for AI agents. Agentic-first architecture where the CRM is the agent's workspace, not the human's. 904 forks.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">CRM</span><span class="tag">Agentic</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">2</span>
+          <span class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft">Vincentwei1021/video-shotcraft</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 4,529</span>
+      </div>
+      <div class="repo-desc">AI video skill for Claude Code and Codex: cinematic product videos with Remotion, 152 shot recipe cards, 209 motion previews, production-ready templates.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Skill</span><span class="tag">Video</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">3</span>
+          <span class="repo-name"><a href="https://github.com/kirodotdev/KiroCrew">kirodotdev/KiroCrew</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 2,629</span>
+      </div>
+      <div class="repo-desc">Persistent workspace for development work that self-improves and continues beyond one session. 504 open issues signals active community pressure-testing.</div>
+      <div class="repo-meta"><span class="tag">Python</span><span class="tag">Workspace</span><span class="tag">Persistence</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">4</span>
+          <span class="repo-name"><a href="https://github.com/genspark-ai/genoffice">genspark-ai/genoffice</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 2,486</span>
+      </div>
+      <div class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux. Covers Word, Excel, PowerPoint, PDF, and Markdown with built-in AI agents.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">Office Suite</span><span class="tag">Desktop</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span class="repo-rank">5</span>
+          <span class="repo-name"><a href="https://github.com/Jakubantalik/thinking-orbs">Jakubantalik/thinking-orbs</a></span>
+        </div>
+        <span class="repo-stars">&#9733; 2,232</span>
+      </div>
+      <div class="repo-desc">Dotted thought-orb loading indicators for AI and agent UIs. Nine tuned types, two sizes, auto dark/light. A small UX library that shipped at the right moment.</div>
+      <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">UI/UX</span><span class="tag">Components</span></div>
+    </li>
+
+  </ul>
+
+  <div class="mentions" style="margin-top:1rem">
+    <strong style="font-size:0.9rem;color:var(--text-secondary)">Also Notable This Month</strong>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/QwenAudio/qwen-audio-agent">QwenAudio/qwen-audio-agent</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 2,063</span>
+        <div class="mention-desc">Real-time voice runtime that keeps agents talking, working, and present. From the Qwen team.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/penecho/penecho">penecho/penecho</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 2,001</span>
+        <div class="mention-desc">Shared canvas for handwriting, equations, diagrams, and spatial reasoning with AI.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/makecindy/cindy">makecindy/cindy</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 1,980</span>
+        <div class="mention-desc">Open-source AI agent that works out of the box.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/NVIDIA-NeMo/labs-OO-Agents">NVIDIA-NeMo/labs-OO-Agents</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 1,417</span>
+        <div class="mention-desc">NVIDIA's Object Oriented Agents: the Pythonic way to build AI agents.</div>
+      </div>
+    </div>
+    <div class="mention-card">
+      <div>
+        <a href="https://github.com/Pan-Chera/Multi-Agent-CAD">Pan-Chera/Multi-Agent-CAD</a> <span class="repo-stars" style="font-size:0.8rem">&#9733; 696</span>
+        <div class="mention-desc">Multi-agent framework for text-to-CAD generation via constrained test-time compute.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine on 2026-08-11.
+</div>
+
+</body>
+</html>
