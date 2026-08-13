@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-13</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --star: #e3b341;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+    --editor-bg: #1c2432;
+    --editor-border: #2d5a88;
+    --rank-color: #30363d;
+    --green: #3fb950;
+    --section-30d: #da3633;
+    --section-7d: #58a6ff;
+    --section-hm: #8b949e;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-secondary: #656d76;
+      --accent: #0969da;
+      --accent-hover: #0550ae;
+      --star: #bf8700;
+      --tag-bg: #eef1f4;
+      --tag-text: #656d76;
+      --editor-bg: #f0f5fa;
+      --editor-border: #0969da;
+      --rank-color: #d0d7de;
+      --green: #1a7f37;
+      --section-30d: #cf222e;
+      --section-7d: #0969da;
+      --section-hm: #656d76;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section { margin-bottom: 2.5rem; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .section-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    color: #fff;
+  }
+
+  .badge-7d { background: var(--section-7d); }
+  .badge-30d { background: var(--section-30d); }
+  .badge-hm { background: var(--section-hm); }
+
+  .repo-list { list-style: none; }
+
+  .repo-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.15s;
+  }
+
+  .repo-item:hover {
+    border-color: var(--accent);
+  }
+
+  .rank {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: var(--rank-color);
+    border-radius: 6px;
+  }
+
+  .repo-body { flex: 1; min-width: 0; }
+
+  .repo-name {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .repo-name a {
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1rem;
+    word-break: break-all;
+  }
+
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .lang {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--tag-bg);
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-item { flex-direction: column; gap: 0.5rem; }
+    .rank { width: 1.75rem; height: 1.75rem; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-08-13 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The week's dominant signal: agents are leaving the terminal and entering the physical world. Phone control, wearable motion analysis, ESP32 hardware, and an agent browser built in Rust all landed in the top charts simultaneously. Meanwhile, the "agent skill" format is consolidating into a real ecosystem — watermark removal, sports analytics, Korean reports, and plain-language compliance all shipped as portable skills this week, not standalone apps. The most provocative entry is a watermark-stripping tool that hit 2,700 stars in two days, suggesting real demand for removing AI provenance marks faster than standards bodies can mandate them. On the platform side, YC's <code>qm</code> at 13k stars confirms that multi-agent harnesses are now a product category, not a research demo. If you are building single-agent workflows, the market has moved past you.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Top 10</h2>
+      <span class="section-badge badge-7d">Last 7 Days</span>
+    </div>
+    <ul class="repo-list">
+      <li class="repo-item">
+        <div class="rank">1</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/guillaumemeyer/watermarks-remover">guillaumemeyer/watermarks-remover</a>
+            <span class="stars">&#9733; 2,734</span>
+            <span class="lang">Python</span>
+          </div>
+          <div class="repo-desc">Strips multi-vendor AI provenance marks (C2PA, SynthID, Unicode patterns) from images, PDFs, and docs. Two days old and already controversial.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">2</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/ShawnPana/phone-harness">ShawnPana/phone-harness</a>
+            <span class="stars">&#9733; 1,660</span>
+            <span class="lang">Python</span>
+          </div>
+          <div class="repo-desc">Lets any LLM agent control a physical phone. Automation bridge between coding agents and mobile UIs.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">3</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/SMNETSTUDIO/WeChat-AI">SMNETSTUDIO/WeChat-AI</a>
+            <span class="stars">&#9733; 1,590</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">AI-powered WeChat integration. The fork count (1,153) dwarfs its stars, signaling heavy adaptation for regional deployments.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">4</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/SaladDay/pi-from-scratch">SaladDay/pi-from-scratch</a>
+            <span class="stars">&#9733; 802</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Build a Pi-style coding agent from scratch in 600 lines of TypeScript. Clean pedagogical resource for understanding agent loops and tool calling.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">5</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/shadcn-ui/chatbot-template">shadcn-ui/chatbot-template</a>
+            <span class="stars">&#9733; 598</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Minimal chatbot scaffold from the shadcn team. Next.js + AI SDK + Vercel AI Gateway. The official starting point for branded chat UIs.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">6</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/sv-number/mcp-server">sv-number/mcp-server</a>
+            <span class="stars">&#9733; 598</span>
+            <span class="lang">JavaScript</span>
+          </div>
+          <div class="repo-desc">MCP server that gives agents phone numbers in 200+ countries for SMS verification. Fills a practical gap in agent autonomy.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">7</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/mewamew/my_ai_town">mewamew/my_ai_town</a>
+            <span class="stars">&#9733; 487</span>
+            <span class="lang">GDScript</span>
+          </div>
+          <div class="repo-desc">AI town simulation built in Godot. A lightweight alternative to Stanford's Smallville for experimenting with agent societies.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">8</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/0xnyn/airship">0xnyn/airship</a>
+            <span class="stars">&#9733; 384</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Figma-like visual editor designed for Claude Code, Codex, and OpenCode. Bridges the gap between visual design and agent-generated code.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">9</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/Sateezg/codex-bridge">Sateezg/codex-bridge</a>
+            <span class="stars">&#9733; 307</span>
+            <span class="lang">Shell</span>
+          </div>
+          <div class="repo-desc">Routes GPT-5 and gpt-image-2 through your existing Codex CLI login into Claude Code. No separate OpenAI API key needed.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">10</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/antinomie-lab/pi-book">antinomie-lab/pi-book</a>
+            <span class="stars">&#9733; 279</span>
+            <span class="lang">Vue</span>
+          </div>
+          <div class="repo-desc">Source-backed architecture notes on building a Pi-style agent. Vue-based interactive docs with code reading annotations.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Top 5</h2>
+      <span class="section-badge badge-30d">Last 30 Days</span>
+    </div>
+    <ul class="repo-list">
+      <li class="repo-item">
+        <div class="rank">1</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/yc-software/qm">yc-software/qm</a>
+            <span class="stars">&#9733; 13,258</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">YC's multiplayer agent harness for collaborative work. The first institutional bet on multi-agent coordination as a product, not a framework.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">2</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/trycompai/crm">trycompai/crm</a>
+            <span class="stars">&#9733; 8,336</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">Open-source CRM designed agent-first. Agents are primary users; humans review. The inversion of every CRM that bolted on "AI features" after the fact.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">3</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/Vincentwei1021/video-shotcraft">Vincentwei1021/video-shotcraft</a>
+            <span class="stars">&#9733; 4,853</span>
+            <span class="lang">TypeScript</span>
+          </div>
+          <div class="repo-desc">AI video skill for Claude Code and Codex. 152 shot recipe cards, 209 motion previews, Remotion-based production pipeline.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">4</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/slvDev/esp32-ai">slvDev/esp32-ai</a>
+            <span class="stars">&#9733; 3,971</span>
+            <span class="lang">Python</span>
+          </div>
+          <div class="repo-desc">AI on ESP32 microcontrollers. Hardware-first ML in a $4 package, signaling that on-device inference is moving below the phone tier.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">5</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/kirodotdev/KiroCrew">kirodotdev/KiroCrew</a>
+            <span class="stars">&#9733; 2,784</span>
+            <span class="lang">Python</span>
+          </div>
+          <div class="repo-desc">Persistent, self-improving development workspace that continues across sessions. The "agent as colleague" model with long-term memory.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Honorable Mentions</h2>
+      <span class="section-badge badge-hm">Notable</span>
+    </div>
+    <ul class="repo-list">
+      <li class="repo-item">
+        <div class="rank">&mdash;</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/lexmount/moli">lexmount/moli</a>
+            <span class="stars">&#9733; 191</span>
+            <span class="lang">Rust</span>
+          </div>
+          <div class="repo-desc">Agent-native browser built in Rust on Servo. Purpose-built for automation, not adapted from a human browser.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">&mdash;</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/i3T4AN/KADATH">i3T4AN/KADATH</a>
+            <span class="stars">&#9733; 172</span>
+            <span class="lang">Python</span>
+          </div>
+          <div class="repo-desc">Evolutionary multi-agent runtime. Breeds, evaluates, and improves agents across epochs using genetic algorithms.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">&mdash;</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/miqdadbadjuber/anti-slop">miqdadbadjuber/anti-slop</a>
+            <span class="stars">&#9733; 175</span>
+          </div>
+          <div class="repo-desc">Design rules to prevent AI agents from generating generic "slop" UI. A style guide for the agent era.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">&mdash;</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/surya-koritala/loomfeed">surya-koritala/loomfeed</a>
+            <span class="stars">&#9733; 166</span>
+            <span class="lang">Go</span>
+          </div>
+          <div class="repo-desc">Open-source Reddit alternative built for agents and humans. Provenance tracking, reputation, epistemic labels.</div>
+        </div>
+      </li>
+      <li class="repo-item">
+        <div class="rank">&mdash;</div>
+        <div class="repo-body">
+          <div class="repo-name">
+            <a href="https://github.com/Yixuan-Wu39/bandminton">Yixuan-Wu39/bandminton</a>
+            <span class="stars">&#9733; 103</span>
+            <span class="lang">JavaScript</span>
+          </div>
+          <div class="repo-desc">Wearable badminton motion analysis with on-device ML. Lightweight inference on a Xiaomi band.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-08-13 UTC
+  </footer>
+</div>
+</body>
+</html>
