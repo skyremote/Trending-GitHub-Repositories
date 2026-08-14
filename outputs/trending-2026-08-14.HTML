@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-14</title>
+<style>
+  :root {
+    --bg: #0e1014;
+    --panel: #161a21;
+    --panel-2: #1d222b;
+    --border: #262c37;
+    --text: #e6e9ef;
+    --muted: #8a93a6;
+    --accent: #7dd3fc;
+    --accent-2: #f0abfc;
+    --star: #fbbf24;
+    --link: #93c5fd;
+    --tag-bg: #1e293b;
+    --tag-text: #94a3b8;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --panel-2: #f0f2f6;
+      --border: #e2e5eb;
+      --text: #1a1d23;
+      --muted: #5b6270;
+      --accent: #0369a1;
+      --accent-2: #a21caf;
+      --star: #b45309;
+      --link: #1d4ed8;
+      --tag-bg: #e2e8f0;
+      --tag-text: #475569;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  header.hero {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin: 0;
+    font-size: 15px;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--panel-2);
+    padding: 4px;
+    border-radius: 10px;
+    margin: 32px 0 24px;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+  .tab {
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .15s, color .15s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: var(--panel);
+    color: var(--text);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .takeaway {
+    background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .takeaway::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    border-radius: 0 3px 3px 0;
+  }
+  .takeaway h2 {
+    margin: 0 0 10px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .takeaway p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  section { margin-bottom: 40px; }
+  section h2.section-title {
+    font-size: 20px;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .section-title .window {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  ol.repos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .repo {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .repo:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .rank {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .repo-main { min-width: 0; }
+  .repo-name {
+    font-size: 15.5px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    word-break: break-all;
+  }
+  .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .repo-lang {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stars {
+    color: var(--star);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    white-space: nowrap;
+    padding-top: 3px;
+    font-weight: 500;
+  }
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+  .hidden { display: none; }
+  @media (max-width: 540px) {
+    .wrap { padding: 28px 16px 64px; }
+    .repo { grid-template-columns: 24px 1fr; }
+    .stars { grid-column: 2; padding-top: 4px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Trending GitHub &middot; AI</p>
+      <h1>Trending AI Repos</h1>
+      <p class="subtitle">Daily brief &mdash; 2026-08-14 &middot; 10 repos (7-day) + 5 repos (30-day)</p>
+    </header>
+
+    <div class="takeaway" role="note" aria-label="Editor's take">
+      <h2>Editor's take</h2>
+      <p>The big signal this week is ecosystem fragmentation. DeepSeek Harness launched its own plugin system and already has a curated awesome-list at 225 stars &mdash; a direct competitor to Claude Code's skill ecosystem. Meanwhile, <strong>watermarks-remover</strong> hit 5.7k stars in three days, suggesting real demand for stripping AI provenance metadata, a counter-move to C2PA and SynthID adoption. The &ldquo;skill as distribution unit&rdquo; pattern continues to accelerate: <strong>book-to-skill</strong> turns any PDF into a coding-agent skill, and <strong>codex-bridge</strong> cross-pollinates Claude Code with GPT-5 subagents through Codex's existing auth. On the inference frontier, Kimi K3's 2.78-trillion-parameter model on a single CPU in C99 and Gemma 4 26B in 2&nbsp;GB on MacBook are redefining &ldquo;local.&rdquo; The 30-day winner &mdash; <strong>qm</strong> at 13.5k stars &mdash; is a multiplayer agent harness, a sign that the next phase is teams of agents, not solo code generation.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-target="week" role="tab" aria-selected="true">Last 7 days</button>
+      <button class="tab" data-target="month" role="tab" aria-selected="false">Last 30 days</button>
+    </div>
+
+    <section id="week">
+      <h2 class="section-title">Top 10 <span class="window">last 7 days</span></h2>
+      <ol class="repos">
+        <li class="repo">
+          <span class="rank">01</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a></p>
+            <p class="repo-desc">Strips multi-vendor AI provenance marks (C2PA, SynthID, Unicode artifacts) from images, PDFs, and documents; the speed of adoption says something about the market's actual appetite for AI watermarking.</p>
+            <span class="repo-lang">Python</span>
+          </div>
+          <span class="stars">&#9733; 5,683</span>
+        </li>
+        <li class="repo">
+          <span class="rank">02</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/SMNETSTUDIO/WeChat-AI" target="_blank" rel="noopener">SMNETSTUDIO/WeChat-AI</a></p>
+            <p class="repo-desc">AI-powered WeChat integration; notable fork-to-star ratio (1,221 forks) points to heavy cloning for private deployments in the Chinese messaging ecosystem.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 1,691</span>
+        </li>
+        <li class="repo">
+          <span class="rank">03</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/Leutenegger/book-to-skill" target="_blank" rel="noopener">Leutenegger/book-to-skill</a></p>
+            <p class="repo-desc">Converts any technical book PDF into a Claude Code skill, ready to reference while you work; the &ldquo;knowledge packaging&rdquo; pattern keeps finding new surfaces.</p>
+            <span class="repo-lang">Python</span>
+          </div>
+          <span class="stars">&#9733; 1,037</span>
+        </li>
+        <li class="repo">
+          <span class="rank">04</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/SaladDay/pi-from-scratch" target="_blank" rel="noopener">SaladDay/pi-from-scratch</a></p>
+            <p class="repo-desc">A 600-line TypeScript implementation of a pi-agent from scratch; educational walkthrough of tool-calling, agent loops, and the minimal anatomy of a coding agent.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 907</span>
+        </li>
+        <li class="repo">
+          <span class="rank">05</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/shadcn-ui/chatbot-template" target="_blank" rel="noopener">shadcn-ui/chatbot-template</a></p>
+            <p class="repo-desc">Official shadcn chatbot template wiring Next.js, AI SDK, and Vercel AI Gateway; the &ldquo;one command to chatbot&rdquo; baseline just moved upstream.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 656</span>
+        </li>
+        <li class="repo">
+          <span class="rank">06</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/0xnyn/airship" target="_blank" rel="noopener">0xnyn/airship</a></p>
+            <p class="repo-desc">Figma-like visual editor built for Claude Code, Codex, and OpenCode; the bet is that AI coding agents still need a spatial canvas, not just a terminal.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 425</span>
+        </li>
+        <li class="repo">
+          <span class="rank">07</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/i3T4AN/KADATH" target="_blank" rel="noopener">i3T4AN/KADATH</a></p>
+            <p class="repo-desc">Evolutionary multi-agent runtime that breeds, evaluates, and selects agents across reproducible epochs; genetic algorithms applied to agent optimization rather than model weights.</p>
+            <span class="repo-lang">Python</span>
+          </div>
+          <span class="stars">&#9733; 349</span>
+        </li>
+        <li class="repo">
+          <span class="rank">08</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/Sateezg/codex-bridge" target="_blank" rel="noopener">Sateezg/codex-bridge</a></p>
+            <p class="repo-desc">Pipes GPT-5 and gpt-image-2 into Claude Code as subagents through your existing Codex CLI login; no separate OpenAI API key required.</p>
+            <span class="repo-lang">Shell</span>
+          </div>
+          <span class="stars">&#9733; 273</span>
+        </li>
+        <li class="repo">
+          <span class="rank">09</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">elie222/rakazo</a></p>
+            <p class="repo-desc">Open-source Grok Bot alternative with model-agnostic backend and Docker sandbox; self-hosted chat that lets you swap in any provider.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 270</span>
+        </li>
+        <li class="repo">
+          <span class="rank">10</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/lexmount/moli" target="_blank" rel="noopener">lexmount/moli</a></p>
+            <p class="repo-desc">AI-agent browser built in Rust on top of Servo; purpose-built for agent browsing with Playwright/Puppeteer compatibility, not a Chromium fork.</p>
+            <span class="repo-lang">Rust</span>
+          </div>
+          <span class="stars">&#9733; 262</span>
+        </li>
+      </ol>
+    </section>
+
+    <section id="month" class="hidden">
+      <h2 class="section-title">Top 5 <span class="window">last 30 days</span></h2>
+      <ol class="repos">
+        <li class="repo">
+          <span class="rank">01</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></p>
+            <p class="repo-desc">Multiplayer agent harness for work from YC; the first major bet that agents are collaborative, not solo, with shared context and real-time co-editing.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 13,471</span>
+        </li>
+        <li class="repo">
+          <span class="rank">02</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></p>
+            <p class="repo-desc">Agentic-first open-source CRM where AI agents are first-class users, not bolt-on copilots; designed so agents can create, update, and close deals autonomously.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 8,399</span>
+        </li>
+        <li class="repo">
+          <span class="rank">03</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/drumih/turbo-fieldfare" target="_blank" rel="noopener">drumih/turbo-fieldfare</a></p>
+            <p class="repo-desc">Gemma 4 26B-A4B inference in ~2 GB of RAM on any M-series MacBook; a single Swift binary with Metal acceleration, no Python, no framework.</p>
+            <span class="repo-lang">Swift</span>
+          </div>
+          <span class="stars">&#9733; 5,934</span>
+        </li>
+        <li class="repo">
+          <span class="rank">04</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></p>
+            <p class="repo-desc">2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM; portable C99 with zero dependencies, no BLAS, no GPU.</p>
+            <span class="repo-lang">C</span>
+          </div>
+          <span class="stars">&#9733; 5,490</span>
+        </li>
+        <li class="repo">
+          <span class="rank">05</span>
+          <div class="repo-main">
+            <p class="repo-name"><a href="https://github.com/Vincentwei1021/video-shotcraft" target="_blank" rel="noopener">Vincentwei1021/video-shotcraft</a></p>
+            <p class="repo-desc">AI video skill for Claude Code and Codex with 152 shot recipe cards and 209 motion previews; turns Remotion into a cinematic product-video pipeline.</p>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <span class="stars">&#9733; 4,951</span>
+        </li>
+      </ol>
+    </section>
+
+    <footer>Generated by the Trending GitHub Repos routine &middot; 2026-08-14 UTC</footer>
+  </div>
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = { week: document.getElementById('week'), month: document.getElementById('month') };
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+    t.classList.add('active'); t.setAttribute('aria-selected', 'true');
+    Object.entries(panels).forEach(([k, el]) => el.classList.toggle('hidden', k !== t.dataset.target));
+  }));
+</script>
+</body>
+</html>
