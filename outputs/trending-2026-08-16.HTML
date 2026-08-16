@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-16</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --editor-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --editor-text: #e2e8f0;
+    --editor-accent: #60a5fa;
+    --section-border: #2563eb;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+    --hover-bg: #f1f5f9;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --editor-bg: linear-gradient(135deg, #0c1426 0%, #0a0f1e 100%);
+      --editor-text: #cbd5e1;
+      --editor-accent: #93c5fd;
+      --section-border: #3b82f6;
+      --rank-bg: #3b82f6;
+      --rank-text: #ffffff;
+      --hover-bg: #253348;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --tag-bg: #334155;
+    --tag-text: #94a3b8;
+    --editor-bg: linear-gradient(135deg, #0c1426 0%, #0a0f1e 100%);
+    --editor-text: #cbd5e1;
+    --editor-accent: #93c5fd;
+    --section-border: #3b82f6;
+    --rank-bg: #3b82f6;
+    --rank-text: #ffffff;
+    --hover-bg: #253348;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-lg: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+  .editor-card {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .editor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  }
+  .editor-card h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--editor-accent);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .editor-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--editor-text);
+  }
+  .section {
+    margin-bottom: 2.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--section-border);
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    font-size: 0.7rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    transition: box-shadow 0.15s, border-color 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+  }
+  .rank {
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .repo-body {
+    min-width: 0;
+  }
+  .repo-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .repo-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name:hover { text-decoration: underline; }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--star);
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .editor-card { padding: 1.25rem; }
+    .repo-card { padding: 1rem; grid-template-columns: 1.8rem 1fr; gap: 0.75rem; }
+    .rank { width: 1.8rem; height: 1.8rem; font-size: 0.75rem; border-radius: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">August 16, 2026</div>
+</header>
+
+<div class="editor-card">
+  <h2>Editor's Take</h2>
+  <p>The week's dominant signal is that agent harness ecosystems have crossed a threshold from curiosity to platform. DeepSeek Harness alone spawned six separately-starred repos &mdash; plugins, handbooks, vision toolkits, marketplace UIs &mdash; in under seven days. Meanwhile YC-backed <strong>qm</strong> is the month's runaway hit at 13.6K stars, validating "multiplayer agent harness" as a product category that venture money now chases. The most provocative entry is <strong>watermarks-remover</strong>, which racked up nearly 10K stars in five days by stripping AI provenance marks from every common file format &mdash; the single most-starred new repo this week exists to erase the fingerprints the rest of the ecosystem leaves behind. On the builder side, Vercel and shadcn both shipped official agent-friendly templates, signaling that "AI chat" is graduating from weekend hack to default project scaffold. And <strong>agent-safe-pipeline</strong> deserves attention as the first serious open-source reference architecture for agents that cannot self-authorize &mdash; the guardrails are finally catching up to the capabilities.</p>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <span class="badge">Aug 9 &ndash; 16</span>
+  </div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 9,874</span>
+        </div>
+        <div class="repo-desc">Strips AI provenance marks across file formats: Unicode text hygiene, statistical rewrite hooks, C2PA metadata removal from PNG/JPEG/SVG/PDF/DOCX/HTML. The star velocity says more about industry sentiment toward AI watermarking than about the tool itself.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">AI Watermarks</span><span class="tag">Metadata</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/SMNETSTUDIO/WeChat-AI" target="_blank" rel="noopener">SMNETSTUDIO/WeChat-AI</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,744</span>
+        </div>
+        <div class="repo-desc">WeChat-native AI assistant integration in TypeScript; tapping into the Chinese messaging platform's billion-user base for conversational AI delivery.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">WeChat</span><span class="tag">Chatbot</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/Leutenegger/book-to-skill" target="_blank" rel="noopener">Leutenegger/book-to-skill</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,130</span>
+        </div>
+        <div class="repo-desc">Converts any technical book PDF into a Claude Code skill you can study, reference, and invoke while working. The "content-to-skill" pipeline is now a real category.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">Claude Code</span><span class="tag">Skills</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/vercel-labs/eve-software-factory-template" target="_blank" rel="noopener">vercel-labs/eve-software-factory-template</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 796</span>
+        </div>
+        <div class="repo-desc">Meet Foreman: Vercel's opinionated template for standing up an Eve Software Factory. Signals that software-factory-as-a-service is moving from concept to one-click deploy.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Vercel</span><span class="tag">Software Factory</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/shadcn-ui/chatbot-template" target="_blank" rel="noopener">shadcn-ui/chatbot-template</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 692</span>
+        </div>
+        <div class="repo-desc">Minimal chatbot template built with Next.js, AI SDK, shadcn/ui, shadcn/react, shadcn/typeset. Runs on the Vercel AI Gateway. When shadcn ships a chatbot scaffold, chat becomes a commodity component.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">AI SDK</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/0xsline/awesome-deepseek-harness" target="_blank" rel="noopener">0xsline/awesome-deepseek-harness</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 513</span>
+        </div>
+        <div class="repo-desc">Curated DSH ecosystem: plugins, tools, and infrastructure from dsh-external/hub and the public dsh-plugin topic. The fact that a curated list already exists shows how fast the DSH plugin economy is growing.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">DeepSeek</span><span class="tag">Ecosystem</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/NousResearch/Hermes-Bot-Mode" target="_blank" rel="noopener">NousResearch/Hermes-Bot-Mode</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 512</span>
+        </div>
+        <div class="repo-desc">Desktop plugin for the Hermes agent that adds named agents with their own chats, avatars, routines, and bot-to-bot messaging. Multi-agent coordination without core patches.</div>
+        <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">NousResearch</span><span class="tag">Multi-Agent</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">elie222/rakazo</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 492</span>
+        </div>
+        <div class="repo-desc">Open-source Grok Bot alternative. Choose your own model and sandbox. Part of the recurring "open alternative to every closed AI product" pattern.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Grok</span><span class="tag">Open Source</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/0xnyn/airship" target="_blank" rel="noopener">0xnyn/airship</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 450</span>
+        </div>
+        <div class="repo-desc">Figma-like visual editor built for Claude Code, Codex, and OpenCode. Bridges the gap between visual design and agentic code generation.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Visual Editor</span><span class="tag">Design</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/decionis/agent-safe-pipeline" target="_blank" rel="noopener">decionis/agent-safe-pipeline</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 450</span>
+        </div>
+        <div class="repo-desc">Reference architecture where AI agents propose actions but cannot authorize them: immutable intent capture, independent policy verdicts (ALLOW/ESCALATE/BLOCK), verified human approval, and a SafeExecutor that consumes single-use grants.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Agent Safety</span><span class="tag">Architecture</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <span class="badge">Jul 17 &ndash; Aug 16</span>
+  </div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 13,639</span>
+        </div>
+        <div class="repo-desc">Multiplayer agent harness for work. The month's biggest hit and the proof point that collaborative agent environments are the next infrastructure layer. YC-backed, TypeScript, 1,600+ forks already.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">YC</span><span class="tag">Agent Harness</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 8,487</span>
+        </div>
+        <div class="repo-desc">Open-source CRM designed for AI agents, not humans. Agentic-first data model where the agent is the primary user and humans review. Rethinks what a CRM looks like when the salesperson is a bot.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">CRM</span><span class="tag">Agentic</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 5,769</span>
+        </div>
+        <div class="repo-desc">Runs inference on a 2.78-trillion-parameter Kimi K3 model on a single CPU in 8.24 GB of RAM. Portable C99, no BLAS, no framework, no GPU. The on-device inference movement keeps compressing what seemed impossible.</div>
+        <div class="repo-tags"><span class="tag">C</span><span class="tag">Inference</span><span class="tag">On-Device</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/Vincentwei1021/video-shotcraft" target="_blank" rel="noopener">Vincentwei1021/video-shotcraft</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 5,160</span>
+        </div>
+        <div class="repo-desc">AI video skill for Claude Code and Codex: 152 cinematic shot recipe cards, 209 motion previews, and a production-ready Remotion template. Content-to-skill applied to video production.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Video</span><span class="tag">Remotion</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 3,117</span>
+        </div>
+        <div class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux. Handles Word, Excel, PowerPoint, PDF, and Markdown editing with built-in AI agents. The "local AI office" category is crystallizing.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Office Suite</span><span class="tag">Cross-Platform</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; August 16, 2026
+</footer>
+
+</div>
+</body>
+</html>
