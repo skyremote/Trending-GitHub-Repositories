@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-18</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a2e;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --card-bg: #f8fafc;
+    --card-border: #e2e8f0;
+    --badge-bg: #fef3c7;
+    --badge-fg: #92400e;
+    --section-bg: #f0f9ff;
+    --section-border: #bfdbfe;
+    --star: #eab308;
+    --rank-bg: #2563eb;
+    --rank-fg: #ffffff;
+    --divider: #e5e7eb;
+    --tag-bg: #e0e7ff;
+    --tag-fg: #3730a3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --badge-bg: #422006;
+      --badge-fg: #fbbf24;
+      --section-bg: #172033;
+      --section-border: #1e3a5f;
+      --star: #facc15;
+      --rank-bg: #3b82f6;
+      --rank-fg: #ffffff;
+      --divider: #334155;
+      --tag-bg: #312e81;
+      --tag-fg: #a5b4fc;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --fg: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfd;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --badge-bg: #422006;
+    --badge-fg: #fbbf24;
+    --section-bg: #172033;
+    --section-border: #1e3a5f;
+    --star: #facc15;
+    --rank-bg: #3b82f6;
+    --rank-fg: #ffffff;
+    --divider: #334155;
+    --tag-bg: #312e81;
+    --tag-fg: #a5b4fc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--divider);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.25rem;
+  }
+  .date-badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2em 0.75em;
+    border-radius: 999px;
+    margin-top: 0.5rem;
+  }
+
+  .editors-take {
+    background: var(--section-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .editors-take strong {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+  }
+  .section-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    padding: 0.15em 0.6em;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .repo-card {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto;
+    gap: 0 0.9rem;
+    align-items: start;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+
+  .rank {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    background: var(--rank-bg);
+    color: var(--rank-fg);
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .repo-info { min-width: 0; }
+  .repo-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+  .repo-desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+  .stars svg { width: 14px; height: 14px; fill: var(--star); flex-shrink: 0; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <span class="date-badge">2026-08-18</span>
+</header>
+
+<div class="editors-take">
+  <strong>Editor's Take</strong>
+  The harness wars are over. DeepSeek Harness launched its plugin ecosystem barely a week ago and already has five repos in the top 15 — desktop apps, plugin marketplaces, cost meters, handbooks, and an Android launcher. That pace of ecosystem formation mirrors what happened around Claude Code in April, but compressed to days instead of weeks. Meanwhile the real structural shift is agent-to-agent collaboration: Cumora (1,658 stars in one day) treats AI agents as first-class chat participants alongside humans, and Vercel's Eve Software Factory template ships a turnkey multi-agent build pipeline. The industry is no longer debating whether agents should act autonomously — it is building the plumbing for them to coordinate with each other. If you are still building single-agent wrappers, this week's signal says you are one abstraction layer too low.
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="section-tag">Last 7 Days</span>
+  <span class="line"></span>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <span class="rank">1</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/yetone/cumora" target="_blank" rel="noopener">yetone/cumora</a></div>
+      <div class="repo-desc">Cross-platform team chat where AI agents are first-class teammates; supports cloud or bring-your-own backends like Claude Code and Codex. One day old with nearly 2k stars — the fastest ramp this week.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 1,658</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">2</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/vercel-labs/eve-software-factory-template" target="_blank" rel="noopener">vercel-labs/eve-software-factory-template</a></div>
+      <div class="repo-desc">Vercel's turnkey multi-agent software factory template. Ships an opinionated agent pipeline for automated builds; signals enterprise adoption of agentic CI.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 884</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">3</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">elie222/rakazo</a></div>
+      <div class="repo-desc">Open-source Grok Bot alternative with model-agnostic sandbox. Self-hosted, Electron + Expo stack. Useful if you want Grok-style chat without vendor lock-in.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 789</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">4</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/DrHazemAli/enterprise-system-design" target="_blank" rel="noopener">DrHazemAli/enterprise-system-design</a></div>
+      <div class="repo-desc">Source-grounded course spanning distributed systems, AI systems, cybersecurity, and mission-critical infrastructure. Reference-grade educational material.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 544</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">5</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/decionis/agent-safe-pipeline" target="_blank" rel="noopener">decionis/agent-safe-pipeline</a></div>
+      <div class="repo-desc">Reference architecture for agents that propose but cannot self-authorize: immutable intent capture, policy verdict, human approval, single-use grant execution. The governance pattern agents have been missing.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 517</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">6</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Electricitysheep/dsh-handbook" target="_blank" rel="noopener">Electricitysheep/dsh-handbook</a></div>
+      <div class="repo-desc">Zero-to-one handbook for DeepSeek Harness (DSH): installation, plugin development, performance tuning, multi-agent benchmarks. Chinese and English PDF.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 462</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">7</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/xinxinshuhao-create/grok-register" target="_blank" rel="noopener">xinxinshuhao-create/grok-register</a></div>
+      <div class="repo-desc">Automated account registration toolkit for Grok with SSO extraction, OAuth Device Flow, and auto-replenish daemon. Tooling for the Grok ecosystem growing fast.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 450</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">8</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/vibeinging/deepseek-harness-desktop-app" target="_blank" rel="noopener">vibeinging/deepseek-harness-desktop-app</a></div>
+      <div class="repo-desc">Desktop workspace for DeepSeek Harness sessions with project management, web research, plugins, and Office artifact support. Electron-based, local-first.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 390</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">9</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/jeremy-prt/bloub" target="_blank" rel="noopener">jeremy-prt/bloub</a></div>
+      <div class="repo-desc">SVG recreation of the x.ai bot avatar, morphing through 14 states frame-by-frame from the reference video. Pure craft; the kind of side project that gets hired.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 265</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">10</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/fufankeji/deepseek-harness-studio" target="_blank" rel="noopener">fufankeji/deepseek-harness-studio</a></div>
+      <div class="repo-desc">Zero-code DeepSeek Harness desktop launcher for Windows and macOS with plugin discovery, hot-plugin push, and AI-powered recommendations.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 250</div>
+  </li>
+
+</ol>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="section-tag">Last 30 Days</span>
+  <span class="line"></span>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <span class="rank">1</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></div>
+      <div class="repo-desc">Multiplayer agent harness for work. YC-backed, TypeScript. The month's breakout project — a shared workspace where multiple agents collaborate on the same codebase in real time.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 13,821</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">2</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></div>
+      <div class="repo-desc">Open-source agentic-first CRM. Designed for AI agents to operate natively rather than through screen scraping. Vertical SaaS rebuilt for the agent era.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 8,571</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">3</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></div>
+      <div class="repo-desc">Free, open-source AI office suite for desktop — Word, Excel, PowerPoint, PDF, and Markdown editing with built-in AI agents. Cross-platform via Electron.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 3,235</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">4</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Jakubantalik/thinking-orbs" target="_blank" rel="noopener">Jakubantalik/thinking-orbs</a></div>
+      <div class="repo-desc">Dotted thought-orb loading indicators for AI and agent UIs. Nine tuned types, two sizes, auto dark/light. Small library, large reach — already showing up in agent dashboards everywhere.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 2,515</div>
+  </li>
+
+  <li class="repo-card">
+    <span class="rank">5</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/QwenAudio/qwen-audio-agent" target="_blank" rel="noopener">QwenAudio/qwen-audio-agent</a></div>
+      <div class="repo-desc">Real-time voice runtime for AI agents. Keeps agents talking and present with speech recognition and TTS. The voice-first agent interface is maturing fast.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg> 2,171</div>
+  </li>
+
+</ol>
+
+<footer>
+  Generated by the Trending GitHub Repos routine.
+</footer>
+
+</body>
+</html>
