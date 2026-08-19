@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-19</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --text-hero: #ffffff;
+    --accent: #e94560;
+    --accent-secondary: #0f3460;
+    --border: #e0e0e0;
+    --star: #f5a623;
+    --tag-bg: #eef2ff;
+    --tag-text: #3b5998;
+    --link: #0f3460;
+    --link-hover: #e94560;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-hero: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --text-hero: #e6edf3;
+      --accent: #f85882;
+      --accent-secondary: #58a6ff;
+      --border: #30363d;
+      --star: #f5a623;
+      --tag-bg: #1c2333;
+      --tag-text: #79b8ff;
+      --link: #58a6ff;
+      --link-hover: #f85882;
+      --shadow: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-hero: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-hero: #e6edf3;
+    --accent: #f85882;
+    --accent-secondary: #58a6ff;
+    --border: #30363d;
+    --star: #f5a623;
+    --tag-bg: #1c2333;
+    --tag-text: #79b8ff;
+    --link: #58a6ff;
+    --link-hover: #f85882;
+    --shadow: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: var(--bg-hero);
+    color: var(--text-hero);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .hero .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .hero .subtitle {
+    font-size: 1rem;
+    opacity: 0.85;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .editors-take {
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+    box-shadow: var(--shadow);
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .repo-card .rank {
+    position: absolute;
+    top: -0.6rem;
+    left: 1rem;
+    background: var(--accent-secondary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .repo-card .repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .repo-card .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-card .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .repo-card .repo-name a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+  .repo-card .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .repo-card .description {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+  .repo-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+  .repo-card .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .editors-take { padding: 1rem 1.25rem; }
+    .repo-card { padding: 1rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-08-19 (UTC)</div>
+    <div class="subtitle">Weekly scan of GitHub for the most-starred new AI repositories</div>
+  </div>
+  <div class="container">
+    <div class="editors-take">
+      <h2>Editor's Take</h2>
+      <p>
+        The harness pattern has won the week. Three of the top ten 7-day repos wrap an LLM around a device — your Mac, your webcam, your phone — and let the model drive it directly. Meanwhile, DeepSeek Harness (DSH) is experiencing its own Cambrian explosion: a handbook, two competing desktop apps, a plugin marketplace, and a cost meter all appeared in seven days, mirroring what happened around Claude Code three months ago. The most telling 30-day signal is <strong>watermarks-remover</strong> at 14,600 stars — the developer community is actively pushing back against AI provenance mandates before the ink is dry. On the constructive side, <strong>agent-safe-pipeline</strong> shows that safety-conscious architecture is getting built alongside the evasion tooling, not after it. Hardware finally gets a seat at the table with an FPGA inference chip running a real transformer decoder, bit-exact against a golden model. The month belongs to whoever is building the connective tissue between agents — routing, safety, memory, team coordination — not to whoever ships the next model wrapper.
+      </p>
+    </div>
+
+    <div class="section-header">
+      <h2>Top 10 — Last 7 Days</h2>
+      <span class="badge">Aug 12 – 19</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/yetone/cumora" target="_blank" rel="noopener">yetone/cumora</a></div>
+          <div class="stars">&#9733; 2,461</div>
+        </div>
+        <div class="description">Cross-platform team chat where AI agents are first-class teammates. Supports cloud-hosted or bring-your-own agent brains (Claude Code, Codex). The "Slack for agents" pitch, but with agent-to-agent messaging as a primitive rather than a bolt-on.</div>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">agent-teams</span><span class="tag">chat</span><span class="tag">MCP</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">elie222/rakazo</a></div>
+          <div class="stars">&#9733; 857</div>
+        </div>
+        <div class="description">Open-source alternative to Grok Bot. Choose your own model and sandbox; runs as Electron desktop or Expo mobile app. Self-hosted, Docker-ready.</div>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">self-hosted</span><span class="tag">Electron</span><span class="tag">Expo</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/decionis/agent-safe-pipeline" target="_blank" rel="noopener">decionis/agent-safe-pipeline</a></div>
+          <div class="stars">&#9733; 533</div>
+        </div>
+        <div class="description">Reference architecture for AI agents that propose but cannot authorize actions. Immutable intent capture, independent policy verdicts (ALLOW / ESCALATE / BLOCK), single-use grants. The safety guardrail repo the ecosystem needed.</div>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">ai-safety</span><span class="tag">policy-as-code</span><span class="tag">human-in-the-loop</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/Electricitysheep/dsh-handbook" target="_blank" rel="noopener">Electricitysheep/dsh-handbook</a></div>
+          <div class="stars">&#9733; 506</div>
+        </div>
+        <div class="description">Zero-to-one deep manual for DeepSeek Harness: installation, plugin development, performance tuning, multi-agent comparison tests. Chinese + English PDF.</div>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">DeepSeek</span><span class="tag">guide</span><span class="tag">plugins</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/vibeinging/deepseek-harness-desktop-app" target="_blank" rel="noopener">vibeinging/deepseek-harness-desktop-app</a></div>
+          <div class="stars">&#9733; 487</div>
+        </div>
+        <div class="description">Electron-based desktop workspace for DSH sessions, projects, web research, plugins, and Office artifacts. Local-first, MCP-compatible.</div>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Electron</span><span class="tag">desktop</span><span class="tag">local-first</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">6</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/browser-use/macos-harness" target="_blank" rel="noopener">browser-use/macos-harness</a></div>
+          <div class="stars">&#9733; 424</div>
+        </div>
+        <div class="description">From the browser-use team: the thinnest possible harness that gives an LLM complete freedom to control a Mac via accessibility APIs and CDP. Python, no wrappers.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">macOS</span><span class="tag">computer-use</span><span class="tag">accessibility</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">7</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/SigmanticAI/apex-inference-chip" target="_blank" rel="noopener">SigmanticAI/apex-inference-chip</a></div>
+          <div class="stars">&#9733; 389</div>
+        </div>
+        <div class="description">FPGA inference chip design that runs Qwen2.5-0.5B — one transformer decoder layer in RTL, every value bit-exact against a golden model. 0.56 tok/s measured with a documented 140x improvement climb.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">FPGA</span><span class="tag">hardware</span><span class="tag">inference</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">8</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/jaredrhod/barehands" target="_blank" rel="noopener">jaredrhod/barehands</a></div>
+          <div class="stars">&#9733; 299</div>
+        </div>
+        <div class="description">Move things on your screen with your bare hands. Webcam-powered, MediaPipe hand-tracking interface for AI agents. No headset, no controllers, just gestures mapped to Three.js.</div>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">MediaPipe</span><span class="tag">gesture-control</span><span class="tag">Three.js</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">9</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/bawadou/ai-data-extractor" target="_blank" rel="noopener">bawadou/ai-data-extractor</a></div>
+          <div class="stars">&#9733; 216</div>
+        </div>
+        <div class="description">Extracts and structures chat histories from Claude Code, Cursor, Windsurf, Aider, Cline/Roo Code, and more. Useful for auditing agent sessions or building training datasets from your own coding work.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">data-extraction</span><span class="tag">audit</span><span class="tag">multi-tool</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">10</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/wang2122/sprix-sage-router" target="_blank" rel="noopener">wang2122/sprix-sage-router</a></div>
+          <div class="stars">&#9733; 173</div>
+        </div>
+        <div class="description">State-aware SELF / COLLABORATE / HANDOFF routing for A2A agent networks. Decides when an agent should handle a task alone, collaborate, or escalate — addressing the coordination gap in multi-agent systems.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">A2A</span><span class="tag">agent-routing</span><span class="tag">multi-agent</span></div>
+      </div>
+
+    </div>
+
+    <div class="section-header">
+      <h2>Top 5 — Last 30 Days</h2>
+      <span class="badge">Jul 20 – Aug 19</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a></div>
+          <div class="stars">&#9733; 14,612</div>
+        </div>
+        <div class="description">Strips multi-vendor AI provenance marks: Unicode text hygiene, statistical rewrite hooks, and C2PA/metadata removal from PNG/JPEG/SVG/PDF/DOCX/HTML/MD. Controversial and massively starred — a clear signal of friction between provenance mandates and developer resistance.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">C2PA</span><span class="tag">watermark</span><span class="tag">provenance</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></div>
+          <div class="stars">&#9733; 13,904</div>
+        </div>
+        <div class="description">YC-backed multiplayer agent harness for work. Details are sparse, but star velocity and YC pedigree make this the most-watched new agent platform of the month.</div>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">YC</span><span class="tag">multiplayer</span><span class="tag">agent-harness</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></div>
+          <div class="stars">&#9733; 6,031</div>
+        </div>
+        <div class="description">Runs a 2.78-trillion-parameter Kimi K3 (MoE) on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no framework, no GPU. A systems-programming tour de force using MXFP4 quantization and hand-tuned SIMD.</div>
+        <div class="tags"><span class="tag">C</span><span class="tag">CPU-inference</span><span class="tag">MoE</span><span class="tag">quantization</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></div>
+          <div class="stars">&#9733; 3,317</div>
+        </div>
+        <div class="description">Free, open-source AI office suite for macOS, Windows, and Linux. Word, Excel, PowerPoint, PDF, and Markdown editing with built-in AI agents. Electron-based, positioning as the AI-native alternative to LibreOffice.</div>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">Electron</span><span class="tag">office-suite</span><span class="tag">cross-platform</span></div>
+      </div>
+
+      <div class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-header">
+          <div class="repo-name"><a href="https://github.com/ShawnPana/phone-harness" target="_blank" rel="noopener">ShawnPana/phone-harness</a></div>
+          <div class="stars">&#9733; 1,921</div>
+        </div>
+        <div class="description">Let your agent control your phone. From the same "harness" pattern as browser-use: minimal Python wrapper that gives an LLM direct access to mobile device actions. The harness-everything trend continues from desktop to pocket.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">mobile</span><span class="tag">automation</span><span class="tag">agent</span></div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    Generated by the Trending GitHub Repos routine on 2026-08-19 (UTC).
+  </footer>
+</body>
+</html>
