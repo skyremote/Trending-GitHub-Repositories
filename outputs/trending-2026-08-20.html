@@ -1,0 +1,440 @@
+<title>Trending AI Repos — Aug 20</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap">
+<style>
+  :root {
+    --ink: #1a1d23;
+    --ink-secondary: #4a4d55;
+    --paper: #f7f5f0;
+    --paper-alt: #efeae2;
+    --accent: #c44b2b;
+    --accent-muted: rgba(196,75,43,0.12);
+    --accent-hover: #a83d22;
+    --mid: #6b6e76;
+    --rule: #d4d0c8;
+    --star-bg: rgba(196,75,43,0.1);
+    --star-text: #b5432a;
+    --card-shadow: 0 1px 3px rgba(26,29,35,0.06);
+    --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e2dfd8;
+      --ink-secondary: #a09d96;
+      --paper: #16181d;
+      --paper-alt: #1e2128;
+      --accent: #e0734e;
+      --accent-muted: rgba(224,115,78,0.14);
+      --accent-hover: #f08a65;
+      --mid: #8a8d94;
+      --rule: #2e3038;
+      --star-bg: rgba(224,115,78,0.13);
+      --star-text: #e8845e;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e2dfd8;
+    --ink-secondary: #a09d96;
+    --paper: #16181d;
+    --paper-alt: #1e2128;
+    --accent: #e0734e;
+    --accent-muted: rgba(224,115,78,0.14);
+    --accent-hover: #f08a65;
+    --mid: #8a8d94;
+    --rule: #2e3038;
+    --star-bg: rgba(224,115,78,0.13);
+    --star-text: #e8845e;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  /* Masthead */
+  .masthead {
+    text-align: center;
+    padding-bottom: 2.5rem;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 2.5rem;
+  }
+  .masthead-label {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .masthead h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    text-wrap: balance;
+    margin-bottom: 0.5rem;
+  }
+  .masthead-date {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--mid);
+    font-weight: 300;
+  }
+
+  /* Editor's take */
+  .editors-take {
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 1.5rem 1.5rem 1.8rem;
+    background: var(--accent-muted);
+    margin-bottom: 3rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .editors-take-label {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+  }
+  .editors-take p {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--ink-secondary);
+  }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.6rem;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .section-header .window {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+
+  /* Repo list */
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 3.5rem;
+  }
+  .repo-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0 1rem;
+    align-items: start;
+  }
+  .repo-rank {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--mid);
+    text-align: right;
+    padding-top: 0.12rem;
+    line-height: 1.5;
+  }
+  .repo-body {
+    min-width: 0;
+  }
+  .repo-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+  .repo-name {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .repo-name:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .repo-name:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--star-text);
+    background: var(--star-bg);
+    padding: 0.15rem 0.55rem;
+    border-radius: 10px;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+  .repo-stars svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+  }
+  .repo-desc {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+  }
+
+  /* 30-day section alternate background */
+  .section-30d {
+    background: var(--paper-alt);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding: 2.5rem 1.5rem 0.5rem;
+    border-radius: 8px;
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-weight: 300;
+  }
+
+  @media (max-width: 520px) {
+    .page { padding: 2rem 1rem 3rem; }
+    .section-30d { margin-left: -1rem; margin-right: -1rem; padding-left: 1rem; padding-right: 1rem; }
+    .repo-item { grid-template-columns: 1.5rem 1fr; gap: 0 0.75rem; }
+    .editors-take { padding: 1.2rem 1rem 1.2rem 1.4rem; }
+  }
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="masthead-label">Daily Brief</div>
+    <h1>Trending AI Repositories</h1>
+    <div class="masthead-date">Wednesday, August 20, 2026 &middot; UTC</div>
+  </header>
+
+  <section class="editors-take">
+    <div class="editors-take-label">Editor&rsquo;s Take</div>
+    <p>The week&rsquo;s defining pattern: agents are graduating from coding tools into full applications. Cumora ships team chat where agents are peers, not plugins. QM builds a multiplayer workspace around agent harnesses. CompAI launches a CRM that assumes the agent is the primary user. Meanwhile, the skill ecosystem has matured past novelty &mdash; book-to-skill turns any PDF into agent knowledge, and ip-as-logo-skill already has 2,200 stars two days after launch. The infrastructure layer is bifurcating: browser-use and phone-harness hand agents entire operating systems to control, while apex-inference-chip pushes LLM inference into FPGA silicon. The message is clear &mdash; the terminal-era agent was a prototype. The agents shipping this month expect to run your Mac, answer your phone, and close your deals.</p>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 10</h2>
+      <span class="window">Last 7 Days</span>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-item">
+        <span class="repo-rank">1</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/yetone/cumora">yetone/cumora</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 2,716</span>
+          </div>
+          <p class="repo-desc">Cross-platform team chat where AI agents are first-class teammates, with cloud or bring-your-own brains. The first chat app built agent-first rather than bolting AI onto Slack.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">2</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/s1dashu/ip-as-logo-skill">s1dashu/ip-as-logo-skill</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 2,261</span>
+          </div>
+          <p class="repo-desc">Compact agent skill for generating simplified, rounded, neo-skeuomorphic IP mascot logos. Two days old and already viral in the Codex skill ecosystem.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">3</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/Leutenegger/book-to-skill">Leutenegger/book-to-skill</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 1,204</span>
+          </div>
+          <p class="repo-desc">Turns any technical book PDF into a Claude Code skill you can study, reference, and use while working. Bridges the gap between reading and building.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">4</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/cinderline/northcinder">cinderline/northcinder</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 1,193</span>
+          </div>
+          <p class="repo-desc">Buyer-run, ad-neutral shopping-agent MCP server with deterministic ranking, signed purchase mandates, and a local audit trail. Commerce without the ad layer.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">5</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/Leutenegger/watermarks-remover">Leutenegger/watermarks-remover</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 914</span>
+          </div>
+          <p class="repo-desc">Strips AI provenance traces: Unicode text sanitization, statistical rewriting, and C2PA/metadata removal across PNG/JPEG/SVG/PDF/DOCX. A controversial tool highlighting the tension in AI content attribution.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">6</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/CopilotKit/openbot">CopilotKit/openbot</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 670</span>
+          </div>
+          <p class="repo-desc">Open-source AI coworkers that each get their own computer &mdash; a browser, files, and tools &mdash; with every action decided before it happens and recorded after. From the CopilotKit team.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">7</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/wang2122/sprix-sage-router">wang2122/sprix-sage-router</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 608</span>
+          </div>
+          <p class="repo-desc">State-aware SELF/COLLABORATE/HANDOFF routing for A2A agent networks. Solves the &ldquo;which agent handles this?&rdquo; problem with measured behavior bands.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">8</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/SigmanticAI/apex-inference-chip">SigmanticAI/apex-inference-chip</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 581</span>
+          </div>
+          <p class="repo-desc">An inference chip design running Qwen2.5-0.5B on FPGA &mdash; one transformer decoder layer in RTL, bit-exact against a golden model. 0.56 tok/s measured with a full evidence trail.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">9</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/browser-use/macos-harness">browser-use/macos-harness</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 535</span>
+          </div>
+          <p class="repo-desc">The thinnest harness that gives an LLM complete freedom to control a Mac. From the team behind browser-use, now expanding to full OS control.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">10</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/missuo/herdrm">missuo/herdrm</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 468</span>
+          </div>
+          <p class="repo-desc">Native macOS console for herdr &mdash; all your coding agents and their live terminals, across devices. A control plane for the multi-agent desktop.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="section-30d">
+    <div class="section-header">
+      <h2>Top 5</h2>
+      <span class="window">Last 30 Days</span>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-item">
+        <span class="repo-rank">1</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/yc-software/qm">yc-software/qm</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 13,959</span>
+          </div>
+          <p class="repo-desc">Multiplayer agent harness for work. A YC-backed workspace where multiple agents collaborate on shared tasks with human oversight. The month&rsquo;s breakout.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">2</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/trycompai/crm">trycompai/crm</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 8,686</span>
+          </div>
+          <p class="repo-desc">Open-source, agentic-first CRM. Not a CRM with AI features &mdash; a CRM where agents are the primary operators and humans supervise.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">3</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/FareedKhan-dev/kimi-k3-in-c">FareedKhan-dev/kimi-k3-in-c</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 6,111</span>
+          </div>
+          <p class="repo-desc">A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no framework, no GPU. Pure systems engineering.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">4</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/genspark-ai/genoffice">genspark-ai/genoffice</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 3,375</span>
+          </div>
+          <p class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux &mdash; Word, Excel, PowerPoint, PDF, and Markdown editing with built-in AI agents. The open-source answer to Microsoft Copilot in Office.</p>
+        </div>
+      </li>
+      <li class="repo-item">
+        <span class="repo-rank">5</span>
+        <div class="repo-body">
+          <div class="repo-header">
+            <a class="repo-name" href="https://github.com/QwenAudio/qwen-audio-agent">QwenAudio/qwen-audio-agent</a>
+            <span class="repo-stars"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg> 2,198</span>
+          </div>
+          <p class="repo-desc">A realtime voice runtime that keeps agents talking, working, and present. Speech recognition, TTS, and voice chat as a first-class agent interface from Alibaba&rsquo;s Qwen team.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <footer class="footer">
+    Generated by the Trending GitHub Repos routine &middot; 2026-08-20 UTC
+  </footer>
+</div>
