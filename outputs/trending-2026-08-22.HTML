@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-22</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: #0f172a;
+    --text: #1a1a2e;
+    --text-secondary: #4a5568;
+    --text-hero: #f1f5f9;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --border: #e2e8f0;
+    --star: #f59e0b;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --section-label: #64748b;
+    --divider: #cbd5e1;
+    --rank-bg: #3b82f6;
+    --rank-text: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-hero: #020617;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-hero: #e2e8f0;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star: #fbbf24;
+      --tag-bg: #1e1b4b;
+      --tag-text: #a5b4fc;
+      --section-label: #94a3b8;
+      --divider: #334155;
+      --rank-bg: #2563eb;
+      --rank-text: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hero: #020617;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-hero: #e2e8f0;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfd;
+    --border: #334155;
+    --star: #fbbf24;
+    --tag-bg: #1e1b4b;
+    --tag-text: #a5b4fc;
+    --section-label: #94a3b8;
+    --divider: #334155;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    background: var(--bg-hero);
+    color: var(--text-hero);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .hero-date {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .editor-take {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    opacity: 0.88;
+    text-align: left;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 1.25rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2em 0.65em;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .repo-card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    box-shadow: var(--shadow);
+  }
+
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+
+  .rank {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .repo-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-info h3 a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+
+  .star-icon {
+    font-size: 1rem;
+  }
+
+  .lang-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15em 0.55em;
+    border-radius: 4px;
+    margin-top: 0.45rem;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.82rem;
+    color: var(--section-label);
+    border-top: 1px solid var(--divider);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .repo-card {
+      grid-template-columns: 2rem 1fr;
+      gap: 0.75rem;
+    }
+    .repo-meta {
+      grid-column: 2;
+      margin-top: 0.25rem;
+    }
+    .rank {
+      width: 2rem;
+      height: 2rem;
+      font-size: 0.8rem;
+    }
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .container { padding: 1.5rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-date">August 22, 2026</div>
+  <h1>Trending AI Repositories</h1>
+  <div class="editor-take">
+    The agent stopped being a solo performer this week. Five of the top seven repos across both windows are about agents working <em>together</em> — team chat for agent squads, coworker sandboxes with governed actions, A2A routing protocols, and phone-harness rigs that hand an agent a real device. The pattern is clear: the industry has moved past "can an agent do a task" to "can agents coordinate without a human in the loop." Meanwhile, the 30-day chart is dominated by a watermark-removal tool that hit 16k stars in eleven days, signaling a growing backlash against AI provenance mandates. And Kimi K3 running a 2.78-trillion-parameter model on a single CPU in 8 GB of RAM is the kind of systems hack that reminds you inference cost curves are far from settled.
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-header">
+    <h2>Top 10 <span class="section-badge">7 days</span></h2>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/yetone/cumora" target="_blank" rel="noopener">yetone/cumora</a></h3>
+        <div class="repo-desc">Cross-platform team chat where AI agents are first-class teammates. Supports cloud-hosted or bring-your-own agent brains (Claude Code, Codex). The Slack-for-agents concept, executed cleanly.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 2,870</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noopener">CopilotKit/OpenBot</a></h3>
+        <div class="repo-desc">Open-source AI coworkers that each get a sandboxed computer: browser, files, and tools. Every action is decided before execution and recorded after. Built on the AG-UI protocol.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 2,150</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/wang2122/sprix-sage-router" target="_blank" rel="noopener">wang2122/sprix-sage-router</a></h3>
+        <div class="repo-desc">State-aware routing for A2A agent networks with SELF/COLLABORATE/HANDOFF modes. Practical multi-agent orchestration without forcing a fixed topology.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 1,009</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/bawadou/ai-data-extractor" target="_blank" rel="noopener">bawadou/ai-data-extractor</a></h3>
+        <div class="repo-desc">Extracts and structures chat histories from Claude Code, Cursor, Windsurf, Aider, and Cline. Useful for auditing AI-assisted development workflows.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 537</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/cclank/lanshu-create-ai-presenter-video" target="_blank" rel="noopener">cclank/lanshu-create-ai-presenter-video</a></h3>
+        <div class="repo-desc">Provider-neutral Codex Skill that produces verified AI presenter videos from a script and authorized presenter image. Focused on consent-safe digital human generation.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 251</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/BigPengSays/bigpeng-hot-gzh" target="_blank" rel="noopener">BigPengSays/bigpeng-hot-gzh</a></h3>
+        <div class="repo-desc">Seven viral content formulas distilled from 100+ high-performing Chinese AI WeChat articles, packaged as a reusable Skill.</div>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 226</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/sam70361/emotion-ball" target="_blank" rel="noopener">sam70361/emotion-ball</a></h3>
+        <div class="repo-desc">Emotion engine for AI assistants: 32 states rendered in pure SVG and vanilla JS. Zero framework, zero image assets. Drop-in emotional expression layer for chatbots and desktop pets.</div>
+        <span class="lang-tag">JavaScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 225</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/jaredrhod/fullstack-agent" target="_blank" rel="noopener">jaredrhod/fullstack-agent</a></h3>
+        <div class="repo-desc">One-command setup wizard that gives an AI agent memory, voice, face, and hands. Opinionated stack assembly for people who want the agent, not the plumbing.</div>
+        <span class="lang-tag">Shell</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 195</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/elie222/botdirectory.ai" target="_blank" rel="noopener">elie222/botdirectory.ai</a></h3>
+        <div class="repo-desc">Open-source directory of agent-bot prompts for Grok Bot, Rakazo, and other agents. An Astro-based registry for the emerging prompt-as-product market.</div>
+        <span class="lang-tag">Astro</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 103</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Hebbian-Robotics/hflow" target="_blank" rel="noopener">Hebbian-Robotics/hflow</a></h3>
+        <div class="repo-desc">Open-source SDK for robotics data-quality, processing, and curation pipelines. Built on DuckDB and Parquet for physical AI datasets. Early bet on the data tooling layer for embodied agents.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 101</div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 <span class="section-badge">30 days</span></h2>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a></h3>
+        <div class="repo-desc">Strips multi-vendor AI provenance marks: Unicode text hygiene, statistical rewrite hooks, and C2PA/metadata from images, PDFs, and documents. Grew faster than almost anything this month. The demand speaks for itself.</div>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 16,670</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></h3>
+        <div class="repo-desc">YC-backed multiplayer agent harness for work. Think "VS Code Live Share but the participants are agents." 303 open issues suggest rapid adoption and rough edges in equal measure.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 14,046</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></h3>
+        <div class="repo-desc">Open-source CRM designed for AI agents first, humans second. The first credible attempt at an agentic-first business application rather than an agent wrapper on a human tool.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 8,783</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></h3>
+        <div class="repo-desc">A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM. Portable C99 with no BLAS, no framework, no GPU. A systems programming tour de force.</div>
+        <span class="lang-tag">C</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 6,232</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <h3><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></h3>
+        <div class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux. Handles Word, Excel, PowerPoint, PDF, and Markdown with built-in AI agents. A direct swing at the Microsoft Office monopoly.</div>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+      <div class="repo-meta"><span class="star-icon">&#9733;</span> 3,464</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Generated by the Trending GitHub Repos routine on 2026-08-22 (UTC).
+  </div>
+
+</div>
+
+</body>
+</html>
