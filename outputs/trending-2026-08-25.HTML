@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-25</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --editor-bg: #f0f4ff;
+    --editor-border: #bfdbfe;
+    --section-badge: #2563eb;
+    --section-badge-text: #fff;
+    --hover: #f8fafc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #999;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #2a2a2a;
+      --star: #facc15;
+      --tag-bg: #262626;
+      --tag-text: #a1a1aa;
+      --editor-bg: #1a2332;
+      --editor-border: #2d4a6f;
+      --section-badge: #3b82f6;
+      --section-badge-text: #fff;
+      --hover: #222;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+  header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+  .editor-take p {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+  }
+  .section-badge {
+    background: var(--section-badge);
+    color: var(--section-badge-text);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--hover);
+  }
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    min-width: 1.5rem;
+    padding-top: 0.15rem;
+  }
+  .repo-info { flex: 1; }
+  .repo-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-top: 0.4rem;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+  .tag {
+    font-size: 0.72rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.4rem; }
+    .repo-top { flex-direction: column; gap: 0.3rem; }
+    .repo-stars { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-08-25 &middot; UTC &middot; Weekly brief</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The agent ecosystem has crossed a line this month: it is no longer about building agents but about building the world agents inhabit. The top 30-day repo is a multiplayer harness from YC that treats agents as coworkers with their own desks. Comp AI shipped an entire CRM where agents are the primary users. GenSpark open-sourced an office suite where AI is the default author. The pattern is consistent&mdash;software is being re-architected with agents as first-class principals, not bolt-on assistants.</p>
+    <p style="margin-top:0.75rem;">Meanwhile, the 7-day window shows the tooling layer catching up: MCP servers for debuggers, observability dashboards for coding agents, email APIs purpose-built for agent inboxes, and a Rust mail server that gives every agent its own address. The skill/plugin economy is also accelerating, with vertical-specific kits for solopreneurs, Excel analysis, video production, and security testing all landing this week. One uncomfortable signal: the month's highest-starred single repo (17k+) strips AI watermarks and provenance metadata from generated content&mdash;a reminder that adoption and accountability do not always travel together.</p>
+  </div>
+
+  <div class="section-header">
+    <span class="section-badge">7 days</span>
+    <h2>Top 10 &mdash; New This Week</h2>
+  </div>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener">duty1g/x64dbg-mcp-server</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 1,257</div>
+      </div>
+      <div class="repo-desc">Native MCP plugin for the x64dbg debugger, built in Zig with zero dependencies. Exposes breakpoints, memory reads, register dumps, and stepping over HTTP so any MCP-compatible AI assistant can drive binary analysis sessions.</div>
+      <div class="repo-tags"><span class="tag">Zig</span><span class="tag">MCP</span><span class="tag">x64dbg</span><span class="tag">binary-analysis</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/cclank/lanshu-create-ai-presenter-video" target="_blank" rel="noopener">cclank/lanshu-create-ai-presenter-video</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 847</div>
+      </div>
+      <div class="repo-desc">Provider-neutral Codex skill that turns a script and an authorized presenter image into a verified AI presenter video. Plugs into existing agent workflows rather than requiring a standalone app.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">video-generation</span><span class="tag">digital-human</span><span class="tag">codex-skill</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Zyrexnn/Cybermes" target="_blank" rel="noopener">Zyrexnn/Cybermes</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 468</div>
+      </div>
+      <div class="repo-desc">Autonomous offensive-security agent framework powered by Hermes Agent with multi-model LLM orchestration. Targets bug bounty and red-team use cases, chaining recon, exploit validation, and CVSS scoring.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">security</span><span class="tag">bug-bounty</span><span class="tag">red-teaming</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/kgoedecke/doop" target="_blank" rel="noopener">kgoedecke/doop</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 329</div>
+      </div>
+      <div class="repo-desc">Open-source alternative to Paper.design. A multiplayer design canvas where humans and AI agents co-design in real time, with MCP built in. Positions itself in the Claude Design space.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">design-tool</span><span class="tag">multiplayer</span><span class="tag">MCP</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/rome-os/rome" target="_blank" rel="noopener">rome-os/rome</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 298</div>
+      </div>
+      <div class="repo-desc">Self-described &ldquo;agentic OS&rdquo; providing a runtime surface for LLM agents backed by Claude Code and Codex. Early-stage but signals the growing appetite for agent-native operating environments.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">agent-os</span><span class="tag">LLM</span><span class="tag">claude-code</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#6</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/bam-bam-2/solo-skills" target="_blank" rel="noopener">bam-bam-2/solo-skills</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 256</div>
+      </div>
+      <div class="repo-desc">Korean solopreneur productivity kit: 26 ready-to-use AI agent skills (plus execution scripts) distilled from automating 49 tasks without employees. Practical, opinionated, and immediately usable.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">solopreneur</span><span class="tag">automation</span><span class="tag">skills</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#7</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/ChenShuo2004/cs-board" target="_blank" rel="noopener">ChenShuo2004/cs-board</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 246</div>
+      </div>
+      <div class="repo-desc">Local AI tool that generates whiteboard animation videos from reference audio and Chinese text. Combines IndexTTS voice cloning with a React + FastAPI pipeline for end-to-end production.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">whiteboard-animation</span><span class="tag">TTS</span><span class="tag">FastAPI</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#8</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/sodiumsun/agenttrail" target="_blank" rel="noopener">sodiumsun/agenttrail</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 182</div>
+      </div>
+      <div class="repo-desc">Local observability dashboard for AI coding agents. Watches Claude Code, Codex, and Cursor in real time &mdash; plans, tool calls, file changes, and progress &mdash; without sending data off-machine.</div>
+      <div class="repo-tags"><span class="tag">HTML</span><span class="tag">observability</span><span class="tag">local-first</span><span class="tag">developer-tools</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#9</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/alchaincyf/huashu-excel" target="_blank" rel="noopener">alchaincyf/huashu-excel</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 182</div>
+      </div>
+      <div class="repo-desc">Full-pipeline data analysis skill for Excel: dirty-table inspection, cleaning, alignment, analysis, reconciliation, and delivery. Depends only on openpyxl. Designed so AI-produced numbers survive scrutiny.</div>
+      <div class="repo-tags"><span class="tag">Python</span><span class="tag">Excel</span><span class="tag">data-analysis</span><span class="tag">openpyxl</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#10</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/truespar/sentio" target="_blank" rel="noopener">truespar/sentio</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 170</div>
+      </div>
+      <div class="repo-desc">Email inbox API for AI agents, written in Rust. Gives every agent a real email address, receives mail as structured webhooks, and replies in-thread over REST. Full multi-tenant mail server with DKIM/SPF/DMARC.</div>
+      <div class="repo-tags"><span class="tag">Rust</span><span class="tag">email</span><span class="tag">SMTP</span><span class="tag">ai-agents</span></div>
+    </li>
+
+  </ul>
+
+  <div class="section-header">
+    <span class="section-badge">30 days</span>
+    <h2>Top 5 &mdash; Month's Biggest</h2>
+  </div>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 14,162</div>
+      </div>
+      <div class="repo-desc">YC-backed multiplayer agent harness for work. Treats AI agents as coworkers with persistent sessions, shared context, and collaborative task execution. The month's clearest signal that &ldquo;agent harness&rdquo; is becoming its own product category.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">harness</span><span class="tag">multiplayer</span><span class="tag">YC</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 8,892</div>
+      </div>
+      <div class="repo-desc">Open-source CRM designed agent-first. AI agents are the primary operators, not an add-on to a human-driven interface. Rethinks the CRM data model around what agents need to close deals.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">CRM</span><span class="tag">agent-first</span><span class="tag">open-source</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 3,592</div>
+      </div>
+      <div class="repo-desc">Free, cross-platform AI office suite for macOS, Windows, and Linux. Handles .docx, .xlsx, .pptx, PDF, and Markdown with built-in AI agents. An Electron app betting that the office suite was always just an agent workflow waiting to happen.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Electron</span><span class="tag">office-suite</span><span class="tag">cross-platform</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yetone/cumora" target="_blank" rel="noopener">yetone/cumora</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 3,059</div>
+      </div>
+      <div class="repo-desc">Cross-platform team chat where AI agents are first-class teammates. Supports cloud-hosted or bring-your-own agent brains (Claude Code, Codex). Slack for agents, effectively.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">team-chat</span><span class="tag">ai-agents</span><span class="tag">cross-platform</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noopener">CopilotKit/OpenBot</a></div>
+        </div>
+        <div class="repo-stars">&#9733; 2,696</div>
+      </div>
+      <div class="repo-desc">Open-source AI coworkers that each get their own computer: a browser, files, and tools. Every action is decided before it happens and recorded after. Brings any AG-UI agent. From the CopilotKit team.</div>
+      <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">AG-UI</span><span class="tag">browser-automation</span><span class="tag">CopilotKit</span></div>
+    </li>
+
+  </ul>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &middot; UTC 2026-08-25
+  </footer>
+</div>
+</body>
+</html>
