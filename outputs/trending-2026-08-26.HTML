@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-26</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e5e7eb;
+    --star: #f59e0b;
+    --tag-bg: #f3f4f6;
+    --tag-text: #374151;
+    --editor-bg: #f0f4ff;
+    --editor-border: #bfdbfe;
+    --section-7d: #2563eb;
+    --section-30d: #7c3aed;
+    --rank-bg: #1e293b;
+    --rank-text: #fff;
+    --card-hover: #f8fafc;
+    --gradient-start: #1e293b;
+    --gradient-end: #0f172a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --star: #fbbf24;
+      --tag-bg: #334155;
+      --tag-text: #cbd5e1;
+      --editor-bg: #1e2a4a;
+      --editor-border: #2d4a7c;
+      --section-7d: #60a5fa;
+      --section-30d: #a78bfa;
+      --rank-bg: #60a5fa;
+      --rank-text: #0f172a;
+      --card-hover: #273548;
+      --gradient-start: #0f172a;
+      --gradient-end: #020617;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --star: #fbbf24;
+    --tag-bg: #334155;
+    --tag-text: #cbd5e1;
+    --editor-bg: #1e2a4a;
+    --editor-border: #2d4a7c;
+    --section-7d: #60a5fa;
+    --section-30d: #a78bfa;
+    --rank-bg: #60a5fa;
+    --rank-text: #0f172a;
+    --card-hover: #273548;
+    --gradient-start: #0f172a;
+    --gradient-end: #020617;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #e2e8f0;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .header .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+  .container {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    margin: -1.5rem auto 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .editor-take h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .editor-take p {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .badge-7d { background: var(--section-7d); }
+  .badge-30d { background: var(--section-30d); }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .repo-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+  }
+  .rank {
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .repo-info { min-width: 0; }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    word-break: break-word;
+  }
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--star);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+  .star-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  @media (max-width: 600px) {
+    .repo-card {
+      grid-template-columns: 2rem 1fr;
+      gap: 0.75rem;
+      padding: 1rem 1.15rem;
+    }
+    .repo-stars {
+      grid-column: 2;
+      margin-top: 0;
+    }
+    .rank { width: 2rem; height: 2rem; font-size: 0.8rem; }
+    .editor-take { padding: 1.25rem; }
+    .header { padding: 2rem 1rem 2rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-08-26 UTC</div>
+  </div>
+  <div class="container">
+    <div class="editor-take">
+      <h2>Editor's Take</h2>
+      <p>Agents stopped being tools this week and started being colleagues. Cumora and OpenBot both crossed 2,900 stars in under ten days by treating AI agents as first-class team members &mdash; one seats them in chat, the other gives each one its own computer. Meanwhile, the harness war is now genuinely three-way: DeepSeek Harness shipped a full ecosystem in two weeks, while browser-use extended to macOS-wide control and HarnessRouter published a Unified Harness Protocol to bridge them all. The routing layer above harnesses is the new battleground &mdash; sprix-sage-router&rsquo;s SELF/COLLABORATE/HANDOFF state machine is the first serious attempt at standardizing how agents decide when to call each other. If you are building single-agent tooling, you are already behind the multi-agent coordination curve.</p>
+    </div>
+
+    <div class="section-header">
+      <span class="section-badge badge-7d">7 Days</span>
+      <h2>Top 10 &mdash; This Week</h2>
+    </div>
+    <div class="repo-list">
+
+      <a class="repo-card" href="https://github.com/yetone/cumora" target="_blank" rel="noopener">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <div class="repo-name">yetone/cumora</div>
+          <div class="repo-desc">Cross-platform team chat where AI agents are first-class teammates; bring Claude Code, Codex, or your own brains. 3K stars in nine days says the market wants agents in Slack-shaped UIs, not terminal tabs.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          3,121
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noopener">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <div class="repo-name">CopilotKit/OpenBot</div>
+          <div class="repo-desc">Open-source AI coworkers that each get a browser, files, and tools of their own, with every action recorded. AG-UI compatible. The "give the agent its own computer" pattern going mainstream.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,925
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/wang2122/sprix-sage-router" target="_blank" rel="noopener">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <div class="repo-name">wang2122/sprix-sage-router</div>
+          <div class="repo-desc">State-aware SELF/COLLABORATE/HANDOFF routing for A2A agent networks. The first serious attempt at standardizing multi-agent delegation rather than hard-coding it per workflow.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,132
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/browser-use/macos-harness" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name">browser-use/macos-harness</div>
+          <div class="repo-desc">The thinnest harness that gives an LLM complete freedom to control a Mac. From the browser-use team, extending their scope from browser tabs to the full desktop.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          763
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/ApodexAI/FrontierAgent" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name">ApodexAI/FrontierAgent</div>
+          <div class="repo-desc">Agent framework with native TUI, ReAct and Agent Team modes, one command on macOS and Linux. No Docker dependency; ships as a single install.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          666
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/iAmCorey/Wake" target="_blank" rel="noopener">
+        <div class="rank">6</div>
+        <div class="repo-info">
+          <div class="repo-name">iAmCorey/Wake</div>
+          <div class="repo-desc">All your AI agent sessions in one place &mdash; browse, search, resume. Built in Rust + GPUI. Solves the "where did that agent conversation go" problem nobody else is touching.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          627
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/SigmanticAI/apex-inference-chip" target="_blank" rel="noopener">
+        <div class="rank">7</div>
+        <div class="repo-info">
+          <div class="repo-name">SigmanticAI/apex-inference-chip</div>
+          <div class="repo-desc">FPGA inference chip design running a real LLM (Qwen2.5-0.5B) with one transformer decoder layer in RTL, bit-exact against a golden model. 0.56 tok/s measured. Hardware-AI gap is closing.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          596
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Zyrexnn/Cybermes" target="_blank" rel="noopener">
+        <div class="rank">8</div>
+        <div class="repo-info">
+          <div class="repo-name">Zyrexnn/Cybermes</div>
+          <div class="repo-desc">Autonomous offensive security and red-teaming agent framework powered by Hermes Agent with multi-model LLM orchestration. Drives netexec, impacket, and Nuclei for authorized pentesting.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          556
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Forsy-AI/biosecurity-agent" target="_blank" rel="noopener">
+        <div class="rank">9</div>
+        <div class="repo-info">
+          <div class="repo-name">Forsy-AI/biosecurity-agent</div>
+          <div class="repo-desc">AI agent that builds a live biosecurity monitoring world around any target. Niche vertical-agent pattern gaining traction in specialized domains.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          514
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/rome-os/rome" target="_blank" rel="noopener">
+        <div class="rank">10</div>
+        <div class="repo-info">
+          <div class="repo-name">rome-os/rome</div>
+          <div class="repo-desc">"The agentic OS" &mdash; a TypeScript runtime for persistent agents with Claude Code and Codex integration. Three days old and already drawing comparisons to holaOS from April.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          337
+        </div>
+      </a>
+
+    </div>
+
+    <div class="section-header">
+      <span class="section-badge badge-30d">30 Days</span>
+      <h2>Top 5 &mdash; This Month</h2>
+    </div>
+    <div class="repo-list">
+
+      <a class="repo-card" href="https://github.com/Leonxlnx/unlazy" target="_blank" rel="noopener">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <div class="repo-name">Leonxlnx/unlazy</div>
+          <div class="repo-desc">Anti-laziness skill using the Depth Tree method: splits a task N layers deep and gives every leaf the full time budget, so effort multiplies with depth. The "make agents try harder" skill category is real now.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,431
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/fuxicodex/Fuxi" target="_blank" rel="noopener">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <div class="repo-name">fuxicodex/Fuxi</div>
+          <div class="repo-desc">Self-contained terminal AI coding agent with cost-aware routing across LLM providers. A no-frills Claude Code alternative that optimises for wallet, not features.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,063
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/ShawnPana/phone-harness" target="_blank" rel="noopener">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <div class="repo-name">ShawnPana/phone-harness</div>
+          <div class="repo-desc">Let your agent control your phone. Three weeks from zero to 2K stars; mobile-native agent control is clearly under-served.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,054
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/eternityspring/shuohao-skills" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name">eternityspring/shuohao-skills</div>
+          <div class="repo-desc">AI short-drama production skills &mdash; character bibles, outlines, art bibles, screenplays, storyboards. First serious vertical-creative skill pack to break 2K stars.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,024
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/AMAP-ML/LongHorizon-Harness" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name">AMAP-ML/LongHorizon-Harness</div>
+          <div class="repo-desc">Long-horizon computer-use harness with fresh-context execution, durable verified state, and recoverable progress. The month's most ambitious infrastructure bet on agents that run for hours, not minutes.</div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          1,316
+        </div>
+      </a>
+
+    </div>
+
+    <div class="footer">
+      Generated by the Trending GitHub Repos routine &bull; 2026-08-26 UTC
+    </div>
+  </div>
+</body>
+</html>
