@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-27</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --section-bg: #f8fafc;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --border: #2d2d44;
+      --star: #facc15;
+      --tag-bg: #1e293b;
+      --tag-text: #94a3b8;
+      --section-bg: #16162a;
+      --gradient-start: #0f172a;
+      --gradient-end: #1e40af;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f0f1a;
+    --surface: #1a1a2e;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e293b;
+    --border: #2d2d44;
+    --star: #facc15;
+    --tag-bg: #1e293b;
+    --tag-text: #94a3b8;
+    --section-bg: #16162a;
+    --gradient-start: #0f172a;
+    --gradient-end: #1e40af;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .header .date {
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: -1.5rem auto 2rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.15rem 1.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 1.4em;
+  }
+  .repo-name a {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+
+  .repo-stars {
+    font-size: 0.85rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-top: 0.2rem;
+  }
+
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+  .repo-tag {
+    font-size: 0.7rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 2rem 1rem 2rem; }
+    .header h1 { font-size: 1.4rem; }
+    .editors-take { margin-top: -1rem; padding: 1.25rem; }
+    .container { padding: 0 1rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-08-27 UTC</div>
+</div>
+
+<div class="container">
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The week's clearest signal: agents stopped being the product and became the surface area to govern. Halofy ships RBAC, audit logs, and signed erasure for agent fleets. Rome calls itself an "agentic OS." x64dbg-mcp-server drops AI straight into binary analysis&mdash;reverse engineering just gained a copilot, and the 1,400-star response in five days shows demand was pent up. Meanwhile, the month's runaway hit is watermark stripping&mdash;18,500 stars for a tool that removes C2PA and SynthID provenance marks from every format. That tension between provenance and plausible deniability is only accelerating. On the model side, Kimi K3 running 2.78 trillion parameters on a single CPU in 8&nbsp;GB of RAM with zero dependencies remains the month's most impressive systems work. The skill-as-a-package pattern continues to compound: solo-skills, huashu-excel, and source-reading-methodology all shipped this week as installable agent skills.</p>
+  </div>
+
+  <div class="section-title">Top 10 &mdash; Last 7 Days</div>
+  <ul class="repo-list">
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1.</span>
+        <span class="repo-name"><a href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener">duty1g/x64dbg-mcp-server</a></span>
+        <span class="repo-stars">&#9733; 1,477</span>
+      </div>
+      <div class="repo-desc">Native MCP plugin for the x64dbg debugger, written in Zig. Exposes breakpoints, memory reads, register dumps, and stepping over HTTP so any MCP-compatible AI assistant can drive binary analysis. Zero dependencies, single binary.</div>
+      <div class="repo-tags"><span class="repo-tag">Zig</span><span class="repo-tag">MCP</span><span class="repo-tag">reverse-engineering</span><span class="repo-tag">x64dbg</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2.</span>
+        <span class="repo-name"><a href="https://github.com/ShadowAqueduct/watermark-remover" target="_blank" rel="noopener">ShadowAqueduct/watermark-remover</a></span>
+        <span class="repo-stars">&#9733; 807</span>
+      </div>
+      <div class="repo-desc">Strips multi-vendor AI watermarks from PNG, JPEG, SVG, PDF, DOCX, HTML, and Markdown. A lighter fork of the month's bigger watermarks-remover, packaged as a Claude Code plugin and Codex skill.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">watermark</span><span class="repo-tag">claude-code-plugin</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3.</span>
+        <span class="repo-name"><a href="https://github.com/Forsy-AI/biosecurity-agent" target="_blank" rel="noopener">Forsy-AI/biosecurity-agent</a></span>
+        <span class="repo-stars">&#9733; 512</span>
+      </div>
+      <div class="repo-desc">AI agent that builds a live biosecurity monitoring world around any target. Niche vertical, but 500 stars in four days says the biotech-meets-AI crowd is paying attention.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">biosecurity</span><span class="repo-tag">agent</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4.</span>
+        <span class="repo-name"><a href="https://github.com/amosblomqvist/learn" target="_blank" rel="noopener">amosblomqvist/learn</a></span>
+        <span class="repo-stars">&#9733; 430</span>
+      </div>
+      <div class="repo-desc">Personal AI learning system in TypeScript. Thin on description, but star velocity suggests a useful pattern for spaced-repetition or curriculum generation with LLMs.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">learning</span><span class="repo-tag">AI</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5.</span>
+        <span class="repo-name"><a href="https://github.com/kgoedecke/doop" target="_blank" rel="noopener">kgoedecke/doop</a></span>
+        <span class="repo-stars">&#9733; 420</span>
+      </div>
+      <div class="repo-desc">Open-source alternative to Paper.design. Multiplayer design canvas where humans and AI agents design together in real time, with MCP built in. Claude Design integration native.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">design</span><span class="repo-tag">multiplayer</span><span class="repo-tag">MCP</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6.</span>
+        <span class="repo-name"><a href="https://github.com/halofyai/halofy" target="_blank" rel="noopener">halofyai/halofy</a></span>
+        <span class="repo-stars">&#9733; 372</span>
+      </div>
+      <div class="repo-desc">Governance layer for AI agent fleets: identity, RBAC, provenance, audit logs, and signed erasure across multi-tenant orgs. The "who did what and why" layer most agent deployments still lack.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">governance</span><span class="repo-tag">RBAC</span><span class="repo-tag">audit</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7.</span>
+        <span class="repo-name"><a href="https://github.com/rome-os/rome" target="_blank" rel="noopener">rome-os/rome</a></span>
+        <span class="repo-stars">&#9733; 363</span>
+      </div>
+      <div class="repo-desc">Declares itself "the agentic OS." Supports Claude Code and Codex as backends. Early and ambitious, but the framing&mdash;agents need an OS, not just a harness&mdash;is worth watching.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">agent-os</span><span class="repo-tag">claude-code</span><span class="repo-tag">codex</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8.</span>
+        <span class="repo-name"><a href="https://github.com/ChenShuo2004/cs-board" target="_blank" rel="noopener">ChenShuo2004/cs-board</a></span>
+        <span class="repo-stars">&#9733; 334</span>
+      </div>
+      <div class="repo-desc">Local AI tool that takes a reference voice and Chinese script, then generates whiteboard animation videos. Combines IndexTTS, FastAPI, and React into a single pipeline.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">TTS</span><span class="repo-tag">video</span><span class="repo-tag">whiteboard</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9.</span>
+        <span class="repo-name"><a href="https://github.com/bam-bam-2/solo-skills" target="_blank" rel="noopener">bam-bam-2/solo-skills</a></span>
+        <span class="repo-stars">&#9733; 315</span>
+      </div>
+      <div class="repo-desc">Korean solopreneur productivity kit: 26 ready-to-install AI agent skills covering automation tasks that previously needed a team. Practical packaging of the skill-as-a-product pattern.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">skills</span><span class="repo-tag">solopreneur</span><span class="repo-tag">Korean</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10.</span>
+        <span class="repo-name"><a href="https://github.com/alchaincyf/huashu-excel" target="_blank" rel="noopener">alchaincyf/huashu-excel</a></span>
+        <span class="repo-stars">&#9733; 301</span>
+      </div>
+      <div class="repo-desc">End-to-end data analysis and Excel skill for AI agents: dirty-table triage, cleaning, alignment, analysis, reconciliation, and delivery. Depends only on openpyxl, works across agent harnesses.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">Excel</span><span class="repo-tag">data-analysis</span><span class="repo-tag">agent-skill</span></div>
+    </li>
+  </ul>
+
+  <div class="section-title">Top 5 &mdash; Last 30 Days</div>
+  <ul class="repo-list">
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1.</span>
+        <span class="repo-name"><a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a></span>
+        <span class="repo-stars">&#9733; 18,567</span>
+      </div>
+      <div class="repo-desc">The month's breakout. Strips Unicode text watermarks, statistical rewrite hooks, and C2PA/metadata from every major file format. The speed of adoption says the market views AI provenance marking as a problem to solve, not a feature to keep.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">watermark</span><span class="repo-tag">C2PA</span><span class="repo-tag">SynthID</span><span class="repo-tag">provenance</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2.</span>
+        <span class="repo-name"><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></span>
+        <span class="repo-stars">&#9733; 14,246</span>
+      </div>
+      <div class="repo-desc">YC-backed multiplayer agent harness for work. 321 open issues signal both demand and early rough edges. The bet: agents collaborate like teammates, not tools.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">agent-harness</span><span class="repo-tag">multiplayer</span><span class="repo-tag">YC</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3.</span>
+        <span class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></span>
+        <span class="repo-stars">&#9733; 8,969</span>
+      </div>
+      <div class="repo-desc">Agentic-first CRM. Not "CRM with an AI chatbot"&mdash;the data model assumes agents are the primary users and humans supervise. A credible test of whether agent-native SaaS can displace human-native SaaS.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">CRM</span><span class="repo-tag">agentic</span><span class="repo-tag">open-source</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4.</span>
+        <span class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></span>
+        <span class="repo-stars">&#9733; 6,534</span>
+      </div>
+      <div class="repo-desc">Runs inference on the 2.78-trillion-parameter Kimi K3 model on a single CPU in 8.24&nbsp;GB of RAM. Portable C99, no BLAS, no framework, no GPU. MoE with MxFP4 quantization. Systems work that makes trillion-parameter models tangible outside data centers.</div>
+      <div class="repo-tags"><span class="repo-tag">C</span><span class="repo-tag">CPU-inference</span><span class="repo-tag">MoE</span><span class="repo-tag">quantization</span><span class="repo-tag">zero-dependencies</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5.</span>
+        <span class="repo-name"><a href="https://github.com/s1dashu/ip-as-logo-skill" target="_blank" rel="noopener">s1dashu/ip-as-logo-skill</a></span>
+        <span class="repo-stars">&#9733; 4,393</span>
+      </div>
+      <div class="repo-desc">Agent skill for generating simplified, rounded, neo-skeuomorphic IP mascot logos. A narrow creative task turned into a reusable skill&mdash;the template for how niche design workflows get packaged now.</div>
+      <div class="repo-tags"><span class="repo-tag">image-generation</span><span class="repo-tag">logo-design</span><span class="repo-tag">codex-skill</span></div>
+    </li>
+  </ul>
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine &mdash; 2026-08-27 UTC
+</div>
+
+</body>
+</html>
