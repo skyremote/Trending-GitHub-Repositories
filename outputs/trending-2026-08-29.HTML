@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-29</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --section-bg: #f0f4ff;
+    --editor-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --editor-text: #e2e8f0;
+    --badge-weekly: #2563eb;
+    --badge-monthly: #7c3aed;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --section-bg: #1a2744;
+      --editor-bg: linear-gradient(135deg, #0c1929 0%, #162033 100%);
+      --editor-text: #cbd5e1;
+    }
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --tag-bg: #334155;
+    --tag-text: #94a3b8;
+    --section-bg: #1a2744;
+    --editor-bg: linear-gradient(135deg, #0c1929 0%, #162033 100%);
+    --editor-text: #cbd5e1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  .editors-take {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    position: relative;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    opacity: 0.7;
+    font-weight: 600;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+  }
+  .badge-weekly { background: var(--badge-weekly); }
+  .badge-monthly { background: var(--badge-monthly); }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .repo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  }
+  .rank {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 28px;
+    text-align: center;
+    padding-top: 2px;
+  }
+  .repo-body { flex: 1; min-width: 0; }
+  .repo-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .repo-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.82rem;
+  }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    color: var(--star);
+  }
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+  }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .forks {
+    color: var(--text-secondary);
+  }
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+  footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 600px) {
+    body { padding: 16px 10px; }
+    header h1 { font-size: 1.4rem; }
+    .editors-take { padding: 18px 16px; }
+    .repo-card { padding: 12px 14px; gap: 10px; }
+    .rank { font-size: 1.1rem; min-width: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-08-29 UTC</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The AI watermark arms race is the headline this month. Two independent watermark-removal repos cracked the top slots in their respective windows &mdash; one hitting 19k stars in under three weeks &mdash; signaling real demand for content-provenance countermeasures whether you find that healthy or not. Beyond that, the week belongs to agent skills: four of the top ten new repos are standalone skills designed to plug into Claude Code, Codex, or similar harnesses. The shift is clear &mdash; builders are no longer writing agents, they are writing <em>for</em> agents. Meanwhile, infrastructure is catching up to ambition: email APIs for agents, agentic operating systems, and model routers all appeared this week, filling gaps that last month's agent frameworks only gestured at. The 30-day window reinforces the pattern: the repos with lasting traction are the ones giving agents real-world surfaces &mdash; CRMs, office suites, team chat &mdash; not more wrappers around the same API.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="badge badge-weekly">Last 7 days</span>
+</div>
+
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/ShadowAqueduct/watermark-remover" target="_blank" rel="noopener">ShadowAqueduct/watermark-remover</a></div>
+      <div class="repo-desc">Strips multi-vendor AI watermarks from text and media: Unicode cleaning, statistical rewriting, C2PA and metadata removal across PNG, JPEG, SVG, PDF, DOCX, HTML, and Markdown. Controversial by design.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 827</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        <span class="forks">78 forks</span>
+        <span class="tag">watermark</span>
+        <span class="tag">privacy</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/amosblomqvist/learn" target="_blank" rel="noopener">amosblomqvist/learn</a></div>
+      <div class="repo-desc">Personal AI learning system in TypeScript. Adaptive study paths that reshape based on demonstrated knowledge gaps. 70 forks in five days suggests the community is already extending it.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 659</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">70 forks</span>
+        <span class="tag">education</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></div>
+      <div class="repo-desc">De-AI writing skill for Claude Code, Codex, Grok Build, and Antigravity. Applies narrative-architecture repair for fiction and venue-matched rules for professional prose. Based on StoryScope (arXiv:2604.03136).</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 443</span>
+        <span class="lang"><span class="lang-dot" style="background:#89e051"></span> Shell</span>
+        <span class="forks">23 forks</span>
+        <span class="tag">ai-writing</span>
+        <span class="tag">agent-skill</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/gtlhuyidan-sketch/life-ipo" target="_blank" rel="noopener">gtlhuyidan-sketch/life-ipo</a></div>
+      <div class="repo-desc">Personal data operating system unifying finance, health, knowledge, network, and AI-driven decision-making with team execution. Ambitious scope, active issue tracker.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 438</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">14 forks</span>
+        <span class="tag">ai-planning</span>
+        <span class="tag">personal-os</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/rome-os/rome" target="_blank" rel="noopener">rome-os/rome</a></div>
+      <div class="repo-desc">The agentic OS &mdash; an operating system layer for AI agents, supporting Claude Code, Codex, and other harnesses. TypeScript core, 22 forks, 13 open issues.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 383</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">22 forks</span>
+        <span class="tag">agent-os</span>
+        <span class="tag">infrastructure</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">6</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/leopard627/fire-your-seo-agency" target="_blank" rel="noopener">leopard627/fire-your-seo-agency</a></div>
+      <div class="repo-desc">Claude Code skill automating SEO, AEO, GEO, LLMO, and Naver search optimization audits. Claims to replace agency-level work. 87 forks indicate real adoption interest.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 334</span>
+        <span class="forks">87 forks</span>
+        <span class="tag">seo</span>
+        <span class="tag">agent-skill</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">7</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/alchaincyf/huashu-excel" target="_blank" rel="noopener">alchaincyf/huashu-excel</a></div>
+      <div class="repo-desc">Full-pipeline data analysis and Excel skill for AI agents. Ingests dirty spreadsheets, cleans, aligns, analyzes, reconciles, and delivers. Cross-agent compatible, sole dependency is openpyxl.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 334</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        <span class="forks">54 forks</span>
+        <span class="tag">data-analysis</span>
+        <span class="tag">agent-skill</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">8</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/OnlyTerp/opengrok" target="_blank" rel="noopener">OnlyTerp/opengrok</a></div>
+      <div class="repo-desc">Routes any model through Grok Bot with one-command setup, a model picker UI, and a self-healing diagnostic tool. Supports OpenAI-compatible providers.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 278</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        <span class="forks">29 forks</span>
+        <span class="tag">model-router</span>
+        <span class="tag">llm</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">9</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/truespar/sentio" target="_blank" rel="noopener">truespar/sentio</a></div>
+      <div class="repo-desc">Email inbox API for AI agents, written in Rust. Each agent gets a real email address with DKIM, SPF, DMARC, ARC, MTA-STS, and DANE. Inbound arrives as structured webhooks; outbound replies stay in-thread.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 225</span>
+        <span class="lang"><span class="lang-dot" style="background:#dea584"></span> Rust</span>
+        <span class="forks">16 forks</span>
+        <span class="tag">email</span>
+        <span class="tag">agent-infra</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">10</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/S1N6H/pentest-harness" target="_blank" rel="noopener">S1N6H/pentest-harness</a></div>
+      <div class="repo-desc">Self-hosted AI agent harness for authorized penetration testing, bug bounty, security labs, and CTFs. Bring-your-own model API; sessions stay local. TypeScript, 37 forks.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 222</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">37 forks</span>
+        <span class="tag">security</span>
+        <span class="tag">pentesting</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="badge badge-monthly">Last 30 days</span>
+</div>
+
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">guillaumemeyer/watermarks-remover</a></div>
+      <div class="repo-desc">Privacy-first app that strips AI watermarks from content you own. Handles C2PA, SynthID, and vendor-specific watermark formats across text and media. The month's runaway hit by a wide margin.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 19,089</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        <span class="forks">2,219 forks</span>
+        <span class="tag">watermark</span>
+        <span class="tag">privacy</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></div>
+      <div class="repo-desc">Open-source CRM built agent-first rather than bolting AI onto legacy patterns. The first CRM to treat agents as primary users, not human assistants. TypeScript, 1,119 forks.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 9,068</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">1,119 forks</span>
+        <span class="tag">crm</span>
+        <span class="tag">agent-first</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/genspark-ai/genoffice" target="_blank" rel="noopener">genspark-ai/genoffice</a></div>
+      <div class="repo-desc">Free, open-source AI office suite for macOS, Windows, and Linux. Edits .docx, .xlsx, .pptx, PDF, and Markdown with built-in AI agents. Electron-based, 632 forks.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 3,885</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">632 forks</span>
+        <span class="tag">office-suite</span>
+        <span class="tag">productivity</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noopener">CopilotKit/OpenBot</a></div>
+      <div class="repo-desc">Open-source AI coworkers that each get their own sandboxed computer &mdash; browser, files, and tools &mdash; with every action logged and decided before execution. Built on the AG-UI protocol.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 3,319</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">402 forks</span>
+        <span class="tag">ai-coworker</span>
+        <span class="tag">ag-ui</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-body">
+      <div class="repo-name"><a href="https://github.com/yetone/cumora" target="_blank" rel="noopener">yetone/cumora</a></div>
+      <div class="repo-desc">Cross-platform team chat where AI agents are first-class teammates. Supports cloud-hosted or bring-your-own agent backends including Claude Code and Codex. 392 forks.</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 3,225</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+        <span class="forks">392 forks</span>
+        <span class="tag">team-chat</span>
+        <span class="tag">agent-native</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &mdash; 2026-08-29 UTC
+</footer>
+
+</body>
+</html>
