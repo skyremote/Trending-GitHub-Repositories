@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-08-30</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: rgba(88,166,255,0.12);
+    --star: #e3b341;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+    --editor-bg: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(188,140,255,0.08));
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  header .date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .editor-take::before {
+    content: "Editor's Take";
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .editor-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title .badge {
+    font-size: 0.7rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s ease;
+    position: relative;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+
+  .repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .repo-rank {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-radius: 6px;
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .repo-name {
+    flex: 1;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--star);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .repo-stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--star);
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-left: 40px;
+  }
+
+  .repo-lang {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    margin-left: 40px;
+    margin-top: 0.5rem;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem 3rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-desc { margin-left: 0; margin-top: 0.5rem; }
+    .repo-lang { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">August 30, 2026 &middot; UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <p>The coding-agent ecosystem has entered its middleware era. Six of the top ten weekly repos are not agents themselves but tools that sit between agents and the work &mdash; context relays, recovery controllers, Datalog memory layers, cross-harness bridges. The raw &ldquo;build another agent&rdquo; wave has crested; now the market is figuring out how to make existing agents reliable. Monthly, the standout is <code>kimi-k3-in-c</code> at nearly 7,000 stars &mdash; running a 2.78-trillion-parameter model on a single CPU in 8&nbsp;GB of RAM using pure C99 is the kind of systems work that redraws the inference cost curve for everyone. Meanwhile, the anti-laziness and anti-scope-creep skills (<code>unlazy</code>, <code>sepia</code>, <code>simplify-codebase</code>) signal that practitioners are done tolerating sloppy agent output and are building guardrails into the loop itself.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 <span class="badge">Last 7 days</span></h2>
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/XiaoDuoYa/codex-with-chatgpt" target="_blank" rel="noopener">XiaoDuoYa/codex-with-chatgpt</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 984</span>
+      </div>
+      <p class="repo-desc">Bridges ChatGPT as a planning brain to the Codex execution harness. Lets you keep the reasoning model you prefer while delegating tool use to the harness runtime; solves the common complaint that Codex's built-in planner under-thinks multi-step tasks.</p>
+      <span class="repo-lang">TypeScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 687</span>
+      </div>
+      <p class="repo-desc">De-AI writing skill for Claude Code, Codex, and Grok Build. Applies narrative-architecture repair for fiction and venue-matched rules for professional prose, grounded in the StoryScope paper (arXiv:2604.03136). The first serious attempt at making agent-written text not read like agent-written text.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/OnlyTerp/opengrok" target="_blank" rel="noopener">OnlyTerp/opengrok</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 369</span>
+      </div>
+      <p class="repo-desc">Run any model inside Grok Bot with a one-command setup. Ships a model picker UI, provider wire maps, and an update-proof doctor. Useful if you want xAI's agent UX without being locked to their models.</p>
+      <span class="repo-lang">JavaScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/tt-a1i/simplify-codebase" target="_blank" rel="noopener">tt-a1i/simplify-codebase</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 350</span>
+      </div>
+      <p class="repo-desc">Agent skill that proves and removes accidental codebase complexity without breaking behavior. The opposite of the usual agent pattern of adding code &mdash; this one subtracts it, with formal verification that the reduction is safe.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/S1N6H/pentest-harness" target="_blank" rel="noopener">S1N6H/pentest-harness</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 294</span>
+      </div>
+      <p class="repo-desc">Self-hosted AI agent harness purpose-built for authorized penetration testing, bug bounty, and CTFs. Bring your own model API; sessions stay local. Fills a gap left by general-purpose harnesses that don't understand security workflows.</p>
+      <span class="repo-lang">TypeScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <span class="repo-name"><a href="https://github.com/CHENG-LIANG1/real-company-interview-ai-coding-projects" target="_blank" rel="noopener">CHENG-LIANG1/real-company-interview-ai-coding-projects</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 249</span>
+      </div>
+      <p class="repo-desc">Three anonymized real AI-coding interview take-home projects with a general-purpose solving methodology. Practical prep material as AI-coding interviews become the norm at major companies.</p>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <span class="repo-name"><a href="https://github.com/acryldev/acryl" target="_blank" rel="noopener">acryldev/acryl</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 226</span>
+      </div>
+      <p class="repo-desc">ACRYL (Agent Context Relay Yielding Lifecycles): one persistent workspace and canonical context that any coding agent can plug into. Solves the fragmentation problem when teams use multiple agent harnesses.</p>
+      <span class="repo-lang">TypeScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <span class="repo-name"><a href="https://github.com/JordyZomer/lemmalog" target="_blank" rel="noopener">JordyZomer/lemmalog</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 153</span>
+      </div>
+      <p class="repo-desc">Datalog engine for LLM agent memory: stratified rules, provenance-tracked facts, incremental derivation, plus an MCP server. Neurosymbolic reasoning for agents, written in Rust. A more principled alternative to dumping everything into a vector store.</p>
+      <span class="repo-lang">Rust</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <span class="repo-name"><a href="https://github.com/itshen/source-reading-methodology" target="_blank" rel="noopener">itshen/source-reading-methodology</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 127</span>
+      </div>
+      <p class="repo-desc">Four-stage methodology for AI-guided reading of large open-source codebases. Ships reusable templates and a 28-item checklist; the core principle is making every technical claim traceable to a specific source line.</p>
+      <span class="repo-lang">Python</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <span class="repo-name"><a href="https://github.com/usedotai/dot-reflex" target="_blank" rel="noopener">usedotai/dot-reflex</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 97</span>
+      </div>
+      <p class="repo-desc">Open-source execution-recovery controller for coding and tool-using AI agents. When an agent fails mid-task, this catches it and routes to recovery rather than crashing the session. Built on QLoRA fine-tuned Qwen3.</p>
+      <span class="repo-lang">Python</span>
+    </li>
+
+  </ul>
+
+  <h2 class="section-title">Top 5 <span class="badge">Last 30 days</span></h2>
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,728</span>
+      </div>
+      <p class="repo-desc">A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24&nbsp;GB of RAM. Portable C99: no BLAS, no framework, no GPU. The month's most technically ambitious repo &mdash; pure systems engineering that makes frontier-scale inference accessible on commodity hardware.</p>
+      <span class="repo-lang">C</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/fuxicodex/Fuxi" target="_blank" rel="noopener">fuxicodex/Fuxi</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,824</span>
+      </div>
+      <p class="repo-desc">Fast, self-contained AI coding agent that lives in your terminal. Differentiator is cost-aware routing across LLM providers &mdash; it picks the cheapest model that can handle each sub-task rather than sending everything to the most expensive one.</p>
+      <span class="repo-lang">Python</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/Leonxlnx/unlazy" target="_blank" rel="noopener">Leonxlnx/unlazy</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,784</span>
+      </div>
+      <p class="repo-desc">Anti-laziness skill for AI agents using the Depth Tree method: splits tasks N layers deep and gives every leaf the full time budget of the whole task, so effort multiplies with depth. Grounded in 2025&ndash;2026 research on model underthinking and premature completion.</p>
+      <span class="repo-lang">JavaScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">elie222/rakazo</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,521</span>
+      </div>
+      <p class="repo-desc">Open-source Grok Bot alternative. Choose your own model and sandbox; ships as an Electron + Docker desktop app. For teams that want the xAI agent UX without the vendor lock-in.</p>
+      <span class="repo-lang">TypeScript</span>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/SaladDay/pi-from-scratch" target="_blank" rel="noopener">SaladDay/pi-from-scratch</a></span>
+        <span class="repo-stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,144</span>
+      </div>
+      <p class="repo-desc">Build your own pi-agent from scratch in 600 lines of TypeScript. A pedagogical project that makes the agent-loop pattern accessible &mdash; useful for understanding how tool-calling agents work under the hood before adopting a framework.</p>
+      <span class="repo-lang">TypeScript</span>
+    </li>
+
+  </ul>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine &middot; 2026-08-30 UTC</p>
+  </footer>
+</div>
+</body>
+</html>
