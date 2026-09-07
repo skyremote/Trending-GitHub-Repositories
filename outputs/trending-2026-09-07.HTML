@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-07</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e5e7eb;
+    --star: #f59e0b;
+    --tag-bg: #f3f4f6;
+    --editor-bg: #f0f4ff;
+    --editor-border: #bfdbfe;
+    --section-7d: #2563eb;
+    --section-30d: #7c3aed;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --star: #fbbf24;
+      --tag-bg: #334155;
+      --editor-bg: #1e293b;
+      --editor-border: #3b5998;
+      --section-7d: #60a5fa;
+      --section-30d: #a78bfa;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --star: #fbbf24;
+    --tag-bg: #334155;
+    --editor-bg: #1e293b;
+    --editor-border: #3b5998;
+    --section-7d: #60a5fa;
+    --section-30d: #a78bfa;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  header .date {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+  .editor-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editor-take p {
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .editor-take code {
+    background: var(--tag-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .section-badge {
+    display: inline-block;
+    padding: 0.2em 0.7em;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .badge-7d { background: var(--section-7d); }
+  .badge-30d { background: var(--section-30d); }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .repo-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+  .repo-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .repo-rank {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--muted);
+    min-width: 1.5em;
+  }
+  .repo-name a {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-stars {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 0.25rem;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+  }
+  .repo-tag {
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 0.72rem;
+    padding: 0.2em 0.55em;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-top { flex-direction: column; gap: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-09-07 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The agent ecosystem is splitting into two clear layers: infrastructure that makes agents persistent and reliable, and skills that make them domain-specific. Three of this week's top repos are agent skills — for slide decks, image prompts, and de-slopping prose — while the 30-day chart is led by <code>unlazy</code> and <code>sepia</code>, both of which treat agent behaviour as a fixable defect rather than a feature request. Meanwhile, the video pipeline is having a moment: a short-video generator hit nearly 1,000 stars in two days, and a streaming AI classroom went from zero to demo in under a week. The tooling story is memory: <code>okf-agent-memory</code> shipped persistent, git-native recall using Google's OKF spec in pure Go, and <code>VoiceMem</code> partitioned agent memory into cognitive and emotional streams. If you are building agents that forget everything between sessions, you are now two months behind the curve.</p>
+  </div>
+
+  <div class="section-header">
+    <span class="section-badge badge-7d">7 days</span>
+    <h2>Top 10 — This Week</h2>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">1.</span>
+        <span class="repo-name"><a href="https://github.com/pierrenade/short-video-generator-AI" target="_blank" rel="noopener">pierrenade/short-video-generator-AI</a></span>
+        <span class="repo-stars">&#9733; 972</span>
+      </div>
+      <div class="repo-desc">Open-source pipeline that converts YouTube videos into vertical short clips with highlight detection, subtitles, translation, and voiceover. All-in-one, no paid APIs required.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">video-generation</span><span class="repo-tag">short-video</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">2.</span>
+        <span class="repo-name"><a href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">Albert-Weasker/niubigeo</a></span>
+        <span class="repo-stars">&#9733; 614</span>
+      </div>
+      <div class="repo-desc">AI-powered brand visibility and competitor intelligence reports. Self-hosted, open-source alternative to SEO monitoring SaaS.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">SEO</span><span class="repo-tag">brand-monitoring</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">3.</span>
+        <span class="repo-name"><a href="https://github.com/okf-memory/okf-agent-memory" target="_blank" rel="noopener">okf-memory/okf-agent-memory</a></span>
+        <span class="repo-stars">&#9733; 375</span>
+      </div>
+      <div class="repo-desc">Git-native persistent memory for coding agents implementing Google OKF v0.2. Sub-300&micro;s in-memory BM25 search, embedded MCP server, pure Go with zero external dependencies. Claims 80% token reduction.</div>
+      <div class="repo-tags"><span class="repo-tag">Go</span><span class="repo-tag">MCP</span><span class="repo-tag">agent-memory</span><span class="repo-tag">OKF</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">4.</span>
+        <span class="repo-name"><a href="https://github.com/kydlikebtc/awesome-grokbot" target="_blank" rel="noopener">kydlikebtc/awesome-grokbot</a></span>
+        <span class="repo-stars">&#9733; 331</span>
+      </div>
+      <div class="repo-desc">Curated catalog of 598 live Grok Bot shares on x.ai, every link status-checked, bilingual EN/CN with JSON schema and CI validation.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">Grok</span><span class="repo-tag">awesome-list</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">5.</span>
+        <span class="repo-name"><a href="https://github.com/LunarXuan/image-prompt-reverse" target="_blank" rel="noopener">LunarXuan/image-prompt-reverse</a></span>
+        <span class="repo-stars">&#9733; 308</span>
+      </div>
+      <div class="repo-desc">Codex skill that reverse-engineers AI image generation prompts from output images. Useful for reproducing or iterating on visual styles.</div>
+      <div class="repo-tags"><span class="repo-tag">Codex</span><span class="repo-tag">skill</span><span class="repo-tag">image-prompts</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">6.</span>
+        <span class="repo-name"><a href="https://github.com/adtexterry-lgtm/unigit-ecosystem" target="_blank" rel="noopener">adtexterry-lgtm/unigit-ecosystem</a></span>
+        <span class="repo-stars">&#9733; 305</span>
+      </div>
+      <div class="repo-desc">Public hub for the UNIGIT ecosystem — AI workbench tools, MCP integrations, and agentic productivity tooling.</div>
+      <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">MCP</span><span class="repo-tag">agentic-AI</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">7.</span>
+        <span class="repo-name"><a href="https://github.com/gozen3ji/consulting-pptx-skill" target="_blank" rel="noopener">gozen3ji/consulting-pptx-skill</a></span>
+        <span class="repo-stars">&#9733; 249</span>
+      </div>
+      <div class="repo-desc">Claude Code skill that generates consulting-grade PowerPoint decks. Ships a 62-type slide catalog (SlideSpec) with a machine-check pipeline.</div>
+      <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">Claude Code</span><span class="repo-tag">PPTX</span><span class="repo-tag">skill</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">8.</span>
+        <span class="repo-name"><a href="https://github.com/joeseesun/qiaomu-book-reader" target="_blank" rel="noopener">joeseesun/qiaomu-book-reader</a></span>
+        <span class="repo-stars">&#9733; 235</span>
+      </div>
+      <div class="repo-desc">Obsidian plugin for reading EPUB and PDF files alongside AI. Ask questions in context, save notes as Markdown — all local.</div>
+      <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">Obsidian</span><span class="repo-tag">EPUB</span><span class="repo-tag">PDF</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">9.</span>
+        <span class="repo-name"><a href="https://github.com/Agenta-AI/awesome-ai-agent-platforms" target="_blank" rel="noopener">Agenta-AI/awesome-ai-agent-platforms</a></span>
+        <span class="repo-stars">&#9733; 232</span>
+      </div>
+      <div class="repo-desc">Curated directory of open-source AI agent platforms: coworkers, builders, workflow automators, browser agents, and coding agents, with license info.</div>
+      <div class="repo-tags"><span class="repo-tag">Astro</span><span class="repo-tag">awesome-list</span><span class="repo-tag">agent-platforms</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">10.</span>
+        <span class="repo-name"><a href="https://github.com/BoardUI/boardui" target="_blank" rel="noopener">BoardUI/boardui</a></span>
+        <span class="repo-stars">&#9733; 227</span>
+      </div>
+      <div class="repo-desc">React component library designed for agentic chat interfaces. Includes a working AI chat app that runs on your own model key.</div>
+      <div class="repo-tags"><span class="repo-tag">TypeScript</span><span class="repo-tag">React</span><span class="repo-tag">design-system</span><span class="repo-tag">agentic-UI</span></div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <span class="section-badge badge-30d">30 days</span>
+    <h2>Top 5 — This Month</h2>
+  </div>
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">1.</span>
+        <span class="repo-name"><a href="https://github.com/Leonxlnx/unlazy" target="_blank" rel="noopener">Leonxlnx/unlazy</a></span>
+        <span class="repo-stars">&#9733; 3,131</span>
+      </div>
+      <div class="repo-desc">Anti-laziness skill for AI agents. Core idea: the Depth Tree method splits tasks N layers deep and gives each leaf the full time budget, so effort multiplies with depth. Grounded in 2025-2026 research on model laziness and premature completion.</div>
+      <div class="repo-tags"><span class="repo-tag">JavaScript</span><span class="repo-tag">ai-agents</span><span class="repo-tag">prompt-engineering</span><span class="repo-tag">skill</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">2.</span>
+        <span class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></span>
+        <span class="repo-stars">&#9733; 2,349</span>
+      </div>
+      <div class="repo-desc">De-AI writing skill for 77+ compatible agents via the Skills CLI, with native plugins for Claude Code, Codex, Grok Build, and Antigravity. Repairs narrative architecture for fiction and enforces venue-matched rules for professional prose. Based on StoryScope (arXiv:2604.03136).</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">ai-writing</span><span class="repo-tag">humanizer</span><span class="repo-tag">fiction</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">3.</span>
+        <span class="repo-name"><a href="https://github.com/0xsline/awesome-deepseek-harness" target="_blank" rel="noopener">0xsline/awesome-deepseek-harness</a></span>
+        <span class="repo-stars">&#9733; 1,007</span>
+      </div>
+      <div class="repo-desc">Curated ecosystem for DeepSeek Harness (DSH): plugins, tools, and infrastructure aggregated from the public DSH plugin topic.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">DeepSeek</span><span class="repo-tag">awesome-list</span><span class="repo-tag">plugins</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">4.</span>
+        <span class="repo-name"><a href="https://github.com/xzf-thu/VoiceMem" target="_blank" rel="noopener">xzf-thu/VoiceMem</a></span>
+        <span class="repo-stars">&#9733; 840</span>
+      </div>
+      <div class="repo-desc">Memory infrastructure for voice agents. Splits storage into a "left brain" (information) and "right brain" (emotion), with a fully streaming architecture to eliminate latency.</div>
+      <div class="repo-tags"><span class="repo-tag">Python</span><span class="repo-tag">voice-agent</span><span class="repo-tag">memory</span><span class="repo-tag">streaming</span></div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">5.</span>
+        <span class="repo-name"><a href="https://github.com/calmrocks/ai-engineer-notebooks" target="_blank" rel="noopener">calmrocks/ai-engineer-notebooks</a></span>
+        <span class="repo-stars">&#9733; 611</span>
+      </div>
+      <div class="repo-desc">Framework-free Colab notebooks covering the full AI engineer skill set: model APIs, structured output, tool calling, RAG, evals, agents, fine-tuning, prompt injection, and LLMOps. Runs on the free Groq API. MIT licensed.</div>
+      <div class="repo-tags"><span class="repo-tag">Jupyter Notebook</span><span class="repo-tag">ai-engineering</span><span class="repo-tag">RAG</span><span class="repo-tag">evals</span></div>
+    </li>
+  </ol>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-09-07 UTC
+  </footer>
+</div>
+</body>
+</html>
