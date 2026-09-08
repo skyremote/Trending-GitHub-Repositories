@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-08</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-dim: #1f3a5f;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --star: #e3b341;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header .date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+  }
+
+  header .subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .editors-take {
+    background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(188, 140, 255, 0.1) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: "EDITOR'S TAKE";
+    position: absolute;
+    top: -0.65rem;
+    left: 1.25rem;
+    background: var(--bg);
+    padding: 0 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-header .badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .badge-7d {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+    border: 1px solid rgba(63, 185, 80, 0.3);
+  }
+
+  .badge-30d {
+    background: rgba(188, 140, 255, 0.15);
+    color: var(--purple);
+    border: 1px solid rgba(188, 140, 255, 0.3);
+  }
+
+  .badge-hm {
+    background: rgba(210, 153, 34, 0.15);
+    color: var(--orange);
+    border: 1px solid rgba(210, 153, 34, 0.3);
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .repo-card:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .repo-rank {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    opacity: 0.4;
+    min-width: 2rem;
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+
+  .repo-info {
+    flex: 1;
+  }
+
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    word-break: break-word;
+  }
+
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .repo-tag {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-go { background: #00ADD8; }
+  .lang-rust { background: #dea584; }
+  .lang-astro { background: #ff5a03; }
+  .lang-zig { background: #ec915c; }
+  .lang-html { background: #e34c26; }
+  .lang-jupyter { background: #DA5B0B; }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .nav-tab {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+  }
+
+  .nav-tab:hover {
+    color: var(--text);
+  }
+
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    header h1 { font-size: 1.5rem; }
+    .repo-card { padding: 1rem; }
+    .repo-rank { font-size: 1.2rem; min-width: 1.5rem; }
+    .nav-tab { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="date">September 8, 2026</div>
+    <h1>Trending AI Repositories</h1>
+    <div class="subtitle">Weekly intelligence from GitHub's open-source AI frontier</div>
+  </header>
+
+  <div class="editors-take">
+    <p>DeepSeek Harness is the gravitational center of this cycle. With 215k stars in under a month, it has triggered an ecosystem&mdash;routing suites, IM connectors, handbooks, curated awesome-lists&mdash;that now outnumbers the original project's own docs. The secondary theme is agent discipline: <strong>reverify</strong> (deterministic fact-checking), <strong>unlazy</strong> (depth-tree task splitting), and <strong>stop-that-shit</strong> (scope-creep guards) all tackle the same problem from different angles&mdash;agents do too much, too loosely. Meanwhile, the education layer is maturing fast: two full curricula appeared in a single month with production-grade notebooks, not slide decks. The market has moved past "can my agent do X" to "can I prove my agent did X correctly."</p>
+  </div>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('7d')">Last 7 Days</button>
+    <button class="nav-tab" onclick="switchTab('30d')">Last 30 Days</button>
+    <button class="nav-tab" onclick="switchTab('hm')">Honorable Mentions</button>
+  </nav>
+
+  <div id="tab-7d" class="tab-content active">
+    <div class="section-header">
+      <h2>Top 10</h2>
+      <div class="line"></div>
+      <span class="badge badge-7d">7 DAYS</span>
+    </div>
+    <div class="repo-list">
+
+      <a class="repo-card" href="https://github.com/pierrenade/short-video-generator-AI" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">1</span>
+          <div class="repo-info">
+            <div class="repo-name">pierrenade/short-video-generator-AI</div>
+            <div class="repo-desc">Turns YouTube videos into viral shorts with highlight detection, subtitles, and transitions. Fully open-source Python pipeline. The creator-economy AI toolchain keeps consolidating.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">161 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 1,184</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">2</span>
+          <div class="repo-info">
+            <div class="repo-name">Albert-Weasker/niubigeo</div>
+            <div class="repo-desc">Open-source AI brand visibility and competitor intelligence reports. Useful for anyone tired of paying for SEO dashboards that an LLM can approximate.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+              <span class="repo-tag">52 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 679</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/okf-memory/okf-agent-memory" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">3</span>
+          <div class="repo-info">
+            <div class="repo-name">okf-memory/okf-agent-memory</div>
+            <div class="repo-desc">Git-native persistent memory for AI coding agents implementing Google OKF v0.2. Sub-300&micro;s BM25 search. The memory-layer wars continue, now with a spec to rally around.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-go"></span> Go</span>
+              <span class="repo-tag">24 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 468</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/adtexterry-lgtm/unigit-ecosystem" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">4</span>
+          <div class="repo-info">
+            <div class="repo-name">adtexterry-lgtm/unigit-ecosystem</div>
+            <div class="repo-desc">UNIGIT ecosystem hub for democratizing AI agent access. More manifesto than framework at this stage, but the community engagement is real.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+              <span class="repo-tag">11 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 413</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/carnot-tech/consulting-pptx-skill" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">5</span>
+          <div class="repo-info">
+            <div class="repo-name">carnot-tech/consulting-pptx-skill</div>
+            <div class="repo-desc">Claude Code skill for generating consulting-grade PPTX decks with 62 slide templates and automated quality checks. Niche but commercially sharp.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+              <span class="repo-tag">23 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 279</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Agenta-AI/awesome-ai-agent-platforms" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">6</span>
+          <div class="repo-info">
+            <div class="repo-name">Agenta-AI/awesome-ai-agent-platforms</div>
+            <div class="repo-desc">Curated list of open-source AI agent platforms: coworkers, builders, browser agents, coding agents. The "awesome" list the agent space was missing.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-astro"></span> Astro</span>
+              <span class="repo-tag">6 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 265</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Yean-Sec/StrikeAgent_AtkBrain-Flash" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">7</span>
+          <div class="repo-info">
+            <div class="repo-name">Yean-Sec/StrikeAgent_AtkBrain-Flash</div>
+            <div class="repo-desc">AI-powered penetration testing platform covering red team, SRC, and CTF. Security tooling is one of the few domains where agent autonomy is a feature, not a liability.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">50 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 201</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/i-am-manware/Manware-s-AI-Learning-Toolkit" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">8</span>
+          <div class="repo-info">
+            <div class="repo-name">i-am-manware/Manware-s-AI-Learning-Toolkit</div>
+            <div class="repo-desc">Turns AI agents into teachers instead of code generators. Pedagogical agents are a small but growing niche.</div>
+            <div class="repo-meta">
+              <span class="repo-tag">Docs / Config</span>
+              <span class="repo-tag">21 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 165</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/blendi-remade/unreel" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">9</span>
+          <div class="repo-info">
+            <div class="repo-name">blendi-remade/unreel</div>
+            <div class="repo-desc">Personal AI video streaming service. The ambition is high; the star trajectory will tell whether it sticks.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+              <span class="repo-tag">28 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 138</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/dreamers-laboratory/ai-evaluation-framework" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">10</span>
+          <div class="repo-info">
+            <div class="repo-name">dreamers-laboratory/ai-evaluation-framework</div>
+            <div class="repo-desc">Accuracy, latency p95, and cost benchmarking for model-based solutions with per-field ground-truth scoring. Eval tooling keeps appearing because nobody's solved it yet.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+              <span class="repo-tag">45 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 129</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div id="tab-30d" class="tab-content">
+    <div class="section-header">
+      <h2>Top 5</h2>
+      <div class="line"></div>
+      <span class="badge badge-30d">30 DAYS</span>
+    </div>
+    <div class="repo-list">
+
+      <a class="repo-card" href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">1</span>
+          <div class="repo-info">
+            <div class="repo-name">deepseek-ai/deepseek-harness</div>
+            <div class="repo-desc">"Everything is a Plugin." DeepSeek's agent harness hit escape velocity within days. The plugin model, TypeScript-first architecture, and 25k forks make this the most consequential open-source AI release since the original DeepSeek models.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+              <span class="repo-tag">25,400 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 215,344</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/yjh051108/dsh-routing-suite" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">2</span>
+          <div class="repo-info">
+            <div class="repo-name">yjh051108/dsh-routing-suite</div>
+            <div class="repo-desc">Injector and router-standard kit for DeepSeek Harness. The ecosystem's plumbing layer&mdash;install the runtime injector, then the task router. Already a dependency for dozens of DSH plugins.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+              <span class="repo-tag">153 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 7,126</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">3</span>
+          <div class="repo-info">
+            <div class="repo-name">CopilotKit/OpenBot</div>
+            <div class="repo-desc">Open-source AI coworkers that each get their own computer: browser, files, and tools, with full observability. CopilotKit's bet that agents need isolation, not just orchestration.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+              <span class="repo-tag">548 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 4,437</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/wang2122/sprix-sage-router" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">4</span>
+          <div class="repo-info">
+            <div class="repo-name">wang2122/sprix-sage-router</div>
+            <div class="repo-desc">State-aware SELF/COLLABORATE/HANDOFF routing for A2A agent networks. Multi-agent coordination is graduating from demos to infrastructure.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">438 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 3,911</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Leonxlnx/unlazy" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">5</span>
+          <div class="repo-info">
+            <div class="repo-name">Leonxlnx/unlazy</div>
+            <div class="repo-desc">Anti-laziness skill for AI agents using the Depth Tree method to split tasks N layers deep. Solves a real problem&mdash;agents skipping steps&mdash;with a mechanically simple approach.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+              <span class="repo-tag">210 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 3,159</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div id="tab-hm" class="tab-content">
+    <div class="section-header">
+      <h2>Honorable Mentions</h2>
+      <div class="line"></div>
+      <span class="badge badge-hm">NOTABLE</span>
+    </div>
+    <div class="repo-list">
+
+      <a class="repo-card" href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">&bull;</span>
+          <div class="repo-info">
+            <div class="repo-name">Nanako0129/sepia</div>
+            <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI. The "make it sound human" market is large and underserved.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">148 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 2,417</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/2akouwu/reverify" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">&bull;</span>
+          <div class="repo-info">
+            <div class="repo-name">2akouwu/reverify</div>
+            <div class="repo-desc">Deterministic verification layer for AI claims. Every assertion checked against tools, not vibes.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">214 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 1,021</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/hku-sail/StreamPI" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">&bull;</span>
+          <div class="repo-info">
+            <div class="repo-name">hku-sail/StreamPI</div>
+            <div class="repo-desc">Streaming multimodal temporal modeling for Vision-Language-Action models from HKU. Academic but immediately practical for robotics teams.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-python"></span> Python</span>
+              <span class="repo-tag">6 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 234</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/context-labs/whip" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">&bull;</span>
+          <div class="repo-info">
+            <div class="repo-name">context-labs/whip</div>
+            <div class="repo-desc">Fast coding-agent harness in Go with MCP support and background subagents. One binary, no runtime. The Go alternative to Node-heavy harnesses.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-go"></span> Go</span>
+              <span class="repo-tag">24 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 218</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/zorost/AI-Engineering-Lab" target="_blank" rel="noopener">
+        <div class="repo-top">
+          <span class="repo-rank">&bull;</span>
+          <div class="repo-info">
+            <div class="repo-name">zorost/AI-Engineering-Lab</div>
+            <div class="repo-desc">Free 24-week AI engineering course: 43 runnable notebooks covering Python through agents and MCP. MIT licensed, no signup. Serious curriculum.</div>
+            <div class="repo-meta">
+              <span class="repo-tag"><span class="lang-dot lang-jupyter"></span> Jupyter Notebook</span>
+              <span class="repo-tag">259 forks</span>
+            </div>
+          </div>
+          <span class="repo-stars">&#9733; 309</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &middot; 2026-09-08 (UTC)
+  </footer>
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
