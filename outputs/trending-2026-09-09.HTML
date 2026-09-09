@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-09</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f3a5f;
+    --gold: #f0c040;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --red: #f85149;
+    --tag-bg: #1c2129;
+    --tag-border: #30363d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header .date-badge {
+    display: inline-block;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  .editors-take {
+    background: linear-gradient(135deg, #1a1f2e 0%, #161b22 100%);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #c9d1d9;
+  }
+
+  .editors-take strong {
+    color: var(--accent);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .section-header .badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .badge-hot {
+    background: rgba(248, 81, 73, 0.15);
+    color: var(--red);
+    border: 1px solid rgba(248, 81, 73, 0.3);
+  }
+
+  .badge-monthly {
+    background: rgba(188, 140, 255, 0.12);
+    color: var(--purple);
+    border: 1px solid rgba(188, 140, 255, 0.25);
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 44px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    transition: border-color 0.15s, background 0.15s;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .rank {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: #c0c0c0; }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+
+  .repo-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .repo-info h3 .owner {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .repo-info h3 .name {
+    color: var(--accent);
+  }
+
+  .repo-desc {
+    color: #9ca6b1;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-ts { background: #3178c6; }
+  .lang-go { background: #00ADD8; }
+  .lang-py { background: #3572A5; }
+  .lang-js { background: #f1e05a; }
+  .lang-rs { background: #dea584; }
+  .lang-php { background: #4F5D95; }
+  .lang-html { background: #e34c26; }
+  .lang-md { background: #083fa1; }
+  .lang-jn { background: #DA5B0B; }
+  .lang-na { background: var(--text-muted); }
+
+  .stars-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+    min-width: 90px;
+    justify-content: center;
+  }
+
+  .stars-badge svg {
+    flex-shrink: 0;
+  }
+
+  .honorable {
+    margin-bottom: 44px;
+  }
+
+  .hon-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hon-card:last-child {
+    border-bottom: none;
+  }
+
+  .hon-card a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .hon-card a:hover { text-decoration: underline; }
+
+  .hon-stars {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .hon-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    flex: 1;
+  }
+
+  .hon-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .nav-tab {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+  }
+
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  @media (max-width: 640px) {
+    .repo-card {
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+    }
+    .stars-badge {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: -4px;
+    }
+    .hon-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="date-badge">2026-09-09 UTC</div>
+    <h1>Trending AI Repositories</h1>
+    <p>Daily brief — GitHub's fastest-rising AI projects</p>
+  </header>
+
+  <div class="editors-take">
+    <strong>Editor's Take</strong>
+    The AI ecosystem this week is less about model improvements and more about the infrastructure settling around agents. Memory — how agents persist knowledge across sessions — is the clear obsession, with multiple projects (OKF Agent Memory, VoiceMem, agent-memory, EverRoom) all racing to solve the same problem from different angles. Meanwhile, watermarks-remover quietly became the month's breakout at 21k+ stars, exposing a growing tension between AI provenance standards and user ownership. The other major thread: developers are building real, playful things with AI — modding SNES games live, generating Pokemon battle cinematics, standing up personal video streaming. The tools are maturing past productivity wrappers into creative territory. Worth watching: the OKF (Open Knowledge Format) standard picking up steam for agent-native knowledge, and Vercel's eve template signaling that software factories are about to get commoditized.
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('weekly')">This Week</button>
+    <button class="nav-tab" onclick="switchTab('monthly')">This Month</button>
+    <button class="nav-tab" onclick="switchTab('honorable')">Honorable Mentions</button>
+  </div>
+
+  <!-- WEEKLY TAB -->
+  <div id="tab-weekly" class="tab-panel active">
+    <div class="section-header">
+      <h2>Top 10 — Last 7 Days</h2>
+      <span class="badge badge-hot">HOT</span>
+    </div>
+    <p class="section-sub">Repos created after 2026-09-02, ranked by stars</p>
+
+    <div class="repo-list">
+      <!-- 1 -->
+      <a class="repo-card" href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <h3><span class="owner">Albert-Weasker / </span><span class="name">niubigeo</span></h3>
+          <p class="repo-desc">Open-source AI brand visibility and competitor intelligence reports</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Sep 3</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,174
+        </div>
+      </a>
+      <!-- 2 -->
+      <a class="repo-card" href="https://github.com/okf-memory/okf-agent-memory" target="_blank" rel="noopener">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <h3><span class="owner">okf-memory / </span><span class="name">okf-agent-memory</span></h3>
+          <p class="repo-desc">Git-native persistent memory for coding agents. OKF v0.2 with sub-300µs BM25 search, embedded MCP server, and progressive disclosure. Pure Go, zero dependencies.</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-go"></span> Go</span>
+            <span class="meta-item">Created Sep 5</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          497
+        </div>
+      </a>
+      <!-- 3 -->
+      <a class="repo-card" href="https://github.com/lfzk550/fanzha-ai-proxy" target="_blank" rel="noopener">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <h3><span class="owner">lfzk550 / </span><span class="name">fanzha-ai-proxy</span></h3>
+          <p class="repo-desc">Reverse proxy converting a national anti-fraud AI API to OpenAI-compatible format. Educational use only.</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-na"></span> —</span>
+            <span class="meta-item">Created Sep 7</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          311
+        </div>
+      </a>
+      <!-- 4 -->
+      <a class="repo-card" href="https://github.com/i-am-manware/Manware-s-AI-Learning-Toolkit" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <h3><span class="owner">i-am-manware / </span><span class="name">Manware-s-AI-Learning-Toolkit</span></h3>
+          <p class="repo-desc">AI toolkit that turns agents into structured teachers rather than raw code generators</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-na"></span> —</span>
+            <span class="meta-item">Created Sep 5</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          251
+        </div>
+      </a>
+      <!-- 5 -->
+      <a class="repo-card" href="https://github.com/ScottStevenson/SuperAstra" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <h3><span class="owner">ScottStevenson / </span><span class="name">SuperAstra</span></h3>
+          <p class="repo-desc">Modify SNES games with AI in real time while you play them</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
+            <span class="meta-item">Created Sep 6</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          221
+        </div>
+      </a>
+      <!-- 6 -->
+      <a class="repo-card" href="https://github.com/noskillish/bankmcp" target="_blank" rel="noopener">
+        <div class="rank">6</div>
+        <div class="repo-info">
+          <h3><span class="owner">noskillish / </span><span class="name">bankmcp</span></h3>
+          <p class="repo-desc">Self-hosted read-only MCP server for your own bank accounts via open banking (PSD2). Tested with Claude and Ollama.</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Sep 7</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          164
+        </div>
+      </a>
+      <!-- 7 -->
+      <a class="repo-card" href="https://github.com/int64ago/vistep" target="_blank" rel="noopener">
+        <div class="rank">7</div>
+        <div class="repo-info">
+          <h3><span class="owner">int64ago / </span><span class="name">vistep</span></h3>
+          <p class="repo-desc">Bilingual visual step-by-step explanations with interactive 3D models and synchronized narration</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Sep 5</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          146
+        </div>
+      </a>
+      <!-- 8 -->
+      <a class="repo-card" href="https://github.com/blendi-remade/unreel" target="_blank" rel="noopener">
+        <div class="rank">8</div>
+        <div class="repo-info">
+          <h3><span class="owner">blendi-remade / </span><span class="name">unreel</span></h3>
+          <p class="repo-desc">Personal AI video streaming service — generates and serves video on demand</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Sep 3</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          140
+        </div>
+      </a>
+      <!-- 9 -->
+      <a class="repo-card" href="https://github.com/xflare-bot/pokemonlive" target="_blank" rel="noopener">
+        <div class="rank">9</div>
+        <div class="repo-info">
+          <h3><span class="owner">xflare-bot / </span><span class="name">pokemonlive</span></h3>
+          <p class="repo-desc">Local Pokemon battle prototype with AI-generated cinematics</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-js"></span> JavaScript</span>
+            <span class="meta-item">Created Sep 6</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          128
+        </div>
+      </a>
+      <!-- 10 -->
+      <a class="repo-card" href="https://github.com/chigwell/Penelopa.ai" target="_blank" rel="noopener">
+        <div class="rank">10</div>
+        <div class="repo-info">
+          <h3><span class="owner">chigwell / </span><span class="name">Penelopa.ai</span></h3>
+          <p class="repo-desc">Analyzes real Codex and Claude Code sessions, extracts workflow patterns, and converts them into reusable skills and prompts</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-js"></span> JavaScript</span>
+            <span class="meta-item">Created Sep 3</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          106
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MONTHLY TAB -->
+  <div id="tab-monthly" class="tab-panel">
+    <div class="section-header">
+      <h2>Top 5 — Last 30 Days</h2>
+      <span class="badge badge-monthly">MONTHLY</span>
+    </div>
+    <p class="section-sub">Repos created after 2026-08-10, excluding 7-day entries, ranked by stars</p>
+
+    <div class="repo-list">
+      <!-- 1 -->
+      <a class="repo-card" href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <h3><span class="owner">guillaumemeyer / </span><span class="name">watermarks-remover</span></h3>
+          <p class="repo-desc">Privacy-first app that strips AI watermarks (C2PA, SynthID) from content you own</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
+            <span class="meta-item">Created Aug 11</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          21,423
+        </div>
+      </a>
+      <!-- 2 -->
+      <a class="repo-card" href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <h3><span class="owner">Nanako0129 / </span><span class="name">sepia</span></h3>
+          <p class="repo-desc">De-AI writing skill compatible with 77+ agents. Narrative-architecture repair for fiction, venue-matched rules for professional prose. Based on StoryScope (arXiv:2604.03136).</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-py"></span> Python</span>
+            <span class="meta-item">Created Aug 28</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,462
+        </div>
+      </a>
+      <!-- 3 -->
+      <a class="repo-card" href="https://github.com/elie222/rakazo" target="_blank" rel="noopener">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <h3><span class="owner">elie222 / </span><span class="name">rakazo</span></h3>
+          <p class="repo-desc">Open-source Grok Bot alternative — bring your own model, bring your own sandbox</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Aug 13</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,150
+        </div>
+      </a>
+      <!-- 4 -->
+      <a class="repo-card" href="https://github.com/Player-YN/PawWork_ZhuaZhua" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <h3><span class="owner">Player-YN / </span><span class="name">PawWork_ZhuaZhua</span></h3>
+          <p class="repo-desc">Selection-first Chrome web agent: select elements on a live page, describe the outcome, export as editable Office files. BYOK, sandboxed, no server.</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-js"></span> JavaScript</span>
+            <span class="meta-item">Created Aug 28</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          1,925
+        </div>
+      </a>
+      <!-- 5 -->
+      <a class="repo-card" href="https://github.com/vercel-labs/eve-software-factory-template" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <h3><span class="owner">vercel-labs / </span><span class="name">eve-software-factory-template</span></h3>
+          <p class="repo-desc">Vercel's eve Software Factory template — a starter kit for AI-driven code generation pipelines</p>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="lang-dot lang-ts"></span> TypeScript</span>
+            <span class="meta-item">Created Aug 12</span>
+          </div>
+        </div>
+        <div class="stars-badge">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          1,111
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- HONORABLE MENTIONS TAB -->
+  <div id="tab-honorable" class="tab-panel">
+    <div class="section-header">
+      <h2>Honorable Mentions</h2>
+    </div>
+    <p class="section-sub">Strong contenders from the 30-day window worth keeping an eye on</p>
+
+    <div class="hon-wrap">
+      <div class="hon-card">
+        <a href="https://github.com/2akouwu/reverify" target="_blank" rel="noopener">2akouwu/reverify</a>
+        <span class="hon-stars">&#9733; 1,042</span>
+        <span class="hon-desc">Anti-hallucination MCP server: deterministic tools verify every AI claim against ground truth</span>
+      </div>
+      <div class="hon-card">
+        <a href="https://github.com/xzf-thu/VoiceMem" target="_blank" rel="noopener">xzf-thu/VoiceMem</a>
+        <span class="hon-stars">&#9733; 1,034</span>
+        <span class="hon-desc">Left-brain/right-brain memory architecture for voice agents with fully streaming design</span>
+      </div>
+      <div class="hon-card">
+        <a href="https://github.com/pgrundev/pgbot" target="_blank" rel="noopener">pgrundev/pgbot</a>
+        <span class="hon-stars">&#9733; 1,027</span>
+        <span class="hon-desc">Postgres intelligence layer for AI agents and apps</span>
+      </div>
+      <div class="hon-card">
+        <a href="https://github.com/NxcoreAI/EverRoom" target="_blank" rel="noopener">NxcoreAI/EverRoom</a>
+        <span class="hon-stars">&#9733; 975</span>
+        <span class="hon-desc">Workspace that retains project context, decisions, and sources across sessions</span>
+      </div>
+      <div class="hon-card">
+        <a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a>
+        <span class="hon-stars">&#9733; 788</span>
+        <span class="hon-desc">Continual learning infrastructure for self-improving agents</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Data sourced from the <a href="https://docs.github.com/en/rest/search">GitHub Search API</a> on 2026-09-09 UTC. Star counts are point-in-time and will shift.</p>
+    <p style="margin-top: 4px;">"Trending" = star velocity on repos created within the stated window.</p>
+  </footer>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector('[onclick="switchTab(\'' + name + '\')"]').classList.add('active');
+}
+</script>
+</body>
+</html>
