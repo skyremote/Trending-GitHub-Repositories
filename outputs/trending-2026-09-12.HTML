@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-12</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --text-secondary: #4a5568;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --star: #d97706;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --editor-bg: #f0fdf4;
+    --editor-border: #86efac;
+    --section-7d: #3b82f6;
+    --section-30d: #8b5cf6;
+    --rank-color: #cbd5e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --star: #fbbf24;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --editor-bg: #0f2918;
+      --editor-border: #22c55e;
+      --section-7d: #60a5fa;
+      --section-30d: #a78bfa;
+      --rank-color: #475569;
+    }
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --star: #fbbf24;
+    --tag-bg: #334155;
+    --tag-text: #94a3b8;
+    --editor-bg: #0f2918;
+    --editor-border: #22c55e;
+    --section-7d: #60a5fa;
+    --section-30d: #a78bfa;
+    --rank-color: #475569;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+  }
+  .date-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .editor-take .label {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--editor-border);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1.25rem;
+  }
+  .section-header .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-header .dot.blue { background: var(--section-7d); }
+  .section-header .dot.purple { background: var(--section-30d); }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0 1rem;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .rank {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--rank-color);
+    grid-row: 1 / 3;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0.1rem;
+  }
+  .repo-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.75rem;
+  }
+  .repo-name a {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .stars {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .repo-desc {
+    grid-column: 2;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    line-height: 1.55;
+  }
+  .tags {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 500px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { grid-template-columns: 1.5rem 1fr; gap: 0 0.65rem; padding: 0.85rem 1rem; }
+    .rank { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <span class="date-badge">12 September 2026 &middot; UTC</span>
+  </header>
+
+  <section class="editor-take">
+    <span class="label">Editor's Take</span>
+    The week's clearest signal: agents are becoming coworkers, not tools. Three of the month's top five repos &mdash; OpenBot, cumora, sprix-sage-router &mdash; treat an AI agent as a team member with its own computer, chat presence, and routing logic. Meanwhile, the 7-day window is dominated by cost control and media generation. TokenTab reflects a market that has moved past "can I use coding agents?" to "how much are they costing me?" And no fewer than three new repos target AI video creation, from YouTube shorts to science comics. The infrastructure layer is quietly filling in around the edges: BankMCP extends MCP into personal finance, Maskit solves the PII-in-prompt problem locally, and Rune bets that the terminal IDE itself should be agent-native from the ground up.
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="dot blue"></span>
+      <h2>Top 10 &mdash; Last 7 Days</h2>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/SpaceDudem/text-humanizer">SpaceDudem/text-humanizer</a></span>
+          <span class="stars">&#9733; 508</span>
+        </div>
+        <p class="repo-desc">Open-source tool to rewrite AI-generated text past detector tools like Turnitin and GPTZero. Ethically fraught, but the star velocity says the demand is real.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ai-humanizer</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/Colafornia/short-video-generator-AI">Colafornia/short-video-generator-AI</a></span>
+          <span class="stars">&#9733; 480</span>
+        </div>
+        <p class="repo-desc">Turns YouTube long-form into viral shorts with highlight detection, subtitles, translation, and voiceover in one pipeline. Content repurposing made turnkey.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">short-video</span><span class="tag">ai-generation</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/crwdla/tokentab">crwdla/tokentab</a></span>
+          <span class="stars">&#9733; 442</span>
+        </div>
+        <p class="repo-desc">CLI that reads Claude Code, Codex, and Gemini CLI session logs and reports cost by model, project, and day. The "where did my credits go" tool the ecosystem was missing.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">token-usage</span><span class="tag">claude-code</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/yudaprasetya007/routeVSCODE">yudaprasetya007/routeVSCODE</a></span>
+          <span class="stars">&#9733; 327</span>
+        </div>
+        <p class="repo-desc">Zero-reload local proxy that hot-swaps AI models behind VSCode Copilot Chat. Useful if you run multiple providers and want to route by task without restarting.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">model-switcher</span><span class="tag">vscode</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/ScottStevenson/SuperAstra">ScottStevenson/SuperAstra</a></span>
+          <span class="stars">&#9733; 252</span>
+        </div>
+        <p class="repo-desc">Uses AI to modify SNES games in real time while you play them. Novelty project, but a genuinely creative application of runtime code generation.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">gaming</span><span class="tag">retro</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">6</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/unstablebuild/rune">unstablebuild/rune</a></span>
+          <span class="stars">&#9733; 231</span>
+        </div>
+        <p class="repo-desc">Go-based terminal IDE built for agent orchestration from day one: workspace management, multiplexing, and coding-agent integration baked into the editor layer.</p>
+        <div class="tags"><span class="tag">Go</span><span class="tag">terminal</span><span class="tag">agent-orchestration</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">7</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/yi1108/printfilm">yi1108/printfilm</a></span>
+          <span class="stars">&#9733; 222</span>
+        </div>
+        <p class="repo-desc">AI platform for creating science explainer videos and comic-style shorts. Part of a wider wave of AI-powered educational media tools.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ai-video</span><span class="tag">education</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">8</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/eternityspring/reelbench-skills">eternityspring/reelbench-skills</a></span>
+          <span class="stars">&#9733; 200</span>
+        </div>
+        <p class="repo-desc">Claude Code skills for AI video analysis: shot detection, ffmpeg workflows, and structured video-to-text pipelines.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">claude-skills</span><span class="tag">video-analysis</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">9</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/noskillish/bankmcp">noskillish/bankmcp</a></span>
+          <span class="stars">&#9733; 189</span>
+        </div>
+        <p class="repo-desc">Self-hosted, read-only MCP server that connects AI agents to your bank accounts via open banking (PSD2). Local-only, no API key. MCP expanding past code into personal finance.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">mcp-server</span><span class="tag">open-banking</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">10</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/xiaYuTian11/maskit">xiaYuTian11/maskit</a></span>
+          <span class="stars">&#9733; 152</span>
+        </div>
+        <p class="repo-desc">Local privacy-masking gateway that sits between your coding agent and the LLM provider. Intercepts requests to redact PII, restores it in responses. Works with Cursor, Claude Code, Codex.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">privacy</span><span class="tag">data-masking</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="dot purple"></span>
+      <h2>Top 5 &mdash; Last 30 Days</h2>
+    </div>
+    <ol class="repo-list">
+      <li class="repo-card">
+        <span class="rank">1</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/CopilotKit/OpenBot">CopilotKit/OpenBot</a></span>
+          <span class="stars">&#9733; 4,741</span>
+        </div>
+        <p class="repo-desc">Open-source AI coworkers that each get their own sandboxed computer: browser, files, and tools. Every action is proposed before execution and recorded after. Built on AG-UI and CopilotKit.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">ai-agents</span><span class="tag">ag-ui</span><span class="tag">mcp</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">2</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/wang2122/sprix-sage-router">wang2122/sprix-sage-router</a></span>
+          <span class="stars">&#9733; 3,685</span>
+        </div>
+        <p class="repo-desc">State-aware SELF/COLLABORATE/HANDOFF routing for A2A (agent-to-agent) networks. The plumbing layer for multi-agent systems that need to decide which agent handles what, dynamically.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">a2a</span><span class="tag">multi-agent</span><span class="tag">agent-routing</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">3</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/EvoMap/AutoResearch">EvoMap/AutoResearch</a></span>
+          <span class="stars">&#9733; 3,589</span>
+        </div>
+        <p class="repo-desc">AI/ML research agents that go from idea to paper-ready evidence. Automates literature search, experiment design, and result synthesis. Ambitious scope, steadily gaining contributors.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">research</span><span class="tag">automation</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">4</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/yetone/cumora">yetone/cumora</a></span>
+          <span class="stars">&#9733; 3,568</span>
+        </div>
+        <p class="repo-desc">Cross-platform team chat where AI agents are first-class members. Supports cloud or bring-your-own backends (Claude Code, Codex). The Slack-for-agents bet.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">team-chat</span><span class="tag">ai-agents</span></div>
+      </li>
+      <li class="repo-card">
+        <span class="rank">5</span>
+        <div class="repo-top">
+          <span class="repo-name"><a href="https://github.com/Nanako0129/sepia">Nanako0129/sepia</a></span>
+          <span class="stars">&#9733; 2,557</span>
+        </div>
+        <p class="repo-desc">Writing skill that strips the "AI voice" from agent-generated prose. Works across 77+ agent platforms via the Skills CLI. Based on a published narrative-architecture paper (arXiv:2604.03136).</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ai-writing</span><span class="tag">agent-skills</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &middot; 2026-09-12 UTC
+  </footer>
+</div>
+</body>
+</html>
