@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-14</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --bg-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --text: #1a1a2e;
+    --text-muted: #555;
+    --text-light: #777;
+    --border: #e2e2e2;
+    --accent: #3a86ff;
+    --accent-hover: #2563eb;
+    --star: #f59e0b;
+    --tag-bg: #f0f4ff;
+    --tag-text: #3a86ff;
+    --badge-7d: #10b981;
+    --badge-30d: #8b5cf6;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 10px 25px rgba(0,0,0,0.08);
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --text: #e6edf3;
+      --text-muted: #9ca3af;
+      --text-light: #6b7280;
+      --border: #30363d;
+      --tag-bg: #1c2333;
+      --tag-text: #58a6ff;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 10px 25px rgba(0,0,0,0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --text: #e6edf3;
+    --text-muted: #9ca3af;
+    --text-light: #6b7280;
+    --border: #30363d;
+    --tag-bg: #1c2333;
+    --tag-text: #58a6ff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .hero {
+    background: var(--bg-hero);
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    font-family: var(--font-mono);
+  }
+
+  .hero .subtitle {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    opacity: 0.85;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .editor-take {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: -1.5rem auto 2rem;
+    position: relative;
+    box-shadow: var(--shadow);
+    max-width: 880px;
+  }
+
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .editor-take p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    color: #fff;
+  }
+
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    font-family: var(--font-mono);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+
+  .repo-info { min-width: 0; }
+
+  .repo-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    word-break: break-all;
+  }
+
+  .repo-name:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+  }
+
+  .star-count {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+    font-family: var(--font-mono);
+  }
+
+  .star-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s;
+  }
+
+  .theme-toggle:hover { background: rgba(255,255,255,0.25); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 2rem; }
+    .editor-take { margin-top: -1rem; padding: 1.25rem; }
+    .repo-card {
+      grid-template-columns: 1.5rem 1fr;
+      gap: 0 0.75rem;
+      padding: 1rem;
+    }
+    .star-count {
+      grid-column: 2;
+      padding-top: 0.25rem;
+      font-size: 0.8rem;
+    }
+    .container { padding: 0 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn">&#9790;</button>
+
+<div class="hero">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-09-14 UTC</div>
+  <div class="subtitle">Daily brief on the most-starred new AI repositories across GitHub</div>
+</div>
+
+<div class="container">
+
+  <div class="editor-take">
+    <h2>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 11.8 3.8 14l.8-4.7L1.2 6l4.7-.7L8 1z" fill="currentColor"/></svg>
+      Editor's Take
+    </h2>
+    <p>Two counter-currents define this week. The first is erasure: the top repo by stars is literally a tool to strip AI fingerprints from text, and the month's breakout hit is a skill that removes translationese from agent output. The market is telling you that raw model output is now a liability, not a feature. The second current is embodied infrastructure &mdash; two of this week's most interesting repos ship teleoperation datasets and robotics benchmarks rather than yet another chat wrapper. Meanwhile, agent memory has quietly consolidated into a category: three independent projects in the 30-day window tackle persistent recall with no shared lineage. If your agent stack still treats every session as stateless, you are building last year's product.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 Days</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/SpaceDudem/text-humanizer" target="_blank" rel="noopener">SpaceDudem/text-humanizer</a>
+        <div class="repo-desc">Open-source text rewriter that converts AI-generated prose into human-passing copy; claims to bypass Turnitin and GPTZero. The demand signal matters more than the tool.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">ai-humanizer</span>
+          <span class="tag">text-humanizer</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        735
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/Colafornia/short-video-generator-AI" target="_blank" rel="noopener">Colafornia/short-video-generator-AI</a>
+        <div class="repo-desc">Turns YouTube long-form into viral shorts with highlight detection, subtitles, translation, and voiceover in one pipeline. Creator-economy tooling, fully open-source.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">ai-generation</span>
+          <span class="tag">short-video</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        722
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/eternityspring/reelbench-skills" target="_blank" rel="noopener">eternityspring/reelbench-skills</a>
+        <div class="repo-desc">Learning notes and agent skills for AI video work: shot analysis, FFmpeg recipes, and Claude Code integration. A structured curriculum disguised as a skill pack.</div>
+        <div class="repo-tags">
+          <span class="tag">html</span>
+          <span class="tag">ai-video</span>
+          <span class="tag">claude-skills</span>
+          <span class="tag">ffmpeg</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        570
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/unstablebuild/rune" target="_blank" rel="noopener">unstablebuild/rune</a>
+        <div class="repo-desc">Go-native development environment combining terminal multiplexer, text editor, and agent orchestration in one binary. Betting that the IDE of the future is a TUI, not an Electron shell.</div>
+        <div class="repo-tags">
+          <span class="tag">go</span>
+          <span class="tag">agent-orchestration</span>
+          <span class="tag">tui</span>
+          <span class="tag">developer-tool</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        473
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/kruzovic7/ai-data-extractor" target="_blank" rel="noopener">kruzovic7/ai-data-extractor</a>
+        <div class="repo-desc">Extracts and normalizes chat histories from Claude Code, Cursor, Windsurf, Aider, and Cline. The first step toward auditing what your agents actually did.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">ai-data-extraction</span>
+          <span class="tag">claude-code</span>
+          <span class="tag">cursor</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        431
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/zjwzcx/Awesome-Astra-Embodied-AI" target="_blank" rel="noopener">zjwzcx/Awesome-Astra-Embodied-AI</a>
+        <div class="repo-desc">Resource collection for GPT-6 Astra applied to embodied AI and robotics. Early signal that foundation-model robotics is pulling in dedicated curators.</div>
+        <div class="repo-tags">
+          <span class="tag">embodied-ai</span>
+          <span class="tag">robotics</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        290
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/Phyzicalorg/Phyzical_org" target="_blank" rel="noopener">Phyzicalorg/Phyzical_org</a>
+        <div class="repo-desc">Browser teleoperation dataset pipeline for embodied AI, with elizaOS-ready episodes and on-chain provenance. Robotics data infra with a web3 audit trail.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">embodied-ai</span>
+          <span class="tag">teleoperation</span>
+          <span class="tag">elizaos</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        278
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/yi1108/printfilm" target="_blank" rel="noopener">yi1108/printfilm</a>
+        <div class="repo-desc">AI-powered science-explainer platform that generates both video and comic-strip formats from research topics. Vertical content creation for the edu niche.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">ai-video</span>
+          <span class="tag">education</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        270
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/yudaprasetya007/routeVSCODE" target="_blank" rel="noopener">yudaprasetya007/routeVSCODE</a>
+        <div class="repo-desc">Zero-reload local proxy that hot-swaps the AI model behind VS Code Copilot Chat. Useful if you want DeepSeek on Monday and Claude on Tuesday without touching settings.</div>
+        <div class="repo-tags">
+          <span class="tag">javascript</span>
+          <span class="tag">vscode</span>
+          <span class="tag">model-switcher</span>
+          <span class="tag">local-proxy</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        238
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/Qiuner/birdview" target="_blank" rel="noopener">Qiuner/birdview</a>
+        <div class="repo-desc">Maps codebase architecture before each AI-assisted change so the agent knows what it is editing. The "measure twice, cut once" pattern applied to coding agents.</div>
+        <div class="repo-tags">
+          <span class="tag">javascript</span>
+          <span class="tag">architecture-as-code</span>
+          <span class="tag">coding-agents</span>
+          <span class="tag">diagram-as-code</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        213
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 Days</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a>
+        <div class="repo-desc">De-AI writing skill compatible with 77+ agent harnesses. Uses narrative-architecture repair for fiction and venue-matched rules for professional prose. Based on a published arXiv method.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">agent-skills</span>
+          <span class="tag">ai-writing</span>
+          <span class="tag">humanizer</span>
+          <span class="tag">prompt-engineering</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        2,589
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/xzf-thu/VoiceMem" target="_blank" rel="noopener">xzf-thu/VoiceMem</a>
+        <div class="repo-desc">Memory infrastructure for voice agents, split into left-brain (information) and right-brain (emotion) stores. Fully streaming architecture eliminates latency at the protocol level.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">voice-agent</span>
+          <span class="tag">long-term-memory</span>
+          <span class="tag">audio-streaming</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        1,557
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/tigerless-labs/agent-memory" target="_blank" rel="noopener">tigerless-labs/agent-memory</a>
+        <div class="repo-desc">Long-term memory runtime using plain Markdown as source of truth with local ranked retrieval and a sleep-time management layer. Claude Code and Codex share one store. No API key required.</div>
+        <div class="repo-tags">
+          <span class="tag">python</span>
+          <span class="tag">agent-memory</span>
+          <span class="tag">markdown</span>
+          <span class="tag">local-first</span>
+          <span class="tag">sqlite</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        1,283
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/only-cli/oc" target="_blank" rel="noopener">only-cli/oc</a>
+        <div class="repo-desc">Converts any website into a compact CLI output that AI agents can consume in hundreds of tokens instead of tens of thousands. Solves the context-window tax on web browsing.</div>
+        <div class="repo-tags">
+          <span class="tag">javascript</span>
+          <span class="tag">ai-agents</span>
+          <span class="tag">cli</span>
+          <span class="tag">web-scraping</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        482
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <a class="repo-name" href="https://github.com/S1N6H/pentest-harness" target="_blank" rel="noopener">S1N6H/pentest-harness</a>
+        <div class="repo-desc">Self-hosted AI agent harness purpose-built for authorized pentests, bug bounty, and CTFs. Bring your own model API; sessions stay local. Security-first agent tooling.</div>
+        <div class="repo-tags">
+          <span class="tag">typescript</span>
+          <span class="tag">pentesting</span>
+          <span class="tag">ai-agent</span>
+          <span class="tag">bug-bounty</span>
+          <span class="tag">security-tools</span>
+        </div>
+      </div>
+      <div class="star-count">
+        <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        365
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Generated by the Trending GitHub Repos routine &mdash; 2026-09-14 UTC
+  </div>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    document.getElementById('themeBtn').textContent = next === 'dark' ? '☀' : '☾';
+    try { localStorage.setItem('theme', next); } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+      document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀' : '☾';
+    }
+  } catch(e) {}
+</script>
+
+</body>
+</html>
