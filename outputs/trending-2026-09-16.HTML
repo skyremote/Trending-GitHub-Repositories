@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-16</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-editor: #f0f4ff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e8eef6;
+    --tag-text: #334155;
+    --section-30d: #fef3c7;
+    --section-30d-border: #f59e0b;
+    --divider: #cbd5e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-editor: #1a2744;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #1e3a5f;
+      --tag-text: #93c5fd;
+      --section-30d: #422006;
+      --section-30d-border: #d97706;
+      --divider: #475569;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 2px solid var(--divider);
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  .editor-box {
+    background: var(--bg-editor);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+  }
+  .editor-box h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .repo-list { list-style: none; }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: box-shadow 0.15s ease;
+  }
+  .repo-card:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    flex: 1;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; color: var(--accent-hover); }
+  .repo-stars {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .repo-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding-left: 40px;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 40px;
+  }
+  .repo-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+  .section-30d .repo-card {
+    border-left: 3px solid var(--section-30d-border);
+  }
+  .section-30d .repo-rank {
+    background: var(--section-30d-border);
+  }
+  footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--divider);
+  }
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-card);
+    color: var(--text);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  @media (max-width: 600px) {
+    .repo-desc, .repo-tags { padding-left: 0; }
+    .repo-header { flex-direction: column; gap: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">September 16, 2026</div>
+</header>
+
+<div class="editor-box">
+  <h2>Editor's Take</h2>
+  <p>The week's clearest signal: AI agent workspaces are graduating from plugins to operating systems. AgentVerse-OS ships a full windowed desktop for humans and agents on one server; Rune rebuilds the terminal multiplexer around agent orchestration. Developers are simultaneously demanding transparency into what those agents did &mdash; ai-data-extractor pulls chat histories out of every major coding assistant, and Birdview maps architecture before an agent touches a file.</p>
+  <p style="margin-top:0.6rem">The 30-day view confirms MCP has become assumed infrastructure (codex-with-chatgpt, chat-on-steroids, and x64dbg-mcp-server all treat it as plumbing, not novelty), while Sprix Sage Router's 3,690 stars prove that multi-agent routing is now an engineering problem with real adopters, not a research curiosity. One counter-trend worth watching: Sepia, a tool for removing AI artifacts from writing, hit 2,631 stars &mdash; the market for making AI output less obviously AI is growing as fast as the market for producing it.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="showAll()">All</button>
+  <button class="filter-btn" onclick="filterSection('7d')">Last 7 Days</button>
+  <button class="filter-btn" onclick="filterSection('30d')">Last 30 Days</button>
+</div>
+
+<section class="section-7d" data-section="7d">
+  <h2 class="section-title">Top 10 &mdash; Last 7 Days</h2>
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/kruzovic7/ai-data-extractor" target="_blank" rel="noopener">kruzovic7/ai-data-extractor</a></span>
+        <span class="repo-stars">&#9733; 823</span>
+      </div>
+      <div class="repo-desc">Open-source extractor for AI coding assistant chat histories. Supports Claude Code, Cursor, Windsurf, Aider, Cline/Roo Code, and more. Useful for auditing, migrating, or analyzing your own agent sessions.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Python</span>
+        <span class="repo-tag">ai-data-extraction</span>
+        <span class="repo-tag">claude-code</span>
+        <span class="repo-tag">cursor</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/zjwzcx/Awesome-Astra-Embodied-AI" target="_blank" rel="noopener">zjwzcx/Awesome-Astra-Embodied-AI</a></span>
+        <span class="repo-stars">&#9733; 702</span>
+      </div>
+      <div class="repo-desc">Curated list around GPT-6 Astra for embodied AI and robotics. A reading list for anyone tracking the intersection of foundation models and physical-world agents.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">embodied-ai</span>
+        <span class="repo-tag">robotics</span>
+        <span class="repo-tag">gpt-6</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/eternityspring/reelbench-skills" target="_blank" rel="noopener">eternityspring/reelbench-skills</a></span>
+        <span class="repo-stars">&#9733; 698</span>
+      </div>
+      <div class="repo-desc">Learning notes and tooling skills for AI video production. Covers shot analysis, ffmpeg pipelines, and agent-driven video workflows.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">HTML</span>
+        <span class="repo-tag">ai-video</span>
+        <span class="repo-tag">ffmpeg</span>
+        <span class="repo-tag">shot-analysis</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/unstablebuild/rune" target="_blank" rel="noopener">unstablebuild/rune</a></span>
+        <span class="repo-stars">&#9733; 643</span>
+      </div>
+      <div class="repo-desc">A Go-based development environment built around agent orchestration, terminal multiplexing, and workspace management. Positions itself as a tmux replacement for the agent era.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Go</span>
+        <span class="repo-tag">agent-orchestration</span>
+        <span class="repo-tag">cli</span>
+        <span class="repo-tag">terminal-multiplexer</span>
+        <span class="repo-tag">tui</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/agentverse-os/AgentVerse-OS" target="_blank" rel="noopener">agentverse-os/AgentVerse-OS</a></span>
+        <span class="repo-stars">&#9733; 607</span>
+      </div>
+      <div class="repo-desc">Personal cloud OS for a developer and their AI agents on a single server. One-command Ubuntu install, windowed desktop in the browser, isolated workspaces with VS Code, Claude Code, and Codex. Rust core, Svelte UI, Tailscale-only access.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Rust</span>
+        <span class="repo-tag">Svelte</span>
+        <span class="repo-tag">cloud-os</span>
+        <span class="repo-tag">self-hosted</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <span class="repo-name"><a href="https://github.com/youngyangyang04/llm-master" target="_blank" rel="noopener">youngyangyang04/llm-master</a></span>
+        <span class="repo-stars">&#9733; 496</span>
+      </div>
+      <div class="repo-desc">Full-stack LLM learning roadmap in Chinese covering prompt engineering, RAG, AI agents, MCP, fine-tuning, model deployment, Transformers, and interview prep.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">llm</span>
+        <span class="repo-tag">llm-tutorial</span>
+        <span class="repo-tag">rag</span>
+        <span class="repo-tag">agent</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <span class="repo-name"><a href="https://github.com/yi1108/printfilm" target="_blank" rel="noopener">yi1108/printfilm</a></span>
+        <span class="repo-stars">&#9733; 481</span>
+      </div>
+      <div class="repo-desc">AI-powered platform for creating science explainer videos and comic-style visual stories. End-to-end pipeline from script to rendered output.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Python</span>
+        <span class="repo-tag">ai-video</span>
+        <span class="repo-tag">content-creation</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <span class="repo-name"><a href="https://github.com/Qiuner/birdview" target="_blank" rel="noopener">Qiuner/birdview</a></span>
+        <span class="repo-stars">&#9733; 286</span>
+      </div>
+      <div class="repo-desc">Maps project architecture before every AI code change. Generates diagram-as-code visualizations so coding agents understand structure before editing. Addresses the &ldquo;blind agent&rdquo; problem directly.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">JavaScript</span>
+        <span class="repo-tag">architecture-as-code</span>
+        <span class="repo-tag">code-visualization</span>
+        <span class="repo-tag">coding-agents</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <span class="repo-name"><a href="https://github.com/yjz211/vivid-figures-skill" target="_blank" rel="noopener">yjz211/vivid-figures-skill</a></span>
+        <span class="repo-stars">&#9733; 242</span>
+      </div>
+      <div class="repo-desc">108 recipes for AI-generated scientific charts and figures with two style profiles and multiple color palettes. Delivers both the image and the source code.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">HTML</span>
+        <span class="repo-tag">data-visualization</span>
+        <span class="repo-tag">scientific-figures</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <span class="repo-name"><a href="https://github.com/yudaprasetya007/routeVSCODE" target="_blank" rel="noopener">yudaprasetya007/routeVSCODE</a></span>
+        <span class="repo-stars">&#9733; 239</span>
+      </div>
+      <div class="repo-desc">Zero-reload dynamic AI model switcher and local proxy for VSCode Copilot Chat via 9Router. Hot-swap between Claude, ChatGPT, DeepSeek, and others without restarting the IDE.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">JavaScript</span>
+        <span class="repo-tag">vscode</span>
+        <span class="repo-tag">model-switcher</span>
+        <span class="repo-tag">local-proxy</span>
+      </div>
+    </li>
+
+  </ol>
+</section>
+
+<section class="section-30d" data-section="30d">
+  <h2 class="section-title">Top 5 &mdash; Last 30 Days</h2>
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <span class="repo-name"><a href="https://github.com/XiaoDuoYa/codex-with-chatgpt" target="_blank" rel="noopener">XiaoDuoYa/codex-with-chatgpt</a></span>
+        <span class="repo-stars">&#9733; 4,517</span>
+      </div>
+      <div class="repo-desc">Wires ChatGPT as the planning brain while keeping the Codex execution harness. Splits reasoning from action in a way that lets you use each model for what it does best.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">TypeScript</span>
+        <span class="repo-tag">chatgpt</span>
+        <span class="repo-tag">codex</span>
+        <span class="repo-tag">mcp</span>
+        <span class="repo-tag">ai-agents</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <span class="repo-name"><a href="https://github.com/wang2122/sprix-sage-router" target="_blank" rel="noopener">wang2122/sprix-sage-router</a></span>
+        <span class="repo-stars">&#9733; 3,690</span>
+      </div>
+      <div class="repo-desc">State-aware SELF/COLLABORATE/HANDOFF routing for A2A agent networks. Production-grade task scheduling for multi-agent systems that need to decide which agent handles what.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Python</span>
+        <span class="repo-tag">a2a</span>
+        <span class="repo-tag">agent-routing</span>
+        <span class="repo-tag">multi-agent-systems</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <span class="repo-name"><a href="https://github.com/totec448-spec/chat-on-steroids" target="_blank" rel="noopener">totec448-spec/chat-on-steroids</a></span>
+        <span class="repo-stars">&#9733; 2,764</span>
+      </div>
+      <div class="repo-desc">Cross-platform local MCP capabilities for ChatGPT with Chrome integration, goal tracking, compact-and-resume, and durable multi-agent workflows. Electron + TypeScript.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">TypeScript</span>
+        <span class="repo-tag">mcp</span>
+        <span class="repo-tag">chatgpt</span>
+        <span class="repo-tag">chrome-extension</span>
+        <span class="repo-tag">multi-agent</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <span class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></span>
+        <span class="repo-stars">&#9733; 2,631</span>
+      </div>
+      <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI. Narrative-architecture repair for fiction, venue-matched rules for professional prose. Based on the StoryScope paper (arXiv:2604.03136).</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Python</span>
+        <span class="repo-tag">ai-writing</span>
+        <span class="repo-tag">humanizer</span>
+        <span class="repo-tag">agent-skills</span>
+      </div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <span class="repo-name"><a href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener">duty1g/x64dbg-mcp-server</a></span>
+        <span class="repo-stars">&#9733; 1,970</span>
+      </div>
+      <div class="repo-desc">Native MCP plugin for x64dbg that exposes the debugger over HTTP. Connect any MCP-compatible AI assistant to set breakpoints, step through code, read memory, and dump registers. Built with Zig &mdash; zero dependencies, single binary.</div>
+      <div class="repo-tags">
+        <span class="repo-tag">Zig</span>
+        <span class="repo-tag">mcp-server</span>
+        <span class="repo-tag">x64dbg</span>
+        <span class="repo-tag">binary-analysis</span>
+        <span class="repo-tag">reverse-engineering</span>
+      </div>
+    </li>
+
+  </ol>
+</section>
+
+<footer>
+  Generated by the Trending GitHub Repos routine on 2026-09-16.
+</footer>
+
+<script>
+  function showAll() {
+    document.querySelectorAll('[data-section]').forEach(s => s.style.display = '');
+    setActive(0);
+  }
+  function filterSection(name) {
+    document.querySelectorAll('[data-section]').forEach(s => {
+      s.style.display = s.dataset.section === name ? '' : 'none';
+    });
+    const idx = name === '7d' ? 1 : 2;
+    setActive(idx);
+  }
+  function setActive(idx) {
+    document.querySelectorAll('.filter-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === idx);
+    });
+  }
+</script>
+
+</body>
+</html>
