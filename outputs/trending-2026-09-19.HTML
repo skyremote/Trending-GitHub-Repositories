@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-19</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --accent: #58a6ff;
+    --accent-dim: #1f6feb33;
+    --star: #e3b341;
+    --tag-bg: #388bfd1a;
+    --tag-text: #58a6ff;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --red: #f85149;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Noto Sans, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    text-align: center;
+    padding: 48px 16px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header .date {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  header .subtitle {
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  }
+
+  .editors-take h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .editors-take h2::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .editors-take p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .section-header .badge {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .badge-weekly {
+    background: #388bfd26;
+    color: var(--accent);
+  }
+
+  .badge-monthly {
+    background: #bc8cff26;
+    color: var(--purple);
+  }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, background 0.2s;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  .rank-top { color: var(--star); }
+
+  .repo-info { min-width: 0; }
+
+  .repo-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    word-break: break-word;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .repo-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .star-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .star-count svg {
+    width: 16px; height: 16px;
+    fill: var(--star);
+  }
+
+  .lang-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-swift { background: #F05138; }
+  .lang-css { background: #563d7c; }
+  .lang-zig { background: #ec915c; }
+
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-card .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .repo-card {
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+    }
+    .star-count {
+      grid-column: 2;
+      justify-self: start;
+      font-size: 13px;
+    }
+    header h1 { font-size: 22px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="date">September 19, 2026</div>
+  <h1>Trending AI Repositories</h1>
+  <div class="subtitle">Weekly intelligence brief from GitHub</div>
+</header>
+
+<div class="container">
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">15</div>
+      <div class="stat-label">Repos Tracked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">16.1k</div>
+      <div class="stat-label">Combined Stars</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Jev Ecosystem</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">6</div>
+      <div class="stat-label">Languages</div>
+    </div>
+  </div>
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>TypeSafe's Jev has taken over the 7-day chart. Four of the top ten repos are Jev ecosystem plays — a trading bot, a code-review dashboard, a Mario-playing agent, and a curated awesome-list — all shipping within days of each other. That is not organic discovery; it is a launch wave, and the community is responding by building on top rather than cloning. Separately, the "de-AI your writing" category continues to mature: <strong>sepia</strong> and <strong>lieflat-less-ai-tone</strong> in the 30-day window show that the market for removing AI artifacts is now as tooled as the market for producing them. The 30-day leader is a Chinese-language open-source book on AI infrastructure that treats GPU memory hierarchies and KV-cache sizing as first-class engineering problems — a sign that the conversation has moved past "can we run it?" to "how cheaply can we run it at scale?"</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRepos('all')">All</button>
+    <button class="filter-btn" onclick="filterRepos('weekly')">7-Day</button>
+    <button class="filter-btn" onclick="filterRepos('monthly')">30-Day</button>
+  </div>
+
+  <section data-section="weekly">
+    <div class="section-header">
+      <h2>Top 10</h2>
+      <span class="badge badge-weekly">Last 7 Days</span>
+    </div>
+
+    <ul class="repo-list">
+      <li class="repo-card" data-window="weekly">
+        <div class="rank rank-top">1</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/mcncarl/jianying-headless" target="_blank" rel="noopener">mcncarl/jianying-headless</a></div>
+          <div class="repo-desc">Headless runtime for Jianying (CapCut) drafts with an agent skill interface for automated video editing and export pipelines.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Sep 15</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          1,130
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank rank-top">2</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/jarrodwatts/jev-trader" target="_blank" rel="noopener">jarrodwatts/jev-trader</a></div>
+          <div class="repo-desc">One AI trade decision per Monad block, powered by TypeSafe Jev on the Kuru MON-USDC pair. A live proof-of-concept for structured-output decision loops in DeFi.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created Sep 16</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          905
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank rank-top">3</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/korcarc/text-humanizer" target="_blank" rel="noopener">korcarc/text-humanizer</a></div>
+          <div class="repo-desc">Open-source pipeline to convert AI-generated text into human-sounding prose, targeting GPTZero and Turnitin detection patterns.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Sep 16</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          725
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Continuum-AI-Corp/OrcaBonsai-27B-Uncensored" target="_blank" rel="noopener">Continuum-AI-Corp/OrcaBonsai-27B-Uncensored</a></div>
+          <div class="repo-desc">Runtime behavioral ablation for compressed LLMs without modifying weights. First target: Ternary Bonsai 2 27B.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Sep 18</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          395
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/AetherLabsAI/RSIAgent" target="_blank" rel="noopener">AetherLabsAI/RSIAgent</a></div>
+          <div class="repo-desc">Training-free multi-agent framework for recursive self-improvement via browser-based exploration of new environments.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Sep 13</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          339
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">6</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/devagrawal09/jev-review" target="_blank" rel="noopener">devagrawal09/jev-review</a></div>
+          <div class="repo-desc">Staged code-review workflow and local dashboard built with TypeSafe Jev. Typed decision outputs at every review gate.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created Sep 16</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          279
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">7</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/fhshaik/typesafe-mario" target="_blank" rel="noopener">fhshaik/typesafe-mario</a></div>
+          <div class="repo-desc">A TypeSafe/Jev agent that plays Super Mario Bros. from structured emulator state. The "hello world" demo that made Jev click for many developers.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Sep 16</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          263
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">8</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/AbdelStark/awesome-typesafe" target="_blank" rel="noopener">AbdelStark/awesome-typesafe</a></div>
+          <div class="repo-desc">Curated directory of official resources and community projects for TypeSafe, System One models, and Jev.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-css"></span> CSS</span>
+            <span>Created Sep 17</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          244
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">9</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/mpociot/claude-siri-ai" target="_blank" rel="noopener">mpociot/claude-siri-ai</a></div>
+          <div class="repo-desc">Experimental macOS 27 App Intents model delegation provider backed by Claude Code. Puts Claude behind Siri's system-level intent routing.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-swift"></span> Swift</span>
+            <span>Created Sep 14</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          207
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="weekly">
+        <div class="rank">10</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Qiuner/QCode" target="_blank" rel="noopener">Qiuner/QCode</a></div>
+          <div class="repo-desc">Explorable island world for learning AI coding and building projects with AI agents, powered by DeepSeek and Godot.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created Sep 14</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          195
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section data-section="monthly">
+    <div class="section-header">
+      <h2>Top 5</h2>
+      <span class="badge badge-monthly">Last 30 Days</span>
+    </div>
+
+    <ul class="repo-list">
+      <li class="repo-card" data-window="monthly">
+        <div class="rank rank-top">1</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/bojieli/ai-infra-book" target="_blank" rel="noopener">bojieli/ai-infra-book</a></div>
+          <div class="repo-desc">Open-source Chinese-language book on AI infrastructure: quantitative analysis of LLM inference and training system design from hardware constraints up.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Aug 22</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          4,396
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="monthly">
+        <div class="rank rank-top">2</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></div>
+          <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI. Narrative-architecture repair for fiction, venue-matched rules for professional prose, based on the StoryScope paper.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Aug 28</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,681
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="monthly">
+        <div class="rank rank-top">3</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/shadcn-ui/lint" target="_blank" rel="noopener">shadcn-ui/lint</a></div>
+          <div class="repo-desc">Agent-first linter for Tailwind design systems. Write design-system rules that AI coding agents can verify at generation time.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span>Created Sep 2</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,140
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="monthly">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener">duty1g/x64dbg-mcp-server</a></div>
+          <div class="repo-desc">Native MCP plugin that exposes x64dbg's full debugger API to AI agents. Written in Zig for direct plugin integration.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-zig"></span> Zig</span>
+            <span>Created Aug 22</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          2,001
+        </div>
+      </li>
+
+      <li class="repo-card" data-window="monthly">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/larashero3-dotcom/lieflat-less-ai-tone" target="_blank" rel="noopener">larashero3-dotcom/lieflat-less-ai-tone</a></div>
+          <div class="repo-desc">AI-tone removal skill grounded in a 2.83-million-character corpus study. Bilingual (Chinese/English) with statistical rules, not vibes.</div>
+          <div class="repo-meta">
+            <span><span class="lang-dot lang-python"></span> Python</span>
+            <span>Created Aug 20</span>
+          </div>
+        </div>
+        <div class="star-count">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          1,802
+        </div>
+      </li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &mdash; 2026-09-19 UTC
+</footer>
+
+<script>
+  function filterRepos(window) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const weeklySec = document.querySelector('[data-section="weekly"]');
+    const monthlySec = document.querySelector('[data-section="monthly"]');
+
+    if (window === 'all') {
+      weeklySec.style.display = '';
+      monthlySec.style.display = '';
+    } else if (window === 'weekly') {
+      weeklySec.style.display = '';
+      monthlySec.style.display = 'none';
+    } else {
+      weeklySec.style.display = 'none';
+      monthlySec.style.display = '';
+    }
+  }
+</script>
+
+</body>
+</html>
