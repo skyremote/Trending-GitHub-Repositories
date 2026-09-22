@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-22</title>
+<style>
+  :root {
+    --bg: #0e1014;
+    --panel: #161a21;
+    --panel-2: #1d222b;
+    --border: #262c37;
+    --text: #e6e9ef;
+    --muted: #8a93a6;
+    --accent: #7dd3fc;
+    --accent-2: #f0abfc;
+    --star: #fbbf24;
+    --link: #93c5fd;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --panel-2: #f0f2f6;
+      --border: #e2e5eb;
+      --text: #1a1d23;
+      --muted: #5b6270;
+      --accent: #0369a1;
+      --accent-2: #a21caf;
+      --star: #b45309;
+      --link: #1d4ed8;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  header.hero {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin: 0;
+    font-size: 15px;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--panel-2);
+    padding: 4px;
+    border-radius: 10px;
+    margin: 32px 0 24px;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+  .tab {
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .tab.active {
+    background: var(--panel);
+    color: var(--text);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .takeaway {
+    background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .takeaway::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    border-radius: 0 3px 3px 0;
+  }
+  .takeaway h2 {
+    margin: 0 0 10px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .takeaway p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--text);
+  }
+  section { margin-bottom: 40px; }
+  section h2.section-title {
+    font-size: 20px;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .section-title .window {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  ol.repos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .repo {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .repo:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .rank {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .repo-main { min-width: 0; }
+  .repo-name {
+    font-size: 15.5px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    word-break: break-all;
+  }
+  .repo-name a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0;
+  }
+  .stars {
+    color: var(--star);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    white-space: nowrap;
+    padding-top: 3px;
+    font-weight: 500;
+  }
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+  .hidden { display: none; }
+  @media (max-width: 540px) {
+    .wrap { padding: 28px 16px 64px; }
+    .repo { grid-template-columns: 24px 1fr; }
+    .stars { grid-column: 2; padding-top: 4px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Trending GitHub · AI</p>
+      <h1>Trending AI Repos</h1>
+      <p class="subtitle">Daily brief — 2026-09-22 · 10 repos (7-day) + 5 repos (30-day)</p>
+    </header>
+
+    <div class="takeaway" role="note" aria-label="Editor's take">
+      <h2>Editor's take</h2>
+      <p>The agent-skill format has fully eaten the top of this week's trending list: five of the ten weekly repos are distributable skills or plugins for coding agents, not standalone products, and two more are pure agent-infrastructure plays. Size no longer predicts momentum — Claude Code, the largest repo here at 147k stars, added just 2,731 stars this week, while cloudflare/security-audit-skill and alibaba/open-code-review each gained five to six times that from a fraction of the base, meaning small, narrowly-scoped skills are now outgrowing platforms on raw velocity. Chinese hyperscalers are shipping the agent-infrastructure layer in parallel — Tencent alone placed two repos (WeKnora for RAG, BrowserSkill for browser control) on the weekly list. On the 30-day view, efficiency work is a real second track: jingyaogong/minimind trains a full LLM from scratch for about three dollars, proof that not every AI infrastructure bet requires frontier-scale compute.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-target="week" role="tab" aria-selected="true">Last 7 days</button>
+      <button class="tab" data-target="month" role="tab" aria-selected="false">Last 30 days</button>
+    </div>
+
+    <section id="week">
+      <h2 class="section-title">Top 10 <span class="window">last 7 days</span></h2>
+      <ol class="repos">
+        <li class="repo"><span class="rank">01</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener">cloudflare/security-audit-skill</a></p><p class="repo-desc">Coding-agent skill for multi-phase security audits with independently verified, machine-readable findings.</p></div><span class="stars">★ 20,016</span></li>
+        <li class="repo"><span class="rank">02</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">alibaba/open-code-review</a></p><p class="repo-desc">Hybrid code review tool battle-tested at Alibaba's scale: deterministic pipelines plus an LLM agent for line-level comments.</p></div><span class="stars">★ 39,681</span></li>
+        <li class="repo"><span class="rank">03</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a></p><p class="repo-desc">Agent harness performance system adding skills, memory, and security across Claude Code, Codex, Opencode, and Cursor.</p></div><span class="stars">★ 265,291</span></li>
+        <li class="repo"><span class="rank">04</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/stablyai/orca" target="_blank" rel="noopener">stablyai/orca</a></p><p class="repo-desc">ADE for running a fleet of parallel coding agents across desktop, mobile, and a remote runtime.</p></div><span class="stars">★ 75,464</span></li>
+        <li class="repo"><span class="rank">05</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/JustVugg/colibri" target="_blank" rel="noopener">JustVugg/colibri</a></p><p class="repo-desc">Runs frontier MoE models on hardware you already own, in pure C with zero dependencies.</p></div><span class="stars">★ 37,103</span></li>
+        <li class="repo"><span class="rank">06</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/Tencent/WeKnora" target="_blank" rel="noopener">Tencent/WeKnora</a></p><p class="repo-desc">Turns raw documents into queryable RAG, an autonomous reasoning agent, or a self-maintaining wiki.</p></div><span class="stars">★ 28,903</span></li>
+        <li class="repo"><span class="rank">07</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/Tencent/BrowserSkill" target="_blank" rel="noopener">Tencent/BrowserSkill</a></p><p class="repo-desc">Lets AI agents use your real, logged-in browser without interrupting your own work.</p></div><span class="stars">★ 6,582</span></li>
+        <li class="repo"><span class="rank">08</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noopener">addyosmani/agent-skills</a></p><p class="repo-desc">Production-grade engineering skills for AI coding agents; 25 workflows spanning spec to deploy.</p></div><span class="stars">★ 98,416</span></li>
+        <li class="repo"><span class="rank">09</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noopener">Panniantong/Agent-Reach</a></p><p class="repo-desc">Gives an AI agent eyes on the internet: search Twitter, Reddit, YouTube, and GitHub from one CLI, no API fees.</p></div><span class="stars">★ 84,750</span></li>
+        <li class="repo"><span class="rank">10</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">anthropics/claude-code</a></p><p class="repo-desc">Agentic coding tool for the terminal that understands a codebase and handles routine tasks via natural language.</p></div><span class="stars">★ 147,637</span></li>
+      </ol>
+    </section>
+
+    <section id="month" class="hidden">
+      <h2 class="section-title">Top 5 <span class="window">last 30 days</span></h2>
+      <ol class="repos">
+        <li class="repo"><span class="rank">01</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/tt-a1i/archify" target="_blank" rel="noopener">tt-a1i/archify</a></p><p class="repo-desc">Agent skill for self-contained, verifiable architecture and workflow diagrams as motion-capable HTML.</p></div><span class="stars">★ 69,804</span></li>
+        <li class="repo"><span class="rank">02</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/jingyaogong/minimind" target="_blank" rel="noopener">jingyaogong/minimind</a></p><p class="repo-desc">Trains a 64M-parameter LLM from scratch in about two hours for roughly three dollars.</p></div><span class="stars">★ 62,181</span></li>
+        <li class="repo"><span class="rank">03</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/ayghri/i-have-adhd" target="_blank" rel="noopener">ayghri/i-have-adhd</a></p><p class="repo-desc">A skill that stops coding agents from burying the answer; ADHD-friendly output formatting.</p></div><span class="stars">★ 50,256</span></li>
+        <li class="repo"><span class="rank">04</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/THU-MAIC/OpenMAIC" target="_blank" rel="noopener">THU-MAIC/OpenMAIC</a></p><p class="repo-desc">Tsinghua's open multi-agent interactive classroom for one-click immersive, multi-agent learning.</p></div><span class="stars">★ 38,588</span></li>
+        <li class="repo"><span class="rank">05</span><div class="repo-main"><p class="repo-name"><a href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noopener">debpalash/VoiceStudio</a></p><p class="repo-desc">Open-source voice cloning, dubbing, dictation, and audiobook creation across 646 languages.</p></div><span class="stars">★ 34,323</span></li>
+      </ol>
+    </section>
+
+    <footer>Generated by the Trending GitHub Repos routine · 2026-09-22 UTC</footer>
+  </div>
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = { week: document.getElementById('week'), month: document.getElementById('month') };
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+    t.classList.add('active'); t.setAttribute('aria-selected', 'true');
+    Object.entries(panels).forEach(([k, el]) => el.classList.toggle('hidden', k !== t.dataset.target));
+  }));
+</script>
+</body>
+</html>
