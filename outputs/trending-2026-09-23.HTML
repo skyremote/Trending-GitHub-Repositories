@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-23</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --green: #3fb950;
+    --gold: #d29922;
+    --orange: #f0883e;
+    --tag-bg: #1f6feb1a;
+    --tag-text: #58a6ff;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header .date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 12px 12px 0 0;
+  }
+
+  .editors-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-header .badge {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.15s, background 0.15s;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr auto;
+    gap: 0 1rem;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 0.15rem;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--gold); }
+  .repo-card:nth-child(2) .rank { color: var(--text-muted); }
+  .repo-card:nth-child(3) .rank { color: var(--orange); }
+
+  .repo-info {
+    min-width: 0;
+  }
+
+  .repo-name {
+    display: inline;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-lang {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--gold);
+  }
+
+  footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1.25rem 1rem; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card {
+      grid-template-columns: 1.75rem 1fr;
+      gap: 0 0.75rem;
+    }
+    .stars {
+      grid-column: 2;
+      padding-top: 0.25rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="date">23 September 2026</div>
+    <h1>Trending AI Repositories</h1>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>This week belongs to TypeSafe AI's Jev. The "System One" typed decision model &mdash; a small, fast network that returns calibrated probability distributions instead of text tokens &mdash; appeared six days ago and already dominates seven of the top ten weekly slots. The pattern is familiar: a new primitive drops, an ecosystem forms overnight, and awesome-lists race to catalogue it before the dust settles. What makes Jev worth watching beyond the hype cycle is the category it opens: sub-50ms decision calls that let agents pick models, gauge intent, and route requests without burning output tokens. <code>laya-mlx</code> running at 7ms on an M3 Max and <code>jev-chat-jarvis</code> hitting 4k stars in two days suggest the use case is real, not just curiosity traffic. Meanwhile, the 30-day chart tells a quieter story: self-improving agents (<code>reef</code>, <code>NeoHorse</code>) and agent-skill libraries (<code>sepia</code>, <code>screenwriting-skills</code>) are maturing into production infrastructure. The market is splitting into models that think and models that decide &mdash; and this week, deciding pulled ahead.</p>
+  </section>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="line"></span>
+    <span class="badge">Last 7 days</span>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a><span class="repo-lang">TypeScript</span></div>
+        <div class="repo-desc">Z.ai's coding agent harness. Extensible, pitched as a direct competitor in the agent-IDE space. New entrant with fast adoption &mdash; worth tracking for architecture choices.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 6,364</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/mizorewww/laya-mlx" target="_blank" rel="noopener">mizorewww/laya-mlx</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">Native MLX runtime for Jev typed decision models. Hits 7&ndash;14ms on M3 Max with zero text generation, no PyTorch dependency, no cloud API. The on-device inference story for System One models.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 5,560</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">jev-chat/jev-chat-jarvis</a><span class="repo-lang">Kotlin</span></div>
+        <div class="repo-desc">Mobile chat copilot that reads WeChat, QQ, X, and Feishu conversations via accessibility services, runs Jev intent classification, and suggests candidate replies. Non-invasive, read-only screen approach.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 4,278</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/yibie/awesome-jev" target="_blank" rel="noopener">yibie/awesome-jev</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">The leading curated Jev ecosystem list. Four additional awesome-jev repos also crossed 200 stars this week (<a href="https://github.com/cobanov/awesome-jev" target="_blank" rel="noopener">cobanov</a>, <a href="https://github.com/v-modal/awesome-jev-tools" target="_blank" rel="noopener">v-modal</a>, <a href="https://github.com/AbdelStark/awesome-typesafe-jev" target="_blank" rel="noopener">AbdelStark</a>, <a href="https://github.com/OmniJev/awesome-jev-gallery" target="_blank" rel="noopener">OmniJev</a>) &mdash; a reliable signal that the ecosystem has hit critical mass.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,340</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/hydra-db/open-glean" target="_blank" rel="noopener">hydra-db/open-glean</a><span class="repo-lang">TypeScript</span></div>
+        <div class="repo-desc">Open-source AI platform for knowledge work: connect apps, search across them, surface answers. Fills the internal-search gap that enterprise teams keep rebuilding from scratch.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 848</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">pallavi-shekhar/ai-engineering-interview-questions-company-wise</a><span class="repo-lang">Markdown</span></div>
+        <div class="repo-desc">Company-by-company cheat sheet for AI engineering interviews. Covers prompt engineering, inference optimization, and system design. Useful reference even outside interview prep.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 626</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/devagrawal09/jev-review" target="_blank" rel="noopener">devagrawal09/jev-review</a><span class="repo-lang">TypeScript</span></div>
+        <div class="repo-desc">Staged code-review workflow and local dashboard built with TypeSafe Jev. Uses typed decisions to triage findings before human review.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 558</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/freestylefly/WeChatBridge" target="_blank" rel="noopener">freestylefly/WeChatBridge</a><span class="repo-lang">Swift</span></div>
+        <div class="repo-desc">Native macOS tool that forwards WeChat chat history to AI agents and Obsidian in one click. Share-extension architecture. Bridges the gap between locked-down messaging and open agent tooling.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 330</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/sutro-sh/jev-align" target="_blank" rel="noopener">sutro-sh/jev-align</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">Build calibrated AI functions from human feedback using Jev and GEPA (Generalized Expected Performance Assessment). Active-learning loop for classification. CLI-first.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 276</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/itsmostafa/typesafe-mcp" target="_blank" rel="noopener">itsmostafa/typesafe-mcp</a><span class="repo-lang">Go</span></div>
+        <div class="repo-desc">MCP connector that gives any agent direct access to TypeSafe AI's Jev model for fast, cheap evaluation calls. Minimal surface area by design.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 263</div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="line"></span>
+    <span class="badge">Last 30 days</span>
+  </div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">Continual learning infrastructure for self-improving agents. Reinforcement learning loop where agents accumulate experience across tasks and retrain. The most complete open-source implementation of the recursive self-improvement pattern.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 4,131</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Player-YN/BrowserKitten" target="_blank" rel="noopener">Player-YN/BrowserKitten</a><span class="repo-lang">JavaScript</span></div>
+        <div class="repo-desc">Selection-first web agent for Chrome. Select elements on a live page, describe the outcome, receive an editable Office file. BYOK, sandboxed, no server. A pragmatic middle ground between full browser automation and manual copy-paste.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,906</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI, with native plugins for Claude Code, Codex, Grok Build, and Antigravity. Narrative architecture repair for fiction, venue-matched rules for professional prose.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,784</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/shadcn-ui/lint" target="_blank" rel="noopener">shadcn-ui/lint</a><span class="repo-lang">TypeScript</span></div>
+        <div class="repo-desc">Agent-first linter for Tailwind design systems. Write design-system rules that agents can verify and enforce. From the shadcn team &mdash; expect wide adoption in the React/Tailwind ecosystem.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,595</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/ZJU-REAL/Easel" target="_blank" rel="noopener">ZJU-REAL/Easel</a><span class="repo-lang">Python</span></div>
+        <div class="repo-desc">Open-source AI agent for social media: trend discovery, content creation, cross-platform publishing, and performance analytics. Covers Xiaohongshu, Douyin, Zhihu, and Bilibili.</div>
+      </div>
+      <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,303</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-09-23 UTC
+  </footer>
+
+</div>
+
+</body>
+</html>
