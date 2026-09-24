@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-24</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --green: #3fb950;
+    --orange: #d29922;
+    --star: #e3b341;
+    --badge-7d: #388bfd33;
+    --badge-7d-text: #79c0ff;
+    --badge-30d: #a371f733;
+    --badge-30d-text: #d2a8ff;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --surface-hover: #eef1f5;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --accent-subtle: #0969da11;
+      --green: #1a7f37;
+      --orange: #9a6700;
+      --star: #9a6700;
+      --badge-7d: #ddf4ff;
+      --badge-7d-text: #0969da;
+      --badge-30d: #fbefff;
+      --badge-30d-text: #8250df;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    padding: 40px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .editor-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .editor-take::before {
+    content: "Editor's Take";
+    position: absolute;
+    top: -11px;
+    left: 16px;
+    background: var(--bg);
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+  }
+
+  .editor-take p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .badge-7d {
+    background: var(--badge-7d);
+    color: var(--badge-7d-text);
+  }
+
+  .badge-30d {
+    background: var(--badge-30d);
+    color: var(--badge-30d-text);
+  }
+
+  .repo-list {
+    list-style: none;
+    margin-bottom: 48px;
+  }
+
+  .repo-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    transition: background 0.15s ease;
+  }
+
+  .repo-item:hover {
+    background: var(--surface-hover);
+  }
+
+  .rank {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    margin-top: 2px;
+  }
+
+  .repo-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .repo-name a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+
+  .stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--star);
+  }
+
+  .repo-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meta-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px 0 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 24px 0 16px; }
+    header h1 { font-size: 22px; }
+    .editor-take { padding: 20px 16px; }
+    .repo-item { padding: 12px; gap: 12px; }
+    .rank { width: 28px; height: 28px; font-size: 12px; }
+    .repo-name a { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-09-24 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <p>The Jev ecosystem is having its Cambrian explosion. Six of this week's top ten repos orbit TypeSafe AI's "System One" decision model &mdash; from Apple Silicon runtimes (laya-mlx, 6k stars in five days) to wrappers that bolt Jev-style typed decisions onto any LLM without training (AnyJev from Nokia Research, rizzo-flow). The jev-chat family, which reads messaging screens and suggests replies through Jev intent classification, crossed 5k stars within 72 hours of launch. This is the strongest single-paradigm burst since the RAG toolkit wave of early 2025. Meanwhile, Z.ai quietly shipped ZCode, a 6.5k-star coding agent harness that competes directly with existing agent IDEs but ships its own model routing. The 30-day window tells a different story: the infrastructure layer is hardening. Reef brings continual learning to agent loops, BrowserKitten makes Chrome a first-class agent surface, and shadcn/lint treats design-system rules as agent-verifiable contracts. The pattern is clear &mdash; the community has moved past building agents and started building the substrate agents run on.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 Days</span>
+  </div>
+
+  <ul class="repo-list">
+    <li class="repo-item">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,582</span>
+        </div>
+        <div class="repo-desc">Z.ai's coding agent harness with built-in model routing. A full IDE-grade agent environment shipping its own orchestration layer rather than wrapping existing providers.</div>
+        <div class="repo-meta"><span class="meta-tag">coding-agent</span><span class="meta-tag">model-routing</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/mizorewww/laya-mlx" target="_blank" rel="noopener">mizorewww/laya-mlx</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,017</span>
+        </div>
+        <div class="repo-desc">Native MLX runtime for Laya typed decision models. Runs 7&ndash;14 ms short decisions on M3 Max with zero text generation, no PyTorch, no cloud API. The fastest on-device System One implementation so far.</div>
+        <div class="repo-meta"><span class="meta-tag">mlx</span><span class="meta-tag">apple-silicon</span><span class="meta-tag">decision-model</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">jev-chat/jev-chat-jarvis</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 5,383</span>
+        </div>
+        <div class="repo-desc">On-phone chat copilot that reads WeChat, QQ, X, and Feishu screens, classifies intent via Jev, and surfaces candidate replies. Non-invasive &mdash; screen-read only, no hooking, no package modification.</div>
+        <div class="repo-meta"><span class="meta-tag">chat-assistant</span><span class="meta-tag">jev</span><span class="meta-tag">intent-classification</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/yibie/awesome-jev" target="_blank" rel="noopener">yibie/awesome-jev</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,524</span>
+        </div>
+        <div class="repo-desc">The most complete curated list of public Jev projects, integrations, and discussions. Source-backed, covering the full TypeSafe AI System One ecosystem.</div>
+        <div class="repo-meta"><span class="meta-tag">awesome-list</span><span class="meta-tag">jev</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/v-modal/awesome-jev-tools" target="_blank" rel="noopener">v-modal/awesome-jev-tools</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 697</span>
+        </div>
+        <div class="repo-desc">Developer-focused catalog of tools built for Jev, from SDKs to evaluation harnesses.</div>
+        <div class="repo-meta"><span class="meta-tag">dev-tools</span><span class="meta-tag">jev</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">pallavi-shekhar/ai-engineering-interview-questions-company-wise</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 641</span>
+        </div>
+        <div class="repo-desc">Company-specific AI engineering interview questions and answers. Practical prep rather than generic ML quiz banks.</div>
+        <div class="repo-meta"><span class="meta-tag">interview-prep</span><span class="meta-tag">ai-engineering</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/freestylefly/WeChatBridge" target="_blank" rel="noopener">freestylefly/WeChatBridge</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 587</span>
+        </div>
+        <div class="repo-desc">Native macOS tool that forwards WeChat chat records to AI agents and Obsidian in one click. Bridges personal messaging history into agent-accessible knowledge.</div>
+        <div class="repo-meta"><span class="meta-tag">macos</span><span class="meta-tag">wechat</span><span class="meta-tag">obsidian</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Continuum-AI-Corp/OrcaBonsai-27B-Uncensored" target="_blank" rel="noopener">Continuum-AI-Corp/OrcaBonsai-27B-Uncensored</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 533</span>
+        </div>
+        <div class="repo-desc">Runtime behavioral ablation for compressed LLMs, starting with Ternary Bonsai 2 27B. No weight modification or re-quantization &mdash; a pure inference-time steering approach.</div>
+        <div class="repo-meta"><span class="meta-tag">llm</span><span class="meta-tag">inference</span><span class="meta-tag">ablation</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/nokia-applied-research/AnyJev" target="_blank" rel="noopener">nokia-applied-research/AnyJev</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 402</span>
+        </div>
+        <div class="repo-desc">Nokia Research's take on retrofitting Jev-style typed decisions onto any LLM. Real probabilities, no training required. Notable for coming from a corporate research lab rather than the open-source community.</div>
+        <div class="repo-meta"><span class="meta-tag">nokia-research</span><span class="meta-tag">jev</span><span class="meta-tag">zero-training</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Rizzo-AI-Academy/rizzo-flow" target="_blank" rel="noopener">Rizzo-AI-Academy/rizzo-flow</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 395</span>
+        </div>
+        <div class="repo-desc">Open, local typed decisions from any LLM without generating a single output token. Takes the Jev approach to its logical extreme by relying entirely on hidden-state extraction.</div>
+        <div class="repo-meta"><span class="meta-tag">jev-alternative</span><span class="meta-tag">local</span><span class="meta-tag">token-free</span></div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 Days</span>
+  </div>
+
+  <ul class="repo-list">
+    <li class="repo-item">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">Albert-Weasker/niubigeo</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 4,839</span>
+        </div>
+        <div class="repo-desc">Open-source AI brand visibility and competitor reports. Offers generative engine optimization (GEO) with real-user testing. The SEO-to-GEO shift is producing its own tooling stack.</div>
+        <div class="repo-meta"><span class="meta-tag">geo</span><span class="meta-tag">brand-visibility</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 4,393</span>
+        </div>
+        <div class="repo-desc">Continual learning infrastructure for self-improving agents. Handles memory, skill acquisition, and feedback loops across sessions &mdash; the missing persistence layer most agent frameworks skip.</div>
+        <div class="repo-meta"><span class="meta-tag">continual-learning</span><span class="meta-tag">agent-infra</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Player-YN/BrowserKitten" target="_blank" rel="noopener">Player-YN/BrowserKitten</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,858</span>
+        </div>
+        <div class="repo-desc">Selection-first web agent for Chrome. Select elements on the live page, describe the outcome, receive an editable Office file. BYOK, sandboxed, no server. A pragmatic middle ground between full browser automation and manual extraction.</div>
+        <div class="repo-meta"><span class="meta-tag">browser-agent</span><span class="meta-tag">chrome</span><span class="meta-tag">byok</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,812</span>
+        </div>
+        <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI, with native plugins for Claude Code, Codex, and Grok Build. Narrative-architecture repair for fiction and venue-matched rules for professional prose.</div>
+        <div class="repo-meta"><span class="meta-tag">writing</span><span class="meta-tag">agent-skill</span><span class="meta-tag">prose</span></div>
+      </div>
+    </li>
+
+    <li class="repo-item">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name">
+          <a href="https://github.com/shadcn-ui/lint" target="_blank" rel="noopener">shadcn-ui/lint</a>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,710</span>
+        </div>
+        <div class="repo-desc">Agent-first linter for Tailwind design systems. Lets you write design-system rules that agents can verify and enforce &mdash; turning visual consistency into a CI-checkable contract.</div>
+        <div class="repo-meta"><span class="meta-tag">design-systems</span><span class="meta-tag">linter</span><span class="meta-tag">tailwind</span></div>
+      </div>
+    </li>
+  </ul>
+
+  <footer>
+    Generated 2026-09-24 UTC &middot; Trending GitHub Repos Routine
+  </footer>
+</div>
+</body>
+</html>
