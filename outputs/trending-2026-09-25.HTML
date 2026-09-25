@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-25</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-editor: #f0f4f8;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --text-muted: #888;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e2e8f0;
+    --tag-text: #475569;
+    --section-7d: #2563eb;
+    --section-30d: #7c3aed;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-editor: #1a2332;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #334155;
+      --tag-text: #94a3b8;
+      --section-7d: #60a5fa;
+      --section-30d: #a78bfa;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-editor: #1a2332;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --star: #facc15;
+    --tag-bg: #334155;
+    --tag-text: #94a3b8;
+    --section-7d: #60a5fa;
+    --section-30d: #a78bfa;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 16px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  header {
+    text-align: center;
+    padding: 32px 0 24px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .editor-take {
+    background: var(--bg-editor);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .editor-take strong {
+    color: var(--text);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .section-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: #fff;
+  }
+  .badge-7d { background: var(--section-7d); }
+  .badge-30d { background: var(--section-30d); }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .repo-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .repo-rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 20px;
+  }
+  .repo-name a {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .repo-stars {
+    font-size: 0.85rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-lang {
+    font-size: 0.75rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  footer {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .repo-card { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-09-25 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <strong>Editor's take:</strong> The Jev ecosystem is this week's unmistakable signal. TypeSafe AI's "System One" decision model — which returns calibrated probability distributions in a single forward pass, no token-by-token decoding — spawned at least six notable repos in seven days: official mobile and desktop chat assistants, Nokia's open reimplementation, a 0.6B parameter agent-native variant, and multiple curated lists. The pattern is worth watching because it bypasses autoregressive generation entirely, treating structured decisions as classification rather than text completion. Meanwhile, Z.ai's ZCode grabbed 6,700+ stars as another serious entry in the coding-agent-harness race, which still has not consolidated despite Claude Code, Codex, and Cursor being established. On the 30-day horizon, Reef's continual-learning infrastructure and shadcn-ui's move into agent-first design linting suggest the agent ecosystem is maturing past "run a prompt" toward agents that improve over time and follow design constraints.
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="section-badge badge-7d">Last 7 days</span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a></span>
+        <span class="repo-stars">&#9733; 6,724</span>
+        <span class="repo-lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Z.ai's coding agent harness with an extensible plugin system. Another contender in an already crowded space, but the star velocity suggests real traction.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/jev-chat/jev-chat-jarvis">jev-chat/jev-chat-jarvis</a></span>
+        <span class="repo-stars">&#9733; 6,191</span>
+        <span class="repo-lang">Kotlin</span>
+      </div>
+      <div class="repo-desc">Mobile AI chat co-pilot for QQ, X, and Feishu. Reads screens via OCR, suggests replies, never sends without approval. Non-invasive, no hooking.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/v-modal/awesome-jev-tools">v-modal/awesome-jev-tools</a></span>
+        <span class="repo-stars">&#9733; 713</span>
+        <span class="repo-lang">&mdash;</span>
+      </div>
+      <div class="repo-desc">Curated directory of tools built on TypeSafe AI's Jev decision model. Useful as a map of the fast-growing ecosystem.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/yetone/magpie">yetone/magpie</a></span>
+        <span class="repo-stars">&#9733; 674</span>
+        <span class="repo-lang">Go</span>
+      </div>
+      <div class="repo-desc">Menu-bar app routing any agent to any model: Codex on DeepSeek, Claude Code on Kimi. Solves the "one agent, many providers" wiring problem.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/freestylefly/WeChatBridge">freestylefly/WeChatBridge</a></span>
+        <span class="repo-stars">&#9733; 669</span>
+        <span class="repo-lang">Swift</span>
+      </div>
+      <div class="repo-desc">macOS tool bridging WeChat messages to AI agents and Obsidian. Niche but solves a real capture-and-route workflow.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#6</span>
+        <span class="repo-name"><a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise">pallavi-shekhar/ai-engineering-interview-questions-company-wise</a></span>
+        <span class="repo-stars">&#9733; 652</span>
+        <span class="repo-lang">Markdown</span>
+      </div>
+      <div class="repo-desc">Company-specific AI engineering interview prep. Growing evidence that "AI Engineer" is solidifying as a distinct hiring track.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#7</span>
+        <span class="repo-name"><a href="https://github.com/jev-chat/jev-chat-windows">jev-chat/jev-chat-windows</a></span>
+        <span class="repo-stars">&#9733; 534</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">Windows companion to jev-chat-jarvis. Screenshot + local OCR reads the chat window, Jev classifies intent, three candidate replies fill the input box.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#8</span>
+        <span class="repo-name"><a href="https://github.com/nokia-applied-research/AnyJev">nokia-applied-research/AnyJev</a></span>
+        <span class="repo-stars">&#9733; 514</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">Turns any LLM into a Jev-style decision model: typed decisions, real probabilities, no fine-tuning. Nokia Research's open take.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#9</span>
+        <span class="repo-name"><a href="https://github.com/Rizzo-AI-Academy/rizzo-flow">Rizzo-AI-Academy/rizzo-flow</a></span>
+        <span class="repo-stars">&#9733; 420</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">Open, local alternative to Jev: typed decisions from an LLM without generating a single token.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#10</span>
+        <span class="repo-name"><a href="https://github.com/malevrigns/agent-jev">malevrigns/agent-jev</a></span>
+        <span class="repo-stars">&#9733; 294</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">AgentJev-0.6B: a purpose-built small model for agent decision-making. Feeds unstructured state, returns calibrated distributions in ~50ms. Zero output-token decoding.</div>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="section-badge badge-30d">Last 30 days</span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#1</span>
+        <span class="repo-name"><a href="https://github.com/Human-Agent-Society/reef">Human-Agent-Society/reef</a></span>
+        <span class="repo-stars">&#9733; 5,126</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">Continual learning infrastructure for self-improving agents. The bet is that agents should get better from their own execution traces, not just from new model weights.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#2</span>
+        <span class="repo-name"><a href="https://github.com/Player-YN/BrowserKitten">Player-YN/BrowserKitten</a></span>
+        <span class="repo-stars">&#9733; 2,857</span>
+        <span class="repo-lang">JavaScript</span>
+      </div>
+      <div class="repo-desc">Selection-first Chrome web agent: select elements on a live page, describe the outcome, get an editable Office file. BYOK, sandboxed, no server.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#3</span>
+        <span class="repo-name"><a href="https://github.com/Nanako0129/sepia">Nanako0129/sepia</a></span>
+        <span class="repo-stars">&#9733; 2,835</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI. Narrative-architecture repair for fiction, venue-matched rules for professional prose. Based on StoryScope (arXiv:2604.03136).</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#4</span>
+        <span class="repo-name"><a href="https://github.com/shadcn-ui/lint">shadcn-ui/lint</a></span>
+        <span class="repo-stars">&#9733; 2,760</span>
+        <span class="repo-lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Agent-first linter for Tailwind design systems. Write design-system rules that agents can verify. The shadcn team building for agents, not just humans.</div>
+    </li>
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">#5</span>
+        <span class="repo-name"><a href="https://github.com/yi1108/printfilm">yi1108/printfilm</a></span>
+        <span class="repo-stars">&#9733; 2,622</span>
+        <span class="repo-lang">Python</span>
+      </div>
+      <div class="repo-desc">AI video marketing and short-drama creation platform. End-to-end pipeline from script to published short-form content.</div>
+    </li>
+  </ol>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &middot; 2026-09-25 UTC
+  </footer>
+</div>
+</body>
+</html>
