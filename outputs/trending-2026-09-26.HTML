@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-09-26</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-header: #0d1117;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --text-muted: #777;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --badge-bg: #e0e7ff;
+    --badge-text: #3730a3;
+    --section-bg: #f1f5f9;
+    --tag-bg: #f0fdf4;
+    --tag-text: #166534;
+    --rank-bg: #2563eb;
+    --rank-text: #fff;
+    --editor-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --editor-text: #e2e8f0;
+    --editor-accent: #60a5fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-header: #020617;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfc;
+      --border: #334155;
+      --badge-bg: #1e3a5f;
+      --badge-text: #93c5fd;
+      --section-bg: #1e293b;
+      --tag-bg: #064e3b;
+      --tag-text: #6ee7b7;
+      --rank-bg: #3b82f6;
+      --rank-text: #fff;
+      --editor-bg: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+      --editor-text: #cbd5e1;
+      --editor-accent: #93c5fd;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-header: #020617;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfc;
+    --border: #334155;
+    --badge-bg: #1e3a5f;
+    --badge-text: #93c5fd;
+    --section-bg: #1e293b;
+    --tag-bg: #064e3b;
+    --tag-text: #6ee7b7;
+    --rank-bg: #3b82f6;
+    --rank-text: #fff;
+    --editor-bg: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    --editor-text: #cbd5e1;
+    --editor-accent: #93c5fd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  header {
+    background: var(--bg-header);
+    color: #fff;
+    padding: 32px 0;
+    text-align: center;
+  }
+  header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 4px; }
+  header .subtitle { color: #94a3b8; font-size: 0.95rem; }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin: 24px 0 0;
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+  }
+  .nav-tab:hover { color: var(--accent); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .editor-take {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin: 24px 0;
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+  .editor-take h2 {
+    color: var(--editor-accent);
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .editor-take p { margin-bottom: 14px; }
+  .editor-take p:last-child { margin-bottom: 0; }
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text);
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .repo-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .rank {
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; color: var(--accent-hover); }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .meta-item { display: flex; align-items: center; gap: 4px; }
+  .star-count {
+    color: var(--star);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .lang-badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .repo-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.3rem; }
+    .repo-header { flex-direction: column; gap: 8px; }
+    .rank { width: 28px; height: 28px; font-size: 0.8rem; }
+    .editor-take { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Trending AI Repositories</h1>
+    <div class="subtitle">Daily Brief &mdash; September 26, 2026 (UTC)</div>
+  </div>
+</header>
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-box">
+      <div class="stat-num">15</div>
+      <div class="stat-label">Repos Tracked</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">38,221</div>
+      <div class="stat-label">Combined Stars</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Jev Ecosystem</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('editor')">Editor's Take</button>
+    <button class="nav-tab" onclick="showTab('weekly')">Top 10 &mdash; 7 Days</button>
+    <button class="nav-tab" onclick="showTab('monthly')">Top 5 &mdash; 30 Days</button>
+  </div>
+
+  <div id="tab-editor" class="tab-content active">
+    <div class="editor-take">
+      <h2>Editor's Take</h2>
+      <p>The Jev ecosystem dominated this week. TypeSafe AI's "System One" decision model &mdash; a classifier that returns typed probability distributions in a single forward pass, no output tokens generated &mdash; spawned at least six major repos in seven days. Chat assistants on Android, Windows, and macOS now use Jev to read conversations and suggest replies without hooking into apps. Nokia Research published AnyJev, showing any off-the-shelf LLM can replicate the pattern without fine-tuning. The velocity suggests Jev is filling a real gap: agents need fast, cheap binary decisions more often than they need long-form generation.</p>
+      <p>Meanwhile, Z.ai's ZCode landed as a direct competitor in the coding-agent space, pulling nearly 7k stars in under a week. Magpie quietly solved a practical headache &mdash; letting developers swap the backing model behind Claude Code, Codex, or Gemini CLI from a menu bar &mdash; and its 800 stars in three days signal how real that friction is.</p>
+      <p>On the 30-day radar, Reef (self-improving agent loops), BrowserKitten (select-on-page web agent), and Sepia (de-AI writing for 77+ agents) each crossed 2,800 stars. The thread connecting all three: agents are moving past "chat with an LLM" toward specialized infrastructure &mdash; memory, decision, perception, and style as separable modules.</p>
+    </div>
+  </div>
+
+  <div id="tab-weekly" class="tab-content">
+    <h3 class="section-title">Top 10 &mdash; Last 7 Days (Sept 19&ndash;26)</h3>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 6,782</span></span>
+            <span class="lang-badge">TypeScript</span>
+            <span class="meta-item">Created Sept 20</span>
+            <span class="meta-item">Forks: 2,037</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Z.ai's coding agent harness. Positions itself as a powerful, extensible alternative in the agentic coding space. Gained 2,000+ forks in under a week, indicating strong community experimentation.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">jev-chat/jev-chat-jarvis</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 6,530</span></span>
+            <span class="lang-badge">Kotlin</span>
+            <span class="meta-item">Created Sept 21</span>
+            <span class="meta-item">Forks: 1,135</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">On-phone conversation copilot for QQ, X, and Feishu. Uses Android accessibility services to read the screen, runs the Jev decision model to understand intent, and surfaces candidate replies users can inject with one tap. Read-only &mdash; no app hooking or packet modification.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 811</span></span>
+            <span class="lang-badge">Go</span>
+            <span class="meta-item">Created Sept 23</span>
+            <span class="meta-item">Forks: 48</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Menu-bar model router for macOS. Lets you point any coding agent &mdash; Codex, Claude Code, Gemini CLI &mdash; at any model provider (DeepSeek, Kimi, etc.) without reconfiguring each tool. Solves the "every agent wants its own model config" problem in one place.</div>
+      <div class="repo-tags">
+        <span class="tag">claude-code</span>
+        <span class="tag">codex</span>
+        <span class="tag">deepseek</span>
+        <span class="tag">llm</span>
+        <span class="tag">macos</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/freestylefly/WeChatBridge" target="_blank" rel="noopener">freestylefly/WeChatBridge</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 737</span></span>
+            <span class="lang-badge">Swift</span>
+            <span class="meta-item">Created Sept 21</span>
+            <span class="meta-item">Forks: 287</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Native macOS tool that forwards WeChat chat history to AI agents and Obsidian. Uses the system share extension &mdash; no WeChat API abuse. Targets users who want LLM-assisted review of their conversations alongside a personal knowledge base.</div>
+      <div class="repo-tags">
+        <span class="tag">ai-agent</span>
+        <span class="tag">obsidian</span>
+        <span class="tag">swift</span>
+        <span class="tag">wechat</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/nokia-applied-research/AnyJev" target="_blank" rel="noopener">nokia-applied-research/AnyJev</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 724</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Sept 21</span>
+            <span class="meta-item">Forks: 96</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Nokia's research contribution to the Jev wave. Demonstrates how to extract Jev-style typed decisions and real probability distributions from any LLM &mdash; no training required. Supports vLLM and HuggingFace Transformers backends.</div>
+      <div class="repo-tags">
+        <span class="tag">jev</span>
+        <span class="tag">decision-model</span>
+        <span class="tag">calibration</span>
+        <span class="tag">vllm</span>
+        <span class="tag">transformers</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">6</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/yukitorido/short-video-generator-AI" target="_blank" rel="noopener">yukitorido/short-video-generator-AI</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 673</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Sept 23</span>
+            <span class="meta-item">Forks: 82</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">End-to-end pipeline for generating vertical short-form videos from long content. Chains LLMs for highlight detection, Whisper for transcription, and automated editing. Positioned as an open-source Opus Clip alternative.</div>
+      <div class="repo-tags">
+        <span class="tag">ai</span>
+        <span class="tag">llm</span>
+        <span class="tag">short-video</span>
+        <span class="tag">opus-clip-alternative</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">7</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/jev-chat/jev-chat-windows" target="_blank" rel="noopener">jev-chat/jev-chat-windows</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 560</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Sept 21</span>
+            <span class="meta-item">Forks: 125</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Windows counterpart to Jarvis. Screenshots the active chat window, runs local offline OCR to read messages, routes through Jev for intent classification, then generates three candidate replies. Send is always manual.</div>
+      <div class="repo-tags">
+        <span class="tag">jev</span>
+        <span class="tag">local-first</span>
+        <span class="tag">ocr</span>
+        <span class="tag">privacy</span>
+        <span class="tag">windows</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">8</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Rizzo-AI-Academy/rizzo-flow" target="_blank" rel="noopener">Rizzo-AI-Academy/rizzo-flow</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 496</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Sept 21</span>
+            <span class="meta-item">Forks: 31</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Open, local take on Jev. Extracts typed decisions from an LLM without generating a single output token. Aims to make the Jev pattern available without depending on TypeSafe AI's proprietary model.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">9</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/kydlikebtc/awesome-jev" target="_blank" rel="noopener">kydlikebtc/awesome-jev</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 436</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Sept 22</span>
+            <span class="meta-item">Forks: 8</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Curated index of 1,207 public Jev resources, organized by decision pattern. Includes source citations, dated link checks, and JSON schema references. Bilingual (English/Chinese).</div>
+      <div class="repo-tags">
+        <span class="tag">awesome-list</span>
+        <span class="tag">jev</span>
+        <span class="tag">decision-model</span>
+        <span class="tag">catalog</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">10</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Inkloom-art/inkloom" target="_blank" rel="noopener">Inkloom-art/inkloom</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 321</span></span>
+            <span class="lang-badge">TypeScript</span>
+            <span class="meta-item">Created Sept 20</span>
+            <span class="meta-item">Forks: 334</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Specialized AI models for logo design. A brand-analysis model turns business context into design constraints, then typography and symbol models construct the mark, and a composition engine produces final lockups with clear-space rules. Currently in early access.</div>
+      <div class="repo-tags">
+        <span class="tag">generative-ai</span>
+        <span class="tag">logo-design</span>
+        <span class="tag">typography</span>
+        <span class="tag">design-systems</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-monthly" class="tab-content">
+    <h3 class="section-title">Top 5 &mdash; Last 30 Days (Aug 27&ndash;Sept 26)</h3>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 5,331</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Aug 31</span>
+            <span class="meta-item">Forks: 464</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Infrastructure for continually self-improving agents. Combines continual learning, reinforcement learning, and LLM training into a runtime that lets agents improve themselves over time. The most ambitious agent-infrastructure project of the month.</div>
+      <div class="repo-tags">
+        <span class="tag">self-improving-agents</span>
+        <span class="tag">continual-learning</span>
+        <span class="tag">reinforcement-learning</span>
+        <span class="tag">llm-training</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">Albert-Weasker/niubigeo</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 4,847</span></span>
+            <span class="lang-badge">TypeScript</span>
+            <span class="meta-item">Created Sept 3</span>
+            <span class="meta-item">Forks: 304</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Open-source AI brand visibility and competitor intelligence reports. Tracks how brands appear across AI-generated answers and search results. The "GEO" (Generative Engine Optimization) space is heating up as more traffic flows through AI answers rather than traditional search.</div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Player-YN/BrowserKitten" target="_blank" rel="noopener">Player-YN/BrowserKitten</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 2,856</span></span>
+            <span class="lang-badge">JavaScript</span>
+            <span class="meta-item">Created Aug 28</span>
+            <span class="meta-item">Forks: 10</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Selection-first web agent for Chrome. Instead of giving the agent a full page, users select the relevant content, describe the desired outcome, and receive an editable office file. BYOK, sandboxed, no server required.</div>
+      <div class="repo-tags">
+        <span class="tag">browser-agent</span>
+        <span class="tag">chrome-extension</span>
+        <span class="tag">byok</span>
+        <span class="tag">llm</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/Nanako0129/sepia" target="_blank" rel="noopener">Nanako0129/sepia</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 2,846</span></span>
+            <span class="lang-badge">Python</span>
+            <span class="meta-item">Created Aug 28</span>
+            <span class="meta-item">Forks: 185</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">De-AI writing skill compatible with 77+ agents via the Skills CLI. Has native plugins for Claude Code, Codex, Grok Build, and Antigravity. Performs narrative-architecture repair for fiction and venue-matched style enforcement for professional prose. Based on the StoryScope paper (arXiv:2604.03136).</div>
+      <div class="repo-tags">
+        <span class="tag">agent-skills</span>
+        <span class="tag">ai-writing</span>
+        <span class="tag">claude-code</span>
+        <span class="tag">codex</span>
+        <span class="tag">humanizer</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-header">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <div class="repo-name"><a href="https://github.com/shadcn-ui/lint" target="_blank" rel="noopener">shadcn-ui/lint</a></div>
+          <div class="repo-meta">
+            <span class="meta-item"><span class="star-count">&#9733; 2,804</span></span>
+            <span class="lang-badge">TypeScript</span>
+            <span class="meta-item">Created Sept 2</span>
+            <span class="meta-item">Forks: 53</span>
+          </div>
+        </div>
+      </div>
+      <div class="repo-desc">Agent-first linter for Tailwind design systems from the shadcn/ui team. Lets you write design-system rules that AI agents can verify and enforce. Bridges the gap between design tokens and agent-driven code generation.</div>
+      <div class="repo-tags">
+        <span class="tag">design-system</span>
+        <span class="tag">shadcn-ui</span>
+        <span class="tag">tailwindcss</span>
+        <span class="tag">agents</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    Data sourced from GitHub Search API on 2026-09-26 (UTC). Stars reflect counts at query time and may fluctuate.
+  </div>
+</footer>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const labels = { editor: "Editor's Take", weekly: 'Top 10 — 7 Days', monthly: 'Top 5 — 30 Days' };
+  document.querySelectorAll('.nav-tab').forEach(el => {
+    if (el.textContent.trim() === labels[name]) el.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>
