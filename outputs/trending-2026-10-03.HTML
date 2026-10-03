@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-03</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: #0f172a;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --text-hero: #f1f5f9;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #e0f2fe;
+    --tag-text: #0369a1;
+    --section-bg: #f1f5f9;
+    --rank-bg: #3b82f6;
+    --rank-text: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-hero: #020617;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-hero: #e2e8f0;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --tag-bg: #1e3a5f;
+      --tag-text: #7dd3fc;
+      --section-bg: #1e293b;
+      --rank-bg: #2563eb;
+      --rank-text: #ffffff;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hero: #020617;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-hero: #e2e8f0;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfd;
+    --border: #334155;
+    --tag-bg: #1e3a5f;
+    --tag-text: #7dd3fc;
+    --section-bg: #1e293b;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .hero {
+    background: var(--bg-hero);
+    color: var(--text-hero);
+    padding: 48px 16px 40px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero .date {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .hero .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero .stat {
+    text-align: center;
+  }
+
+  .hero .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .hero .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .editors-take {
+    background: var(--section-bg);
+    border-left: 4px solid var(--accent);
+    padding: 24px;
+    margin: 32px auto;
+    max-width: 800px;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .editors-take h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .editors-take p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 40px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .section-header .badge {
+    font-size: 12px;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .repo-card {
+    display: flex;
+    gap: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .repo-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+
+  .rank {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .repo-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    word-break: break-word;
+  }
+
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 6px 0;
+    flex-wrap: wrap;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--star);
+  }
+
+  .lang {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .repo-desc {
+    font-size: 14px;
+    color: var(--text);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 11px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 32px 16px; }
+    .hero h1 { font-size: 22px; }
+    .hero .stat-number { font-size: 24px; }
+    .repo-card { padding: 16px; gap: 12px; }
+    .section-header h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Trending AI Repos</h1>
+  <div class="date">October 3, 2026</div>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">15</div>
+      <div class="stat-label">Repos tracked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">29.7k</div>
+      <div class="stat-label">Combined stars</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Agent skills</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>Two forces define this week. First, OpenAI shipped Dots and the open-source response was immediate: three independent clones in four days, each taking a different angle — stealth browsing, always-on coworker, and local Mac agent. The market is telling you that persistent, browser-capable agents are the expected default now, not a novelty. Second, the Claude Code skill ecosystem has crossed from "useful plugins" into professional verticals — game modding, Japanese prose polishing, business video production, and academic paper translation all shipped as packaged skills this week. The long tail of agent capabilities is growing faster than any single harness can ship features. If you are building an agent platform and not thinking about your skill marketplace, you are already behind.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 — Last 7 Days</h2>
+    <span class="badge">Sep 26 – Oct 3</span>
+  </div>
+
+  <a class="repo-card" href="https://github.com/KKKKhazix/AIHOT" target="_blank" rel="noopener">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name">KKKKhazix/AIHOT</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,003</span>
+        <span class="lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Self-hosted framework that finds its own hot topics and writes daily briefs. Swap the sources and curation criteria and it becomes your industry news site. MCP-native.</div>
+      <div class="tags">
+        <span class="tag">ai</span>
+        <span class="tag">news-aggregator</span>
+        <span class="tag">self-hosted</span>
+        <span class="tag">mcp</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/feder-cr/dots" target="_blank" rel="noopener">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name">feder-cr/dots</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,524</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Open-source Dots clone: an AI agent with its own anti-detect browser that does not get blocked. Playwright-based, supports OpenRouter.</div>
+      <div class="tags">
+        <span class="tag">ai-agent</span>
+        <span class="tag">browser-automation</span>
+        <span class="tag">stealth-browser</span>
+        <span class="tag">playwright</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/rehan-remade/universal-modder" target="_blank" rel="noopener">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name">rehan-remade/universal-modder</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,197</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Point Claude Code at any PC game and let it mod it. Skills for recon, reverse engineering, fal-generated art and audio, and in-game testing.</div>
+      <div class="tags">
+        <span class="tag">claude-code</span>
+        <span class="tag">game-modding</span>
+        <span class="tag">reverse-engineering</span>
+        <span class="tag">fal</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/CopilotKit/OpenDots" target="_blank" rel="noopener">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name">CopilotKit/OpenDots</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,577</span>
+        <span class="lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Always-on AI coworkers that move between text, calls, and Slack. From the CopilotKit team.</div>
+      <div class="tags">
+        <span class="tag">ai-coworker</span>
+        <span class="tag">slack</span>
+        <span class="tag">typescript</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/nanaism/yomiyasu" target="_blank" rel="noopener">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name">nanaism/yomiyasu</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,206</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Agent skill that refines AI-generated Japanese into natural prose. Works across Claude Code, Codex, Cursor, and Gemini.</div>
+      <div class="tags">
+        <span class="tag">agent-skills</span>
+        <span class="tag">japanese</span>
+        <span class="tag">nlp</span>
+        <span class="tag">writing</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/edenfunf/reelmimic" target="_blank" rel="noopener">
+    <div class="rank">6</div>
+    <div class="repo-info">
+      <div class="repo-name">edenfunf/reelmimic</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 970</span>
+        <span class="lang">JavaScript</span>
+      </div>
+      <div class="repo-desc">Show it a video you like, get a new one in the same style. Multi-agent crew (Claude Code or Codex) plans, builds, and reviews with you.</div>
+      <div class="tags">
+        <span class="tag">ai-video</span>
+        <span class="tag">style-transfer</span>
+        <span class="tag">multi-agent</span>
+        <span class="tag">animation</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/echris6/motion-video-kit" target="_blank" rel="noopener">
+    <div class="rank">7</div>
+    <div class="repo-info">
+      <div class="repo-name">echris6/motion-video-kit</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 965</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Claude Code skill kit for premium business videos: critic loop, motion principles from 28 launch films, sound design, Three.js patterns.</div>
+      <div class="tags">
+        <span class="tag">claude-code</span>
+        <span class="tag">motion-design</span>
+        <span class="tag">video-generation</span>
+        <span class="tag">three.js</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/Edwardxlai/easyread" target="_blank" rel="noopener">
+    <div class="rank">8</div>
+    <div class="repo-info">
+      <div class="repo-name">Edwardxlai/easyread</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 620</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Local PDF paper translation with side-by-side view, inline Q&amp;A, and reference management. Electron app, fully offline.</div>
+      <div class="tags">
+        <span class="tag">paper-reading</span>
+        <span class="tag">pdf-translator</span>
+        <span class="tag">academic</span>
+        <span class="tag">electron</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/JoasASantos/Offensive-Security-AI-Models" target="_blank" rel="noopener">
+    <div class="rank">9</div>
+    <div class="repo-info">
+      <div class="repo-name">JoasASantos/Offensive-Security-AI-Models</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 550</span>
+      </div>
+      <div class="repo-desc">Curated list of AI models fine-tuned for cybersecurity tasks, including red-team and penetration testing applications.</div>
+      <div class="tags">
+        <span class="tag">cybersecurity</span>
+        <span class="tag">red-team</span>
+        <span class="tag">awesome-list</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/composio-community/open-dot" target="_blank" rel="noopener">
+    <div class="rank">10</div>
+    <div class="repo-info">
+      <div class="repo-name">composio-community/open-dot</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 428</span>
+        <span class="lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Open-source personal AI agents that work on their own computers. Mac app built on OpenAI and Composio.</div>
+      <div class="tags">
+        <span class="tag">ai-agent</span>
+        <span class="tag">macos</span>
+        <span class="tag">composio</span>
+      </div>
+    </div>
+  </a>
+
+  <div class="section-header">
+    <h2>Top 5 — Last 30 Days</h2>
+    <span class="badge">Sep 3 – Oct 3</span>
+  </div>
+
+  <a class="repo-card" href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name">zai-org/ZCode</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 7,339</span>
+        <span class="lang">TypeScript</span>
+      </div>
+      <div class="repo-desc">Z.ai's coding agent harness. Another entrant in the Claude Code / Codex space, emphasizing extensibility.</div>
+      <div class="tags">
+        <span class="tag">coding-agent</span>
+        <span class="tag">harness</span>
+        <span class="tag">typescript</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name">yetone/magpie</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 4,294</span>
+        <span class="lang">Go</span>
+      </div>
+      <div class="repo-desc">Model router from the menu bar: run Codex on DeepSeek, Claude Code on Kimi, or any harness on any model. macOS.</div>
+      <div class="tags">
+        <span class="tag">model-router</span>
+        <span class="tag">macos</span>
+        <span class="tag">claude-code</span>
+        <span class="tag">deepseek</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/kaankiziltug/logo-design-skill" target="_blank" rel="noopener">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name">kaankiziltug/logo-design-skill</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,553</span>
+        <span class="lang">HTML</span>
+      </div>
+      <div class="repo-desc">Comprehensive logo-design skill for Claude, Gemini CLI, and Codex: principles, SVG craft, testing tools, and a 1,400+ logo reference library.</div>
+      <div class="tags">
+        <span class="tag">agent-skills</span>
+        <span class="tag">logo-design</span>
+        <span class="tag">svg</span>
+        <span class="tag">branding</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/jtydhr88/screenwriting-skills" target="_blank" rel="noopener">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name">jtydhr88/screenwriting-skills</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,541</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">Professional agent skills for screenwriting, television writing, and dramaturgy. The creative-writing vertical packaged as reusable agent skills.</div>
+      <div class="tags">
+        <span class="tag">agent-skills</span>
+        <span class="tag">screenwriting</span>
+        <span class="tag">creative-writing</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="repo-card" href="https://github.com/TokenRhythm/NeoHorse" target="_blank" rel="noopener">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name">TokenRhythm/NeoHorse</div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,487</span>
+        <span class="lang">Python</span>
+      </div>
+      <div class="repo-desc">NeoHorse-1: recursive self-improvement via agentic post-training with a routing harness. Research repo pushing the frontier of models that improve themselves.</div>
+      <div class="tags">
+        <span class="tag">post-training</span>
+        <span class="tag">recursive-self-improvement</span>
+        <span class="tag">research</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine &middot; Data sourced from GitHub Search API &middot; October 3, 2026
+</div>
+
+</body>
+</html>
