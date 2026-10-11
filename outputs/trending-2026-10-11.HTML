@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-11</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-dim: #1f6feb;
+    --star: #e3b341;
+    --badge-7d: #238636;
+    --badge-30d: #6e40c9;
+    --tag-bg: #1c2128;
+    --tag-border: #30363d;
+    --editor-bg: #1c2128;
+    --editor-border: #58a6ff33;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --accent-dim: #0550ae;
+      --star: #bf8700;
+      --badge-7d: #1a7f37;
+      --badge-30d: #5e3fbe;
+      --tag-bg: #f0f3f6;
+      --tag-border: #d0d7de;
+      --editor-bg: #f0f6ff;
+      --editor-border: #0969da33;
+      --gradient-start: #0969da;
+      --gradient-end: #8250df;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 36px 0 18px;
+  }
+
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    transition: border-color 0.15s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 22px;
+  }
+
+  .repo-name a {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .stars {
+    font-size: 0.82rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .lang {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-left: 32px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.35rem; }
+    .repo-desc { padding-left: 0; margin-top: 4px; }
+    .repo-top { gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-10-11 UTC</div>
+</header>
+
+<div class="editor-take">
+  <h2>Editor's Take</h2>
+  <p>The agent-as-infrastructure wave has crested. This week's top repos aren't building agents &mdash; they're building the plumbing agents need to operate independently: their own Chrome sessions, their own OS, their own Cloudflare accounts, their own phone numbers. The clearest signal is that three of the top ten give agents access to real-world surfaces (screens, browsers, business phone lines) rather than sandboxed playgrounds. Meanwhile, the 30-day window shows a maturing ecosystem: model-routing from a menu bar, agent-monitoring from your phone's lock screen, and a full coding harness from a new entrant. If your product still assumes agents run inside a chat window, this week's repos are a direct challenge to that assumption.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="badge badge-7d">Last 7 Days</span>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#1</span>
+      <span class="repo-name"><a href="https://github.com/mhtsec/ARTEX">mhtsec/ARTEX</a></span>
+      <span class="stars">&#9733; 2,959</span>
+      <span class="lang">Go</span>
+    </div>
+    <div class="repo-desc">AI autonomous penetration testing system and winner of Baidu's agent+ offensive security challenge. Multi-agent architecture for structured red-team engagements.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#2</span>
+      <span class="repo-name"><a href="https://github.com/LosaLosSantos/aurelio-finance">LosaLosSantos/aurelio-finance</a></span>
+      <span class="stars">&#9733; 2,094</span>
+      <span class="lang">Python</span>
+    </div>
+    <div class="repo-desc">Self-hosted personal finance app with an AI financial advisor. Tracks net worth, ETFs, dividends and debts locally with no external data sharing.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#3</span>
+      <span class="repo-name"><a href="https://github.com/elstongun/leviathan">elstongun/leviathan</a></span>
+      <span class="stars">&#9733; 732</span>
+      <span class="lang">Rust</span>
+    </div>
+    <div class="repo-desc">Deep memory for agents over large datasets. Single static binary that turns JSONL, CSV, SQLite or database exports into a ranked full-text index.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#4</span>
+      <span class="repo-name"><a href="https://github.com/ThariqS/ai-newtab">ThariqS/ai-newtab</a></span>
+      <span class="stars">&#9733; 700</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Chrome extension where Claude generates a personalised new-tab page from your browser history each day.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#5</span>
+      <span class="repo-name"><a href="https://github.com/franzenzenhofer/big-arrow-on-the-screen">franzenzenhofer/big-arrow-on-the-screen</a></span>
+      <span class="stars">&#9733; 594</span>
+      <span class="lang">Swift</span>
+    </div>
+    <div class="repo-desc">CLI that lets AI agents paint arrows, boxes and text on your Mac screen as click-through overlays. Works as a Claude Code and Codex skill.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#6</span>
+      <span class="repo-name"><a href="https://github.com/sirioberati/Genjustsu-Open-Source-Workflow">sirioberati/Genjustsu-Open-Source-Workflow</a></span>
+      <span class="stars">&#9733; 499</span>
+      <span class="lang">Python</span>
+    </div>
+    <div class="repo-desc">Open-source AI video replacement workflow combining depth maps, SAM segmentation, face meshes and audio processing with Seedance. Includes a local web UI for mask review and export.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#7</span>
+      <span class="repo-name"><a href="https://github.com/rociiu/talorys">rociiu/talorys</a></span>
+      <span class="stars">&#9733; 442</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Personal AI agent deployed to your own Cloudflare account with one command. Chat, memory, tasks, notes and scheduled reminders. Free-tier friendly, no telemetry.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#8</span>
+      <span class="repo-name"><a href="https://github.com/iamlukethedev/Herald-OS">iamlukethedev/Herald-OS</a></span>
+      <span class="stars">&#9733; 407</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Agent-native operating system built on Fedora/Hyprland with Hermes Agent as the primary interface. The "agent as desktop environment" thesis, implemented.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#9</span>
+      <span class="repo-name"><a href="https://github.com/mushigaite/short-video-maker">mushigaite/short-video-maker</a></span>
+      <span class="stars">&#9733; 291</span>
+      <span class="lang">Python</span>
+    </div>
+    <div class="repo-desc">Turns YouTube videos into viral short clips with highlight detection, subtitles, translation and voiceover. Open-source alternative to OpusClip-style SaaS tools.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#10</span>
+      <span class="repo-name"><a href="https://github.com/OrgoAI/bops">OrgoAI/bops</a></span>
+      <span class="stars">&#9733; 247</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">A team of AI bots that run your business ops, each with its own computer, email and phone number. Electron + Next.js Mac app.</div>
+  </li>
+
+</ol>
+
+<div class="section-header">
+  <h2>Top 5</h2>
+  <span class="badge badge-30d">Last 30 Days</span>
+</div>
+
+<ol class="repo-list">
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#1</span>
+      <span class="repo-name"><a href="https://github.com/yetone/magpie">yetone/magpie</a></span>
+      <span class="stars">&#9733; 8,674</span>
+      <span class="lang">Go</span>
+    </div>
+    <div class="repo-desc">Menu-bar app that routes any agent to any model: Codex on DeepSeek, Claude Code on Kimi, all from one toggle. macOS.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#2</span>
+      <span class="repo-name"><a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a></span>
+      <span class="stars">&#9733; 7,656</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Z.ai's coding agent harness. A new entrant in the Claude Code / Codex space with its own extensibility model and 2,300+ forks already.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#3</span>
+      <span class="repo-name"><a href="https://github.com/KKKKhazix/AIHOT">KKKKhazix/AIHOT</a></span>
+      <span class="stars">&#9733; 7,098</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Self-running AI hot-news aggregator framework. Swap in your sources and curation criteria, and it writes its own daily digest. Docker, PostgreSQL.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#4</span>
+      <span class="repo-name"><a href="https://github.com/CopilotKit/OpenDots">CopilotKit/OpenDots</a></span>
+      <span class="stars">&#9733; 4,824</span>
+      <span class="lang">TypeScript</span>
+    </div>
+    <div class="repo-desc">Always-on AI coworkers that move between text, calls and Slack. From CopilotKit, pushing the "ambient agent" category toward production.</div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-top">
+      <span class="rank">#5</span>
+      <span class="repo-name"><a href="https://github.com/Louis-CFM/coucou">Louis-CFM/coucou</a></span>
+      <span class="stars">&#9733; 4,715</span>
+      <span class="lang">Swift</span>
+    </div>
+    <div class="repo-desc">A tiny companion in your Mac's notch and on your iPhone Lock Screen that monitors your coding agents (Claude Code, Codex, Cursor, Gemini CLI). Approve actions from the notch or your wrist.</div>
+  </li>
+
+</ol>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; 2026-10-11 UTC
+</footer>
+
+</body>
+</html>
