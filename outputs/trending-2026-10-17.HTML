@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-17</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-highlight: #f0f4ff;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --accent: #4361ee;
+    --accent-light: #e8edff;
+    --border: #e2e4e9;
+    --star: #f59e0b;
+    --tag-bg: #eef1f6;
+    --tag-text: #4a5068;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --radius: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f0f1a;
+      --bg-card: #1a1a2e;
+      --bg-highlight: #1e2140;
+      --text: #e8e8f0;
+      --text-secondary: #9a9ab8;
+      --accent: #6b8aff;
+      --accent-light: #252850;
+      --border: #2a2a40;
+      --tag-bg: #252540;
+      --tag-text: #b0b0d0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f0f1a;
+    --bg-card: #1a1a2e;
+    --bg-highlight: #1e2140;
+    --text: #e8e8f0;
+    --text-secondary: #9a9ab8;
+    --accent: #6b8aff;
+    --accent-light: #252850;
+    --border: #2a2a40;
+    --tag-bg: #252540;
+    --tag-text: #b0b0d0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  header .date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .editors-take {
+    background: var(--bg-highlight);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .editors-take p {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .editors-take p:last-child { margin-bottom: 0; }
+
+  .section-header {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  .section { margin-bottom: 40px; }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    word-break: break-word;
+  }
+
+  .repo-name a:hover { text-decoration: underline; }
+
+  .repo-meta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--star);
+  }
+
+  .lang-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .repo-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-left: 40px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .repo-top { flex-direction: column; gap: 8px; }
+    .repo-meta { margin-left: 40px; }
+    .repo-desc { margin-left: 0; margin-top: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-10-17 UTC</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The week's headline is hardware breaking into the agent loop. A $7 ESP32 giving AI models physical control of a real iPhone pulled nearly 3,000 stars in six days — no jailbreak, no Mac, just AirPlay for eyes and USB HID for hands. That is the clearest sign yet that "computer use" is leaving the browser sandbox and entering physical device control at consumer price points.</p>
+  <p>Meanwhile, the agent toolchain is quietly assembling itself. Git got a purpose-built fork for agent workflows. A design system appeared exclusively for AI application UIs. Coding agents gained ears (audio processing), a code graph with persistent memory, and a browser agent that ships as a standalone binary. None of these existed a month ago; together they sketch the outline of an agent-native development stack that no longer borrows from human developer tooling.</p>
+  <p>On the 30-day horizon, the model router Magpie crossed 14,000 stars — agents swapping between DeepSeek, Kimi and Claude from a menu bar is now table stakes. OpenDots and coucou signal that monitoring and orchestrating multiple agents is the new frontier: the question is no longer "can an agent do it" but "which agent is doing what, and who is watching."</p>
+</div>
+
+<div class="section">
+  <h2 class="section-header">Top 10 — Last 7 Days</h2>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">1</span>
+      <div class="repo-name"><a href="https://github.com/onehumanbeing/esp32-iphone-agent">onehumanbeing/esp32-iphone-agent</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 2,884</span>
+        <span class="lang-tag">C</span>
+      </div>
+    </div>
+    <div class="repo-desc">Let an AI model use a real iPhone with a $7 ESP32: AirPlay for vision, USB HID for input. No Mac, no developer account, no jailbreak.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">2</span>
+      <div class="repo-name"><a href="https://github.com/deeplethe/solid-glass">deeplethe/solid-glass</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 1,473</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Design system built specifically for AI applications — material, physical, tactile components with React, shadcn/ui and Tailwind.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">3</span>
+      <div class="repo-name"><a href="https://github.com/feder-cr/git-ai">feder-cr/git-ai</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 1,069</span>
+        <span class="lang-tag">Go</span>
+      </div>
+    </div>
+    <div class="repo-desc">Git reimagined for AI agents. Purpose-built version control for coding agent workflows.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">4</span>
+      <div class="repo-name"><a href="https://github.com/zhuyansen/new-term-radar">zhuyansen/new-term-radar</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 1,067</span>
+        <span class="lang-tag">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Daily radar for new AI terms: catches names of new models, products and repos on X, Hugging Face, GitHub and sitemaps before keyword tools list them.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">5</span>
+      <div class="repo-name"><a href="https://github.com/outcrawlai/scout">outcrawlai/scout</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 901</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Open-source browser agent from Outcrawl. CDP-based web automation built for LLM agent consumption.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">6</span>
+      <div class="repo-name"><a href="https://github.com/Zfinix/eleven">Zfinix/eleven</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 628</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Agent-first reverse engineering for macOS, Windows and Linux. Any ACP agent reads, renames and patches binaries.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">7</span>
+      <div class="repo-name"><a href="https://github.com/yeyuxin777/baoyan-agent-benchmark">yeyuxin777/baoyan-agent-benchmark</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 504</span>
+        <span class="lang-tag">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Open-source benchmark for AI agents in academic advising and application planning. Domain-specific eval in a vertical no one was measuring.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">8</span>
+      <div class="repo-name"><a href="https://github.com/datalab-to/indra">datalab-to/indra</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 468</span>
+        <span class="lang-tag">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Fast CPU-only OCR: line detection, CTC recognition, reading order, markdown output. No GPU required.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">9</span>
+      <div class="repo-name"><a href="https://github.com/i12bp8/decomp.wtf">i12bp8/decomp.wtf</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 466</span>
+        <span class="lang-tag">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">AI agent that decompiles games into C that compiles to the exact same bytes. Matching decompilation running locally.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">10</span>
+      <div class="repo-name"><a href="https://github.com/Leonxlnx/earshot">Leonxlnx/earshot</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 375</span>
+        <span class="lang-tag">Python</span>
+      </div>
+    </div>
+    <div class="repo-desc">Ears for coding agents: lets AI hear, review and produce sound. CPU-only, open source, ships as an MCP server.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-header">Top 5 — Last 30 Days</h2>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">1</span>
+      <div class="repo-name"><a href="https://github.com/yetone/magpie">yetone/magpie</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 14,301</span>
+        <span class="lang-tag">Go</span>
+      </div>
+    </div>
+    <div class="repo-desc">Every agent's model in one place. Route Codex to DeepSeek, Claude Code to Kimi, all from the menu bar. The model router agents needed.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">2</span>
+      <div class="repo-name"><a href="https://github.com/KKKKhazix/AIHOT">KKKKhazix/AIHOT</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 7,898</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Self-operating AI hot-topic aggregator: finds its own stories, writes its own daily digest. Swap the sources and criteria and it becomes your industry's news site.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">3</span>
+      <div class="repo-name"><a href="https://github.com/zai-org/ZCode">zai-org/ZCode</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 7,896</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Z.ai's coding agent harness. A full-featured, extensible alternative in the agent-IDE race.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">4</span>
+      <div class="repo-name"><a href="https://github.com/CopilotKit/OpenDots">CopilotKit/OpenDots</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 5,494</span>
+        <span class="lang-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="repo-desc">Always-on AI coworkers that move between text, calls and Slack. Multi-modal agent presence, not just chat.</div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">5</span>
+      <div class="repo-name"><a href="https://github.com/Louis-CFM/coucou">Louis-CFM/coucou</a></div>
+      <div class="repo-meta">
+        <span class="stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 5,384</span>
+        <span class="lang-tag">Swift</span>
+      </div>
+    </div>
+    <div class="repo-desc">A tiny friend in your Mac's notch and on your iPhone that monitors your coding agents: Claude Code, Codex, Cursor, Gemini CLI. Approve from the notch or your Lock Screen.</div>
+  </div>
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine — 2026-10-17 UTC
+</footer>
+
+</body>
+</html>
