@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-19</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --star: #e3b341;
+    --badge-7d: #238636;
+    --badge-30d: #8957e5;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+    --card-hover: #1c2129;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-secondary: #656d76;
+      --accent: #0969da;
+      --accent-subtle: #0969da11;
+      --star: #bf8700;
+      --badge-7d: #1a7f37;
+      --badge-30d: #8250df;
+      --gradient-start: #0969da;
+      --gradient-end: #8250df;
+      --card-hover: #f3f4f6;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+  header {
+    text-align: center;
+    padding: 48px 16px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 12px 12px 0 0;
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+  }
+  .editors-take p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-7d { background: var(--badge-7d); color: #fff; }
+  .badge-30d { background: var(--badge-30d); color: #fff; }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .repo-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+  }
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-align: center;
+    padding-top: 2px;
+  }
+  .repo-card:nth-child(1) .rank { color: var(--star); }
+  .repo-card:nth-child(2) .rank { color: var(--text-secondary); }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+  .repo-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    word-break: break-word;
+  }
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-info h3 a:hover { text-decoration: underline; }
+  .repo-info p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    color: var(--star);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .stars svg { width: 16px; height: 16px; fill: var(--star); flex-shrink: 0; }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .lang-tag, .topic-tag {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .topic-tag {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .repo-card { grid-template-columns: 28px 1fr; }
+    .stars { grid-column: 2; }
+    header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">Week of October 19, 2026</div>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>MCP is eating creative tooling. This week's standout is a Blender addon that turns a 3D editor into an AI-driven scene-building pipeline &mdash; and it pulled nearly 800 stars in four days. The broader pattern: AI agents are colonizing domain-specific desktop software (Blender, game engines, even iPhone control via a $7 ESP32) rather than staying inside chat windows and IDEs. Meanwhile, the &ldquo;agent skill&rdquo; format pioneered by Claude Code is becoming a distribution channel in its own right &mdash; three of the month's top repos are installable skills, not standalone apps. If you are still building tools that require users to leave their workflow, you are building for last quarter.</p>
+  </section>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 Days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/LiCinCan/blender-ai-mcp-addon" target="_blank" rel="noopener">LiCinCan/blender-ai-mcp-addon</a></h3>
+        <p>MCP server that turns Blender into an AI workspace: visual chat, scene manipulation, and multi-agent workflows across OpenAI, Claude, Gemini, and Ollama. The fork count (377) says people are actually extending it.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">blender</span>
+          <span class="topic-tag">mcp-server</span>
+          <span class="topic-tag">3D</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 788</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit" target="_blank" rel="noopener">heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit</a></h3>
+        <p>Decomposes cross-border e-commerce SOPs into seven reusable AI agent workflows with prompts, templates, and real case studies for Shopee and Mercado Livre. Vertical AI automation for a market that prints money.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">ai-agents</span>
+          <span class="topic-tag">ecommerce</span>
+          <span class="topic-tag">workflow</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 395</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/zcbacxc/mcd-party-planner" target="_blank" rel="noopener">zcbacxc/mcd-party-planner</a></h3>
+        <p>An MCP-based party booking and group-meal planning CLI/skill built on top of McDonald's data. Niche but illustrates how quickly MCP skills can wrap real-world services.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">mcp</span>
+          <span class="topic-tag">model-context-protocol</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 353</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Graphicle-AI/graphicle" target="_blank" rel="noopener">Graphicle-AI/graphicle</a></h3>
+        <p>Code graph and persistent memory for coding agents, written in Rust. Works with Claude Code, Codex, and Cursor via MCP. Local-first, tree-sitter-powered code intelligence &mdash; the &ldquo;give your agent a brain&rdquo; play.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Rust</span>
+          <span class="topic-tag">code-graph</span>
+          <span class="topic-tag">agent-memory</span>
+          <span class="topic-tag">mcp</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 300</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/christos-antono/NPCTalk" target="_blank" rel="noopener">christos-antono/NPCTalk</a></h3>
+        <p>Makes any game NPC talk back with Fish Audio voice synthesis and a self-hosted voice server. Ships a full GTA V example. AI agents entering game modding is a sleeper category.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">game-modding</span>
+          <span class="topic-tag">voice-cloning</span>
+          <span class="topic-tag">llm</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 170</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">6</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/adexbn/walk-kcal" target="_blank" rel="noopener">adexbn/walk-kcal</a></h3>
+        <p>MCP skill that converts walking distance into calorie budgets using real McDonald's nutrition data and nearby restaurant lookups. The lightest-weight agent skill this week.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">health</span>
+          <span class="topic-tag">mcp-server</span>
+          <span class="topic-tag">nutrition</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 76</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">7</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/repoboost-hq/github-star-benchmarks" target="_blank" rel="noopener">repoboost-hq/github-star-benchmarks</a></h3>
+        <p>Open dataset of 32.6M starred repositories with star thresholds, language cohorts, and fake-star research context from ICSE 2026. Useful for repo-recommendation or LLM-eval pipelines.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">dataset</span>
+          <span class="topic-tag">ai-research</span>
+          <span class="topic-tag">benchmarks</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 74</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">8</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/vakandi/opencode-rust" target="_blank" rel="noopener">vakandi/opencode-rust</a></h3>
+        <p>Open-source AI coding agent rewritten in Rust: CLI, TUI, and HTTP server. No Docker required. The performance-first rewrite of the AI coding agent pattern.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Rust</span>
+          <span class="topic-tag">coding-agent</span>
+          <span class="topic-tag">cli</span>
+          <span class="topic-tag">lsp</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 73</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">9</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/mmm1712/Local_AI_esp32" target="_blank" rel="noopener">mmm1712/Local_AI_esp32</a></h3>
+        <p>A transformer model trained from scratch and running offline on an ESP32-S3 with a touchscreen chat UI. Proof that embedded AI is not waiting for better hardware.</p>
+        <div class="meta-row">
+          <span class="lang-tag">C</span>
+          <span class="topic-tag">embedded-ai</span>
+          <span class="topic-tag">esp32</span>
+          <span class="topic-tag">transformer</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 64</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">10</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/azrinaldi/opencode-free-bridge" target="_blank" rel="noopener">azrinaldi/opencode-free-bridge</a></h3>
+        <p>OpenAI-compatible bridge for free-tier models &mdash; no account required. Proxy layer that routes requests to DeepSeek and Muse Spark, lowering the barrier to local AI coding.</p>
+        <div class="meta-row">
+          <span class="lang-tag">JavaScript</span>
+          <span class="topic-tag">proxy</span>
+          <span class="topic-tag">openai</span>
+          <span class="topic-tag">free</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 55</span>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 Days</span>
+    <span class="line"></span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a></h3>
+        <p>Agent skill that answers complex questions by generating a single-page HTML explainer you can actually read. 260 forks in two weeks. The &ldquo;answer as artifact&rdquo; pattern is becoming standard.</p>
+        <div class="meta-row">
+          <span class="lang-tag">JavaScript</span>
+          <span class="topic-tag">agent-skill</span>
+          <span class="topic-tag">claude-code</span>
+          <span class="topic-tag">html</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 3,714</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a></h3>
+        <p>Let an AI model use a real iPhone with a $7 ESP32: AirPlay for vision, USB HID for control, any OpenAI-compatible model. No Mac, no developer account, no jailbreak. Hardware-agent convergence at its most literal.</p>
+        <div class="meta-row">
+          <span class="lang-tag">C</span>
+          <span class="topic-tag">esp32</span>
+          <span class="topic-tag">ai-agent</span>
+          <span class="topic-tag">computer-use</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 3,155</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/nanaism/yomiyasu" target="_blank" rel="noopener">nanaism/yomiyasu</a></h3>
+        <p>Agent skill for refining AI-generated Japanese into natural Japanese. Works across Claude Code, Codex, Cursor, and Gemini. A language-specific writing linter that signals non-English AI tooling is maturing.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Python</span>
+          <span class="topic-tag">japanese</span>
+          <span class="topic-tag">writing-assistant</span>
+          <span class="topic-tag">agent-skills</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,237</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/trhhubsd/ARTEX" target="_blank" rel="noopener">trhhubsd/ARTEX</a></h3>
+        <p>Multi-agent autonomous penetration testing system in Go and Next.js. Won the Baidu Agent+ cybersecurity challenge. LLM agents running offensive security workflows, not just answering questions about them.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Go</span>
+          <span class="topic-tag">cybersecurity</span>
+          <span class="topic-tag">penetration-testing</span>
+          <span class="topic-tag">llm-agent</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,265</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/amitshekhariitbhu/ai-system-design" target="_blank" rel="noopener">amitshekhariitbhu/ai-system-design</a></h3>
+        <p>Step-by-step guide to designing AI systems built on LLMs, RAG, and AI agents. The &ldquo;system design interview but for AI&rdquo; niche is filling fast.</p>
+        <div class="meta-row">
+          <span class="lang-tag">Markdown</span>
+          <span class="topic-tag">ai-system-design</span>
+          <span class="topic-tag">system-design</span>
+          <span class="topic-tag">llm</span>
+        </div>
+      </div>
+      <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 723</span>
+    </li>
+  </ol>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine on 2026-10-19. Star counts as of retrieval time.</p>
+  </footer>
+</div>
+</body>
+</html>
