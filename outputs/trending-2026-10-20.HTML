@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-20</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: #0d1117;
+    --text: #1a1a2e;
+    --text-muted: #586069;
+    --text-hero: #e6edf3;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e1e4e8;
+    --star: #e3b341;
+    --tag-bg: #eff1f3;
+    --tag-text: #57606a;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+    --section-accent: #2563eb;
+    --gradient-start: #0d1117;
+    --gradient-end: #161b22;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-hero: #010409;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --text-hero: #e6edf3;
+      --accent: #58a6ff;
+      --accent-light: #1a2332;
+      --border: #30363d;
+      --star: #e3b341;
+      --tag-bg: #21262d;
+      --tag-text: #8b949e;
+      --rank-bg: #58a6ff;
+      --rank-text: #0d1117;
+      --section-accent: #58a6ff;
+      --gradient-start: #010409;
+      --gradient-end: #0d1117;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-hero: #010409;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-hero: #e6edf3;
+    --accent: #58a6ff;
+    --accent-light: #1a2332;
+    --border: #30363d;
+    --star: #e3b341;
+    --tag-bg: #21262d;
+    --tag-text: #8b949e;
+    --rank-bg: #58a6ff;
+    --rank-text: #0d1117;
+    --section-accent: #58a6ff;
+    --gradient-start: #010409;
+    --gradient-end: #0d1117;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: var(--text-hero);
+    padding: 3rem 1rem 2.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+  .hero .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+  .container {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .editors-take {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    border-left: 4px solid var(--section-accent);
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--section-accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--section-accent);
+  }
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    font-size: 0.75rem;
+    background: var(--section-accent);
+    color: var(--rank-text);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .repo-card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+  .rank {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .repo-info { min-width: 0; }
+  .repo-name {
+    font-size: 1rem;
+    font-weight: 600;
+    word-break: break-word;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0.4rem 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .repo-meta .stars {
+    color: var(--star);
+    font-weight: 600;
+  }
+  .repo-meta .lang {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+    line-height: 1.55;
+  }
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .hero h1 { font-size: 1.35rem; }
+    .repo-card { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 1rem; }
+    .rank { width: 2rem; height: 2rem; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-10-20 UTC</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The MCP ecosystem is no longer experimental — it is the platform layer. Six of this week's top ten repos are MCP servers or agent skills spanning audio, messaging, 3D modelling, and stock analysis. The pattern is clear: every domain that touches a computer is getting an agent interface, and the speed of adoption says the protocol bet has paid off. Meanwhile, the month's breakout star is Magpie, a menu-bar router that lets you swap the model behind any coding agent without changing your workflow — a sign that the model itself is becoming a commodity while the harness around it is where the value accrues. The backlash repo of the month, RemoveMacAI, crossed 5k stars by offering a one-click undo for Apple Intelligence, proving that mandatory AI features generate their own antibodies.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 — Last 7 Days</h2>
+    <span class="badge">Weekly</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/feder-cr/git-ai" target="_blank" rel="noopener">feder-cr/git-ai</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 2,467</span>
+        <span class="lang"><span class="lang-dot" style="background:#00ADD8"></span> Go</span>
+      </div>
+      <div class="repo-desc">Git redesigned for AI agents — structured diffs, semantic commits, and conflict resolution tuned for LLM context windows.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Leonxlnx/earshot" target="_blank" rel="noopener">Leonxlnx/earshot</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 1,605</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+      </div>
+      <div class="repo-desc">Gives coding agents ears: CPU-only audio review, sound generation, and playback — an MCP server that adds a sensory channel agents never had.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/LiCinCan/blender-ai-mcp-addon" target="_blank" rel="noopener">LiCinCan/blender-ai-mcp-addon</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 921</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+      </div>
+      <div class="repo-desc">MCP server for Blender with visual chat, scene manipulation, and multi-agent workflows across OpenAI, Claude, Gemini, and Ollama.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/cranebeaker/coop-anything" target="_blank" rel="noopener">cranebeaker/coop-anything</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 594</span>
+        <span class="lang"><span class="lang-dot" style="background:#555555"></span> C</span>
+      </div>
+      <div class="repo-desc">Point an AI agent at any single-player game and play it cooperatively with friends — an MCP server that reverse-engineers game state for multiplayer injection.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/AndreSzymanski15/ai-jailbreaks" target="_blank" rel="noopener">AndreSzymanski15/ai-jailbreaks</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 401</span>
+        <span class="lang"><span class="lang-dot" style="background:#8b949e"></span> —</span>
+      </div>
+      <div class="repo-desc">35 paste-ready jailbreak prompts for 25+ frontier and open-weight LLMs, built for AI security research and red-team testing.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">6</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener">finereli/whatsapp-mcp</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 288</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+      </div>
+      <div class="repo-desc">Read-only MCP server that lets AI agents search and read your WhatsApp messages, running on Cloudflare Workers.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">7</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/kanaworksai-hue/audio-studio-mcp" target="_blank" rel="noopener">kanaworksai-hue/audio-studio-mcp</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 274</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+      </div>
+      <div class="repo-desc">Local AI music and sound-effect generation for Claude Code and any MCP client — Stable Audio 3 on Apple Silicon and Windows NVIDIA, no cloud needed.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">8</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/christos-antono/NPCTalk" target="_blank" rel="noopener">christos-antono/NPCTalk</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 182</span>
+        <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+      </div>
+      <div class="repo-desc">Make any NPC in any game talk back using Fish Audio voice cloning — agent skills, a self-hosted voice server, and a full GTA V example.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">9</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/caveman-ai/trim-1" target="_blank" rel="noopener">caveman-ai/trim-1</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 171</span>
+        <span class="lang"><span class="lang-dot" style="background:#00ADD8"></span> Go</span>
+      </div>
+      <div class="repo-desc">A 1.2 MB model that decides which lines of context an AI agent actually needs — built by the caveman team as a fast context pruner.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">10</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/nichochar/ari" target="_blank" rel="noopener">nichochar/ari</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 154</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+      </div>
+      <div class="repo-desc">Learn with pen, paper, and AI — a local-first education app that pairs handwriting capture with an AI tutor.</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 — Last 30 Days</h2>
+    <span class="badge">Monthly</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 17,269</span>
+        <span class="lang"><span class="lang-dot" style="background:#00ADD8"></span> Go</span>
+      </div>
+      <div class="repo-desc">Every agent's model, one place: route Codex through DeepSeek, Claude Code through Kimi, all from the menu bar. The month's breakout model-routing tool.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/KKKKhazix/AIHOT" target="_blank" rel="noopener">KKKKhazix/AIHOT</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 8,115</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+      </div>
+      <div class="repo-desc">A self-running site that finds its own hot topics and writes its own daily digest — swap the sources and criteria for any industry vertical.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/CopilotKit/OpenDots" target="_blank" rel="noopener">CopilotKit/OpenDots</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,630</span>
+        <span class="lang"><span class="lang-dot" style="background:#3178c6"></span> TypeScript</span>
+      </div>
+      <div class="repo-desc">Always-on AI coworkers that move between text, calls, and Slack — CopilotKit's play for persistent multi-modal agents in the workplace.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Louis-CFM/coucou" target="_blank" rel="noopener">Louis-CFM/coucou</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,603</span>
+        <span class="lang"><span class="lang-dot" style="background:#F05138"></span> Swift</span>
+      </div>
+      <div class="repo-desc">A tiny friend in your Mac's notch and on your iPhone that watches your coding agents — approve Claude Code, Codex, or Cursor prompts from the Dynamic Island or Lock Screen.</div>
+    </div>
+  </div>
+
+  <div class="repo-card">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/omlahore/RemoveMacAI" target="_blank" rel="noopener">omlahore/RemoveMacAI</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,029</span>
+        <span class="lang"><span class="lang-dot" style="background:#F05138"></span> Swift</span>
+      </div>
+      <div class="repo-desc">Debloat macOS: turn off Apple Intelligence, analytics, ads, and pop-ups with a native app and CLI — every change reversible. The AI backlash, packaged neatly.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine — 2026-10-20 UTC
+</div>
+
+</body>
+</html>
