@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-21</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-raised: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: rgba(88,166,255,0.12);
+    --star: #e3b341;
+    --tag-bg: rgba(88,166,255,0.1);
+    --tag-text: #58a6ff;
+    --green: #3fb950;
+    --editor-bg: linear-gradient(135deg, rgba(88,166,255,0.06) 0%, rgba(63,185,80,0.04) 100%);
+    --rank-color: #30363d;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --surface-raised: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --accent-soft: rgba(9,105,218,0.08);
+      --star: #bf8700;
+      --tag-bg: rgba(9,105,218,0.08);
+      --tag-text: #0969da;
+      --green: #1a7f37;
+      --editor-bg: linear-gradient(135deg, rgba(9,105,218,0.04) 0%, rgba(26,127,55,0.03) 100%);
+      --rank-color: #d0d7de;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 40px 0 60px; }
+  header { margin-bottom: 40px; }
+  .date-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .subtitle { color: var(--text-muted); font-size: 15px; }
+  .editor-card {
+    background: var(--editor-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .editor-card::before {
+    content: "Editor's Take";
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .editor-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .section-header .badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    background: rgba(63,185,80,0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .repo-list { list-style: none; margin-bottom: 48px; }
+  .repo-item {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .repo-item:last-child { border-bottom: none; }
+  .rank {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--rank-color);
+    text-align: right;
+    padding-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .repo-body { min-width: 0; }
+  .repo-title-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .repo-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name:hover { text-decoration: underline; }
+  .stars {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .stars::before { content: "★ "; }
+  .repo-lang {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface);
+    padding: 1px 7px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .tag {
+    font-size: 11px;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 2px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  footer {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  @media (max-width: 520px) {
+    .repo-item { grid-template-columns: 28px 1fr; gap: 10px; }
+    .rank { font-size: 16px; }
+    h1 { font-size: 22px; }
+    .editor-card { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="date-badge">2026-10-21 UTC</span>
+    <h1>Trending AI Repos</h1>
+    <p class="subtitle">Weekly signal from GitHub — curated by an automated routine</p>
+  </header>
+
+  <div class="editor-card">
+    <p>The agent-skills ecosystem has crossed a threshold: five of this month's fastest-growing repos are packaged skills or plugins for coding agents, not standalone tools. Audio is the breakout modality — earshot and audio-studio-mcp both shipped in the same week, giving agents ears and a voice without a cloud dependency. Mistral quietly dropped Timestral, a time-series foundation model, while everyone else was building MCP wrappers — the first credible open-weights entry into a domain still owned by proprietary forecasting APIs. The $7 ESP32-to-iPhone hardware bridge is the month's most subversive project: it turns any vision model into a phone automation agent with zero Apple cooperation. If you are building agent infrastructure, the signal is clear: the bottleneck has shifted from model capability to sensory input and real-world actuation.</p>
+  </div>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 10 — Last 7 Days</h2>
+      <span class="badge">Oct 14 – 21</span>
+    </div>
+    <ol class="repo-list">
+
+      <li class="repo-item">
+        <span class="rank">1</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/Leonxlnx/earshot" target="_blank" rel="noopener">Leonxlnx/earshot</a>
+            <span class="stars">1,982</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Gives coding agents the ability to hear, review, and generate sound. CPU-only, no cloud keys. The first serious attempt at audio as an agent modality rather than a standalone pipeline.</p>
+          <div class="repo-tags"><span class="tag">ai-agents</span><span class="tag">audio</span><span class="tag">claude-code</span><span class="tag">mcp</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">2</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/feder-cr/git-ai" target="_blank" rel="noopener">feder-cr/git-ai</a>
+            <span class="stars">1,286</span>
+            <span class="repo-lang">Go</span>
+          </div>
+          <p class="repo-desc">A Git reimagination purpose-built for AI agents. Handles the merge-conflict, context-window, and diff-size problems that make vanilla Git hostile to autonomous coding workflows.</p>
+          <div class="repo-tags"><span class="tag">ai-agents</span><span class="tag">coding-agents</span><span class="tag">git</span><span class="tag">golang</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">3</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/LiCinCan/blender-ai-mcp-addon" target="_blank" rel="noopener">LiCinCan/blender-ai-mcp-addon</a>
+            <span class="stars">940</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">MCP server and AI assistant for Blender with multi-agent workflows. Works across OpenAI, Claude, Gemini, and Ollama. Bridges the gap between 3D authoring and agent-driven scene generation.</p>
+          <div class="repo-tags"><span class="tag">blender</span><span class="tag">mcp-server</span><span class="tag">multi-agent</span><span class="tag">3d</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">4</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/cranebeaker/coop-anything" target="_blank" rel="noopener">cranebeaker/coop-anything</a>
+            <span class="stars">721</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Point an AI agent at any single-player game and turn it into a multiplayer experience. MCP server with a reverse-engineering playbook. Creative abuse of agent tool-use for entertainment.</p>
+          <div class="repo-tags"><span class="tag">ai-agents</span><span class="tag">gaming</span><span class="tag">mcp</span><span class="tag">reverse-engineering</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">5</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/mistralai/timestral" target="_blank" rel="noopener">mistralai/timestral</a>
+            <span class="stars">677</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Mistral's time-series foundation model. First credible open-weights competitor in a domain still dominated by proprietary forecasting services. Worth watching for financial and IoT use cases.</p>
+          <div class="repo-tags"><span class="tag">mistral</span><span class="tag">time-series</span><span class="tag">foundation-model</span><span class="tag">forecasting</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">6</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/kanaworksai-hue/audio-studio-mcp" target="_blank" rel="noopener">kanaworksai-hue/audio-studio-mcp</a>
+            <span class="stars">364</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Local AI music and sound-effect generation for Claude Code and any MCP client. Stable Audio 3 on Apple Silicon (MLX) and NVIDIA GPUs. No cloud, no API key.</p>
+          <div class="repo-tags"><span class="tag">audio-generation</span><span class="tag">mcp</span><span class="tag">mlx</span><span class="tag">stable-audio</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">7</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener">finereli/whatsapp-mcp</a>
+            <span class="stars">312</span>
+            <span class="repo-lang">TypeScript</span>
+          </div>
+          <p class="repo-desc">Read-only MCP server that lets agents search and read your WhatsApp messages. Runs on Cloudflare Workers. A clean example of giving agents access to personal data without write permissions.</p>
+          <div class="repo-tags"><span class="tag">whatsapp</span><span class="tag">mcp-server</span><span class="tag">cloudflare</span><span class="tag">read-only</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">8</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/MemTensor/MemT-1.0" target="_blank" rel="noopener">MemTensor/MemT-1.0</a>
+            <span class="stars">221</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Native long-term memory layer for LLMs. Targets the gap between context-window hacks and proper memory-augmented architectures. Supports DeepSeek, Qwen, and SGLang.</p>
+          <div class="repo-tags"><span class="tag">llm</span><span class="tag">long-term-memory</span><span class="tag">deepseek</span><span class="tag">qwen</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">9</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/christos-antono/NPCTalk" target="_blank" rel="noopener">christos-antono/NPCTalk</a>
+            <span class="stars">186</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Voice AI for game NPCs using Fish Audio. Ships a self-hosted voice server, agent skills, and a full GTA V integration as proof of concept.</p>
+          <div class="repo-tags"><span class="tag">game-modding</span><span class="tag">voice-cloning</span><span class="tag">fish-audio</span><span class="tag">gta5</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">10</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/nace-ai/kapitsa" target="_blank" rel="noopener">nace-ai/kapitsa</a>
+            <span class="stars">161</span>
+            <span class="repo-lang">C++</span>
+          </div>
+          <p class="repo-desc">Apple Silicon optimized inference engine for Qwen and Nemotron models. OpenAI and Anthropic API compatible. Built in C++ for raw Metal performance.</p>
+          <div class="repo-tags"><span class="tag">apple-silicon</span><span class="tag">inference</span><span class="tag">c++</span><span class="tag">openai-compatible</span></div>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 5 — Last 30 Days</h2>
+      <span class="badge">Sep 21 – Oct 21</span>
+    </div>
+    <ol class="repo-list">
+
+      <li class="repo-item">
+        <span class="rank">1</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/Louis-CFM/coucou" target="_blank" rel="noopener">Louis-CFM/coucou</a>
+            <span class="stars">5,650</span>
+            <span class="repo-lang">Swift</span>
+          </div>
+          <p class="repo-desc">A Mac notch and iPhone companion that monitors your AI coding agents. Approve tool calls from your Lock Screen or the Dynamic Island. Supports Claude Code, Codex, Cursor, Gemini CLI, and more.</p>
+          <div class="repo-tags"><span class="tag">macos</span><span class="tag">ios</span><span class="tag">dynamic-island</span><span class="tag">agent-monitoring</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">2</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a>
+            <span class="stars">4,130</span>
+            <span class="repo-lang">JavaScript</span>
+          </div>
+          <p class="repo-desc">Agent skill that makes AI answer complex questions as a single readable HTML page instead of scrolling terminal output. Simple idea, wildly popular execution.</p>
+          <div class="repo-tags"><span class="tag">agent-skill</span><span class="tag">html</span><span class="tag">claude-code</span><span class="tag">explainer</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">3</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/kaankiziltug/logo-design-skill" target="_blank" rel="noopener">kaankiziltug/logo-design-skill</a>
+            <span class="stars">3,859</span>
+            <span class="repo-lang">HTML</span>
+          </div>
+          <p class="repo-desc">Comprehensive logo-design skill for Claude, Gemini CLI, and Codex. Includes design principles, SVG craft tools, and a 1,400+ logo reference library.</p>
+          <div class="repo-tags"><span class="tag">logo-design</span><span class="tag">svg</span><span class="tag">agent-skills</span><span class="tag">branding</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">4</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a>
+            <span class="stars">3,416</span>
+            <span class="repo-lang">C</span>
+          </div>
+          <p class="repo-desc">A $7 ESP32 lets any vision model control a real iPhone via AirPlay eyes and USB HID hands. No Mac, no developer account, no jailbreak. Hardware-level computer use on the cheap.</p>
+          <div class="repo-tags"><span class="tag">esp32</span><span class="tag">iphone</span><span class="tag">computer-use</span><span class="tag">hardware</span></div>
+        </div>
+      </li>
+
+      <li class="repo-item">
+        <span class="rank">5</span>
+        <div class="repo-body">
+          <div class="repo-title-row">
+            <a class="repo-name" href="https://github.com/nanaism/yomiyasu" target="_blank" rel="noopener">nanaism/yomiyasu</a>
+            <span class="stars">2,358</span>
+            <span class="repo-lang">Python</span>
+          </div>
+          <p class="repo-desc">Agent skill that refines AI-generated Japanese into natural Japanese. Signals that non-English writing quality is becoming a first-class agent concern.</p>
+          <div class="repo-tags"><span class="tag">japanese</span><span class="tag">nlp</span><span class="tag">writing-assistant</span><span class="tag">agent-skills</span></div>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine — 2026-10-21 UTC
+  </footer>
+</div>
+</body>
+</html>
