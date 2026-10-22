@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-10-22</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-editor: #f0f4f8;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --border: #e5e7eb;
+    --star: #eab308;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --section-7d: #059669;
+    --section-30d: #7c3aed;
+    --rank-bg: #1e293b;
+    --rank-text: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-editor: #1a2332;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-light: #1e3a5f;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #312e81;
+      --tag-text: #c7d2fe;
+      --section-7d: #34d399;
+      --section-30d: #a78bfa;
+      --rank-bg: #60a5fa;
+      --rank-text: #0f172a;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-editor: #1a2332;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --border: #334155;
+    --star: #facc15;
+    --tag-bg: #312e81;
+    --tag-text: #c7d2fe;
+    --section-7d: #34d399;
+    --section-30d: #a78bfa;
+    --rank-bg: #60a5fa;
+    --rank-text: #0f172a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 0 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .editor-take {
+    background: var(--bg-editor);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .editor-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .editor-take p {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .editor-take p:last-child { margin-bottom: 0; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    margin-top: 8px;
+  }
+
+  .section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .section-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-7d {
+    background: var(--section-7d);
+    color: #fff;
+  }
+
+  .badge-30d {
+    background: var(--section-30d);
+    color: #fff;
+  }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.15s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .rank {
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .repo-info { flex: 1; min-width: 0; }
+
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover { text-decoration: underline; }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .stars {
+    color: var(--star);
+    font-weight: 600;
+  }
+
+  .repo-desc {
+    font-size: 0.92rem;
+    margin: 10px 0;
+    color: var(--text);
+  }
+
+  .repo-why {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text);
+    z-index: 100;
+  }
+
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .editor-take { padding: 18px 20px; }
+    .repo-card { padding: 16px 18px; }
+    .repo-meta { gap: 10px; }
+    .theme-toggle { top: 8px; right: 8px; padding: 4px 10px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span id="theme-icon">&#9790;</span>
+</button>
+
+<div class="container">
+
+<header>
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-10-22 UTC</div>
+</header>
+
+<div class="editor-take">
+  <h2>Editor's Take</h2>
+  <p>The agent tooling ecosystem is consolidating fast. This week's standout, <code>coop-anything</code>, shows a pattern we'll see more of: MCP servers that bolt new capabilities onto existing AI agents rather than building from scratch. Three of the top 10 weekly repos are MCP integrations (games, audio, WhatsApp), confirming that the protocol is becoming the default extension layer for coding agents.</p>
+  <p>The 30-day picture tells a bigger story. <code>dsh-our-free-model</code> hit 34k stars in under a month by removing the API-key friction from frontier model access. <code>magpie</code> took the same idea and made it a Mac menu bar app. The message from developers is clear: the model layer is commoditizing, and the race is now about routing, monitoring, and integrating models into workflows.</p>
+  <p>Two repos worth watching closely: <code>MemT-1.0</code> is tackling the persistent memory problem for LLMs with native memory augmentation, and <code>antirion</code> is a single-binary Rust AI gateway that could threaten established proxies like LiteLLM. Both are early but technically sharp.</p>
+</div>
+
+<!-- 7-Day Section -->
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="section-badge badge-7d">Last 7 Days</span>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/cranebeaker/coop-anything" target="_blank" rel="noopener">cranebeaker/coop-anything</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 798</span>
+        <span>Python</span>
+        <span>Oct 16</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Point your AI agent at any single-player game and play it with friends online or splitscreen. Ships as an MCP server with a playbook system that lets the agent reverse-engineer, patch, and share what it learns about each game.</div>
+  <div class="repo-why">Turns AI agents into game-modding collaborators. The MCP-server approach means any compatible agent can use it.</div>
+  <div class="repo-tags"><span class="tag">MCP</span><span class="tag">gaming</span><span class="tag">agents</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/kanaworksai-hue/audio-studio-mcp" target="_blank" rel="noopener">kanaworksai-hue/audio-studio-mcp</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 429</span>
+        <span>Python</span>
+        <span>Oct 18</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Local AI background music and sound effects for Claude Code and any MCP client. Runs Stable Audio 3 on Apple Silicon (MLX) and Windows NVIDIA GPUs (PyTorch). No cloud, no API key.</div>
+  <div class="repo-why">Gives coding agents ears and a voice. Local-only execution means no usage fees and no data leaving your machine.</div>
+  <div class="repo-tags"><span class="tag">MCP</span><span class="tag">audio</span><span class="tag">MLX</span><span class="tag">local-first</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener">finereli/whatsapp-mcp</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 319</span>
+        <span>TypeScript</span>
+        <span>Oct 18</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">A read-only MCP server that lets AI agents search and read your WhatsApp messages. Runs on Cloudflare Workers for near-zero hosting cost.</div>
+  <div class="repo-why">Personal messaging data has been a blind spot for AI agents. Read-only by design is the right trust model for this kind of integration.</div>
+  <div class="repo-tags"><span class="tag">MCP</span><span class="tag">WhatsApp</span><span class="tag">Cloudflare</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/garycaogan/ai-live-avatar" target="_blank" rel="noopener">garycaogan/ai-live-avatar</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 312</span>
+        <span>Python</span>
+        <span>Oct 19</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Real-time AI live-streaming system: Vidu S2 digital avatar with bullet-screen filtering, wardrobe switching, and OBS overlay integration.</div>
+  <div class="repo-why">AI-generated livestreamers are already common in Chinese e-commerce. This open-sources the full pipeline.</div>
+  <div class="repo-tags"><span class="tag">avatar</span><span class="tag">livestreaming</span><span class="tag">OBS</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/MemTensor/MemT-1.0" target="_blank" rel="noopener">MemTensor/MemT-1.0</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 290</span>
+        <span>Python</span>
+        <span>Oct 19</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Native long-term memory for LLMs. Works with Qwen and DeepSeek via SGLang. Designed for memory-augmented agents that need to recall across sessions without external vector stores.</div>
+  <div class="repo-why">Most agent memory solutions bolt on RAG after the fact. MemT integrates memory at the model level, which could produce more natural recall patterns.</div>
+  <div class="repo-tags"><span class="tag">memory</span><span class="tag">LLM</span><span class="tag">SGLang</span><span class="tag">agents</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">6</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/nace-ai/kapitsa" target="_blank" rel="noopener">nace-ai/kapitsa</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 233</span>
+        <span>C++</span>
+        <span>Oct 16</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Blazing fast Apple Silicon inference engine optimized for Qwen and Nemotron models. OpenAI and Anthropic API compatible.</div>
+  <div class="repo-why">Purpose-built inference for specific model families can outperform general-purpose engines. Worth watching if you run Qwen locally on a Mac.</div>
+  <div class="repo-tags"><span class="tag">inference</span><span class="tag">Apple Silicon</span><span class="tag">C++</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">7</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/joeseesun/lexfridman-cn" target="_blank" rel="noopener">joeseesun/lexfridman-cn</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 226</span>
+        <span>HTML</span>
+        <span>Oct 18</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Chinese companion site for the Lex Fridman Podcast: AI deep-reads, official audio, transcripts, and full-text RSS for all 506 episodes.</div>
+  <div class="repo-why">A clean example of using AI translation at scale to bridge language barriers on high-value content.</div>
+  <div class="repo-tags"><span class="tag">podcast</span><span class="tag">translation</span><span class="tag">Chinese</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">8</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/nichochar/ari" target="_blank" rel="noopener">nichochar/ari</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 183</span>
+        <span>TypeScript</span>
+        <span>Oct 18</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Learn with pen, paper, and AI. A local-first AI tutor designed for handwritten study rather than screen-based interaction.</div>
+  <div class="repo-why">Goes against the all-digital trend. The hypothesis that physical writing aids retention is well-supported by research; adding AI guidance to that workflow is a smart product bet.</div>
+  <div class="repo-tags"><span class="tag">education</span><span class="tag">local-first</span><span class="tag">learning</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">9</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/ydflow/Trail" target="_blank" rel="noopener">ydflow/Trail</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 183</span>
+        <span>TypeScript</span>
+        <span>Oct 16</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Local-first AI investment research desktop. Connects market data, charts, and deep research with an evidence-grounded copilot. Electron-based, runs entirely on your machine.</div>
+  <div class="repo-why">Financial research tools with AI copilots are proliferating, but Trail's local-first architecture avoids the trust problem of sending portfolio data to cloud services.</div>
+  <div class="repo-tags"><span class="tag">finance</span><span class="tag">Electron</span><span class="tag">local-first</span><span class="tag">research</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">10</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/eliasbiondo/antirion" target="_blank" rel="noopener">eliasbiondo/antirion</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 155</span>
+        <span>Rust</span>
+        <span>Oct 17</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Single-binary AI gateway in Rust with a built-in console. Routes, secures, budgets, and observes LLM calls across OpenAI, Anthropic, Gemini, Bedrock and more.</div>
+  <div class="repo-why">A compiled Rust binary with zero runtime dependencies is a strong deployment story compared to Python-based alternatives. The built-in console is a nice touch.</div>
+  <div class="repo-tags"><span class="tag">gateway</span><span class="tag">Rust</span><span class="tag">self-hosted</span><span class="tag">observability</span></div>
+</div>
+
+<!-- 30-Day Section -->
+<div class="section-header" style="margin-top: 48px;">
+  <h2>Top 5</h2>
+  <span class="section-badge badge-30d">Last 30 Days</span>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">1</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 34,523</span>
+        <span>JavaScript</span>
+        <span>Sep 24</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">A plugin for the dsh (DeepSeek Harness) agent that provides access to frontier models including DeepSeek V4.1 Flash and Kimi K3 without API keys, logins, or usage limits.</div>
+  <div class="repo-why">The fastest-growing AI repo this month by a wide margin. Signals massive developer demand for frictionless model access, though the sustainability model remains unclear.</div>
+  <div class="repo-tags"><span class="tag">dsh</span><span class="tag">free models</span><span class="tag">DeepSeek</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">2</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 18,957</span>
+        <span>Go</span>
+        <span>Sep 23</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Menu bar app for macOS that lets you route any coding agent (Codex, Claude Code, Gemini CLI) through any model (DeepSeek, Kimi, etc.) with a single click.</div>
+  <div class="repo-why">Model routing from the system tray. Makes switching providers trivial, which accelerates the commoditization of the model layer.</div>
+  <div class="repo-tags"><span class="tag">macOS</span><span class="tag">model routing</span><span class="tag">Go</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">3</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/KKKKhazix/AIHOT" target="_blank" rel="noopener">KKKKhazix/AIHOT</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 8,379</span>
+        <span>TypeScript</span>
+        <span>Sep 28</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Self-deploying AI news site framework. Finds hot topics, writes daily digests, and publishes them automatically. Swap in your own sources and editorial criteria to build a niche industry news site.</div>
+  <div class="repo-why">The "AI journalist" template. Docker Compose deployment, PostgreSQL backend, RSS input. Low barrier to running your own automated news desk.</div>
+  <div class="repo-tags"><span class="tag">news</span><span class="tag">automation</span><span class="tag">self-hosted</span><span class="tag">Docker</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">4</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Louis-CFM/coucou" target="_blank" rel="noopener">Louis-CFM/coucou</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 6,034</span>
+        <span>Swift</span>
+        <span>Sep 27</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">A tiny friend in your Mac's notch and on your iPhone that monitors your AI coding agents. Approve agent actions from the notch or your Lock Screen. Supports Claude Code, Codex, Cursor, Gemini CLI, and more.</div>
+  <div class="repo-why">As AI agents gain more autonomy, human-in-the-loop approval needs better UX. Using the Mac notch and iOS Lock Screen is clever real estate.</div>
+  <div class="repo-tags"><span class="tag">macOS</span><span class="tag">Swift</span><span class="tag">agent monitoring</span><span class="tag">iOS</span></div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <div class="rank">5</div>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/CopilotKit/OpenDots" target="_blank" rel="noopener">CopilotKit/OpenDots</a></div>
+      <div class="repo-meta">
+        <span class="stars">&#9733; 5,834</span>
+        <span>TypeScript</span>
+        <span>Sep 29</span>
+      </div>
+    </div>
+  </div>
+  <div class="repo-desc">Always-on AI coworkers that move between text, calls, and Slack. From the CopilotKit team.</div>
+  <div class="repo-why">CopilotKit already has traction in the React AI copilot space. OpenDots extends that into persistent multi-modal agents that live across communication channels.</div>
+  <div class="repo-tags"><span class="tag">agents</span><span class="tag">Slack</span><span class="tag">CopilotKit</span><span class="tag">multi-modal</span></div>
+</div>
+
+<footer>
+  Generated on 2026-10-22 UTC. Star counts are as of time of generation and may have changed.
+</footer>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    var root = document.documentElement;
+    var icon = document.getElementById('theme-icon');
+    var current = root.getAttribute('data-theme');
+    if (current === 'dark') {
+      root.setAttribute('data-theme', 'light');
+      icon.innerHTML = '&#9790;';
+    } else {
+      root.setAttribute('data-theme', 'dark');
+      icon.innerHTML = '&#9788;';
+    }
+    try { localStorage.setItem('theme', root.getAttribute('data-theme')); } catch(e) {}
+  }
+  try {
+    var saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+      document.getElementById('theme-icon').innerHTML = saved === 'dark' ? '☆' : '☾';
+    }
+  } catch(e) {}
+</script>
+
+</body>
+</html>
