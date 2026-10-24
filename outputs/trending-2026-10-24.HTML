@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-24</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-highlight: #e8f4f8;
+    --text: #1a1a2e;
+    --text-muted: #555770;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --badge-7d: #dbeafe;
+    --badge-7d-text: #1e40af;
+    --badge-30d: #fef3c7;
+    --badge-30d-text: #92400e;
+    --badge-mention: #f3e8ff;
+    --badge-mention-text: #6b21a8;
+    --rank-bg: #2563eb;
+    --rank-text: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-highlight: #1e3a5f;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfc;
+      --border: #334155;
+      --star: #facc15;
+      --badge-7d: #1e3a5f;
+      --badge-7d-text: #93c5fd;
+      --badge-30d: #422006;
+      --badge-30d-text: #fcd34d;
+      --badge-mention: #3b0764;
+      --badge-mention-text: #d8b4fe;
+      --rank-bg: #3b82f6;
+      --rank-text: #ffffff;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-highlight: #1e3a5f;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfc;
+    --border: #334155;
+    --star: #facc15;
+    --badge-7d: #1e3a5f;
+    --badge-7d-text: #93c5fd;
+    --badge-30d: #422006;
+    --badge-30d-text: #fcd34d;
+    --badge-mention: #3b0764;
+    --badge-mention-text: #d8b4fe;
+    --rank-bg: #3b82f6;
+    --rank-text: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 0 64px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  header .date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .editor-take {
+    background: var(--bg-highlight);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .editor-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .editor-take p {
+    font-size: 0.925rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+
+  .editor-take p:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-7d { background: var(--badge-7d); color: var(--badge-7d-text); }
+  .badge-30d { background: var(--badge-30d); color: var(--badge-30d-text); }
+  .badge-mention { background: var(--badge-mention); color: var(--badge-mention-text); }
+
+  .repo-list {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .repo-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s ease;
+  }
+
+  .repo-item:hover {
+    border-color: var(--accent);
+  }
+
+  .rank {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .repo-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .repo-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .repo-name:hover { color: var(--accent-hover); text-decoration: underline; }
+
+  .repo-lang {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--border);
+    padding: 1px 7px;
+    border-radius: 4px;
+  }
+
+  .repo-stars {
+    font-size: 0.8rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .repo-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .mention-list .repo-item {
+    background: transparent;
+    border: 1px dashed var(--border);
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.35rem; }
+    .repo-item { flex-direction: column; gap: 8px; }
+    .rank { width: 28px; height: 28px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <p class="date">2026-10-24 UTC &mdash; Automated GitHub Trend Scan</p>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The AI coding-agent ecosystem is consolidating fast. This week's standout signal: the tools <em>around</em> agents now attract more stars than the agents themselves. Coucou (6.3k stars in under a month) lets you approve agent actions from your Mac notch or iPhone lock screen &mdash; a sign that developers trust agents enough to run them unsupervised but still want a kill switch in their pocket. Meanwhile, AIHOT (8.5k stars) automates the entire content-curation pipeline with LLMs, and OpenDots blurs the line between text chat, voice calls, and Slack into one always-on AI coworker layer.</p>
+    <p>On the infrastructure side, the "run big models on small hardware" trend keeps accelerating. Kyojin squeezes 300B-parameter MoE models onto a single AMD Strix Halo mini PC, and lithos-metal pushes Apple Silicon inference performance further. StartLux Decision ships calibrated probability outputs from models as small as 0.8B parameters &mdash; useful for agent routing where you need a fast, confident yes/no before calling a heavier model.</p>
+    <p>The week's sleeper hit is MemT-1.0 (374 stars, 7 days old): a native long-term memory layer for LLMs that plugs into DeepSeek and Qwen via SGLang. If it works as advertised, it solves one of the persistent pain points in multi-session agent workflows without bolting on an external vector store.</p>
+  </div>
+
+  <h2 class="section-title"><span class="badge badge-7d">7 Days</span> Top 10 &mdash; Created after Oct 17</h2>
+  <ul class="repo-list">
+    <li class="repo-item">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/Alejandros17487/ai-jailbreaks" target="_blank" rel="noopener">Alejandros17487/ai-jailbreaks</a>
+          <span class="repo-stars">&#9733; 490</span>
+        </div>
+        <p class="repo-desc">35 paste-ready jailbreak prompts for 25+ models, built for AI security research and red-team testing.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/kanaworksai-hue/audio-studio-mcp" target="_blank" rel="noopener">kanaworksai-hue/audio-studio-mcp</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 462</span>
+        </div>
+        <p class="repo-desc">Local AI background music and sound effects via MCP for Claude Code and other clients. Stable Audio 3 on Apple Silicon (MLX) and NVIDIA (PyTorch). No cloud, no API key.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/MemTensor/MemT-1.0" target="_blank" rel="noopener">MemTensor/MemT-1.0</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 374</span>
+        </div>
+        <p class="repo-desc">Native long-term memory for LLMs (DeepSeek, Qwen) via SGLang &mdash; persistent context across sessions without external vector stores.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/garycaogan/ai-live-avatar" target="_blank" rel="noopener">garycaogan/ai-live-avatar</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 343</span>
+        </div>
+        <p class="repo-desc">Real-time AI livestream avatar with Vidu S2 digital humans, chat filtering, wardrobe changes, and OBS overlay integration.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/finereli/whatsapp-mcp" target="_blank" rel="noopener">finereli/whatsapp-mcp</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 342</span>
+        </div>
+        <p class="repo-desc">Read-only MCP server that lets AI agents search and read your WhatsApp messages. Runs on Cloudflare Workers.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/qianshuixia/shrimpreel" target="_blank" rel="noopener">qianshuixia/shrimpreel</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 238</span>
+        </div>
+        <p class="repo-desc">Open-source SaaS template: "one photo to AI video" using Cloudflare Workers, TanStack Start, Hono, and fal.ai video generation.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/joeseesun/lexfridman-cn" target="_blank" rel="noopener">joeseesun/lexfridman-cn</a>
+          <span class="repo-lang">HTML</span>
+          <span class="repo-stars">&#9733; 236</span>
+        </div>
+        <p class="repo-desc">Chinese companion site for all 506 Lex Fridman podcast episodes with AI deep-reads, transcripts, and full-text RSS.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/nichochar/ari" target="_blank" rel="noopener">nichochar/ari</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 198</span>
+        </div>
+        <p class="repo-desc">Learn with pen, paper, and AI. A local-first AI tutor for handwritten study.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/zilvestro/grammai" target="_blank" rel="noopener">zilvestro/grammai</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 171</span>
+        </div>
+        <p class="repo-desc">Free, open-source, offline grammar checker for English and German with AI-powered rewrites and translation. Chrome extension.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/C4rohan/Lampline" target="_blank" rel="noopener">C4rohan/Lampline</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 169</span>
+        </div>
+        <p class="repo-desc">Build and test AI phone agents locally. Open source, imports Dialogflow CX, runs free with no API keys, cents per call with your own.</p>
+      </div>
+    </li>
+  </ul>
+
+  <h2 class="section-title"><span class="badge badge-30d">30 Days</span> Top 5 &mdash; Created after Sep 24</h2>
+  <ul class="repo-list">
+    <li class="repo-item">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/KKKKhazix/AIHOT" target="_blank" rel="noopener">KKKKhazix/AIHOT</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 8,515</span>
+        </div>
+        <p class="repo-desc">Self-hosted framework that auto-discovers hot topics and writes daily industry digests using LLMs. Swap your own sources and selection criteria.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/Louis-CFM/coucou" target="_blank" rel="noopener">Louis-CFM/coucou</a>
+          <span class="repo-lang">Swift</span>
+          <span class="repo-stars">&#9733; 6,325</span>
+        </div>
+        <p class="repo-desc">Tiny Mac notch and iPhone companion that monitors your AI coding agents (Claude Code, Codex, Cursor, Gemini CLI). Approve actions from Dynamic Island or Lock Screen.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/CopilotKit/OpenDots" target="_blank" rel="noopener">CopilotKit/OpenDots</a>
+          <span class="repo-lang">TypeScript</span>
+          <span class="repo-stars">&#9733; 5,938</span>
+        </div>
+        <p class="repo-desc">Always-on AI coworkers that move between text, calls, and Slack.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/omlahore/RemoveMacAI" target="_blank" rel="noopener">omlahore/RemoveMacAI</a>
+          <span class="repo-lang">Swift</span>
+          <span class="repo-stars">&#9733; 5,186</span>
+        </div>
+        <p class="repo-desc">Debloat macOS: disable Apple Intelligence, analytics, ads and pop-ups. Native app and CLI. Every change is reversible.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/kaankiziltug/logo-design-skill" target="_blank" rel="noopener">kaankiziltug/logo-design-skill</a>
+          <span class="repo-lang">HTML</span>
+          <span class="repo-stars">&#9733; 4,324</span>
+        </div>
+        <p class="repo-desc">Comprehensive logo-design skill for Claude, Gemini CLI, and Codex with principles, process, SVG craft, and a 1,400+ logo reference library.</p>
+      </div>
+    </li>
+  </ul>
+
+  <h2 class="section-title"><span class="badge badge-mention">Also Notable</span> Honorable Mentions</h2>
+  <ul class="repo-list mention-list">
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a>
+          <span class="repo-lang">JavaScript</span>
+          <span class="repo-stars">&#9733; 4,319</span>
+        </div>
+        <p class="repo-desc">Agent skill that answers complex questions with a single readable HTML page.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a>
+          <span class="repo-lang">C</span>
+          <span class="repo-stars">&#9733; 3,650</span>
+        </div>
+        <p class="repo-desc">Use a $7 ESP32 to let an AI model control a real iPhone via AirPlay eyes and USB HID hands. No Mac, no developer account, no jailbreak.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/StartLuxLabs/StartLux-Decision" target="_blank" rel="noopener">StartLuxLabs/StartLux-Decision</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 1,436</span>
+        </div>
+        <p class="repo-desc">Open decision models (0.8B&ndash;27B) that output calibrated probabilities in one pass, with a short thought only when unsure. Engines: vLLM, llama.cpp, MLX.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/Yamz-Labs/kyojin" target="_blank" rel="noopener">Yamz-Labs/kyojin</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 202</span>
+        </div>
+        <p class="repo-desc">Inference engine for AMD Strix Halo (ROCm): runs 300B-class MoE models on a single 128 GB mini PC, built on ExLlamaV3.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/lithos-ai/lithos-metal" target="_blank" rel="noopener">lithos-ai/lithos-metal</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 311</span>
+        </div>
+        <p class="repo-desc">High-performance LLM inference kernels and serving for Apple Silicon.</p>
+      </div>
+    </li>
+    <li class="repo-item">
+      <div class="repo-body">
+        <div class="repo-header">
+          <a class="repo-name" href="https://github.com/conglu1997/local-autoresearch" target="_blank" rel="noopener">conglu1997/local-autoresearch</a>
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">&#9733; 53</span>
+        </div>
+        <p class="repo-desc">Local automated research on a MacBook using Flint for geometry, scheduling, and ML experiments.</p>
+      </div>
+    </li>
+  </ul>
+
+  <footer>
+    Generated 2026-10-24 UTC &mdash; Automated GitHub Trend Scan
+  </footer>
+
+</div>
+</body>
+</html>
