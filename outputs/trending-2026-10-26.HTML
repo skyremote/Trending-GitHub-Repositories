@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-26</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e5e7eb;
+    --badge-bg: #fef3c7;
+    --badge-text: #92400e;
+    --star: #eab308;
+    --section-bg: #f0f4ff;
+    --tag-bg: #e0e7ff;
+    --tag-text: #3730a3;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --card-hover-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --editor-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --editor-text: #e2e8f0;
+    --editor-accent: #60a5fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-hover: #93bbfd;
+      --border: #334155;
+      --badge-bg: #422006;
+      --badge-text: #fbbf24;
+      --star: #facc15;
+      --section-bg: #1a2744;
+      --tag-bg: #312e81;
+      --tag-text: #a5b4fc;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --card-hover-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      --editor-bg: linear-gradient(135deg, #0c1222 0%, #060a14 100%);
+      --editor-text: #cbd5e1;
+      --editor-accent: #93c5fd;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-hover: #93bbfd;
+    --border: #334155;
+    --badge-bg: #422006;
+    --badge-text: #fbbf24;
+    --star: #facc15;
+    --section-bg: #1a2744;
+    --tag-bg: #312e81;
+    --tag-text: #a5b4fc;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --card-hover-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    --editor-bg: linear-gradient(135deg, #0c1222 0%, #060a14 100%);
+    --editor-text: #cbd5e1;
+    --editor-accent: #93c5fd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  header {
+    text-align: center;
+    padding: 40px 16px 24px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  header .date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .editor-box {
+    background: var(--editor-bg);
+    color: var(--editor-text);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+  .editor-box .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--editor-accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .editor-box p {
+    font-size: 0.95rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    font-size: 0.7rem;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .repo-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-1px);
+  }
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .repo-rank {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 28px;
+    line-height: 1.4;
+  }
+  .repo-name {
+    flex: 1;
+  }
+  .repo-name a {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .repo-stars {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .repo-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-left: 28px;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+    margin-left: 28px;
+  }
+  .repo-tags span {
+    font-size: 0.68rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .section-gap { margin-top: 40px; }
+  footer {
+    text-align: center;
+    padding: 32px 16px 40px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.35rem; }
+    .editor-box { padding: 18px 16px; }
+    .repo-card { padding: 14px 16px; }
+    .repo-desc, .repo-tags { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-10-26 UTC</div>
+</header>
+
+<div class="container">
+
+  <div class="editor-box">
+    <div class="label">Editor's Take</div>
+    <p>The agent ecosystem is hardening into infrastructure. This week's standout signal: repos are no longer building agents &mdash; they are building the connective tissue around them. Terminal adapters, quota monitors, code explainers, and bot detectors all assume agents are a given and focus on the operational gaps they leave behind. Meanwhile, the 30-day view confirms that DeepSeek's DeepInfer has become the inference story of October, and the rest of the top tier is dominated by agent companions and AI-aware operating layers &mdash; not models. The market has decided agents are the platform; the race now is to own the periphery.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge">Last 7 days</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">1</span>
+      <div class="repo-name"><a href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank" rel="noopener">rddmwmddr/android-ad-cleaner</a></div>
+      <span class="repo-stars">&#9733; 1,010</span>
+    </div>
+    <div class="repo-desc">AI agent that disables ads, recommendations, and push notifications on Chinese Android OEMs via ADB. No root, fully reversible. The first mainstream use of an agent as a consumer debloat tool.</div>
+    <div class="repo-tags"><span>Python</span><span>ADB</span><span>AI Agent</span><span>Android</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">2</span>
+      <div class="repo-name"><a href="https://github.com/DenisSergeevitch/ex-ussr-kinship-research" target="_blank" rel="noopener">DenisSergeevitch/ex-ussr-kinship-research</a></div>
+      <span class="repo-stars">&#9733; 546</span>
+    </div>
+    <div class="repo-desc">Genealogy skill for Claude Code and Codex that navigates church books, military records, and deportation archives across the former USSR. A niche vertical that shows agent skills can encode deep domain expertise, not just generic workflows.</div>
+    <div class="repo-tags"><span>Python</span><span>Agent Skills</span><span>Genealogy</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">3</span>
+      <div class="repo-name"><a href="https://github.com/qianshuixia/shrimpreel" target="_blank" rel="noopener">qianshuixia/shrimpreel</a></div>
+      <span class="repo-stars">&#9733; 270</span>
+    </div>
+    <div class="repo-desc">Open-source SaaS template for "one photo to AI video" sites. Cloudflare Workers stack with fal.ai video generation, Hono, and TanStack Start. The boilerplate bet is that every trending keyword gets its own single-purpose video site.</div>
+    <div class="repo-tags"><span>TypeScript</span><span>Cloudflare Workers</span><span>AI Video</span><span>SaaS</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">4</span>
+      <div class="repo-name"><a href="https://github.com/huaxialucaicaizi/ai-startup-skills" target="_blank" rel="noopener">huaxialucaicaizi/ai-startup-skills</a></div>
+      <span class="repo-stars">&#9733; 217</span>
+    </div>
+    <div class="repo-desc">Seven-step agent skill collection that walks a startup from MVP validation through business plan, policy review, pitch, growth, pricing, and registration. Ambitious scope; useful as a template for end-to-end workflow skills.</div>
+    <div class="repo-tags"><span>Python</span><span>Agent Skills</span><span>Startup</span><span>Claude Code</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">5</span>
+      <div class="repo-name"><a href="https://github.com/hevnsnt/CVEngine" target="_blank" rel="noopener">hevnsnt/CVEngine</a></div>
+      <span class="repo-stars">&#9733; 188</span>
+    </div>
+    <div class="repo-desc">AI-first external attack surface scanner with continuous discovery, evidence-based vulnerability validation, and MCP integration. Wraps nmap, Nuclei, and BBOT behind an agent-friendly interface.</div>
+    <div class="repo-tags"><span>Python</span><span>Security</span><span>MCP</span><span>Vulnerability Scanner</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">6</span>
+      <div class="repo-name"><a href="https://github.com/h9-tec/ai-roadmap-2026" target="_blank" rel="noopener">h9-tec/ai-roadmap-2026</a></div>
+      <span class="repo-stars">&#9733; 163</span>
+    </div>
+    <div class="repo-desc">Structured learning path from foundations through LLM engineering, agents, evaluation, and production, with verified free resources and a mini-project per layer. A timely refresh for the post-agent curriculum.</div>
+    <div class="repo-tags"><span>Education</span><span>LLM</span><span>Agents</span><span>Roadmap</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">7</span>
+      <div class="repo-name"><a href="https://github.com/dk23lhl/termius-mcp" target="_blank" rel="noopener">dk23lhl/termius-mcp</a></div>
+      <span class="repo-stars">&#9733; 148</span>
+    </div>
+    <div class="repo-desc">MCP adapter that gives AI agents access to Termius sessions: read terminals, run commands, track SFTP uploads. Bridges the gap between agent tooling and existing DevOps workflows on macOS.</div>
+    <div class="repo-tags"><span>Python</span><span>MCP</span><span>DevOps</span><span>Terminal</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">8</span>
+      <div class="repo-name"><a href="https://github.com/Monopoly0024/simple-reviewer-v1" target="_blank" rel="noopener">Monopoly0024/simple-reviewer-v1</a></div>
+      <span class="repo-stars">&#9733; 139</span>
+    </div>
+    <div class="repo-desc">Codex skill for AI-assisted code review: explains code, visualizes workflows, and verifies goals with evidence. Targeted at the "vibe coding" problem where developers accept AI output without understanding it.</div>
+    <div class="repo-tags"><span>Python</span><span>Code Review</span><span>Codex Skill</span><span>Vibe Coding</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">9</span>
+      <div class="repo-name"><a href="https://github.com/yesterdayfuture/confess" target="_blank" rel="noopener">yesterdayfuture/confess</a></div>
+      <span class="repo-stars">&#9733; 133</span>
+    </div>
+    <div class="repo-desc">Requires developers to explain AI-generated code before it ships. A social enforcement tool: your agent wrote it, you still have to pass the explanation gate. Simple idea, real problem.</div>
+    <div class="repo-tags"><span>Python</span><span>Code Quality</span><span>Developer Tools</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">10</span>
+      <div class="repo-name"><a href="https://github.com/liyupi/dafeiyu-cleaner" target="_blank" rel="noopener">liyupi/dafeiyu-cleaner</a></div>
+      <span class="repo-stars">&#9733; 91</span>
+    </div>
+    <div class="repo-desc">Browser extension that detects and cleans DeepSeek-powered bot accounts flooding Bilibili comment sections. Uses offline rules plus DeepSeek API verification. The anti-spam side of the AI arms race, built in public.</div>
+    <div class="repo-tags"><span>JavaScript</span><span>Bot Detection</span><span>Browser Extension</span><span>Anti-Spam</span></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge">Last 30 days</span>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">1</span>
+      <div class="repo-name"><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a></div>
+      <span class="repo-stars">&#9733; 22,553</span>
+    </div>
+    <div class="repo-desc">DeepSeek's official high-performance inference framework for its model family. The month's runaway hit by star count; signals that inference optimization is now the competitive front, not model training.</div>
+    <div class="repo-tags"><span>Python</span><span>Inference</span><span>DeepSeek</span><span>High Performance</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">2</span>
+      <div class="repo-name"><a href="https://github.com/KKKKhazix/AIHOT" target="_blank" rel="noopener">KKKKhazix/AIHOT</a></div>
+      <span class="repo-stars">&#9733; 8,615</span>
+    </div>
+    <div class="repo-desc">Self-hosted framework that autonomously finds trending topics and writes daily digests. Swap the sources and curation criteria and it becomes your industry's hot-topic site. Docker Compose, PostgreSQL, RSS, and MCP-equipped.</div>
+    <div class="repo-tags"><span>TypeScript</span><span>News Aggregator</span><span>Self-Hosted</span><span>MCP</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">3</span>
+      <div class="repo-name"><a href="https://github.com/Louis-CFM/coucou" target="_blank" rel="noopener">Louis-CFM/coucou</a></div>
+      <span class="repo-stars">&#9733; 6,457</span>
+    </div>
+    <div class="repo-desc">A tiny companion in your Mac's notch and on your iPhone that monitors AI coding agents (Claude Code, Codex, Cursor, Gemini CLI). Approve actions from the Dynamic Island or your Lock Screen. The UX layer agents were missing.</div>
+    <div class="repo-tags"><span>Swift</span><span>macOS</span><span>iOS</span><span>Agent Monitor</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">4</span>
+      <div class="repo-name"><a href="https://github.com/CopilotKit/OpenDots" target="_blank" rel="noopener">CopilotKit/OpenDots</a></div>
+      <span class="repo-stars">&#9733; 6,011</span>
+    </div>
+    <div class="repo-desc">Always-on AI coworkers that move between text, voice calls, and Slack. From the CopilotKit team; pushes the boundary from copilot to persistent colleague. The bet is on continuity across communication surfaces.</div>
+    <div class="repo-tags"><span>TypeScript</span><span>AI Coworker</span><span>Slack</span><span>Voice</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-top">
+      <span class="repo-rank">5</span>
+      <div class="repo-name"><a href="https://github.com/omlahore/RemoveMacAI" target="_blank" rel="noopener">omlahore/RemoveMacAI</a></div>
+      <span class="repo-stars">&#9733; 5,256</span>
+    </div>
+    <div class="repo-desc">Native app and CLI that removes Apple Intelligence, analytics, ads, and pop-ups from macOS. Every change reversible. Five thousand stars in a month says something about user sentiment toward mandatory AI features.</div>
+    <div class="repo-tags"><span>Swift</span><span>macOS</span><span>Privacy</span><span>Debloat</span></div>
+  </div>
+
+</div>
+
+<footer>
+  Generated by the <a href="https://github.com/skyremote/trending-github-repositories">Trending GitHub Repos</a> routine &mdash; 2026-10-26 UTC
+</footer>
+
+</body>
+</html>
