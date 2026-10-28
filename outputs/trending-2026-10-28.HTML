@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-28</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --bg-card: #ffffff;
+    --text: #1c1917;
+    --text-muted: #57534e;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --border: #e7e5e4;
+    --star: #d97706;
+    --badge-bg: #f0fdf4;
+    --badge-text: #166534;
+    --section-bg: #f5f5f4;
+    --gradient-start: #1e3a5f;
+    --gradient-end: #2563eb;
+    --rank-bg: #f1f5f9;
+    --rank-text: #475569;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c0a09;
+      --bg-card: #1c1917;
+      --text: #e7e5e4;
+      --text-muted: #a8a29e;
+      --accent: #60a5fa;
+      --accent-light: #172554;
+      --border: #292524;
+      --star: #fbbf24;
+      --badge-bg: #052e16;
+      --badge-text: #86efac;
+      --section-bg: #1c1917;
+      --gradient-start: #0f172a;
+      --gradient-end: #1e40af;
+      --rank-bg: #1e293b;
+      --rank-text: #94a3b8;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0c0a09;
+    --bg-card: #1c1917;
+    --text: #e7e5e4;
+    --text-muted: #a8a29e;
+    --accent: #60a5fa;
+    --accent-light: #172554;
+    --border: #292524;
+    --star: #fbbf24;
+    --badge-bg: #052e16;
+    --badge-text: #86efac;
+    --section-bg: #1c1917;
+    --gradient-start: #0f172a;
+    --gradient-end: #1e40af;
+    --rank-bg: #1e293b;
+    --rank-text: #94a3b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #ffffff;
+    padding: 48px 16px 40px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .header .date {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 64px;
+  }
+
+  .editors-take {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: -24px 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .editors-take .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 32px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 16px 16px 20px;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+    align-items: start;
+    transition: border-color 0.15s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+  }
+
+  .rank {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--rank-bg);
+    color: var(--rank-text);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .repo-info { min-width: 0; }
+
+  .repo-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .stars {
+    color: var(--star);
+    font-weight: 600;
+  }
+
+  .lang {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .repo-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.55;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 32px 16px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  @media (max-width: 480px) {
+    .header { padding: 36px 16px 32px; }
+    .header h1 { font-size: 1.4rem; }
+    .editors-take { padding: 18px; margin-top: -18px; }
+    .repo-card { grid-template-columns: 30px 1fr; gap: 10px; padding: 14px 14px 14px 16px; }
+    .rank { width: 30px; height: 30px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-10-28 UTC</div>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <div class="label">Editor's Take</div>
+    <p>Agent skills have won. Eight of fifteen repos this week are packaged as skills or plugins for coding agents &mdash; not libraries you import, but instructions an agent reads. The shift from &ldquo;tool for humans&rdquo; to &ldquo;tool for agents&rdquo; is now the default distribution model for new AI projects. Meanwhile, the physical world is leaking in: an ESP32 that gives an AI eyes and hands on a real iPhone, motion capture from a single video, and a digital-human pipeline that turns one photo into a talking head. The repos gaining stars fastest are not the ones building new models &mdash; they are the ones giving existing models new senses and new reach.</p>
+  </div>
+
+  <div class="section-title">Top 10 &mdash; Last 7 Days <span class="badge">Oct 21 &ndash; 28</span></div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank" rel="noopener">rddmwmddr/android-ad-cleaner</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 3,571</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Strips ads, hot-search feeds, and push notifications from Chinese Android ROMs via ADB. No root. Ships as an AI agent skill for one-click execution.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/andyhuo520/digital-human-koubo" target="_blank" rel="noopener">andyhuo520/digital-human-koubo</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 1,136</span>
+          <span class="lang"><span class="lang-dot" style="background:#3178C6"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Generates talking-head digital-human videos from a single photo using Renoise MCP, with five editing styles and 48 packaging components. Agent skill for Claude Code, Codex, and others.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/DenisSergeevitch/ex-ussr-kinship-research" target="_blank" rel="noopener">DenisSergeevitch/ex-ussr-kinship-research</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 1,066</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Evidence-first genealogy agent skill that navigates church books, military records, and deportation archives across the former Soviet Union. Responds in the user's language.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/anhao/ai-pose-gallery-zh" target="_blank" rel="noopener">anhao/ai-pose-gallery-zh</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 730</span>
+          <span class="lang"><span class="lang-dot" style="background:#e34c26"></span> HTML</span>
+        </div>
+        <div class="repo-desc">Chinese-localized AI pose reference gallery: 1,439 sets, 2,878 images, zero dependencies. A static site deployed to Cloudflare Pages.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/yaojingang/GEOInflow" target="_blank" rel="noopener">yaojingang/GEOInflow</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 631</span>
+          <span class="lang"><span class="lang-dot" style="background:#3178C6"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Self-hosted analytics for Generative Engine Optimization. Tracks AI crawler visits, search referrals, and content coverage. Built with PostgreSQL.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/blakeandersonw/ai-app-playbook" target="_blank" rel="noopener">blakeandersonw/ai-app-playbook</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 494</span>
+          <span class="lang"><span class="lang-dot" style="background:#3178C6"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Opinionated guide to building profitable AI apps in 2026. Designed to be cloned and pointed at by a coding agent via its AGENTS.md.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/huaxialucaicaizi/ai-startup-skills" target="_blank" rel="noopener">huaxialucaicaizi/ai-startup-skills</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 435</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Seven-step agent skill collection for AI startups: MVP validation, business plans, policy checks, pitch decks, customer acquisition, pricing, and company registration.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/hevnsnt/CVEngine" target="_blank" rel="noopener">hevnsnt/CVEngine</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 423</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">AI-first external attack surface scanner with continuous discovery and evidence-based vulnerability validation. Integrates BBOT, Nmap, and Nuclei via MCP.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/patch-gg/anymove" target="_blank" rel="noopener">patch-gg/anymove</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 223</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Motion capture for any creature from a single AI-generated video. Uses DINOv2 for joint detection across two camera views baked into one frame, outputs GLB rigs.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Cattmonkey/ChaosIntelligence" target="_blank" rel="noopener">Cattmonkey/ChaosIntelligence</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 202</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Agent-native functional programming language: treat agents as functions, write intentions as programs. Comes with a CLI, Web IDE, and goal-driven bots with live UI.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Top 5 &mdash; Last 30 Days <span class="badge">Sep 28 &ndash; Oct 28</span></div>
+
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 4,557</span>
+          <span class="lang"><span class="lang-dot" style="background:#f1e05a"></span> JavaScript</span>
+        </div>
+        <div class="repo-desc">Agent skill that makes AI answer complex questions as a single readable HTML page with diagrams. The month's clearest proof that &ldquo;skill&rdquo; is the new &ldquo;npm package.&rdquo;</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 4,027</span>
+          <span class="lang"><span class="lang-dot" style="background:#555555"></span> C</span>
+        </div>
+        <div class="repo-desc">A $7 ESP32 gives any vision model full control of a real iPhone: AirPlay for eyes, USB HID for hands. No Mac, no developer account, no jailbreak.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/openfilm/openfilm" target="_blank" rel="noopener">openfilm/openfilm</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 3,214</span>
+          <span class="lang"><span class="lang-dot" style="background:#3178C6"></span> TypeScript</span>
+        </div>
+        <div class="repo-desc">Open-source AI video agent that turns any coding agent into a video production agent, plus an editor to refine what it makes. Motion-graphics focused.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Leonxlnx/earshot" target="_blank" rel="noopener">Leonxlnx/earshot</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 3,060</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Gives coding agents ears: hear, review, and generate sound. CPU-only, open source. Fills the last major sensory gap for desktop agents.</div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/nanaism/yomiyasu" target="_blank" rel="noopener">nanaism/yomiyasu</a></div>
+        <div class="repo-meta">
+          <span class="stars">&#9733; 2,612</span>
+          <span class="lang"><span class="lang-dot" style="background:#3572A5"></span> Python</span>
+        </div>
+        <div class="repo-desc">Agent skill for refining AI-generated Japanese into natural Japanese. A niche language linter that signals the skill ecosystem is going multilingual fast.</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated by the Trending GitHub Repos routine &mdash; 2026-10-28 UTC
+</div>
+
+</body>
+</html>
