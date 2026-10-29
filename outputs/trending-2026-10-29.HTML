@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-10-29</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb22;
+    --star: #e3b341;
+    --badge-7d: #238636;
+    --badge-30d: #6e40c9;
+    --editor-bg: #161b2288;
+    --editor-border: #58a6ff33;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    text-align: center;
+    padding: 48px 16px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+  }
+
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .editor-take::before {
+    content: "Editor's Take";
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .editor-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: #fff;
+  }
+
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .repo-card:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+  }
+
+  .rank {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    padding-top: 2px;
+    text-align: center;
+  }
+
+  .repo-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-info h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .star-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .star-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 32px 16px 24px; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card {
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+    }
+    .star-count {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Trending AI Repositories</h1>
+  <div class="date">2026-10-29 UTC</div>
+</header>
+
+<div class="container">
+
+  <div class="editor-take">
+    <p>Agent skills are no longer a novelty — they are a distribution format. Four of this week's top ten repos ship as packaged skills or plugins for Claude Code, Codex, or similar harnesses, which tells you where the ecosystem's center of gravity has moved: from building agents to equipping them. Meanwhile, the hardware layer is getting louder: gpu-unlock doubled GeForce tensor throughput for 12k stars in under two weeks, and a $7 ESP32 board turned an iPhone into an agent's hands and eyes. The theme of the month is that AI tooling is leaving the cloud, entering your pocket, and plugging into everything from genealogy archives to penetration-testing frameworks. If you are still shipping cloud-only, you are building for last quarter.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10</h2>
+    <span class="badge badge-7d">Last 7 Days</span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank" rel="noopener">rddmwmddr/android-ad-cleaner</a></h3>
+        <p class="repo-desc">Strips ads, hot-search widgets, and push marketing from Chinese Android OEM ROMs via ADB. No root, reversible, and wired for one-click execution by an AI agent.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,404</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/anhao/ai-pose-gallery-zh" target="_blank" rel="noopener">anhao/ai-pose-gallery-zh</a></h3>
+        <p class="repo-desc">Fully localized Chinese edition of an AI pose reference library: 1,439 pose sets, 2,878 images, zero-dependency static gallery deployable to Cloudflare Pages.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>2,094</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/andyhuo520/digital-human-koubo" target="_blank" rel="noopener">andyhuo520/digital-human-koubo</a></h3>
+        <p class="repo-desc">Generates talking-head digital-human videos from a single photo using Renoise MCP, with five editing styles and 48 creator-grade packaging components. Ships as an agent skill.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,336</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/DenisSergeevitch/ex-ussr-kinship-research" target="_blank" rel="noopener">DenisSergeevitch/ex-ussr-kinship-research</a></h3>
+        <p class="repo-desc">Evidence-first genealogy skill for coding agents: searches church books, civil registries, military and deportation records across the former USSR. Replies in the user's language.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,185</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/yaojingang/GEOInflow" target="_blank" rel="noopener">yaojingang/GEOInflow</a></h3>
+        <p class="repo-desc">Self-hosted analytics for Generative Engine Optimization: tracks visitors, AI search referrals, crawl logs, content coverage, and conversions. From the same author as GEOFlow.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>694</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">6</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/anonnerdfrenzy/survival-llm" target="_blank" rel="noopener">anonnerdfrenzy/survival-llm</a></h3>
+        <p class="repo-desc">Offline AI assistant bundled with a survival knowledge library. Runs locally with no internet, cites every source. A niche bet on local-first utility.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>609</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">7</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/blakeandersonw/ai-app-playbook" target="_blank" rel="noopener">blakeandersonw/ai-app-playbook</a></h3>
+        <p class="repo-desc">Opinionated guide to building profitable AI apps in 2026. Clone the repo, point your coding agent at AGENTS.md, and follow the playbook.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>565</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">8</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/stormydayy/halo-overlay" target="_blank" rel="noopener">stormydayy/halo-overlay</a></h3>
+        <p class="repo-desc">Lightweight open-source AI overlay for live conversations. Listens, watches, and suggests in real time. Positioned for meetings and interviews.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>516</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">9</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/hevnsnt/CVEngine" target="_blank" rel="noopener">hevnsnt/CVEngine</a></h3>
+        <p class="repo-desc">AI-first external attack-surface assessment with continuous discovery, evidence-based vulnerability validation, and MCP integration for developer agents.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>448</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">10</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/zgx949/ai-pojia" target="_blank" rel="noopener">zgx949/ai-pojia</a></h3>
+        <p class="repo-desc">Curated skills and plugins for CodeX aimed at beginners: packaged prompts that unlock more of the model's capability, with tutorials and examples.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>415</span>
+    </li>
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5</h2>
+    <span class="badge badge-30d">Last 30 Days</span>
+  </div>
+
+  <ol class="repo-list">
+    <li class="repo-card">
+      <span class="rank">1</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a></h3>
+        <p class="repo-desc">Unlocks up to 2x FP16/BF16/TF32 tensor throughput on GeForce 20/30/40 series cards. Consumer GPUs running AI at half speed was an open secret; this repo turned it into a one-liner fix.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>12,488</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">2</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a></h3>
+        <p class="repo-desc">Agent skill that answers complex questions by generating a single self-contained HTML page you can actually read — diagrams, tables, and all. Proves the "artifact as answer" pattern has legs.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,602</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">3</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a></h3>
+        <p class="repo-desc">A $7 ESP32 gives an AI model eyes (AirPlay) and hands (USB HID) on a real iPhone. No Mac, no developer account, no jailbreak. Hardware computer-use on a budget.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,068</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">4</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/Folkbench/folkbench" target="_blank" rel="noopener">Folkbench/folkbench</a></h3>
+        <p class="repo-desc">Open-source benchmark and switcher for AI API relay providers. Measures real uptime, latency, and price across 1,800+ providers so you stop guessing which relay to trust.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,874</span>
+    </li>
+    <li class="repo-card">
+      <span class="rank">5</span>
+      <div class="repo-info">
+        <h3><a href="https://github.com/openfilm/openfilm" target="_blank" rel="noopener">openfilm/openfilm</a></h3>
+        <p class="repo-desc">Open-source AI video agent that turns any coding agent into a video agent, with an editor to change anything it produces. The first credible open play for agent-driven video production.</p>
+      </div>
+      <span class="star-count"><svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,399</span>
+    </li>
+  </ol>
+
+</div>
+
+<footer>
+  <p>Generated by the Trending GitHub Repos routine — 2026-10-29 UTC</p>
+</footer>
+
+</body>
+</html>
