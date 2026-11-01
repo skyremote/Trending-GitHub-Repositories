@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-11-01</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #161822;
+    --surface-hover: #1c1f2e;
+    --border: #2a2d3e;
+    --text: #e4e4e7;
+    --text-muted: #9ca3af;
+    --accent: #818cf8;
+    --accent-dim: #6366f1;
+    --accent-glow: rgba(129,140,248,0.12);
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --tag-bg: #1e2030;
+    --tag-text: #a5b4fc;
+    --star: #facc15;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .header-date {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* Filter tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .tab:hover { border-color: var(--accent-dim); color: var(--text); }
+  .tab.active {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Editor's Take */
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .editors-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    border-radius: 12px 12px 0 0;
+  }
+  .editors-take h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .editors-take h2 .icon { font-size: 20px; }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .editors-take strong { color: var(--text); }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .section-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .badge-weekly {
+    background: var(--accent-glow);
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+  }
+  .badge-monthly {
+    background: var(--orange-dim);
+    color: var(--orange);
+    border: 1px solid var(--orange);
+  }
+
+  /* Repo cards */
+  .repo-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .repo-card:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-1px);
+  }
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 24px;
+  }
+  .repo-name a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .repo-name a:hover { color: var(--accent); text-decoration: underline; }
+  .repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--star);
+  }
+  .repo-lang {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-weight: 500;
+  }
+  .repo-date {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .repo-analysis {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.65;
+    border-left: 2px solid var(--accent-dim);
+    padding-left: 14px;
+    margin-top: 12px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 22px; }
+    .repo-top { flex-direction: column; }
+    .repo-meta { margin-top: 4px; }
+    .editors-take { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="header-date">November 1, 2026</div>
+    <h1>Trending AI Repositories</h1>
+    <p>Curated daily brief — what gained the most stars this week and month</p>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('all')">All</div>
+    <div class="tab" onclick="showSection('weekly')">This Week</div>
+    <div class="tab" onclick="showSection('monthly')">Monthly Standouts</div>
+  </div>
+
+  <div id="editors-take" class="editors-take">
+    <h2><span class="icon">&#9998;</span> Editor's Take</h2>
+    <p>The last week belongs to <strong>on-device AI agents</strong>. Three of the top five repos put a full agent runtime on a phone — Android and iOS alike — without cloud calls, root access, or developer accounts. DeepSeek alone shipped two mobile harnesses and an autonomous "superagent" prototype in seven days, signaling that the Chinese lab sees edge-first agents as the next battlefield.</p>
+    <p>The <strong>agent-skills ecosystem</strong> continues to mature. Theo Browne's <code>tstack</code> and Heydamir's <code>unslop</code> show that developers now treat agent behavior as composable middleware: one skill polishes AI-generated UI into production design, another bundles an opinionated daily workflow. Security tooling is keeping pace — <code>grim-prompter</code> and <code>sapper-v2</code> both frame AI agents as attack surfaces worth formal threat modeling.</p>
+    <p>On the monthly chart, <strong><code>gpu-unlock</code> is the breakout story</strong>: a driver-level patch that doubles tensor throughput on consumer GeForce cards. It democratizes local AI in a way that no amount of API price cuts can match. Microsoft's <code>TokenEconomizer</code> tackles the other side of the cost equation, bringing experience-driven cost control to coding agents.</p>
+    <p><strong>The signal is clear: AI is leaving the cloud.</strong> The repos that gained the most stars this month are the ones that put models, agents, and controls directly on the hardware people already own.</p>
+  </div>
+
+  <!-- Weekly Section -->
+  <div id="section-weekly">
+    <div class="section-header">
+      <h2>Top 10 — Last 7 Days</h2>
+      <span class="section-badge badge-weekly">Oct 25 – Nov 1</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#1</span>
+            <span class="repo-name"><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 3,749</span>
+            <span class="repo-lang">Dart</span>
+            <span class="repo-date">Oct 25</span>
+          </div>
+        </div>
+        <div class="repo-desc">DeepSeek Harness in your pocket: run natively on phone, remote-control your desktop.</div>
+        <div class="repo-analysis">A mobile client for DeepSeek Harness built in Dart/Flutter for cross-platform reach. Runs the agent natively on phone hardware and can also drive your workstation remotely. Signals that DeepSeek's agent ecosystem is going mobile-first.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#2</span>
+            <span class="repo-name"><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 3,674</span>
+            <span class="repo-lang">JavaScript</span>
+            <span class="repo-date">Oct 29</span>
+          </div>
+        </div>
+        <div class="repo-desc">A Claude skill that turns vibecoded, AI-looking UI into a designed interface.</div>
+        <div class="repo-analysis">Addresses the "AI slop" problem head-on. Takes the generic, cookie-cutter UI that vibecoding produces and transforms it into a polished interface that looks designed rather than generated. Growing fast because the pain is universal.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#3</span>
+            <span class="repo-name"><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 3,389</span>
+            <span class="repo-lang">TypeScript</span>
+            <span class="repo-date">Oct 31</span>
+          </div>
+        </div>
+        <div class="repo-desc">Towards a More Autonomous Agent System.</div>
+        <div class="repo-analysis">Official DeepSeek repository showing how they envision multi-step, self-directed agents. A prototype reference architecture that will likely shape the next wave of DSH ecosystem tooling. Gained 3.4k stars in a single day.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#4</span>
+            <span class="repo-name"><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 2,899</span>
+            <span class="repo-lang">Kotlin</span>
+            <span class="repo-date">Oct 29</span>
+          </div>
+        </div>
+        <div class="repo-desc">An on-device AI agent for Android that operates apps and the web to get things done for you.</div>
+        <div class="repo-analysis">Fully on-device, no cloud dependency. Navigates UI elements, fills forms, and executes multi-step tasks across apps. A local-first alternative to cloud phone agents — privacy by architecture rather than by promise.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#5</span>
+            <span class="repo-name"><a href="https://github.com/t3dotgg/tstack" target="_blank" rel="noopener">t3dotgg/tstack</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 2,542</span>
+            <span class="repo-lang">Python</span>
+            <span class="repo-date">Oct 24</span>
+          </div>
+        </div>
+        <div class="repo-desc">The agent skills I use every day. Works with Claude Code and Codex.</div>
+        <div class="repo-analysis">Theo Browne published his daily-driver agent skills — opinionated, practical, and immediately usable. A curated workflow rather than a kitchen-sink toolkit. Important because it shows agent skills becoming a personal brand artifact.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#6</span>
+            <span class="repo-name"><a href="https://github.com/jackwener/DSH-Android" target="_blank" rel="noopener">jackwener/DSH-Android</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 637</span>
+            <span class="repo-lang">Kotlin</span>
+            <span class="repo-date">Oct 27</span>
+          </div>
+        </div>
+        <div class="repo-desc">DeepSeek Harness on Android: no root, no Termux, one APK.</div>
+        <div class="repo-analysis">Single APK deployment with accessibility-based app control, system settings modification, and scheduled automation. Optional Shizuku support for deeper integration. The low barrier to entry is the point — one install and you have a phone agent.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#7</span>
+            <span class="repo-name"><a href="https://github.com/boardshogunfluctuate/Capri-AI" target="_blank" rel="noopener">boardshogunfluctuate/Capri-AI</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 516</span>
+            <span class="repo-lang">N/A</span>
+            <span class="repo-date">Oct 30</span>
+          </div>
+        </div>
+        <div class="repo-desc">Cyberpunk AI agent: tell your PC what to do through a visual interface.</div>
+        <div class="repo-analysis">A Windows GUI wrapper for Claude Code, Codex, and Antigravity with a Cyberpunk 2077-inspired aesthetic. Targets users who never open a terminal — notable for bringing AI coding agents to a non-developer audience.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#8</span>
+            <span class="repo-name"><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 367</span>
+            <span class="repo-lang">Python</span>
+            <span class="repo-date">Oct 30</span>
+          </div>
+        </div>
+        <div class="repo-desc">Autonomous pentest legion — AI commander + worker swarm with a layered fact-intent graph.</div>
+        <div class="repo-analysis">Won 3rd at the Tencent Intelligent Attack-Defense competition (634 teams, 8 hours unattended, 1B tokens). Uses a commander-worker architecture over a knowledge graph. Serious defensive security tool, not a toy.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#9</span>
+            <span class="repo-name"><a href="https://github.com/shipwords-dev/shipwords" target="_blank" rel="noopener">shipwords-dev/shipwords</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 315</span>
+            <span class="repo-lang">TypeScript</span>
+            <span class="repo-date">Oct 28</span>
+          </div>
+        </div>
+        <div class="repo-desc">Ship a money-making AI site for every new keyword. Cloudflare-native.</div>
+        <div class="repo-analysis">Programmatic SEO meets AI content generation. Cloudflare Workers, D1 database, auth, credits, and Stripe payments included. The "one keyword, one site, one afternoon" approach to AI-powered content businesses.</div>
+      </div>
+
+      <div class="repo-card" data-section="weekly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#10</span>
+            <span class="repo-name"><a href="https://github.com/jmanico/grim-prompter" target="_blank" rel="noopener">jmanico/grim-prompter</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 312</span>
+            <span class="repo-lang">N/A</span>
+            <span class="repo-date">Oct 28</span>
+          </div>
+        </div>
+        <div class="repo-desc">Threat modeling for AI coding agents: 36 architectures, 29 methods, MIT.</div>
+        <div class="repo-analysis">From Jim Manico (OWASP contributor). Point any AI coding agent at your repo and get an evidence-traced threat model. Treats the agent itself as part of the attack surface — a much-needed security perspective as agents gain more autonomy.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Monthly Section -->
+  <div id="section-monthly">
+    <div class="section-header">
+      <h2>Top 5 — Monthly Standouts</h2>
+      <span class="section-badge badge-monthly">Oct 1 – Oct 24</span>
+    </div>
+    <div class="repo-list">
+
+      <div class="repo-card" data-section="monthly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#1</span>
+            <span class="repo-name"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 13,890</span>
+            <span class="repo-lang">C</span>
+            <span class="repo-date">Oct 18</span>
+          </div>
+        </div>
+        <div class="repo-desc">Your GeForce runs AI at half speed. This fixes it for 20/30/40 series cards.</div>
+        <div class="repo-analysis">A driver-level patch unlocking up to 2x FP16/BF16/TF32 tensor throughput on consumer NVIDIA GPUs. The most-starred AI repo of the month by a wide margin. Democratizes local AI inference in a way no API price cut can match.</div>
+      </div>
+
+      <div class="repo-card" data-section="monthly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#2</span>
+            <span class="repo-name"><a href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener">QingYunA/answer-me-with-html</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 4,981</span>
+            <span class="repo-lang">JavaScript</span>
+            <span class="repo-date">Oct 2</span>
+          </div>
+        </div>
+        <div class="repo-desc">Agent skill that answers hard questions with interactive, readable HTML pages.</div>
+        <div class="repo-analysis">Replaces walls of markdown with structured, interactive single-page HTML. Tables, diagrams, and layouts that make complex answers scannable. A simple concept with massive quality-of-life improvement for daily agent use.</div>
+      </div>
+
+      <div class="repo-card" data-section="monthly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#3</span>
+            <span class="repo-name"><a href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 4,162</span>
+            <span class="repo-lang">C</span>
+            <span class="repo-date">Oct 11</span>
+          </div>
+        </div>
+        <div class="repo-desc">Let an AI model use a real iPhone with a $7 ESP32 — AirPlay eyes, USB HID hands.</div>
+        <div class="repo-analysis">Hardware hacking meets AI agents. Uses AirPlay for vision and USB HID for input — no Mac, no developer account, no jailbreak. The $7 ESP32 bridges any OpenAI-compatible vision model to a physical iPhone. Clever and unsettling in equal measure.</div>
+      </div>
+
+      <div class="repo-card" data-section="monthly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#4</span>
+            <span class="repo-name"><a href="https://github.com/openfilm/openfilm" target="_blank" rel="noopener">openfilm/openfilm</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 3,939</span>
+            <span class="repo-lang">TypeScript</span>
+            <span class="repo-date">Oct 4</span>
+          </div>
+        </div>
+        <div class="repo-desc">The open source AI video agent: turns any coding agent into a video agent.</div>
+        <div class="repo-analysis">First credible open-source AI video creation tool that treats the agent loop and human editing as equal partners. Comes with an editor UI for manual overrides. Bridges the gap between fully automated video and manual production.</div>
+      </div>
+
+      <div class="repo-card" data-section="monthly">
+        <div class="repo-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="repo-rank">#5</span>
+            <span class="repo-name"><a href="https://github.com/microsoft/TokenEconomizer" target="_blank" rel="noopener">microsoft/TokenEconomizer</a></span>
+          </div>
+          <div class="repo-meta">
+            <span class="repo-stars">&#9733; 3,195</span>
+            <span class="repo-lang">Python</span>
+            <span class="repo-date">Oct 13</span>
+          </div>
+        </div>
+        <div class="repo-desc">Experience-Driven Black-Box Cost Control for Coding Agents.</div>
+        <div class="repo-analysis">Microsoft Research's approach to token cost control: learns from past agent runs to predict and constrain future spend without modifying the agent. Works as a wrapper around any coding agent. Solves the "surprise $200 bill" problem that plagues agent-heavy workflows.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Generated on 2026-11-01 UTC. Star counts are approximate at time of query.</p>
+    <p style="margin-top: 8px;">Data sourced from the GitHub Search API.</p>
+  </div>
+</div>
+
+<script>
+  function showSection(section) {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const editorsTake = document.getElementById('editors-take');
+    const weekly = document.getElementById('section-weekly');
+    const monthly = document.getElementById('section-monthly');
+
+    if (section === 'all') {
+      editorsTake.style.display = 'block';
+      weekly.style.display = 'block';
+      monthly.style.display = 'block';
+    } else if (section === 'weekly') {
+      editorsTake.style.display = 'none';
+      weekly.style.display = 'block';
+      monthly.style.display = 'none';
+    } else if (section === 'monthly') {
+      editorsTake.style.display = 'none';
+      weekly.style.display = 'none';
+      monthly.style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
