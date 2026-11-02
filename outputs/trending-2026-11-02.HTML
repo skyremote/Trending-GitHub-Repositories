@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-02</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-hero: #0f172a;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --text-hero: #f1f5f9;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --border: #e2e8f0;
+    --star: #eab308;
+    --tag-bg: #eef2ff;
+    --tag-text: #4338ca;
+    --section-bg: #f1f5f9;
+    --link: #4f46e5;
+    --link-hover: #4338ca;
+    --badge-7d: #10b981;
+    --badge-30d: #6366f1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-hero: #020617;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-hero: #f1f5f9;
+      --accent: #818cf8;
+      --accent-light: #a5b4fc;
+      --border: #334155;
+      --star: #facc15;
+      --tag-bg: #1e1b4b;
+      --tag-text: #a5b4fc;
+      --section-bg: #1e293b;
+      --link: #818cf8;
+      --link-hover: #a5b4fc;
+      --badge-7d: #34d399;
+      --badge-30d: #818cf8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hero: #020617;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-hero: #f1f5f9;
+    --accent: #818cf8;
+    --accent-light: #a5b4fc;
+    --border: #334155;
+    --star: #facc15;
+    --tag-bg: #1e1b4b;
+    --tag-text: #a5b4fc;
+    --section-bg: #1e293b;
+    --link: #818cf8;
+    --link-hover: #a5b4fc;
+    --badge-7d: #34d399;
+    --badge-30d: #818cf8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: var(--bg-hero);
+    color: var(--text-hero);
+    padding: 3rem 1rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .hero .date {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+  }
+  .hero .subtitle {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+  }
+  .container {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .editors-take {
+    background: var(--section-bg);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+  .editors-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .editors-take p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-7d { background: var(--badge-7d); }
+  .badge-30d { background: var(--badge-30d); }
+  .repo-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(99,102,241,0.08);
+  }
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .repo-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .repo-name {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name a {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--link);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name a:hover { color: var(--link-hover); text-decoration: underline; }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-top: 0.25rem;
+  }
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .repo-card { padding: 1rem; }
+    .repo-top { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="subtitle">Daily AI Repository Intelligence</p>
+  <h1>Trending AI Repos</h1>
+  <p class="date">November 2, 2026 &middot; UTC</p>
+</div>
+
+<div class="container">
+
+  <div class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>The week's defining pattern: AI is colonizing the physical world. The top new repo unlocks hidden tensor performance on consumer GPUs, an on-device Android agent hit 4k stars in three days, and a $7 ESP32 can now pilot a real iPhone via AirPlay. Meanwhile, the agent tooling layer is splitting into two camps — those building harnesses (HelixHarness, Uncut, cheap-ag) and those building defenses against them (BLA, grim-prompter, ai-design-check). The most telling signal from the 30-day window is DeepSeek shipping a dedicated inference framework at 25k stars, confirming that inference infrastructure, not training, is where the open-source gravity has shifted. If you are still building agent wrappers without a security story, BLA and grim-prompter should make you nervous.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 — Last 7 Days</h2>
+    <span class="badge badge-7d">7-day</span>
+  </div>
+
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></div>
+        <span class="stars">&#9733; 5,028</span>
+      </div>
+      <p class="repo-desc">Claude skill that rewrites AI-generated UI into a properly designed interface. Addresses the real problem with vibecoded apps: they work but look AI-generated. A design linter that actually fixes what it finds.</p>
+      <div class="tags"><span class="tag">Claude Skill</span><span class="tag">UI/UX</span><span class="tag">JavaScript</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></div>
+        <span class="stars">&#9733; 4,187</span>
+      </div>
+      <p class="repo-desc">On-device AI agent for Android that operates apps and the web autonomously. Kotlin + Jetpack Compose, accessibility-service driven. The mobile-agent category now has a clear frontrunner.</p>
+      <div class="tags"><span class="tag">Mobile Agent</span><span class="tag">Android</span><span class="tag">Kotlin</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/speridlabs/idol-sdk" target="_blank" rel="noopener">speridlabs/idol-sdk</a></div>
+        <span class="stars">&#9733; 517</span>
+      </div>
+      <p class="repo-desc">Single image to 3D Gaussian splatting. Clean single-purpose inference SDK with demo. Ships as a usable SDK, not a research repo — a welcome shift in the image-to-3D pipeline.</p>
+      <div class="tags"><span class="tag">3D Generation</span><span class="tag">Gaussian Splatting</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></div>
+        <span class="stars">&#9733; 512</span>
+      </div>
+      <p class="repo-desc">Autonomous pentest framework with an AI commander, worker swarm, and layered fact-intent graph. Won 3rd at Tencent Intelligent Attack-Defense. Offensive security meets multi-agent coordination.</p>
+      <div class="tags"><span class="tag">Security</span><span class="tag">Pentest</span><span class="tag">Multi-Agent</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/patch-gg/anymove" target="_blank" rel="noopener">patch-gg/anymove</a></div>
+        <span class="stars">&#9733; 463</span>
+      </div>
+      <p class="repo-desc">Motion capture for any creature from a single AI video: two-camera DINOv2 joint reader outputs a rigged GLB. Solves a real VFX pipeline bottleneck with minimal hardware.</p>
+      <div class="tags"><span class="tag">Motion Capture</span><span class="tag">Computer Vision</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">6</span>
+        <div class="repo-name"><a href="https://github.com/Pika-Labs/Pika-H3-Flex" target="_blank" rel="noopener">Pika-Labs/Pika-H3-Flex</a></div>
+        <span class="stars">&#9733; 454</span>
+      </div>
+      <p class="repo-desc">Pika's open-weight video and audio generation model with inference code. First time Pika has released weights. Worth watching whether this shifts the video-gen landscape away from closed APIs.</p>
+      <div class="tags"><span class="tag">Video Generation</span><span class="tag">Open Weights</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">7</span>
+        <div class="repo-name"><a href="https://github.com/jmanico/grim-prompter" target="_blank" rel="noopener">jmanico/grim-prompter</a></div>
+        <span class="stars">&#9733; 336</span>
+      </div>
+      <p class="repo-desc">Threat modeling for AI coding agents. Point it at a repo, get an evidence-traced threat model covering 36 architectural patterns. STRIDE + PASTA + LINDDUN in one pass. The security audit tool agents needed.</p>
+      <div class="tags"><span class="tag">Threat Modeling</span><span class="tag">AppSec</span><span class="tag">Claude Code</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">8</span>
+        <div class="repo-name"><a href="https://github.com/Balanov/uncut" target="_blank" rel="noopener">Balanov/uncut</a></div>
+        <span class="stars">&#9733; 318</span>
+      </div>
+      <p class="repo-desc">Lossless, headless coding agent harness in a single 7 MB Go binary. Four tools, plain stdin/stdout, no silent context cuts. A deliberate counterpoint to the kitchen-sink harness trend.</p>
+      <div class="tags"><span class="tag">Agent Harness</span><span class="tag">Go</span><span class="tag">Minimalist</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">9</span>
+        <div class="repo-name"><a href="https://github.com/didi/helixharness" target="_blank" rel="noopener">didi/helixharness</a></div>
+        <span class="stars">&#9733; 244</span>
+      </div>
+      <p class="repo-desc">DiDi's open-source AI coding harness. Enterprise-grade foundation with support for custom business knowledge, engineering standards, and team workflows. Big Chinese tech open-sourcing internal agent infra.</p>
+      <div class="tags"><span class="tag">Enterprise</span><span class="tag">Coding Agent</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">10</span>
+        <div class="repo-name"><a href="https://github.com/DiffuSpace/Clover-35B-A3B-Preview" target="_blank" rel="noopener">DiffuSpace/Clover-35B-A3B-Preview</a></div>
+        <span class="stars">&#9733; 126</span>
+      </div>
+      <p class="repo-desc">A 35B-parameter diffusion language model. Early preview of an architecture that generates text via iterative denoising rather than autoregression. Small star count, large implications if the approach scales.</p>
+      <div class="tags"><span class="tag">Diffusion LM</span><span class="tag">Research</span><span class="tag">35B Parameters</span></div>
+    </li>
+
+  </ol>
+
+  <div class="section-header">
+    <h2>Top 5 — Last 30 Days</h2>
+    <span class="badge badge-30d">30-day</span>
+  </div>
+
+  <ol class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">1</span>
+        <div class="repo-name"><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a></div>
+        <span class="stars">&#9733; 24,862</span>
+      </div>
+      <p class="repo-desc">DeepSeek's high-performance inference framework purpose-built for their model family. The signal: model labs are no longer content to let vLLM and TGI own the serving layer. Inference is now a first-party product.</p>
+      <div class="tags"><span class="tag">Inference</span><span class="tag">DeepSeek</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">2</span>
+        <div class="repo-name"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a></div>
+        <span class="stars">&#9733; 14,197</span>
+      </div>
+      <p class="repo-desc">Unlocks full FP16/BF16/TF32 tensor throughput on GeForce 20/30/40 series cards. Up to 2x performance for AI workloads on consumer hardware. A driver-level fix that makes every local-inference project faster overnight.</p>
+      <div class="tags"><span class="tag">GPU</span><span class="tag">Performance</span><span class="tag">C</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">3</span>
+        <div class="repo-name"><a href="https://github.com/openfilm/openfilm" target="_blank" rel="noopener">openfilm/openfilm</a></div>
+        <span class="stars">&#9733; 4,136</span>
+      </div>
+      <p class="repo-desc">Open-source AI video agent that turns any coding agent into a video editor. Built-in editor for human review. The first serious open-source competitor to closed video-gen APIs for agentic workflows.</p>
+      <div class="tags"><span class="tag">Video Agent</span><span class="tag">Open Source</span><span class="tag">TypeScript</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">4</span>
+        <div class="repo-name"><a href="https://github.com/SoMarkAI/OXR" target="_blank" rel="noopener">SoMarkAI/OXR</a></div>
+        <span class="stars">&#9733; 2,856</span>
+      </div>
+      <p class="repo-desc">Open-source document parsing model achieving SOTA accuracy and speed via an RSI loop during post-training. The "good enough" OCR bar just moved up again, Apache-licensed.</p>
+      <div class="tags"><span class="tag">OCR</span><span class="tag">Document Parsing</span><span class="tag">Python</span></div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-top">
+        <span class="repo-rank">5</span>
+        <div class="repo-name"><a href="https://github.com/CopilotKit/OpenDuet" target="_blank" rel="noopener">CopilotKit/OpenDuet</a></div>
+        <span class="stars">&#9733; 1,802</span>
+      </div>
+      <p class="repo-desc">Open-source template for proactive AI agents that keep users in the loop. From CopilotKit — signals that the "agent works alongside you" pattern is becoming a reusable template, not a bespoke build.</p>
+      <div class="tags"><span class="tag">Agent Template</span><span class="tag">CopilotKit</span><span class="tag">TypeScript</span></div>
+    </li>
+
+  </ol>
+
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; UTC 2026-11-02
+</footer>
+
+</body>
+</html>
