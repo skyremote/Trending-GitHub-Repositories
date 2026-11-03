@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-03</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --accent-subtle: rgba(56,139,253,0.1);
+    --star: #e3b341;
+    --tag-bg: rgba(56,139,253,0.15);
+    --tag-text: #58a6ff;
+    --badge-new: #238636;
+    --badge-hot: #da3633;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    padding: 48px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  header .date-badge {
+    display: inline-block;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header .subtitle {
+    color: var(--text-secondary);
+    font-size: 16px;
+  }
+
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 12px 12px 0 0;
+  }
+
+  .editors-take h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .editors-take p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .section-header .window-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    transition: border-color 0.2s, background 0.2s;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .rank {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  .repo-card:nth-child(1) .rank { color: var(--star); }
+  .repo-card:nth-child(2) .rank { color: var(--text-secondary); }
+  .repo-card:nth-child(3) .rank { color: #cd7f32; }
+
+  .repo-info h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .repo-info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-info h3 a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .repo-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .meta-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stars-col {
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .stars-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--star);
+  }
+
+  .stars-count svg {
+    flex-shrink: 0;
+  }
+
+  .lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-kotlin { background: #A97BFF; }
+  .lang-python { background: #3572A5; }
+  .lang-go { background: #00ADD8; }
+  .lang-c { background: #555555; }
+  .lang-cpp { background: #f34b7d; }
+  .lang-dart { background: #00B4AB; }
+  .lang-java { background: #b07219; }
+  .lang-html { background: #e34c26; }
+  .lang-swift { background: #F05138; }
+
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 12px 16px; }
+    header { padding: 32px 0 24px; }
+    header h1 { font-size: 24px; }
+    .editors-take { padding: 20px; }
+    .repo-card {
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 16px;
+    }
+    .stars-col {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="date-badge">2026-11-03 UTC</div>
+    <h1>Trending AI Repositories</h1>
+    <p class="subtitle">Weekly signal from GitHub's fastest-growing AI projects</p>
+  </header>
+
+  <section class="editors-take">
+    <h2>Editor's Take</h2>
+    <p>Agent skills are now the dominant distribution format for AI tooling. Six of this week's top ten repos are packaged skills — pixel art generators, architecture diagrammers, 3D simulators, animation decompilers — each a single installable unit that turns a coding agent into a specialist. The shift from "build an AI app" to "ship a skill for someone else's agent" happened quietly, but the star counts say it loudly. Meanwhile, DeepSeek dropped a 14K-star autonomous agent prototype, Microsoft published a paper-backed cost controller for coding agents, and someone unlocked 2x tensor throughput on consumer GeForce cards. The infrastructure layer is splitting in two directions: agents that do more, and agents that cost less doing it.</p>
+  </section>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRepos('all')">All</button>
+    <button class="filter-btn" onclick="filterRepos('skill')">Agent Skills</button>
+    <button class="filter-btn" onclick="filterRepos('agent')">Agents</button>
+    <button class="filter-btn" onclick="filterRepos('infra')">Infrastructure</button>
+    <button class="filter-btn" onclick="filterRepos('research')">Research</button>
+  </div>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 10</h2>
+      <span class="window-tag">Last 7 days</span>
+    </div>
+    <div class="repo-list" id="weekly-list">
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></h3>
+          <p class="repo-desc">DeepSeek's blueprint for a more autonomous agent system. TypeScript-based, built on the DeepSeek Harness, focused on multi-step task execution with minimal human handholding. The star velocity suggests the community sees this as more than a prototype.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-tag">Created Oct 31</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            14,010
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></h3>
+          <p class="repo-desc">A Claude skill that takes vibecoded, obviously-AI-generated UI and turns it into something that looks designed. Solves the last-mile polish gap between "it works" and "it ships."</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 29</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            6,456
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></h3>
+          <p class="repo-desc">On-device AI agent for Android that operates apps and the web on your behalf. Written in Kotlin, runs locally. The phone-as-agent-platform thesis is getting serious implementations.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-kotlin"></span> Kotlin</span>
+            <span class="meta-tag">Created Oct 29</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            5,517
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/patch-gg/pixelfx" target="_blank" rel="noopener">patch-gg/pixelfx</a></h3>
+          <p class="repo-desc">244 pixel art effects, each a small standalone piece of code, plus a Claude Code skill to generate your own. A well-scoped creative tool that doubles as a skill authoring example.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 30</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            3,620
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/elvarofficial/teardown" target="_blank" rel="noopener">elvarofficial/teardown</a></h3>
+          <p class="repo-desc">A Claude Code skill that turns any machine into a 3D simulator you can take apart. Isometric exploded views generated from a text description. Impressive demo surface area.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 30</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            1,320
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">6</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener">caru-ini/stack-diagram</a></h3>
+          <p class="repo-desc">Describe your stack in a sentence, get an architecture diagram with official logos. Agent skill format, works with Claude Code and Codex. The kind of utility that earns a permanent install.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-tag">Created Nov 1</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            1,258
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">7</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/NiazMorshed2007/reanimate" target="_blank" rel="noopener">NiazMorshed2007/reanimate</a></h3>
+          <p class="repo-desc">A Claude Code skill that reverse-engineers any animation frame by frame, then proves the copy moves the same way. Useful for understanding motion design, or replicating it.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 29</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            972
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">8</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/jacke-pp/open-yoki" target="_blank" rel="noopener">jacke-pp/open-yoki</a></h3>
+          <p class="repo-desc">An AI live-stream host that runs on a single server: voice, face, chat, memory, and social posting bundled together. Open-source base for AI-driven streaming.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 28</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            871
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">9</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></h3>
+          <p class="repo-desc">Autonomous penetration testing: an AI commander coordinates a swarm of worker agents over a layered fact-intent graph. Third place in the Tencent Intelligent Attack-Defense competition. Security agents are getting structured.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-tag">Created Oct 30</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            625
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="infra">
+        <div class="rank">10</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/Balanov/uncut" target="_blank" rel="noopener">Balanov/uncut</a></h3>
+          <p class="repo-desc">A 7 MB static binary that gives you a lossless, headless coding agent harness. Four tools, plain stdin/stdout, no silent context cuts. Minimalist alternative to full-featured agent runtimes.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-go"></span> Go</span>
+            <span class="meta-tag">Created Nov 1</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            575
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top 5</h2>
+      <span class="window-tag">Last 30 days</span>
+    </div>
+    <div class="repo-list" id="monthly-list">
+
+      <div class="repo-card" data-category="skill">
+        <div class="rank">1</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a></h3>
+          <p class="repo-desc">Agent skill for creating detailed, interactive isometric illustrations of real-world machines and complex systems. The month's star leader by a wide margin. Demonstrates that agent skills can go viral the way standalone apps used to.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-javascript"></span> JavaScript</span>
+            <span class="meta-tag">Created Oct 8</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            24,167
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="infra">
+        <div class="rank">2</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a></h3>
+          <p class="repo-desc">Unlocks up to 2x FP16/BF16/TF32 tensor throughput on GeForce 20/30/40 series cards. Your consumer GPU has been running AI at half speed; this fixes it. Controversial but effective.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-c"></span> C</span>
+            <span class="meta-tag">Created Oct 18</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            14,736
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">3</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></h3>
+          <p class="repo-desc">DeepSeek Harness in your pocket: runs on mobile, can also remote-control your desktop. Built with Dart/Flutter. The companion app pattern for agent harnesses is solidifying.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-dart"></span> Dart</span>
+            <span class="meta-tag">Created Oct 25</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            6,109
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="agent">
+        <div class="rank">4</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/amosblomqvist/learnharness" target="_blank" rel="noopener">amosblomqvist/learnharness</a></h3>
+          <p class="repo-desc">An agent harness purpose-built for learning difficult things. Not a tutor chatbot — a structured learning environment that uses agent patterns to sequence, test, and adapt instruction.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-typescript"></span> TypeScript</span>
+            <span class="meta-tag">Created Oct 16</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            5,001
+          </span>
+        </div>
+      </div>
+
+      <div class="repo-card" data-category="research">
+        <div class="rank">5</div>
+        <div class="repo-info">
+          <h3><a href="https://github.com/microsoft/TokenEconomizer" target="_blank" rel="noopener">microsoft/TokenEconomizer</a></h3>
+          <p class="repo-desc">Experience-driven black-box cost control for coding agents. Microsoft Research paper with code. Learns from past agent runs to reduce token spend without degrading output. The "make agents cheaper" layer is arriving.</p>
+          <div class="repo-meta">
+            <span class="meta-tag"><span class="lang-dot lang-python"></span> Python</span>
+            <span class="meta-tag">Created Oct 13</span>
+          </div>
+        </div>
+        <div class="stars-col">
+          <span class="stars-count">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            4,517
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Generated by the Trending GitHub Repos routine — 2026-11-03 UTC</p>
+    <p style="margin-top: 8px;">Data sourced from <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> search API. Stars as of report time.</p>
+  </footer>
+</div>
+
+<script>
+  function filterRepos(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent === 'All'));
+    });
+    document.querySelectorAll('.repo-card').forEach(card => {
+      if (category === 'all') {
+        card.style.display = '';
+      } else {
+        card.style.display = card.dataset.category === category ? '' : 'none';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
