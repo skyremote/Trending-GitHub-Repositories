@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-04</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: #1f6feb33;
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --rank-gold: #f0c000;
+    --rank-silver: #a0aab4;
+    --rank-bronze: #cd7f32;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  header {
+    text-align: center;
+    padding: 48px 16px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    font-family: inherit;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+    border-left: 3px solid var(--accent);
+  }
+  .editors-take h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .badge {
+    font-size: 0.7rem;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+  .repo-list { list-style: none; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s;
+    position: relative;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .rank {
+    font-size: 1.2rem;
+    font-weight: 800;
+    min-width: 28px;
+    text-align: center;
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .rank-1 { color: var(--rank-gold); }
+  .rank-2 { color: var(--rank-silver); }
+  .rank-3 { color: var(--rank-bronze); }
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover { text-decoration: underline; }
+  .stars {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: var(--orange);
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-left: 40px;
+  }
+  .repo-meta {
+    margin-left: 40px;
+    margin-top: 8px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .meta-tag.lang { color: var(--purple); border-color: #bc8cff44; }
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  @media (max-width: 600px) {
+    header { padding: 32px 16px 24px; }
+    header h1 { font-size: 1.4rem; }
+    .repo-card { padding: 16px; }
+    .repo-desc, .repo-meta { margin-left: 0; }
+    .tab-btn { padding: 8px 14px; font-size: 0.82rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-11-04 UTC</div>
+  </header>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('take')">Editor's Take</button>
+    <button class="tab-btn" onclick="showTab('weekly')">Top 10 — 7 Days</button>
+    <button class="tab-btn" onclick="showTab('monthly')">Top 5 — 30 Days</button>
+  </div>
+
+  <div id="tab-take" class="tab-content active">
+    <div class="editors-take">
+      <h2>Editor's Take</h2>
+      <p>The on-device agent has won the week. Mika shipped a fully autonomous Android agent that reached 6,100 stars in six days — the fastest climb for a mobile AI project this quarter. Meanwhile, the harness wars continue: Uncut and Shim both bet that the coding-agent runtime should be a single static binary with zero dependencies, a direct rebuke to the bloated Docker images that dominated last month's chart. The other signal worth watching is verification tooling. Verdict (semantic verification for tool calls) and Sapper-v2 (autonomous pentest swarm) show the field splitting into "trust the agent" and "prove the agent" camps. The 30-day window tells the same story at scale: dsh-Go and Project Maya prove that running large models locally is no longer a research project, it is a product category.</p>
+    </div>
+  </div>
+
+  <div id="tab-weekly" class="tab-content">
+    <h3 class="section-title">Top 10 — last 7 days <span class="badge">Oct 28 – Nov 4</span></h3>
+    <ul class="repo-list">
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-1">1</span>
+          <span class="repo-name"><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></span>
+          <span class="stars">&#9733; 6,163</span>
+        </div>
+        <div class="repo-desc">On-device AI agent for Android that operates apps and the web autonomously. Kotlin, no root required. The fastest-growing mobile agent repo this quarter.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Kotlin</span>
+          <span class="meta-tag">Created Oct 29</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-2">2</span>
+          <span class="repo-name"><a href="https://github.com/sleepy-zone/ai-ref-library-cn" target="_blank" rel="noopener">sleepy-zone/ai-ref-library-cn</a></span>
+          <span class="stars">&#9733; 704</span>
+        </div>
+        <div class="repo-desc">Chinese-language AI image reference library (faces, poses, clothing). A vertical asset toolkit for image-generation workflows.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">JavaScript</span>
+          <span class="meta-tag">Created Oct 29</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-3">3</span>
+          <span class="repo-name"><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></span>
+          <span class="stars">&#9733; 670</span>
+        </div>
+        <div class="repo-desc">Autonomous pentest legion: AI commander plus worker swarm with a layered fact-intent graph. Won 3rd place at Tencent's attack-defense contest (634 teams, 8 hours unattended).</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 30</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">4</span>
+          <span class="repo-name"><a href="https://github.com/Balanov/uncut" target="_blank" rel="noopener">Balanov/uncut</a></span>
+          <span class="stars">&#9733; 598</span>
+        </div>
+        <div class="repo-desc">Lossless, headless coding-agent harness in one 7 MB Go binary. Four tools, plain stdin/stdout, no silent context cuts.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Go</span>
+          <span class="meta-tag">Created Nov 1</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">5</span>
+          <span class="repo-name"><a href="https://github.com/Balanov/shim" target="_blank" rel="noopener">Balanov/shim</a></span>
+          <span class="stars">&#9733; 442</span>
+        </div>
+        <div class="repo-desc">Local-first AI harness: any model, MCP, agent skills, natural-language CLI. Zero dependencies, MIT.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Go</span>
+          <span class="meta-tag">Created Nov 2</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">6</span>
+          <span class="repo-name"><a href="https://github.com/aa1143/NamiAgent" target="_blank" rel="noopener">aa1143/NamiAgent</a></span>
+          <span class="stars">&#9733; 294</span>
+        </div>
+        <div class="repo-desc">From-scratch agent tutorial that is also a working agent: file I/O, shell commands, MCP, long-term memory, and a web UI showing each step. Dissects Claude Code and Codex internals.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 30</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">7</span>
+          <span class="repo-name"><a href="https://github.com/apekshik/anyscene" target="_blank" rel="noopener">apekshik/anyscene</a></span>
+          <span class="stars">&#9733; 287</span>
+        </div>
+        <div class="repo-desc">Photoreal Blender scenes from a one-paragraph brief. AI agents generate image-to-3D props, then script layout, lighting, camera, and color grade.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 30</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">8</span>
+          <span class="repo-name"><a href="https://github.com/SAOS-3624/dsh-see-now" target="_blank" rel="noopener">SAOS-3624/dsh-see-now</a></span>
+          <span class="stars">&#9733; 275</span>
+        </div>
+        <div class="repo-desc">Real-time screen-aware AI: filters frames by change rate, composites multi-frame into single images. Near-zero token spend on static screens.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">JavaScript</span>
+          <span class="meta-tag">Created Nov 1</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">9</span>
+          <span class="repo-name"><a href="https://github.com/Interactive-Active-AI/NextTransformer" target="_blank" rel="noopener">Interactive-Active-AI/NextTransformer</a></span>
+          <span class="stars">&#9733; 227</span>
+        </div>
+        <div class="repo-desc">Open framework for next-gen transformer architectures with compute-matched benchmarking and a platform for autonomous architecture research.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 31</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">10</span>
+          <span class="repo-name"><a href="https://github.com/Moh4696/open-3d-skills" target="_blank" rel="noopener">Moh4696/open-3d-skills</a></span>
+          <span class="stars">&#9733; 225</span>
+        </div>
+        <div class="repo-desc">Eight agent skills for 3D web: three.js scenes, scroll films, transparent video, cursor rigs, exploded views, AI motion assets. Works with Claude Code, Codex, Cursor, Gemini CLI.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">JavaScript</span>
+          <span class="meta-tag">Created Oct 31</span>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <div id="tab-monthly" class="tab-content">
+    <h3 class="section-title">Top 5 — last 30 days <span class="badge">Oct 4 – Nov 4</span></h3>
+    <ul class="repo-list">
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-1">1</span>
+          <span class="repo-name"><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></span>
+          <span class="stars">&#9733; 7,953</span>
+        </div>
+        <div class="repo-desc">DeepSeek Harness in your pocket: run it on-device on a phone and remote-control your desktop. Dart, cross-platform.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Dart</span>
+          <span class="meta-tag">Created Oct 25</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-2">2</span>
+          <span class="repo-name"><a href="https://github.com/microsoft/TokenEconomizer" target="_blank" rel="noopener">microsoft/TokenEconomizer</a></span>
+          <span class="stars">&#9733; 4,696</span>
+        </div>
+        <div class="repo-desc">Experience-driven black-box cost control for coding agents. Microsoft's answer to runaway token budgets.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 13</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank rank-3">3</span>
+          <span class="repo-name"><a href="https://github.com/onehumanbeing/esp32-iphone-agent" target="_blank" rel="noopener">onehumanbeing/esp32-iphone-agent</a></span>
+          <span class="stars">&#9733; 4,318</span>
+        </div>
+        <div class="repo-desc">Let an AI model use a real iPhone with a $7 ESP32: AirPlay for eyes, USB HID for hands. No Mac, no developer account, no jailbreak.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">C</span>
+          <span class="meta-tag">Created Oct 11</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">4</span>
+          <span class="repo-name"><a href="https://github.com/mw00/project-maya" target="_blank" rel="noopener">mw00/project-maya</a></span>
+          <span class="stars">&#9733; 2,481</span>
+        </div>
+        <div class="repo-desc">Run GLM-5.3-Flash (321B MoE), DeepSeek-V4.1-Flash, and MiniMax-M3.1-Flash privately on your own GPUs. One-to-sixteen cards, NVIDIA or AMD, OpenAI/Anthropic-compatible API.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">CUDA</span>
+          <span class="meta-tag">Created Oct 6</span>
+        </div>
+      </li>
+
+      <li class="repo-card">
+        <div class="repo-header">
+          <span class="rank">5</span>
+          <span class="repo-name"><a href="https://github.com/modelflare-ai/AnyModelBot" target="_blank" rel="noopener">modelflare-ai/AnyModelBot</a></span>
+          <span class="stars">&#9733; 2,368</span>
+        </div>
+        <div class="repo-desc">Open-source, local-first alternative to Grok Bot and Claude Duet. Your own AI bots on 70+ models, reachable in-app, WeChat, or Feishu, with background tasks and computer control.</div>
+        <div class="repo-meta">
+          <span class="meta-tag lang">Python</span>
+          <span class="meta-tag">Created Oct 27</span>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine — 2026-11-04 UTC
+  </footer>
+</div>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    const labels = { take: "Editor's Take", weekly: 'Top 10 — 7 Days', monthly: 'Top 5 — 30 Days' };
+    document.querySelectorAll('.tab-btn').forEach(el => {
+      if (el.textContent.trim() === labels[name]) el.classList.add('active');
+    });
+  }
+</script>
+</body>
+</html>
