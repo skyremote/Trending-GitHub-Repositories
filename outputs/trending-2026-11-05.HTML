@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-05</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: rgba(88,166,255,0.12);
+    --green: #3fb950;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --star: #e3b341;
+    --tag-bg: rgba(88,166,255,0.1);
+    --tag-border: rgba(88,166,255,0.3);
+    --editor-bg: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(188,140,255,0.08));
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .editors-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .editors-take::before {
+    content: 'EDITOR\'S TAKE';
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .editors-take p {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    margin-top: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-header .badge {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: default;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .repo-rank {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 32px;
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .repo-info {
+    flex: 1;
+  }
+
+  .repo-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--star);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .repo-stars svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--star);
+  }
+
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .lang-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lang-python { background: #3572A5; }
+  .lang-typescript { background: #3178c6; }
+  .lang-javascript { background: #f1e05a; }
+  .lang-go { background: #00ADD8; }
+  .lang-swift { background: #F05138; }
+  .lang-lean { background: #83579A; }
+  .lang-c { background: #555555; }
+  .lang-kotlin { background: #A97BFF; }
+  .lang-dart { background: #00B4AB; }
+
+  footer {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px; }
+    header h1 { font-size: 1.5rem; }
+    .editors-take { padding: 20px; }
+    .repo-card { padding: 16px; }
+    .repo-top { flex-direction: column; gap: 8px; }
+    .repo-rank { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-11-05 UTC</div>
+</header>
+
+<div class="editors-take">
+  <p>The signal this week is unmistakable: the agent harness war is over, and the winner is "all of them." DeepSeek dropped a superagent prototype that hit 18k stars in four days, but the real story is the three independent micro-harnesses (uncut, shim, latch) from a single developer that collectively argue the agent runtime should be a 7&nbsp;MB binary, not a platform. Meanwhile, Anthropic quietly published FlashProve, a research prototype for zero-knowledge proofs of AI inference &mdash; if that matures, it solves the "did a model actually produce this output" question that every regulated industry is asking. The 30-day view confirms a durable shift: agent skills are now the primary distribution mechanism for developer tools, with anatomy's 25k stars proving that a well-scoped SVG generator packaged as a skill can outrun entire frameworks. GPU-unlock cracking 16k stars by doubling tensor throughput on consumer GeForce cards tells you where the compute bottleneck really lives &mdash; not in the cloud, but in the millions of 30-series cards sitting under desks.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="line"></span>
+  <span class="badge">Last 7 days</span>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">1</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      18,769
+    </div>
+  </div>
+  <div class="repo-desc">DeepSeek's autonomous agent system prototype, pushing toward fully self-directed task completion without human-in-the-loop. The most-starred new AI repo this week by a wide margin.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-typescript"></span>TypeScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">2</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">KKKKhazix/agent-autoloop</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      2,721
+    </div>
+  </div>
+  <div class="repo-desc">Background agent daemon that picks up tasks, follows through autonomously, and only interrupts you when it hits a decision it cannot make. Works with Claude Code and Codex.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-typescript"></span>TypeScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">3</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener">caru-ini/stack-diagram</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      1,769
+    </div>
+  </div>
+  <div class="repo-desc">Agent skill that turns a one-sentence stack description into a polished architecture diagram with official logos. Supports Claude Code and Codex.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-typescript"></span>TypeScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">4</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/wquguru/cicada" target="_blank" rel="noopener">wquguru/cicada</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      1,231
+    </div>
+  </div>
+  <div class="repo-desc">Real-time AI subtitles, simultaneous interpretation, and meeting notes for any call or stream. Native apps for Mac, Windows, Linux, Android. Free and open source.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-swift"></span>Swift</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">5</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      914
+    </div>
+  </div>
+  <div class="repo-desc">Autonomous pentest swarm: AI commander orchestrating worker agents over a layered fact-intent graph. Won 3rd at the Tencent Intelligent Attack-Defense competition (634 teams, 8 hours unattended, 1B tokens).</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-python"></span>Python</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">6</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/anthropics/FlashProve" target="_blank" rel="noopener">anthropics/FlashProve</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      835
+    </div>
+  </div>
+  <div class="repo-desc">Anthropic research prototype for zero-knowledge proofs of AI inference. Written in Lean. Not maintained, but the concept &mdash; cryptographically proving a specific model produced a specific output &mdash; has obvious compliance implications.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-lean"></span>Lean</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">7</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Balanov/uncut" target="_blank" rel="noopener">Balanov/uncut</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      601
+    </div>
+  </div>
+  <div class="repo-desc">Lossless, headless coding agent harness in a single 7 MB Go binary. Four tools, plain stdin/stdout, no silent context truncation. The anti-framework framework.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-go"></span>Go</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">8</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/andrew-babo/muse4ai" target="_blank" rel="noopener">andrew-babo/muse4ai</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      511
+    </div>
+  </div>
+  <div class="repo-desc">Local Windows bridge that lets AI agents generate images and video through Muse via REST, MCP, and OAuth. Closes the gap between text agents and visual output.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-typescript"></span>TypeScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">9</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Balanov/shim" target="_blank" rel="noopener">Balanov/shim</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      453
+    </div>
+  </div>
+  <div class="repo-desc">Tiny local-first AI harness: any model, MCP and Agent Skills, natural-language CLI. Zero dependencies. Same author as uncut &mdash; shim is the Swiss-army knife where uncut is the scalpel.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-go"></span>Go</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">10</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/SAOS-3624/dsh-see-now" target="_blank" rel="noopener">SAOS-3624/dsh-see-now</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      345
+    </div>
+  </div>
+  <div class="repo-desc">Real-time screen capture plugin for AI agents that filters frames by visual change and composites multiple frames into a single image. Static screens cost nearly zero tokens.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-javascript"></span>JavaScript</span>
+  </div>
+</div>
+
+<div class="section-header" style="margin-top: 48px;">
+  <h2>Top 5</h2>
+  <span class="line"></span>
+  <span class="badge">Last 30 days</span>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">1</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      24,944
+    </div>
+  </div>
+  <div class="repo-desc">Agent skill that creates detailed, interactive isometric illustrations of real-world machines and complex systems. Generates polished SVGs with optional WebGL shaders and 3D effects. The month's breakout hit.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-javascript"></span>JavaScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">2</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      16,700
+    </div>
+  </div>
+  <div class="repo-desc">Unlocks up to 2x FP16/BF16/TF32 tensor throughput on GeForce 20/30/40 series cards. Your consumer GPU has been running AI at half speed; this fixes it.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-c"></span>C</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">3</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      9,928
+    </div>
+  </div>
+  <div class="repo-desc">DeepSeek Harness in your pocket: runs on your phone natively and can remote-control your desktop. The mobile-agent pattern going mainstream.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-dart"></span>Dart / Flutter</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">4</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      8,789
+    </div>
+  </div>
+  <div class="repo-desc">Claude skill that takes vibecoded, AI-looking UI and transforms it into a properly designed interface. The anti-slop tool the frontend world was waiting for.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-javascript"></span>JavaScript</span>
+  </div>
+</div>
+
+<div class="repo-card">
+  <div class="repo-top">
+    <span class="repo-rank">5</span>
+    <div class="repo-info">
+      <div class="repo-name"><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></div>
+    </div>
+    <div class="repo-stars">
+      <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+      6,729
+    </div>
+  </div>
+  <div class="repo-desc">On-device Android AI agent that operates apps and the web autonomously. Accessibility-based, no root needed. The strongest open-source mobile agent this month.</div>
+  <div class="repo-meta">
+    <span class="lang-tag"><span class="lang-dot lang-kotlin"></span>Kotlin</span>
+  </div>
+</div>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &mdash; 2026-11-05 UTC
+</footer>
+
+</div>
+</body>
+</html>
