@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repositories — 2026-11-07</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --text: #1f2328;
+    --text-secondary: #656d76;
+    --border: #d0d7de;
+    --accent: #0969da;
+    --accent-hover: #0550ae;
+    --card-bg: #ffffff;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+    --star-color: #d4a72c;
+    --badge-bg: #ddf4ff;
+    --badge-text: #0550ae;
+    --editor-bg: #f0f7ff;
+    --editor-border: #0969da;
+    --section-gradient: linear-gradient(135deg, #0969da 0%, #6639ba 100%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-secondary: #161b22;
+      --text: #e6edf3;
+      --text-secondary: #8b949e;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --card-bg: #161b22;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+      --star-color: #e3b341;
+      --badge-bg: #1a2332;
+      --badge-text: #58a6ff;
+      --editor-bg: #111827;
+      --editor-border: #58a6ff;
+      --section-gradient: linear-gradient(135deg, #1f6feb 0%, #8957e5 100%);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 16px;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 0 64px; }
+  header { text-align: center; margin-bottom: 40px; }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  header .date {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border-left: 4px solid var(--editor-border);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .editor-take strong { color: var(--accent); }
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-title span {
+    background: var(--section-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  .card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-1px);
+  }
+  .rank {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .card-body { flex: 1; min-width: 0; }
+  .card-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+  .repo-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--accent);
+    word-break: break-word;
+  }
+  .card:hover .repo-name { color: var(--accent-hover); }
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star-color);
+  }
+  .stars svg { width: 14px; height: 14px; fill: var(--star-color); }
+  .lang-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+  }
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  footer {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    .card { padding: 12px 14px; gap: 10px; }
+    .editor-take { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Trending AI Repositories</h1>
+    <div class="date">2026-11-07 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <strong>Editor's Take:</strong> This week's new repos reveal two clear currents. First, agent autonomy is no longer a demo &mdash; tools like <code>agent-autoloop</code> and <code>dsh-see-now</code> aim to keep coding agents running unsupervised for extended sessions, handling their own context and only surfacing when stuck. Second, agents are reaching beyond the terminal into physical and creative domains: operating iPhones, driving Roblox Studio, rendering 3D scenes, and producing finished video from a text prompt. The MCP protocol continues to serve as the connective tissue binding these capabilities together. On the 30-day chart, DeepSeek shipped both an inference framework and an autonomous agent prototype, while Microsoft published research on reining in the token costs that all this autonomy generates.
+  </div>
+
+  <h2 class="section-title"><span>Top 10 &mdash; Last 7 Days</span></h2>
+  <div class="cards">
+
+    <a class="card" href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">
+      <div class="rank">1</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">KKKKhazix/agent-autoloop</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>3,737</span>
+          <span class="lang-badge">TypeScript</span>
+        </div>
+        <div class="card-desc">CLI agent that picks up tasks in the background, follows through autonomously, and only pings you when it needs a decision.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener">
+      <div class="rank">2</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">caru-ini/stack-diagram</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,978</span>
+          <span class="lang-badge">TypeScript</span>
+        </div>
+        <div class="card-desc">Agent skill that turns a one-sentence stack description into an architecture diagram with official logos.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/wquguru/cicada" target="_blank" rel="noopener">
+      <div class="rank">3</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">wquguru/cicada</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>1,564</span>
+          <span class="lang-badge">Swift</span>
+        </div>
+        <div class="card-desc">Real-time meeting subtitles, simultaneous interpretation, and AI-generated meeting notes across Mac, Windows, Linux, and Android.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener">
+      <div class="rank">4</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">Sandflow-ai/sand3d</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>828</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">3D modeling library designed for LLM consumption, with procedural modeling and USD/Blender export.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/sarpstar/cinecode" target="_blank" rel="noopener">
+      <div class="rank">5</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">sarpstar/cinecode</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>493</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">AI coding agent that writes a script, builds every frame in code, designs the sound, and hands you an MP4.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/zeekk0/OpenAmika" target="_blank" rel="noopener">
+      <div class="rank">6</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">zeekk0/OpenAmika</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>450</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">Open-source AI companion with Live2D avatar, real-time voice, and long-term memory via OpenRouter or Ollama.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/JosssphZhou/poki" target="_blank" rel="noopener">
+      <div class="rank">7</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">JosssphZhou/poki</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>429</span>
+          <span class="lang-badge">JavaScript</span>
+        </div>
+        <div class="card-desc">Local MCP server that lets AI agents operate a real iPhone &mdash; no jailbreak, no extra hardware.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/HerdBuilderEstimate/roblox-studio-mcp" target="_blank" rel="noopener">
+      <div class="rank">8</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">HerdBuilderEstimate/roblox-studio-mcp</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>427</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">MCP server for Roblox Studio: AI assistants can read object trees, edit scripts, and run playtests.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/SAOS-3624/dsh-see-now" target="_blank" rel="noopener">
+      <div class="rank">9</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">SAOS-3624/dsh-see-now</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>426</span>
+          <span class="lang-badge">JavaScript</span>
+        </div>
+        <div class="card-desc">Gives AI real-time screen vision with token-efficient frame selection &mdash; static screens cost almost nothing.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/voyager-so/vork" target="_blank" rel="noopener">
+      <div class="rank">10</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">voyager-so/vork</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>424</span>
+          <span class="lang-badge">Rust</span>
+        </div>
+        <div class="card-desc">Headless 3D and VFX engine built for agents, with Vulkan/Metal ray tracing. Research preview.</div>
+      </div>
+    </a>
+
+  </div>
+
+  <h2 class="section-title"><span>Top 5 &mdash; Last 30 Days</span></h2>
+  <div class="cards">
+
+    <a class="card" href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">
+      <div class="rank">1</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">deepseek-ai/DeepInfer</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>25,562</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">High-performance, large-scale inference framework optimized for DeepSeek models.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">
+      <div class="rank">2</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">deepseek-ai/dsh-superagent-prototype</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>20,341</span>
+          <span class="lang-badge">TypeScript</span>
+        </div>
+        <div class="card-desc">DeepSeek's prototype for a more autonomous agent system within the DeepSeek Harness.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">
+      <div class="rank">3</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">Zagitta/gpu-unlock</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>17,639</span>
+          <span class="lang-badge">C</span>
+        </div>
+        <div class="card-desc">Unlocks up to 2x FP16/BF16/TF32 tensor throughput on GeForce 20/30/40 series cards.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">
+      <div class="rank">4</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">heydamir/unslop</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>10,822</span>
+          <span class="lang-badge">JavaScript</span>
+        </div>
+        <div class="card-desc">Claude skill that transforms AI-generated, generic-looking UI into a properly designed interface.</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://github.com/microsoft/TokenEconomizer" target="_blank" rel="noopener">
+      <div class="rank">5</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="repo-name">microsoft/TokenEconomizer</span>
+          <span class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>4,902</span>
+          <span class="lang-badge">Python</span>
+        </div>
+        <div class="card-desc">Experience-driven black-box cost control for coding agents &mdash; learns which tokens to spend.</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    Data sourced from GitHub Search API on 2026-11-07 UTC. Stars reflect the count at query time.
+  </footer>
+</div>
+</body>
+</html>
