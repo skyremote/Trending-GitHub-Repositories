@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-11</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-accent: #f0f4f8;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --text-muted: #8888a0;
+    --border: #e2e4e9;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --star: #e8a317;
+    --tag-bg: #e8edf3;
+    --tag-text: #3a4a5c;
+    --section-gradient-start: #2563eb;
+    --section-gradient-end: #7c3aed;
+    --editor-bg: #f0f4ff;
+    --editor-border: #c7d6f0;
+    --rank-color: #b0b8c8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1117;
+      --bg-card: #1a1c28;
+      --bg-accent: #22253a;
+      --text: #e4e5ed;
+      --text-secondary: #a0a3b5;
+      --text-muted: #6c6f82;
+      --border: #2c2f40;
+      --accent: #5b8def;
+      --accent-hover: #7ba5f7;
+      --star: #f0b840;
+      --tag-bg: #2a2d44;
+      --tag-text: #b0b4cc;
+      --section-gradient-start: #5b8def;
+      --section-gradient-end: #a78bfa;
+      --editor-bg: #1a1e33;
+      --editor-border: #2e3350;
+      --rank-color: #4a4e66;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1117;
+    --bg-card: #1a1c28;
+    --bg-accent: #22253a;
+    --text: #e4e5ed;
+    --text-secondary: #a0a3b5;
+    --text-muted: #6c6f82;
+    --border: #2c2f40;
+    --accent: #5b8def;
+    --accent-hover: #7ba5f7;
+    --star: #f0b840;
+    --tag-bg: #2a2d44;
+    --tag-text: #b0b4cc;
+    --section-gradient-start: #5b8def;
+    --section-gradient-end: #a78bfa;
+    --editor-bg: #1a1e33;
+    --editor-border: #2e3350;
+    --rank-color: #4a4e66;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .date {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .editor-take h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .editor-take p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--section-gradient-start), var(--section-gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+  }
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 18px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  }
+  .rank {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--rank-color);
+    min-width: 32px;
+    text-align: right;
+    padding-top: 2px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .repo-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .repo-name-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .repo-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .repo-name:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  .stars {
+    font-size: 0.82rem;
+    color: var(--star);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.55;
+  }
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .tag {
+    font-size: 0.72rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    z-index: 10;
+    transition: background 0.15s;
+  }
+  .theme-toggle:hover { background: var(--bg-accent); }
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px 48px; }
+    header h1 { font-size: 1.4rem; }
+    .repo-card { padding: 16px; gap: 12px; }
+    .rank { font-size: 1.3rem; min-width: 26px; }
+    .editor-take { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">Light / Dark</button>
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">2026-11-11 UTC</div>
+  </header>
+
+  <div class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>Agent skills have eaten the week. Six of the top ten 7-day repos are packaged skill sets &mdash; for writing, hiring, video editing, team orchestration &mdash; not libraries or frameworks. The pattern: one domain expert distills their workflow into a distributable skill that any coding agent can load. Meanwhile, the 30-day chart tells the infrastructure story underneath: mobile agents took over (dsh-Go and Mika together pulled 27k stars), and Microsoft entered the cost-control game with TokenEconomizer, acknowledging that agents are expensive before they are useful. The subtext across both windows is that the &ldquo;build an agent&rdquo; phase is receding and the &ldquo;make agents cheaper, safer, and less annoying&rdquo; phase has started.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Top 10 &mdash; Last 7 Days</h2>
+    <div class="line"></div>
+  </div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/voyager-so/vork" target="_blank" rel="noopener">voyager-so/vork</a>
+          <span class="stars">&#9733; 1,362</span>
+        </div>
+        <div class="repo-desc">Headless 3D and VFX engine purpose-built for agents; Rust core with Metal and Vulkan backends. If you need an agent to render a scene without a display server, this is the first serious option.</div>
+        <div class="repo-tags"><span class="tag">Rust</span><span class="tag">3D</span><span class="tag">VFX</span><span class="tag">GPU</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/JosssphZhou/poki" target="_blank" rel="noopener">JosssphZhou/poki</a>
+          <span class="stars">&#9733; 934</span>
+        </div>
+        <div class="repo-desc">MCP server that lets AI agents operate a real iPhone &mdash; no jailbreak, no extra hardware. Swift-native, local-only. The Android side already had Mika; now iOS has an answer.</div>
+        <div class="repo-tags"><span class="tag">Swift</span><span class="tag">iOS</span><span class="tag">MCP</span><span class="tag">Automation</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/dabingfy-dot/solo-to-team-skills" target="_blank" rel="noopener">dabingfy-dot/solo-to-team-skills</a>
+          <span class="stars">&#9733; 580</span>
+        </div>
+        <div class="repo-desc">Skill pack for running a human-led AI team: task delegation, evidence verification, step explanation, and case-based learning. Practical management layer over multi-agent setups.</div>
+        <div class="repo-tags"><span class="tag">Agent Skills</span><span class="tag">Workflow</span><span class="tag">Human-in-the-loop</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/dhruvthakur11/youtube-ai-video-editing-system" target="_blank" rel="noopener">dhruvthakur11/youtube-ai-video-editing-system</a>
+          <span class="stars">&#9733; 481</span>
+        </div>
+        <div class="repo-desc">JSON-driven animation and motion-graphics pipeline with an integrated teleprompter. Aimed at solo YouTube creators who want agent-assisted editing without touching a timeline.</div>
+        <div class="repo-tags"><span class="tag">Video Editing</span><span class="tag">Motion Graphics</span><span class="tag">YouTube</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/shanselman/sandbox-mcp" target="_blank" rel="noopener">shanselman/sandbox-mcp</a>
+          <span class="stars">&#9733; 403</span>
+        </div>
+        <div class="repo-desc">MCP server + CLI that spins up fresh, throwaway Windows Sandbox instances for testing. Scott Hanselman's entry into the agent-tooling space; useful for CI-like validation without a full VM.</div>
+        <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">MCP</span><span class="tag">Windows</span><span class="tag">Testing</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">6</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/Dodaios/ste80-humanizer" target="_blank" rel="noopener">Dodaios/ste80-humanizer</a>
+          <span class="stars">&#9733; 322</span>
+        </div>
+        <div class="repo-desc">Agent skill that rewrites text 80% of the way to ASD-STE100 (Simplified Technical English), the method Karpathy shared. Strips AI tells without making prose robotic.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">Writing</span><span class="tag">Humanizer</span><span class="tag">Claude Code</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">7</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/gogoymh/auto-ontology-mcp" target="_blank" rel="noopener">gogoymh/auto-ontology-mcp</a>
+          <span class="stars">&#9733; 315</span>
+        </div>
+        <div class="repo-desc">Plugs NVIDIA Auto Ontology's semantic layer and a personal knowledge base into any MCP client. No LLM API key needed &mdash; the ontology does the reasoning.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">MCP</span><span class="tag">Knowledge Base</span><span class="tag">NVIDIA</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">8</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/yucezerey/turkish-anti-ai-skill" target="_blank" rel="noopener">yucezerey/turkish-anti-ai-skill</a>
+          <span class="stars">&#9733; 302</span>
+        </div>
+        <div class="repo-desc">Turkish-language de-slop skill that cleans AI tells, translationese, and TDK errors. First non-English humanizer skill to break 300 stars; signals the skill ecosystem is going multilingual.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">Turkish NLP</span><span class="tag">Humanizer</span><span class="tag">Agent Skills</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">9</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/Glen-Web-App/best-agent-memory-mcp" target="_blank" rel="noopener">Glen-Web-App/best-agent-memory-mcp</a>
+          <span class="stars">&#9733; 238</span>
+        </div>
+        <div class="repo-desc">Curated comparison of 12+ agent-memory MCP servers (Glen, Mem0, Zep, Graphiti, etc.) with storage model, team sharing, and live star counts. The awesome-list the memory space needed.</div>
+        <div class="repo-tags"><span class="tag">Agent Memory</span><span class="tag">MCP</span><span class="tag">Awesome List</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">10</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/nishant-Tiwari24/cracked" target="_blank" rel="noopener">nishant-Tiwari24/cracked</a>
+          <span class="stars">&#9733; 202</span>
+        </div>
+        <div class="repo-desc">Agent skills for job hunting: company-specific mock interviews, OA problems with hidden tests, and resume reviews for 470+ companies. The first career-focused skill pack to gain real traction.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Career</span><span class="tag">Interview Prep</span><span class="tag">Agent Skills</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <h2>Top 5 &mdash; Last 30 Days</h2>
+    <div class="line"></div>
+  </div>
+  <div class="repo-list">
+
+    <div class="repo-card">
+      <div class="rank">1</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a>
+          <span class="stars">&#9733; 18,884</span>
+        </div>
+        <div class="repo-desc">DeepSeek Harness on mobile: run an AI agent from your phone and remote-control your PC. Flutter app, exploded on Android-first markets. The month's runaway star count.</div>
+        <div class="repo-tags"><span class="tag">Dart</span><span class="tag">Flutter</span><span class="tag">Android</span><span class="tag">DeepSeek</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">2</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a>
+          <span class="stars">&#9733; 8,104</span>
+        </div>
+        <div class="repo-desc">On-device AI agent for Android that operates apps and the web via accessibility APIs. Kotlin/Jetpack Compose. The closest thing to a local Siri replacement on Android.</div>
+        <div class="repo-tags"><span class="tag">Kotlin</span><span class="tag">Android</span><span class="tag">Mobile Agent</span><span class="tag">Accessibility</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">3</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/microsoft/TokenEconomizer" target="_blank" rel="noopener">microsoft/TokenEconomizer</a>
+          <span class="stars">&#9733; 5,661</span>
+        </div>
+        <div class="repo-desc">Experience-driven black-box cost control for coding agents. Microsoft's open acknowledgment that agent token spend is a first-class engineering problem. Works with Claude Code, Codex, and Copilot.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">Cost Optimization</span><span class="tag">Coding Agents</span><span class="tag">Microsoft</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">4</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/Leonxlnx/earshot" target="_blank" rel="noopener">Leonxlnx/earshot</a>
+          <span class="stars">&#9733; 4,464</span>
+        </div>
+        <div class="repo-desc">Gives coding agents the ability to hear, review, and produce sound. CPU-only, open-source MCP server. Fills a sensory gap nobody had addressed &mdash; agents could see and type but not listen.</div>
+        <div class="repo-tags"><span class="tag">Python</span><span class="tag">Audio</span><span class="tag">MCP</span><span class="tag">Claude Code</span></div>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="rank">5</div>
+      <div class="repo-body">
+        <div class="repo-name-row">
+          <a class="repo-name" href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">KKKKhazix/agent-autoloop</a>
+          <span class="stars">&#9733; 4,452</span>
+        </div>
+        <div class="repo-desc">Lets your CLI agent pick up jobs autonomously in the background, only pinging you when it is stuck. Event-driven, self-hosted, TypeScript. The &ldquo;unattended agent&rdquo; pattern gaining momentum.</div>
+        <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">Automation</span><span class="tag">CLI</span><span class="tag">Self-hosted</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Generated by the Trending GitHub Repos routine &mdash; 2026-11-11 UTC
+  </footer>
+</div>
+<script>
+  function toggleTheme() {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    if (current === 'dark') {
+      root.setAttribute('data-theme', 'light');
+    } else if (current === 'light') {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+    }
+    try { localStorage.setItem('theme', root.getAttribute('data-theme') || 'auto'); } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+  } catch(e) {}
+</script>
+</body>
+</html>
