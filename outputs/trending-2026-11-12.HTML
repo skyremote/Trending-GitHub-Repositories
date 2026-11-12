@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-12</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --star: #e3b341;
+    --tag-bg: #1f2937;
+    --tag-text: #9ca3af;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+    --section-7d: #238636;
+    --section-30d: #8957e5;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --accent-hover: #0550ae;
+      --star: #bf8700;
+      --tag-bg: #eef1f5;
+      --tag-text: #57606a;
+      --gradient-start: #0969da;
+      --gradient-end: #8250df;
+      --section-7d: #1a7f37;
+      --section-30d: #8250df;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+  header {
+    text-align: center;
+    padding: 48px 0 32px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .editors-take h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .editors-take p:last-child { margin-bottom: 0; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 36px 0 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .section-header .badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-7d { background: var(--section-7d); }
+  .badge-30d { background: var(--section-30d); }
+  .repo-list { display: flex; flex-direction: column; gap: 12px; }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.15s ease;
+  }
+  .repo-card:hover { border-color: var(--accent); }
+  .repo-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .repo-rank {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    min-width: 30px;
+    opacity: 0.5;
+    line-height: 1;
+    padding-top: 3px;
+  }
+  .repo-info { flex: 1; }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .repo-name a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--star);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 6px;
+  }
+  footer {
+    text-align: center;
+    padding: 40px 0 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    .section-header { font-size: 1.1rem; }
+    .repo-card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-11-12 &middot; Weekly Brief</div>
+</header>
+
+<div class="editors-take">
+  <h2>Editor's Take</h2>
+  <p>The phone is the new frontier for AI agents. Three of this week's top ten repos &mdash; Pinky, Poki, and Vork &mdash; are dedicated to giving agents control of physical devices and real-world rendering pipelines. This isn't the "chatbot on your phone" wave from two years ago; these projects hand agents the screen, the cameras, and the GPU, then ask a human to approve before anything ships.</p>
+  <p>The same pattern shows up in the 30-day window: dsh-Go wraps DeepSeek's harness in a Flutter app, and Mika operates Android apps through accessibility APIs. Agents are moving from the terminal to the touchscreen, and the biggest unsolved problem is no longer capability &mdash; it's trust boundaries on hardware you carry in your pocket.</p>
+  <p>Meanwhile, the tooling layer around coding agents is maturing fast. Agent-autoloop, maxagent, and tinker-ai-skill each solve a distinct gap &mdash; background autonomy, persistent memory, and self-improvement &mdash; that early adopters have been duct-taping with shell scripts. The fact that these gaps now have purpose-built repos with thousands of stars says the "agent harness" is becoming its own software category.</p>
+</div>
+
+<div class="section-header">
+  <span class="badge badge-7d">7 days</span>
+  Top 10 &mdash; Last 7 Days
+</div>
+
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">1</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/DIYgod/pinky" target="_blank" rel="noopener">DIYgod/pinky</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,895</span>
+    </div>
+    <div class="repo-desc">Let AI agents use your phone, with you in the loop. A human-in-the-loop mobile agent framework that routes actions through approval before touching the device. Clean architecture; the approval UX is the product.</div>
+    <div class="repo-meta"><span class="tag">Go</span><span class="tag">mobile-agent</span><span class="tag">human-in-the-loop</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">2</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/voyager-so/vork" target="_blank" rel="noopener">voyager-so/vork</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 1,461</span>
+    </div>
+    <div class="repo-desc">Headless 3D and VFX engine built for agents. Metal and Vulkan backends, ray tracing, Slang shaders. Research preview, but the bet is that agents will need real-time rendering without a display server.</div>
+    <div class="repo-meta"><span class="tag">Rust</span><span class="tag">3D</span><span class="tag">VFX</span><span class="tag">ray-tracing</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">3</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/JosssphZhou/poki" target="_blank" rel="noopener">JosssphZhou/poki</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 984</span>
+    </div>
+    <div class="repo-desc">Let AI agents operate a real iPhone via a local MCP server. No jailbreak, no extra hardware. Uses native iOS automation APIs and exposes them through the Model Context Protocol.</div>
+    <div class="repo-meta"><span class="tag">Swift</span><span class="tag">iOS</span><span class="tag">MCP</span><span class="tag">mobile-agent</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">4</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/dhruvthakur11/youtube-ai-video-editing-system" target="_blank" rel="noopener">dhruvthakur11/youtube-ai-video-editing-system</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 483</span>
+    </div>
+    <div class="repo-desc">Eyeline teleprompter meets editing agents: JSON-driven animation and motion graphics workflow. Bridges the gap between AI-generated scripts and finished video with a structured editing pipeline.</div>
+    <div class="repo-meta"><span class="tag">HTML</span><span class="tag">video-editing</span><span class="tag">motion-graphics</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">5</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/Dodaios/ste80-humanizer" target="_blank" rel="noopener">Dodaios/ste80-humanizer</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 412</span>
+    </div>
+    <div class="repo-desc">Agent skill that removes AI tells and rewrites text 80% of the way toward ASD-STE100 (Simplified Technical English), the method Andrej Karpathy highlighted. Works as a Claude Code, Codex, or Cursor skill.</div>
+    <div class="repo-meta"><span class="tag">Python</span><span class="tag">writing</span><span class="tag">agent-skill</span><span class="tag">STE100</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">6</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/agentes-chat/agentes-chat" target="_blank" rel="noopener">agentes-chat/agentes-chat</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 405</span>
+    </div>
+    <div class="repo-desc">Open-source, self-hosted Slack alternative where humans and AI agents share channels and DMs. Agents run on Claude, ChatGPT, Gemini, or Grok with MCP tools, computer use, routines, and approvals. Docker Compose + Postgres. AGPL-3.0.</div>
+    <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">team-chat</span><span class="tag">multi-agent</span><span class="tag">self-hosted</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">7</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/drost-ai/tinker-ai-skill" target="_blank" rel="noopener">drost-ai/tinker-ai-skill</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 316</span>
+    </div>
+    <div class="repo-desc">Agent skill for fine-tuning an agentic model on your own Claude Code sessions. Your agent gets better at your codebase by learning from its own past runs. Works across Claude Code, Codex, and OpenCode.</div>
+    <div class="repo-meta"><span class="tag">Python</span><span class="tag">fine-tuning</span><span class="tag">agent-skill</span><span class="tag">self-improvement</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">8</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/vzroslieigry/maxagent" target="_blank" rel="noopener">vzroslieigry/maxagent</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 265</span>
+    </div>
+    <div class="repo-desc">Experience hooks for coding agents: makes Claude Code, Codex, and others recall and record what worked. Includes maxagent-bridge for Chrome integration. Persistent memory without a separate database.</div>
+    <div class="repo-meta"><span class="tag">JavaScript</span><span class="tag">agent-memory</span><span class="tag">hooks</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">9</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/SsKanDon/blender-ai-mcp-addon" target="_blank" rel="noopener">SsKanDon/blender-ai-mcp-addon</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 139</span>
+    </div>
+    <div class="repo-desc">AI assistant and MCP server for Blender. Visual chat, scene tools, multi-agent workflows across ChatGPT, Claude, Gemini, and Ollama. Extends the "agent skill for creative tools" pattern into 3D.</div>
+    <div class="repo-meta"><span class="tag">Blender</span><span class="tag">MCP</span><span class="tag">3D</span><span class="tag">multi-model</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">10</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/huawei-csl/MACaQ" target="_blank" rel="noopener">huawei-csl/MACaQ</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 115</span>
+    </div>
+    <div class="repo-desc">SOTA model-agnostic quantization for GGUF and beyond. Quantize and run text, image, video, and audio models with llama.cpp, vLLM, Diffusers, and PyTorch. From Huawei's research lab; supports Ascend hardware alongside CUDA.</div>
+    <div class="repo-meta"><span class="tag">C++</span><span class="tag">quantization</span><span class="tag">GGUF</span><span class="tag">inference</span></div>
+  </div>
+
+</div>
+
+<div class="section-header">
+  <span class="badge badge-30d">30 days</span>
+  Top 5 &mdash; Last 30 Days
+</div>
+
+<div class="repo-list">
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">1</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 19,927</span>
+    </div>
+    <div class="repo-desc">DeepSeek Harness in your pocket: a Flutter app that runs the full DSH agent on-device and can also remote-control your desktop. The star velocity alone (20k in three weeks) makes it the breakout repo of the month.</div>
+    <div class="repo-meta"><span class="tag">Dart</span><span class="tag">Flutter</span><span class="tag">DeepSeek</span><span class="tag">mobile</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">2</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 8,274</span>
+    </div>
+    <div class="repo-desc">On-device AI agent for Android that operates apps and the web. Uses accessibility services, Jetpack Compose UI. The most polished mobile-agent project in the Android ecosystem right now.</div>
+    <div class="repo-meta"><span class="tag">Kotlin</span><span class="tag">Android</span><span class="tag">on-device</span><span class="tag">accessibility</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">3</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/qybaihe/bla" target="_blank" rel="noopener">qybaihe/bla</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 5,333</span>
+    </div>
+    <div class="repo-desc">BLA (Blind LLM Agents): adversarial defense shield that protects binaries, Electron apps, JS bundles, Python, and WASM against AI reverse-engineering. Three-stage approach: poison, exhaust, hallucinate. A direct counter to the agent-does-everything trend.</div>
+    <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">security</span><span class="tag">adversarial</span><span class="tag">obfuscation</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">4</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">KKKKhazix/agent-autoloop</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 4,549</span>
+    </div>
+    <div class="repo-desc">Background auto-looping for command-line agents. Your agent picks up tasks, follows through autonomously, and only pings you when it needs a decision. Event-driven, self-hosted, works with Claude Code and Codex.</div>
+    <div class="repo-meta"><span class="tag">TypeScript</span><span class="tag">automation</span><span class="tag">event-driven</span><span class="tag">CLI</span></div>
+  </div>
+
+  <div class="repo-card">
+    <div class="repo-card-header">
+      <span class="repo-rank">5</span>
+      <div class="repo-info">
+        <div class="repo-name"><a href="https://github.com/expo/exact" target="_blank" rel="noopener">expo/exact</a></div>
+      </div>
+      <span class="repo-stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg> 2,987</span>
+    </div>
+    <div class="repo-desc">Write an app once; it runs natively on web, macOS, iOS, and Linux; an AI agent can build it, run it, see it, and test it on every platform. From the Expo team. A cross-platform native framework designed from the ground up for agent-driven development.</div>
+    <div class="repo-meta"><span class="tag">Rust</span><span class="tag">cross-platform</span><span class="tag">native-apps</span><span class="tag">Expo</span></div>
+  </div>
+
+</div>
+
+<footer>
+  All repos verified via GitHub API on 2026-11-12 &middot; Stars as of query time<br>
+  Generated by the Trending GitHub Repos routine
+</footer>
+
+</div>
+</body>
+</html>
