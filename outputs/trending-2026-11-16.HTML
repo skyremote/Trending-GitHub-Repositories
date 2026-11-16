@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-16</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-hover: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --accent-hover: #79c0ff;
+    --accent-subtle: rgba(56, 139, 253, 0.1);
+    --green: #3fb950;
+    --orange: #d29922;
+    --pink: #f778ba;
+    --red: #f85149;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+    --star: #e3b341;
+    --tag-bg: rgba(56, 139, 253, 0.15);
+    --tag-text: #58a6ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Noto Sans, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .header-meta .dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  .editor-take {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .editor-take::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
+  }
+
+  .editor-take h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .editor-take p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .section-header .badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .badge-7d {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+  }
+
+  .badge-30d {
+    background: rgba(210, 153, 34, 0.15);
+    color: var(--orange);
+  }
+
+  .status-note {
+    background: rgba(210, 153, 34, 0.08);
+    border: 1px solid rgba(210, 153, 34, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--orange);
+    line-height: 1.5;
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .repo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, background 0.2s;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+
+  .rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-align: center;
+    padding-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rank-top { color: var(--accent); }
+
+  .repo-body { min-width: 0; }
+
+  .repo-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    word-break: break-word;
+  }
+
+  .repo-card:hover .repo-name {
+    color: var(--accent-hover);
+  }
+
+  .repo-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .repo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .star-icon {
+    width: 16px; height: 16px;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .container { padding: 12px 16px; }
+    header { padding: 24px 0 20px; }
+    h1 { font-size: 22px; }
+    .repo-card {
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+    }
+    .repo-stars {
+      grid-column: 2;
+      padding-top: 0;
+    }
+    .editor-take { padding: 16px 16px 16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-meta"><span class="dot"></span> Daily Brief</div>
+    <h1>Trending AI Repos</h1>
+    <p class="subtitle">November 16, 2026 &mdash; curated from GitHub search, spam-filtered</p>
+  </header>
+
+  <section class="editor-take">
+    <h2>Editor's Take</h2>
+    <p>The "agent as desktop companion" pattern is consolidating. Three of this week's top repos &mdash; yogurt (meeting notes), agentes-chat (team chat), and linger (personal agent) &mdash; all bet on local-first AI that lives alongside your existing workflows rather than replacing them. Meanwhile, GitHub's trending charts were polluted by two spam campaigns: a Blender MCP clone army (~15 identical repos from fresh accounts, all created Nov 12 within minutes of each other) and a Gemini config-checker fork ring (~30 copies). If you use star counts as a discovery signal, budget time for deduplication &mdash; the astroturfing infrastructure is getting more sophisticated.</p>
+    <p style="margin-top: 12px;">The genuine gems this week are infrastructure plays: Huawei's MACaQ pushing GGUF quantization to new SOTA across modalities, and gpucanvas building the GPU-rendered infinite canvas that agent UIs will eventually need. In the 30-day view, DeepSeek dominates with two entries in the top three. The breakout hit of the month is <strong>unslop</strong> &mdash; a Claude skill that fixes AI-generated UI &mdash; proof that the "de-slopping" market is real and growing alongside the slop itself.</p>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top Repos</h2>
+      <span class="badge badge-7d">Last 7 days</span>
+    </div>
+
+    <div class="status-note">
+      This week's GitHub search results were heavily polluted by two coordinated spam campaigns. After filtering, nine genuine AI repos remained from the Nov 9&ndash;16 window.
+    </div>
+
+    <div class="repo-list">
+      <a class="repo-card" href="https://github.com/FrigadeHQ/yogurt" target="_blank" rel="noopener">
+        <div class="rank rank-top">1</div>
+        <div class="repo-body">
+          <div class="repo-name">FrigadeHQ/yogurt</div>
+          <div class="repo-desc">Private AI meeting notes that stay on your machine. A local-first, open-source Granola alternative for Mac, Windows, and Linux using Whisper and llama.cpp. No cloud, no subscription.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">local-first</span><span class="tag">whisper</span><span class="tag">meeting-notes</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          1,675
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/agentes-chat/agentes-chat" target="_blank" rel="noopener">
+        <div class="rank rank-top">2</div>
+        <div class="repo-body">
+          <div class="repo-name">agentes-chat/agentes-chat</div>
+          <div class="repo-desc">Self-hosted Slack alternative where your team and AI agents share channels and DMs. Agents run on Claude, ChatGPT, Gemini, or Grok with MCP tools, computer use, routines, and memory. Docker Compose + Postgres.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">self-hosted</span><span class="tag">multi-agent</span><span class="tag">MCP</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          1,531
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/berkantay/gpucanvas" target="_blank" rel="noopener">
+        <div class="rank rank-top">3</div>
+        <div class="repo-body">
+          <div class="repo-name">berkantay/gpucanvas</div>
+          <div class="repo-desc">Put thousands of live DOM nodes on an infinite canvas: the GPU draws them, an editor selects and moves them, shaders and transitions run on them, and an AI agent can read and point at them. React + WebGPU.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">WebGPU</span><span class="tag">infinite-canvas</span><span class="tag">React</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          485
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/simplexai-labs/linger" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-body">
+          <div class="repo-name">simplexai-labs/linger</div>
+          <div class="repo-desc">Open-source personal agent that runs fully on your PC. Aims to break Big Tech's grip on AI through efficient model-harness co-design so everyday hardware can run a useful agent.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">local-llm</span><span class="tag">personal-agent</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          356
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/huawei-csl/MACaQ" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-body">
+          <div class="repo-name">huawei-csl/MACaQ</div>
+          <div class="repo-desc">SOTA model-agnostic quantization for GGUF and beyond. Quantize and run text, image, video, and audio models with llama.cpp, vLLM, Diffusers, and PyTorch. Supports Ascend hardware.</div>
+          <div class="repo-tags"><span class="tag">C++</span><span class="tag">quantization</span><span class="tag">GGUF</span><span class="tag">multi-modal</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          316
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Xin-YuXiao/Awesome-AI-for-Astronomy" target="_blank" rel="noopener">
+        <div class="rank">6</div>
+        <div class="repo-body">
+          <div class="repo-name">Xin-YuXiao/Awesome-AI-for-Astronomy</div>
+          <div class="repo-desc">Curated list of papers applying AI to astronomy and astrophysics. One of the more unusual domain-specific awesome lists to trend this year.</div>
+          <div class="repo-tags"><span class="tag">Python</span><span class="tag">papers</span><span class="tag">astronomy</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          246
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/fendouai/ViralForge" target="_blank" rel="noopener">
+        <div class="rank">7</div>
+        <div class="repo-body">
+          <div class="repo-name">fendouai/ViralForge</div>
+          <div class="repo-desc">Agent-native viral video studio: one-click replicate viral short videos, deconstruct video hooks and scripts into a Viral DNA report, and ship costed variants. Skill + MCP + CLI.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">video</span><span class="tag">agent-skills</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          206
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/8hjkkwikl8/ai-portfolio" target="_blank" rel="noopener">
+        <div class="rank">8</div>
+        <div class="repo-body">
+          <div class="repo-name">8hjkkwikl8/ai-portfolio</div>
+          <div class="repo-desc">Three runnable AI engineering projects: traceable RAG, prompt evaluation, and guarded NL2SQL analysis. A solid portfolio template for AI engineers entering the field.</div>
+          <div class="repo-tags"><span class="tag">Python</span><span class="tag">RAG</span><span class="tag">NL2SQL</span><span class="tag">prompt-eval</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          105
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Timaga/noda-local-ai-notes" target="_blank" rel="noopener">
+        <div class="rank">9</div>
+        <div class="repo-body">
+          <div class="repo-name">Timaga/noda-local-ai-notes</div>
+          <div class="repo-desc">Local-first AI note-taking app for Windows: Markdown notes, personal knowledge base, knowledge graph, semantic search, and chat with cited sources. Zero cloud dependency.</div>
+          <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">local-first</span><span class="tag">knowledge-graph</span><span class="tag">notes</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          104
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Top Repos</h2>
+      <span class="badge badge-30d">Last 30 days</span>
+    </div>
+
+    <div class="repo-list">
+      <a class="repo-card" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">
+        <div class="rank rank-top">1</div>
+        <div class="repo-body">
+          <div class="repo-name">ccch1mneyyy/dsh-Go</div>
+          <div class="repo-desc">DeepSeek Harness in your pocket: run the agent on your phone and remote-control your computer. The mobile-first entry point to the DSH ecosystem. Flutter/Dart.</div>
+          <div class="repo-tags"><span class="tag">Dart</span><span class="tag">DeepSeek</span><span class="tag">mobile</span><span class="tag">agent</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          23,948
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">
+        <div class="rank rank-top">2</div>
+        <div class="repo-body">
+          <div class="repo-name">deepseek-ai/dsh-superagent-prototype</div>
+          <div class="repo-desc">DeepSeek's official "towards a more autonomous agent system" prototype. Research-grade, but the star count says the community is paying close attention to their agent ambitions.</div>
+          <div class="repo-tags"><span class="tag">TypeScript</span><span class="tag">DeepSeek</span><span class="tag">autonomous-agent</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          23,339
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">
+        <div class="rank rank-top">3</div>
+        <div class="repo-body">
+          <div class="repo-name">Zagitta/gpu-unlock</div>
+          <div class="repo-desc">Your GeForce runs AI at half speed. This fixes it for RTX 20/30/40 series cards with up to 2x FP16/BF16/TF32 tensor throughput. Hardware-level &mdash; know the risks before flashing.</div>
+          <div class="repo-tags"><span class="tag">C</span><span class="tag">GPU</span><span class="tag">hardware</span><span class="tag">tensor-unlock</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          19,741
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">
+        <div class="rank">4</div>
+        <div class="repo-body">
+          <div class="repo-name">heydamir/unslop</div>
+          <div class="repo-desc">A Claude skill that turns vibecoded, AI-looking UI into a designed interface. The breakout hit that proves "de-slopping" is its own product category.</div>
+          <div class="repo-tags"><span class="tag">JavaScript</span><span class="tag">Claude-skill</span><span class="tag">UI-design</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          16,831
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/JuneYaooo/rea-video" target="_blank" rel="noopener">
+        <div class="rank">5</div>
+        <div class="repo-body">
+          <div class="repo-name">JuneYaooo/rea-video</div>
+          <div class="repo-desc">Reverse-engineer any video, shot by shot: filmed, AI-generated, or coded, and how to remake it. Breakdowns in the open VIDEO.md format. Supports Claude Code and Codex agents.</div>
+          <div class="repo-tags"><span class="tag">Python</span><span class="tag">video-analysis</span><span class="tag">reverse-engineering</span></div>
+        </div>
+        <div class="repo-stars">
+          <svg class="star-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          9,284
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    Generated by the <a href="https://github.com/skyremote/trending-github-repositories">Trending GitHub Repos</a> routine &mdash; 2026-11-16
+  </footer>
+</div>
+</body>
+</html>
