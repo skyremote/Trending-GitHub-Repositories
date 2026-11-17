@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-17</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: #1f3a5f;
+    --gold: #f0c040;
+    --gold-soft: #3d2e00;
+    --green: #3fb950;
+    --green-soft: #0d2818;
+    --purple: #bc8cff;
+    --purple-soft: #2a1a4e;
+    --tag-bg: #21262d;
+    --tag-text: #c9d1d9;
+    --star-color: #e3b341;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --surface-hover: #eef1f4;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --accent-soft: #ddf4ff;
+      --gold: #9a6700;
+      --gold-soft: #fff8c5;
+      --green: #1a7f37;
+      --green-soft: #dafbe1;
+      --purple: #8250df;
+      --purple-soft: #fbefff;
+      --tag-bg: #eef1f4;
+      --tag-text: #1f2328;
+      --star-color: #9a6700;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: #1f3a5f;
+    --gold: #f0c040;
+    --gold-soft: #3d2e00;
+    --green: #3fb950;
+    --green-soft: #0d2818;
+    --purple: #bc8cff;
+    --purple-soft: #2a1a4e;
+    --tag-bg: #21262d;
+    --tag-text: #c9d1d9;
+    --star-color: #e3b341;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  header .date {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .editor-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .editor-take::before {
+    content: 'EDITOR\'S TAKE';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+
+  .editor-take p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-week {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+
+  .badge-month {
+    background: var(--purple-soft);
+    color: var(--purple);
+  }
+
+  .repo-list {
+    list-style: none;
+    margin-bottom: 48px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .repo-rank {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .repo-name-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .repo-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .repo-name:hover {
+    text-decoration: underline;
+  }
+
+  .repo-stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--star-color);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .repo-stars svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--star-color);
+  }
+
+  .repo-desc {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .status-bar {
+    margin-top: 48px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    z-index: 10;
+    transition: background 0.15s;
+  }
+
+  .theme-toggle:hover {
+    background: var(--surface-hover);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 24px 0 20px; }
+    header h1 { font-size: 22px; }
+    .repo-card { padding: 16px; }
+    .repo-header { flex-direction: column; gap: 8px; }
+    .repo-stars { align-self: flex-start; }
+    .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn">
+  <span id="themeIcon"></span>
+</button>
+
+<div class="container">
+  <header>
+    <h1>Trending AI Repos</h1>
+    <div class="date">November 17, 2026 &middot; Daily Brief</div>
+  </header>
+
+  <div class="editor-take">
+    <p>The week's headline: AI is eating 3D content creation. Blender's MCP addon pulled 2,200+ stars in five days and spawned a dozen clones overnight, signaling that the "AI copilot for creative tools" pattern has matured past text editors. Meanwhile, the arms race has flipped from generation to detection &mdash; a local-only browser extension that flags AI-generated images broke 400 stars with zero backend, suggesting trust infrastructure may outpace generation infrastructure as the next investment thesis. In the 30-day window, the GeForce tensor-unlock tool at 20K stars confirms that GPU access remains the binding constraint: people will patch their own drivers before they will pay for cloud compute. The two most practical repos this week are <code>tiny-voca</code> (a 4.5M-param TTS model you can actually ship in a mobile app) and <code>PeakCut</code> (self-hosted AI video clipping that works with your own API key). Both solve real production problems without requiring a cluster.</p>
+  </div>
+
+  <h2 class="section-title">Top 10 <span class="badge badge-week">LAST 7 DAYS</span></h2>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/hitkeeen/blender-ai-mcp-addon" target="_blank" rel="noopener">hitkeeen/blender-ai-mcp-addon</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          2,266
+        </div>
+      </div>
+      <div class="repo-desc">AI assistant and MCP server for Blender with visual chat, scene tools, and multi-agent workflows. Works with GPT, Claude, Gemini, and Ollama. The original that launched a swarm of clones within 48 hours.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/haziqahmedqasmi/PeakCut" target="_blank" rel="noopener">haziqahmedqasmi/PeakCut</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          683
+        </div>
+      </div>
+      <div class="repo-desc">Self-hosted AI clipping for long videos and live streams. Bring your own API key, keep your footage local. Fills the gap between manual editing and expensive SaaS clippers.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/n4ze3m/tiny-voca" target="_blank" rel="noopener">n4ze3m/tiny-voca</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          629
+        </div>
+      </div>
+      <div class="repo-desc">A 4.5M-parameter two-voice English TTS model trained from scratch. Small enough to embed in mobile apps, accurate enough to be useful. The "small model, real deployment" pattern keeps winning.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/berkantay/gpucanvas" target="_blank" rel="noopener">berkantay/gpucanvas</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          509
+        </div>
+      </div>
+      <div class="repo-desc">GPU-accelerated infinite canvas that renders thousands of live DOM nodes. An editor with selection, resize, and shared state over WebSocket. Useful foundation for visual AI workflow builders.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/hikaku-io/hikaku-extension" target="_blank" rel="noopener">hikaku-io/hikaku-extension</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          397
+        </div>
+      </div>
+      <div class="repo-desc">Browser extension that flags AI-generated images and video as you browse. Runs entirely on-device with no server calls. Trust tooling catching up to generation tooling.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">6</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/op7418/guizang-game-skill" target="_blank" rel="noopener">op7418/guizang-game-skill</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          384
+        </div>
+      </div>
+      <div class="repo-desc">Agent skill for Claude Code and Codex that builds playable 3D action games in the browser from a single prompt. Ships with a playable demo ("Mist-Locked Mountain Gate").</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">7</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/davidondrej/superbot" target="_blank" rel="noopener">davidondrej/superbot</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          230
+        </div>
+      </div>
+      <div class="repo-desc">Open-source, self-hosted alternative to Grok Bot. Written in Rust for low memory footprint. The "run your own X Bot" category continues to grow.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">8</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/vaibhav-space/my-ai-coding-workflow" target="_blank" rel="noopener">vaibhav-space/my-ai-coding-workflow</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          225
+        </div>
+      </div>
+      <div class="repo-desc">Production-grade AI coding instructions with curated skills and a three-stage review pipeline (Planning, Coding, Review). An opinionated starter kit for teams adopting agent-assisted development.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">9</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/edgerunners2/capri-ai-desktop" target="_blank" rel="noopener">edgerunners2/capri-ai-desktop</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          214
+        </div>
+      </div>
+      <div class="repo-desc">Free AI desktop pet, gaming overlay, and voice companion for Windows. Visual GUI for local and cloud models. The desktop AI companion space keeps finding niches.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">10</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/molly554/whiteboard-ai-tutor" target="_blank" rel="noopener">molly554/whiteboard-ai-tutor</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          208
+        </div>
+      </div>
+      <div class="repo-desc">Open-source whiteboard AI tutor with animated lessons and interactive playback. Compare Claude, Gemini, and GPT side-by-side on the same lesson. Education-focused, not a wrapper.</div>
+    </li>
+
+  </ul>
+
+  <h2 class="section-title">Top 5 <span class="badge badge-month">LAST 30 DAYS</span></h2>
+
+  <ul class="repo-list">
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">1</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          24,986
+        </div>
+      </div>
+      <div class="repo-desc">DeepSeek Harness in your pocket. Mobile app that runs LLMs on-device and remote-controls your desktop. The month's most-starred AI repo by a wide margin.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">2</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener">Zagitta/gpu-unlock</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          20,045
+        </div>
+      </div>
+      <div class="repo-desc">Unlocks full AI tensor performance on GeForce 20/30/40 series GPUs. Up to 2x FP16/BF16/TF32 throughput. A driver-level patch that became a grassroots movement.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">3</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          17,328
+        </div>
+      </div>
+      <div class="repo-desc">Claude skill that transforms AI-looking, vibecoded UI into a properly designed interface. Scratches the universal itch of "my AI output looks like AI output."</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">4</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/JuneYaooo/rea-video" target="_blank" rel="noopener">JuneYaooo/rea-video</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          9,769
+        </div>
+      </div>
+      <div class="repo-desc">Reverse-engineer any video shot by shot: filmed, AI-generated, or coded. Full breakdowns with remake guides in the open VIDEOLAB dataset. Research tool disguised as a creative tool.</div>
+    </li>
+
+    <li class="repo-card">
+      <div class="repo-header">
+        <span class="repo-rank">5</span>
+        <div class="repo-name-wrap">
+          <a class="repo-name" href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a>
+        </div>
+        <div class="repo-stars">
+          <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+          8,886
+        </div>
+      </div>
+      <div class="repo-desc">On-device AI agent for Android that operates apps and the web autonomously. The mobile agent category moves from demo to daily driver.</div>
+    </li>
+
+  </ul>
+
+  <div class="status-bar">
+    Complete scan &middot; Data sourced from GitHub Search API on 2026-11-17 &middot; Star counts at time of query &middot; Spam rings filtered
+    <br>Generated by the Trending GitHub Repos routine
+  </div>
+</div>
+
+<script>
+  function getPreferred() {
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved) return saved;
+    } catch(e) {}
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('themeIcon').textContent = t === 'dark' ? '☀️' : '🌙';
+  }
+
+  function toggleTheme() {
+    var current = document.documentElement.getAttribute('data-theme') || getPreferred();
+    var next = current === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch(e) {}
+    applyTheme(next);
+  }
+
+  applyTheme(getPreferred());
+</script>
+</body>
+</html>
