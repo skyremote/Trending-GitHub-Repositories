@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-20</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-soft: rgba(88,166,255,0.12);
+    --green: #3fb950;
+    --green-soft: rgba(63,185,80,0.12);
+    --orange: #d29922;
+    --orange-soft: rgba(210,153,34,0.12);
+    --purple: #bc8cff;
+    --purple-soft: rgba(188,140,255,0.12);
+    --star: #e3b341;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+  }
+  header {
+    text-align: center;
+    padding: 48px 0 40px;
+  }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .badge-7d { background: var(--accent-soft); color: var(--accent); }
+  .badge-30d { background: var(--purple-soft); color: var(--purple); }
+  .badge-new { background: var(--green-soft); color: var(--green); }
+
+  /* Editor's take */
+  .editors-take {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .editors-take::before {
+    content: 'Editor\'s take';
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .editors-take p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* Section headers */
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 40px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Repo cards */
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .repo-card {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 0.15s, background 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+  }
+  .rank {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 2px;
+  }
+  .repo-card .info h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  .repo-card .info h3 a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-card .info h3 a:hover { text-decoration: underline; }
+  .repo-card .desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--star);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .stars svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--star);
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px 48px; }
+    header { padding: 32px 0 28px; }
+    header h1 { font-size: 1.35rem; }
+    .repo-card { grid-template-columns: 28px 1fr auto; gap: 10px; padding: 14px 14px; }
+    .rank { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Trending AI Repos</h1>
+  <div class="date">2026-11-20 UTC &middot; Weekly Brief</div>
+</header>
+
+<div class="editors-take">
+  <p>The agent ecosystem is splitting into two layers: <em>runtimes</em> that keep agents alive for days, and <em>skills</em> that plug into those runtimes like apps into a phone. Five of this week's top repos are packaged skill sets &mdash; marketing, inference tuning, design, crypto trading &mdash; confirming that the "skill as distribution unit" pattern has moved from experiment to default. Meanwhile, the on-device push has jumped from phones to creative workstations: Blender gets an MCP server, Houdini gets a sketch-to-3D bridge, and filmmaking gets a self-hosted studio. The unifying thread is that the model is no longer the product; the integration surface is.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="7d">Last 7 days</button>
+  <button class="filter-btn" data-filter="30d">Last 30 days</button>
+</div>
+
+<section data-section="7d">
+<div class="section-title">
+  <span class="badge badge-7d">7 days</span> Top 10 — New this week
+  <span class="line"></span>
+</div>
+<div class="repo-list">
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">1</div>
+    <div class="info">
+      <h3><a href="https://github.com/sybil-solutions/inference-optimisation-skill" target="_blank" rel="noopener">sybil-solutions/inference-optimisation-skill</a></h3>
+      <div class="desc">Agent skill that hill-climbs local LLM serving speed across decode, speculative decoding, prefill and KV-cache on any hardware. The first skill that treats inference tuning as an automated feedback loop rather than a manual knob-turning exercise.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1,271</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">2</div>
+    <div class="info">
+      <h3><a href="https://github.com/bookwjitchieni1986/blender-ai-mcp-addon" target="_blank" rel="noopener">bookwjitchieni1986/blender-ai-mcp-addon</a></h3>
+      <div class="desc">MCP server and AI assistant for Blender: visual chat, scene manipulation, and multi-agent workflows. Works with Claude, GPT, Gemini and Ollama. Bridges the last major creative DCC app into the agent tool graph.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 731</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">3</div>
+    <div class="info">
+      <h3><a href="https://github.com/boringmarketer/boring-marketing-skills" target="_blank" rel="noopener">boringmarketer/boring-marketing-skills</a></h3>
+      <div class="desc">32 free marketing skills for AI agents covering research, positioning, copy, SEO, ads, email and content — plus a deep local-business audit. A full GTM stack distributed as skill files.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 722</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">4</div>
+    <div class="info">
+      <h3><a href="https://github.com/erkamyaman/rust-anything" target="_blank" rel="noopener">erkamyaman/rust-anything</a></h3>
+      <div class="desc">Rewrite your entire app in Rust, one piece at a time, checked against the original's recorded behaviour at every step. Supports CLIs, HTTP servers and libraries. The "strangler fig" pattern, automated.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 5,391</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">5</div>
+    <div class="info">
+      <h3><a href="https://github.com/vaibhav-space/my-ai-coding-workflow" target="_blank" rel="noopener">vaibhav-space/my-ai-coding-workflow</a></h3>
+      <div class="desc">Production-grade AI coding instructions with curated skills and a 3-stage review pipeline (Planning, Critical Review, Diff Audit). An opinionated CLAUDE.md starter kit built from real project experience.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 279</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">6</div>
+    <div class="info">
+      <h3><a href="https://github.com/diego3g/craft" target="_blank" rel="noopener">diego3g/craft</a></h3>
+      <div class="desc">Design skills for AI agents: writes your design brief, designs screens with every state from your design system, and runs visual review. Closes the design-to-code gap from the agent side.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 276</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">7</div>
+    <div class="info">
+      <h3><a href="https://github.com/alexturkey/z-image-turbo-pascal-4gb" target="_blank" rel="noopener">alexturkey/z-image-turbo-pascal-4gb</a></h3>
+      <div class="desc">Runs full-quality Q8 image generation on a 4 GB GTX 1050 Ti via stable-diffusion.cpp and cuDNN VAE. Proof that the VRAM floor for usable diffusion has dropped to consumer-laptop territory.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 181</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">8</div>
+    <div class="info">
+      <h3><a href="https://github.com/dmitrykurash/holospot" target="_blank" rel="noopener">dmitrykurash/holospot</a></h3>
+      <div class="desc">Holographic materials for Three.js scenes, designed to be handed directly to an AI agent. A niche 3D asset library that ships with agent-readable metadata — a small signal of where asset distribution is heading.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 185</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">9</div>
+    <div class="info">
+      <h3><a href="https://github.com/Tthanh2k6/turbo-browser-mcp" target="_blank" rel="noopener">Tthanh2k6/turbo-browser-mcp</a></h3>
+      <div class="desc">Playwright MCP server built to cut agent turns and tokens: one-call form filling, delta snapshots, batched steps and a submit guard on by default. Practical browser-use optimisation for real deployments.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 132</div>
+  </div>
+
+  <div class="repo-card" data-window="7d">
+    <div class="rank">10</div>
+    <div class="info">
+      <h3><a href="https://github.com/google-deepmind/robotics-antigravity-plugin" target="_blank" rel="noopener">google-deepmind/robotics-antigravity-plugin</a></h3>
+      <div class="desc">GDM Robotics skills for agentic robotics workflows across simulation and real robots. DeepMind packaging its manipulation stack as agent skills confirms the pattern has reached hardware labs.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 141</div>
+  </div>
+
+</div>
+</section>
+
+<section data-section="30d">
+<div class="section-title">
+  <span class="badge badge-30d">30 days</span> Top 5 — This month's biggest movers
+  <span class="line"></span>
+</div>
+<div class="repo-list">
+
+  <div class="repo-card" data-window="30d">
+    <div class="rank">1</div>
+    <div class="info">
+      <h3><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></h3>
+      <div class="desc">DeepSeek Harness in your pocket: runs on-device on mobile and can remote-control your desktop. The month's breakout hit, riding the Chinese on-device agent wave.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 28,370</div>
+  </div>
+
+  <div class="repo-card" data-window="30d">
+    <div class="rank">2</div>
+    <div class="info">
+      <h3><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></h3>
+      <div class="desc">DeepSeek's official prototype toward a more autonomous agent system. First-party signal that the race is now "who ships the agent runtime," not "who ships the model."</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 23,976</div>
+  </div>
+
+  <div class="repo-card" data-window="30d">
+    <div class="rank">3</div>
+    <div class="info">
+      <h3><a href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">wangzan101/Mika</a></h3>
+      <div class="desc">On-device AI agent for Android that operates apps and the web on your behalf. The mobile-agent bracket is consolidating fast; Mika leads on star velocity this month.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 9,210</div>
+  </div>
+
+  <div class="repo-card" data-window="30d">
+    <div class="rank">4</div>
+    <div class="info">
+      <h3><a href="https://github.com/vercel-labs/ui" target="_blank" rel="noopener">vercel-labs/ui</a></h3>
+      <div class="desc">A library of behaviours for agents to build next-generation user interfaces. Vercel betting that agents will compose UIs at runtime, not at build time.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 6,158</div>
+  </div>
+
+  <div class="repo-card" data-window="30d">
+    <div class="rank">5</div>
+    <div class="info">
+      <h3><a href="https://github.com/modelflare-ai/AnyModelBot" target="_blank" rel="noopener">modelflare-ai/AnyModelBot</a></h3>
+      <div class="desc">Open-source, local-first alternative to Grok Bot, OpenAI Dots and Claude Duet. Your own AI bots on any model — GPT, Claude, Gemini, Grok, DeepSeek — in one self-hosted app.</div>
+    </div>
+    <div class="stars"><svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 4,712</div>
+  </div>
+
+</div>
+</section>
+
+<footer>
+  Generated by the Trending GitHub Repos routine &middot; 2026-11-20 UTC
+</footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('section[data-section]').forEach(s => {
+        if (filter === 'all') { s.style.display = ''; return; }
+        s.style.display = s.dataset.section === filter ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
