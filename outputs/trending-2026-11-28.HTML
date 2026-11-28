@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending AI Repos — 2026-11-28</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2129;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --accent-dim: #1f6feb;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #db6d28;
+    --purple: #bc8cff;
+    --star: #e3b341;
+    --fork: #8b949e;
+    --tag-bg: #1c2129;
+    --tag-border: #30363d;
+    --editor-bg: #0e1319;
+    --gradient-start: #58a6ff;
+    --gradient-end: #bc8cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Noto Sans, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  header {
+    text-align: center;
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  header .date-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  header .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .editor-take {
+    background: var(--editor-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+  .editor-take .label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .section-header .window {
+    font-size: 13px;
+    color: var(--text-dim);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 2px 10px;
+    border-radius: 12px;
+  }
+  .repo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .repo-card:hover {
+    border-color: var(--accent-dim);
+    background: var(--surface-hover);
+  }
+  .repo-rank {
+    position: absolute;
+    top: 20px;
+    left: -1px;
+    background: var(--accent-dim);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px 2px 8px;
+    border-radius: 0 8px 8px 0;
+  }
+  .repo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding-left: 36px;
+  }
+  .repo-name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .repo-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .repo-name a:hover {
+    text-decoration: underline;
+  }
+  .repo-stats {
+    display: flex;
+    gap: 14px;
+    flex-shrink: 0;
+    font-size: 13px;
+  }
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-star { color: var(--star); }
+  .stat-fork { color: var(--fork); }
+  .repo-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 36px;
+    margin-bottom: 10px;
+  }
+  .repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 36px;
+  }
+  .meta-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 2px 10px;
+    border-radius: 12px;
+  }
+  .meta-tag.lang {
+    color: var(--green);
+    border-color: rgba(63, 185, 80, 0.3);
+  }
+  .thirty-day .repo-rank {
+    background: var(--purple);
+  }
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    header { padding: 32px 0 24px; }
+    header h1 { font-size: 22px; }
+    .repo-top { flex-direction: column; gap: 6px; }
+    .repo-stats { padding-left: 36px; }
+    .editor-take { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="date-badge">28 November 2026</div>
+  <h1>Trending AI Repositories</h1>
+  <p class="subtitle">Weekly scan of GitHub for the most interesting new AI projects</p>
+</header>
+
+<div class="editor-take">
+  <div class="label">Editor's Take</div>
+  <p>The week's signal is bifurcation. One track pushes inference to absurdist extremes &mdash; <strong>llm.asm</strong> ships a full Qwen3 inference loop in 12 KB of pure x86-64 assembly, zero dependencies, bootable from bare metal. The other track builds up: agent game studios, agentic commerce protocols, vulnerability scanners purpose-built for agent setups. The 30-day view confirms the pattern at scale &mdash; MROffice ships an MCP server so Claude can edit real .docx files, Sapper v2 runs autonomous pentests for eight hours unattended, and mobile-agent-testers puts 20 Claude Code agents on 20 simulated phones in parallel. The industry is no longer asking &ldquo;can agents work?&rdquo; but rather &ldquo;what do agents need to work safely at scale?&rdquo; Security tooling and inference infrastructure are the quiet winners this month.</p>
+</div>
+
+<div class="section-header">
+  <h2>Top 10</h2>
+  <span class="window">Last 7 days</span>
+</div>
+<ul class="repo-list">
+  <li class="repo-card">
+    <div class="repo-rank">1</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/nexu-io/opengame" target="_blank" rel="noopener">nexu-io/opengame</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,382</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 383</span>
+      </div>
+    </div>
+    <p class="repo-desc">Turns 20+ coding agents (Claude Code, Codex, DeepSeek) into a full-stack AI game studio. Ships 100+ remixable games and publishes to WeChat, TikTok, Telegram, and itch.io.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">TypeScript</span>
+      <span class="meta-tag">ai-agents</span>
+      <span class="meta-tag">game-dev</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">2</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/alesha-pro/llm.asm" target="_blank" rel="noopener">alesha-pro/llm.asm</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,290</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 353</span>
+      </div>
+    </div>
+    <p class="repo-desc">Qwen3-0.6B inference in 12 KB, bare-metal bootable OS in 22 KB, Mini-GPT trainer with Braille TUI in 32 KB. 100% x86-64 NASM assembly. Zero C, zero libc, zero dependencies.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Assembly</span>
+      <span class="meta-tag">bare-metal</span>
+      <span class="meta-tag">inference</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">3</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/erkamyaman/safe-anything" target="_blank" rel="noopener">erkamyaman/safe-anything</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 836</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 95</span>
+      </div>
+    </div>
+    <p class="repo-desc">Fast, 100% Rust vulnerability scanner covering XSS, SQL injection, leaked secrets, dependency CVEs, and AI agent setups. Single binary.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Rust</span>
+      <span class="meta-tag">security</span>
+      <span class="meta-tag">ai-agents</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">4</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/EL4CTEO/shrink-anything" target="_blank" rel="noopener">EL4CTEO/shrink-anything</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 396</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 21</span>
+      </div>
+    </div>
+    <p class="repo-desc">Deletes dead code, files, dependencies, and assets from any codebase. Keeps each cut only if your test suite still passes. Less code, same green CI.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Rust</span>
+      <span class="meta-tag">developer-tools</span>
+      <span class="meta-tag">refactoring</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">5</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/brainintelli/BioSignal-Guided-LLM-Reinforcement-Learning" target="_blank" rel="noopener">brainintelli/BioSignal-Guided-LLM-Reinforcement-Learning</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 208</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 41</span>
+      </div>
+    </div>
+    <p class="repo-desc">Offline organoid neural recordings as policy inputs for LLM agent reinforcement learning in a Godot survival game. Biosignal-guided RL with paired evaluation.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">reinforcement-learning</span>
+      <span class="meta-tag">biosignals</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">6</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/uxpilot-ai/frontend-design-skill" target="_blank" rel="noopener">uxpilot-ai/frontend-design-skill</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 196</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 3</span>
+      </div>
+    </div>
+    <p class="repo-desc">Free agent skill that designs your UI on a UX Pilot canvas before building it in code. Works with Claude Code, Codex, and Cursor.</p>
+    <div class="repo-meta">
+      <span class="meta-tag">agent-skill</span>
+      <span class="meta-tag">ui-design</span>
+      <span class="meta-tag">claude-code</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">7</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/duzhenxun/pop-agent" target="_blank" rel="noopener">duzhenxun/pop-agent</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 153</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 1</span>
+      </div>
+    </div>
+    <p class="repo-desc">Local web UI for watching coding agent reasoning streams, cutting in mid-turn with corrections, and managing models. Works with Claude Code, Codex, and OpenCode. No database, no account.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">TypeScript</span>
+      <span class="meta-tag">coding-agent</span>
+      <span class="meta-tag">local-first</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">8</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/sthamann/awesome-agentic-commerce" target="_blank" rel="noopener">sthamann/awesome-agentic-commerce</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 131</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 3</span>
+      </div>
+    </div>
+    <p class="repo-desc">Daily-updated curated list of agentic commerce protocols (UCP, ACP, AP2, MCP, x402), SDKs, payment providers, and open-source implementations.</p>
+    <div class="repo-meta">
+      <span class="meta-tag">awesome-list</span>
+      <span class="meta-tag">agentic-commerce</span>
+      <span class="meta-tag">protocols</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">9</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/mbzuai-oryx/LoopedWSP" target="_blank" rel="noopener">mbzuai-oryx/LoopedWSP</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 127</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 20</span>
+      </div>
+    </div>
+    <p class="repo-desc">LLM-written transformers that solve algorithmic reasoning (Sudoku, Tower of Hanoi, maze-hard) via looped weight-space programming. No training required. From MBZUAI.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">reasoning</span>
+      <span class="meta-tag">transformers</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">10</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/enwove/flyx" target="_blank" rel="noopener">enwove/flyx</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 115</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 17</span>
+      </div>
+    </div>
+    <p class="repo-desc">Zero-dependency local LLM inference in a ~50 MB binary. Native long context, per-GPU tuning, built-in speculative decoding, web dashboard, OpenAI-compatible API.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">C++</span>
+      <span class="meta-tag">inference</span>
+      <span class="meta-tag">local-llm</span>
+    </div>
+  </li>
+</ul>
+
+<div class="section-header thirty-day">
+  <h2>Top 5</h2>
+  <span class="window">Last 30 days</span>
+</div>
+<ul class="repo-list thirty-day">
+  <li class="repo-card">
+    <div class="repo-rank">1</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/XinaTian/MROffice" target="_blank" rel="noopener">XinaTian/MROffice</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 5,125</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 424</span>
+      </div>
+    </div>
+    <p class="repo-desc">Open-source AI office suite: documents, spreadsheets, presentations, PDF, and code in the browser. Copilot in every editor works on real Office files. MCP server lets Claude, ChatGPT, and Codex create and edit them.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">TypeScript</span>
+      <span class="meta-tag">office-suite</span>
+      <span class="meta-tag">mcp</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">2</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/sybil-solutions/inference-optimisation-skill" target="_blank" rel="noopener">sybil-solutions/inference-optimisation-skill</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,887</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 266</span>
+      </div>
+    </div>
+    <p class="repo-desc">Agent skill that hill-climbs local LLM serving speed — decode, speculative decoding, prefill, KV cache, startup, TTFT — on any hardware and quantization.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">inference</span>
+      <span class="meta-tag">optimization</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">3</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/N1nEmAn/sapper-v2" target="_blank" rel="noopener">N1nEmAn/sapper-v2</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,683</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 1,295</span>
+      </div>
+    </div>
+    <p class="repo-desc">Autonomous AI pentest legion. Won a 634-team CTF running 8 hours unattended with 1B tokens. Evolvable by design on the Nuwa Foundation.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">security</span>
+      <span class="meta-tag">autonomous-agents</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">4</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/pierridotite/mobile-agent-testers" target="_blank" rel="noopener">pierridotite/mobile-agent-testers</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,629</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 271</span>
+      </div>
+    </div>
+    <p class="repo-desc">20 Claude Code agents on 20 simulated phones in parallel on GitHub free runners. Finds broken flows, translation issues, layout bugs, and accessibility problems on iOS and Android.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">mobile-testing</span>
+      <span class="meta-tag">claude-code</span>
+    </div>
+  </li>
+
+  <li class="repo-card">
+    <div class="repo-rank">5</div>
+    <div class="repo-top">
+      <div class="repo-name"><a href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener">Sandflow-ai/sand3d</a></div>
+      <div class="repo-stats">
+        <span class="stat stat-star"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2,376</span>
+        <span class="stat stat-fork"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.878a2.25 2.25 0 111.5 0v.878a2.25 2.25 0 01-2.25 2.25h-1.5v2.128a2.251 2.251 0 11-1.5 0V8.5h-1.5A2.25 2.25 0 013.5 6.25v-.878a2.25 2.25 0 111.5 0zM5 3.25a.75.75 0 10-1.5 0 .75.75 0 001.5 0zm6.75.75a.75.75 0 10 0-1.5.75.75 0 000 1.5zM8 12.75a.75.75 0 10 0-1.5.75.75 0 000 1.5z"/></svg> 260</span>
+      </div>
+    </div>
+    <p class="repo-desc">3D modeling in Python, designed from scratch for LLM consumption. Agents can describe, create, and manipulate 3D scenes programmatically.</p>
+    <div class="repo-meta">
+      <span class="meta-tag lang">Python</span>
+      <span class="meta-tag">3d-modeling</span>
+      <span class="meta-tag">llm</span>
+    </div>
+  </li>
+</ul>
+
+<footer>
+  Generated 2026-11-28 UTC &middot; Trending GitHub Repos Routine
+</footer>
+
+</div>
+</body>
+</html>
